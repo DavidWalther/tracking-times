@@ -1,6 +1,6 @@
 <template>
-    <div class="modal">
-        <div class="modal-content">
+    <ui-modal-base class="modal">
+        <div slot="body">
             <div class="modal-header">{label.title}</div>
             <div class="modal-body">
                 <slot></slot>
@@ -20,5 +20,5 @@
                 />
             </div>
         </div>
-    </div>
+    </ui-modal-base>
 </template>

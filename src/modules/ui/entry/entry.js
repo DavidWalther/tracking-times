@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
 import { LightningElement, api, track } from 'lwc';
-import { thisTypeAnnotation } from '@babel/types';
 
 export default class Entry extends LightningElement {
     @api
@@ -29,7 +27,7 @@ export default class Entry extends LightningElement {
         return this.internalState.startTimeStamp;
     }
     set start(value) {
-        var integerValue;
+        let integerValue;
         if (value !== undefined) {
             integerValue = parseInt(value, 10);
             this.internalState.startTimeStamp = integerValue;
@@ -43,7 +41,7 @@ export default class Entry extends LightningElement {
         return this.internalState.endTimeStamp;
     }
     set end(value) {
-        var integerValue;
+        let integerValue;
         if (value !== undefined) {
             integerValue = parseInt(value, 10);
             this.internalState.endTimeStamp = integerValue;
@@ -56,11 +54,21 @@ export default class Entry extends LightningElement {
 
     label = {
         modal: {
-            title: 'Entry Details'
+            title: 'Entry Details',
+            delete: {
+                title: 'Delete',
+                body: 'Delete Entry?',
+                button: {
+                    confirm: 'Delete',
+                    cancel: 'Cancel'
+                }
+            }
         },
         button: {
             edit: 'Edit',
-            delete: 'Delete'
+            delete: 'Delete',
+            save: 'Save',
+            cancel: 'Cancel'
         },
         input: {
             startdate: 'Start date',
@@ -103,14 +111,14 @@ export default class Entry extends LightningElement {
     }
 
     extractDateStringFromTimeStamp(timestamp) {
-        var fullDate, dateString;
+        let fullDate, dateString;
         fullDate = new Date(timestamp);
         dateString = fullDate.toISOString().split('T')[0];
         return dateString;
     }
 
     extractTimeStringFromTimeStamp(timestamp) {
-        var fullDate, timeString;
+        let fullDate, timeString;
 
         fullDate = new Date(timestamp);
         timeString = fullDate.toLocaleTimeString().substr(0, 5);
@@ -126,127 +134,64 @@ export default class Entry extends LightningElement {
         return difference / (1000 * 60 * 60);
     }
 
+    //----------------------------
+    // event handlers
+    //----------------------------
+
+    handleButtonClickModalSave() {
+        this.processModalSave();
+    }
+
+    handleButtonClickModalCancel() {
+        this.processModalCancel();
+    }
+
     handleButtonClickEdit() {
-        this.showEditModal();
+        this.processEdit();
     }
 
     handleButtonClickDelete() {
+        this.getDeleteModal().show();
+    }
+
+    handleButtonClickDeleteConfirm() {
+        this.getDeleteModal().hide();
         this.processDelete();
     }
 
-    handleChangeStartDate(internalEvent) {
-        this.processNewStartDate(internalEvent.target.value);
+    handleButtonClickDeleteCancel() {
+        this.getDeleteModal().hide();
     }
 
-    handleChangeStartTime(internalEvent) {
-        this.processNewStartTime(internalEvent.target.value);
+    //----------------------------
+    // process events
+    //----------------------------
+
+    processModalSave() {
+        let inputValues;
+
+        this.getEditModal().hide();
+        inputValues = this.readModalInputs();
+        this.writeValuesToInternalState(inputValues);
+        this.fillOutputs();
+        this.createAndFireChangeEvent();
     }
 
-    handleChangeEndDate(internalEvent) {
-        this.processNewEndDate(internalEvent.target.value);
-    }
-
-    handleChangeEndTime(internalEvent) {
-        this.processNewEndTime(internalEvent.target.value);
-    }
-
-    handleChangeComment(internalEvent) {
-        this.processNewComment(internalEvent.target.value);
-    }
-
-    processNewStartDate(newStartDateISOString) {
-        var param;
-        if (this.internalState.startTimeStamp !== undefined) {
-            let currentTimeValue = extractTimeFromTimestamp(
-                this.internalState.startTimeStamp
-            );
-            let newDateValue = convertISODateToInteger(newStartDateISOString);
-            this.internalState.startTimeStamp = newDateValue + currentTimeValue;
-            this.setDisplayStartDate();
-
-            param = {
-                value: this.internalState.startTimeStamp,
-                name: 'start'
-            };
-        }
-    }
-
-    processNewStartTime(newStartDateISOString) {
-        var param, currentTimeStamp, newTimeStamp;
-
-        currentTimeStamp = this.internalState.startTimeStamp;
-
-        if (currentTimeStamp !== undefined) {
-            newTimeStamp = getNewTimestampByIsoTime(
-                currentTimeStamp,
-                newStartDateISOString
-            );
-            this.internalState.startTimeStamp = newTimeStamp;
-            this.setDisplayStartTime();
-        }
-
-        param = {
-            value: this.internalState.startTimeStamp,
-            name: 'start'
-        };
-    }
-
-    processNewEndDate(newEndDateISOString) {
-        var param;
-
-        if (this.internalState.endTimeStamp !== undefined) {
-            let currentTimeValue = extractTimeFromTimestamp(
-                this.internalState.endTimeStamp
-            );
-            let newDateValue = convertISODateToInteger(newEndDateISOString);
-            this.internalState.endTimeStamp = newDateValue + currentTimeValue;
-
-            this.setDisplayEndDate();
-
-            param = {
-                value: this.internalState.endTimeStamp,
-                name: 'end'
-            };
-        }
-    }
-
-    processNewEndTime(newEndTimeISOString) {
-        var param, currentTimeStamp, newTimeStamp;
-
-        currentTimeStamp = this.internalState.endTimeStamp;
-
-        if (currentTimeStamp !== undefined) {
-            newTimeStamp = getNewTimestampByIsoTime(
-                currentTimeStamp,
-                newEndTimeISOString
-            );
-            this.internalState.endTimeStamp = newTimeStamp;
-            this.setDisplayEndTime();
-        }
-
-        param = {
-            value: this.internalState.endTimeStamp,
-            name: 'end'
-        };
-    }
-
-    processNewComment(newCommentString) {
-        var param;
-
-        this.internalState.comment = newCommentString;
-        this.setDisplayStateComment();
-        param = {
-            value: newCommentString,
-            name: 'comment'
-        };
+    processModalCancel() {
+        this.getEditModal().hide();
     }
 
     processDelete() {
         this.dispatchEvent(new CustomEvent('delete'));
     }
 
+    processEdit() {
+        this.fillModalInputs();
+        this.getEditModal().show();
+    }
+
     createAndFireChangeEvent() {
-        var externalEvent;
+        let externalEvent;
         externalEvent = new CustomEvent('change', {
             bubbles: true,
             composed: true,
@@ -260,7 +205,7 @@ export default class Entry extends LightningElement {
     }
 
     getValuesForInputs() {
-        var result, start, end;
+        let result, start, end;
         result = {};
 
         if (this.isStartDefined()) {
@@ -288,7 +233,7 @@ export default class Entry extends LightningElement {
     //----------------------
 
     fillOutputs() {
-        var values;
+        let values;
         values = this.getValuesForInputs();
         this.displayState.startdate = values.startdate;
         this.displayState.starttime = values.starttime;
@@ -298,7 +243,7 @@ export default class Entry extends LightningElement {
     }
 
     writeValuesToInternalState(values) {
-        var start, end, comment;
+        let start, end, comment;
         start = new Date(values.startDateStr + 'T' + values.startTimeStr);
         end = new Date(values.endDateStr + 'T' + values.endTimeStr);
         comment = values.comment;
@@ -312,7 +257,7 @@ export default class Entry extends LightningElement {
     //----------------------
 
     fillModalInputs() {
-        var values;
+        let values;
         values = this.getValuesForInputs();
         this.getInputStartDate().value = values.startdate;
         this.getInputStartTime().value = values.starttime;
@@ -322,7 +267,7 @@ export default class Entry extends LightningElement {
     }
 
     readModalInputs() {
-        var values;
+        let values;
         values = {};
         values.startDateStr = this.getInputStartDate().value;
         values.startTimeStr = this.getInputStartTime().value;
@@ -330,19 +275,6 @@ export default class Entry extends LightningElement {
         values.endTimeStr = this.getInputEndTime().value;
         values.comment = this.getInputComment().value;
         return values;
-    }
-
-    onModalConfirm() {
-        var inputValues;
-        inputValues = this.readModalInputs();
-        this.writeValuesToInternalState(inputValues);
-        this.fillOutputs();
-        this.createAndFireChangeEvent();
-    }
-
-    showEditModal() {
-        this.fillModalInputs();
-        this.getEditModal().show();
     }
 
     /**
@@ -387,6 +319,10 @@ export default class Entry extends LightningElement {
     // Element selectors
     //----------------------
 
+    getDeleteModal() {
+        return this.template.querySelector('.modal-delete');
+    }
+
     getEditModal() {
         return this.template.querySelector('.modal-edit');
     }
@@ -410,66 +346,4 @@ export default class Entry extends LightningElement {
     getInputComment() {
         return this.template.querySelector('textarea.comment');
     }
-
-    getSpanStartDate() {
-        return this.template.querySelector('span.start-date');
-    }
-
-    getSpanStartTime() {
-        return this.template.querySelector('span.start-time');
-    }
-
-    getSpanEndDate() {
-        return this.template.querySelector('span.end-date');
-    }
-
-    getSpanEndTime() {
-        return this.template.querySelector('span.end-time');
-    }
-
-    getSpanComment() {
-        return this.template.querySelector('span.comment');
-    }
-}
-
-function getNewTimestampByIsoTime(timestamp, isoTimeString) {
-    var splittedTime, hourInt, minuteInt, newTimeStamp;
-    if (timestamp !== undefined) {
-        splittedTime = isoTimeString.split(':');
-        hourInt = parseInt(splittedTime[0], 10);
-        minuteInt = parseInt(splittedTime[1], 10);
-
-        newTimeStamp = new Date(timestamp).setHours(hourInt, minuteInt);
-    }
-    return newTimeStamp;
-}
-
-function convertISOTimeToInteger(time) {
-    return new Date('1970-01-01T' + time + 'Z').getTime();
-}
-
-function convertISODateToInteger(date) {
-    return new Date(date + 'T00:00:00.0000Z').getTime();
-}
-
-function extractTimeFromTimestamp(timestamp) {
-    const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-    return timestamp % MILLISECONDS_PER_DAY;
-}
-
-function extractDateFromTimestamp(timestamp) {
-    let time = extractTimeFromTimestamp(timestamp);
-    return timestamp - time;
-}
-
-function splitTimeStampIntegerIntoDateAndTime(timestamp) {
-    var result;
-    if (timestamp !== undefined) {
-        result = {
-            date: extractDateFromTimestamp(timestamp),
-            time: extractTimeFromTimestamp(timestamp)
-        };
-        return result;
-    }
-    return undefined;
 }

@@ -33,12 +33,11 @@
             />
         </div>
     </div>
-    <ui-modal
-        class="modal-edit"
-        onconfirm={onModalConfirm}
-        title={label.modal.title}
-    >
-        <div class="container-modal">
+    <ui-modal-generic class="modal-edit">
+        <div slot="header">
+            <span class="header">{label.modal.title}</span>
+        </div>
+        <div slot="body">
             <label class="start-date">{label.input.startdate}</label>
             <input class="modal-input start-date" type="date" />
             <label class="start-time">{label.input.starttime}</label>
@@ -50,5 +49,31 @@
             <label class="comment">{label.input.comment}</label>
             <textarea class="modal-input comment"></textarea>
         </div>
-    </ui-modal>
+        <div slot="footer">
+            <input
+                type="button"
+                class="button edit-save"
+                value={label.button.save}
+                onclick={handleButtonClickModalSave}
+            />
+            <input
+                type="button"
+                class="button edit-cancel"
+                value={label.button.cancel}
+                onclick={handleButtonClickModalCancel}
+            />
+        </div>
+    </ui-modal-generic>
+    <ui-modal-confirmable
+        class="modal-delete"
+        title={label.modal.delete.title}
+        confirm-label={label.modal.delete.button.confirm}
+        confirm-design="deny"
+        onconfirm={handleButtonClickDeleteConfirm}
+        cancel-design="info"
+        cancel-label={label.modal.delete.button.cancel}
+        oncancel={handleButtonClickDeleteCancel}
+    >
+        <div>{label.modal.delete.body}</div>
+    </ui-modal-confirmable>
 </template>

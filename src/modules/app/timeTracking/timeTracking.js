@@ -1,4 +1,5 @@
 import { LightningElement, track } from 'lwc';
+import { startDownload } from 'data/fileDownload';
 import { save, load, clear } from 'data/localStorage';
 
 const MILISECONDS_PER_MINUTE = 1000 * 60;
@@ -40,14 +41,88 @@ export default class TimeTracking extends LightningElement {
         this.showClearModal();
     }
 
+    handleClickClearCancel() {
+        this.hideClearModal();
+    }
+
     handleClickClearConfirm() {
+        this.hideClearModal();
         this.processClearData();
     }
 
     handleEventDelete(event) {
-        var itemSortNumber = event.target.getAttribute('data-index');
+        const itemSortNumber = event.target.getAttribute('data-index');
+
         this.processEntryDelete(itemSortNumber);
         this.saveData();
+    }
+
+    handleClickExport() {
+        this.proccessExport();
+    }
+
+    //----------------------------
+    // Actions
+    //----------------------------
+
+    proccessExport() {
+        this.doExportCsv();
+    }
+
+    doExportCsv() {
+        const output = [];
+        const firstLine =
+            ' Startdate | Starttime |    Enddate | Endtime | Duration (h) | Comment\n';
+        output.push(firstLine);
+        const secondLine =
+            '===================================================================================\n';
+        output.push(secondLine);
+
+        const columnSeparator = ' | ';
+        this.state.entries.forEach(entry => {
+            let outputLine = '';
+
+            // add start date column
+            let startDateStr = extractDateStringFromTimeStamp(entry.start);
+            outputLine += startDateStr;
+            outputLine += columnSeparator;
+
+            //add start time column
+            let startTimeStr = extractTimeStringFromTimeStamp(entry.start);
+            outputLine += '    ';
+            outputLine += startTimeStr;
+            outputLine += columnSeparator;
+
+            // add end date column
+            let endDateStr = extractDateStringFromTimeStamp(entry.end);
+            outputLine += endDateStr;
+            outputLine += columnSeparator;
+
+            //add start time column
+            let endTimeStr = extractTimeStringFromTimeStamp(entry.end);
+            outputLine += '  ';
+            outputLine += endTimeStr;
+            outputLine += columnSeparator;
+
+            // add difference column
+            let differenceStr = '' + getdifference(entry.start, entry.end);
+            let columnWidth = 13;
+            //leading spaces
+            outputLine += ' '.repeat(columnWidth - differenceStr.length - 1);
+
+            outputLine += differenceStr;
+            outputLine += columnSeparator;
+
+            // add comment
+            let commentStr = entry.comment;
+            commentStr = commentStr ? commentStr : '';
+            outputLine += commentStr;
+
+            // add line break
+            outputLine += '\n';
+            output.push(outputLine);
+        });
+        startDownload('export.txt', output, 'test/plain');
     }
 
     processEntryDelete(itemSortNumber) {
@@ -71,7 +146,7 @@ export default class TimeTracking extends LightningElement {
     }
 
     saveData() {
-        var data = {
+        const data = {
             settings: {
                 version: 'v0.4'
             },
@@ -118,10 +193,10 @@ export default class TimeTracking extends LightningElement {
     }
 
     loadDataV03(loaded) {
-        var itemCounter;
-        itemCounter = 0;
+        let itemCounter = 0;
         this.state.version = loaded.settings.version;
         this.state.entries = loaded.entries;
+
         this.state.entries.forEach(loadedEntry => {
             loadedEntry.itemId = loadedEntry.start + itemCounter;
             itemCounter++;
@@ -141,7 +216,7 @@ export default class TimeTracking extends LightningElement {
 
     fireClearDataConfirmation() {
         // eslint-disable-next-line no-alert
-        var confirmationResult = confirm('Clear all entries?');
+        const confirmationResult = confirm('Clear all entries?');
         return confirmationResult;
     }
 
@@ -151,22 +226,20 @@ export default class TimeTracking extends LightningElement {
     }
 
     processClickAdd() {
-        var newEntry, entryConfig;
-        entryConfig = {
+        const entryConfig = {
             cuttingType: CUTTING_TYPE_ROUND,
             cuttingAccuracy: MILISECONDS_PER_FIFTEEN_MINUTE,
             defaultDuration: MILISECONDS_PER_HOUR
         };
-        newEntry = this.createListEntry(entryConfig);
+        const newEntry = this.createListEntry(entryConfig);
         this.state.entries.unshift(newEntry);
     }
 
     processEntryChange(index, newDetail) {
-        var entry, startValue, endValue, commentValue;
-
-        startValue = newDetail.start;
-        endValue = newDetail.end;
-        commentValue = newDetail.comment;
+        let entry;
+        const startValue = newDetail.start;
+        const endValue = newDetail.end;
+        const commentValue = newDetail.comment;
 
         if (index !== undefined) {
             let entryIndex = parseInt(index, 10);
@@ -190,13 +263,12 @@ export default class TimeTracking extends LightningElement {
     }
 
     createListEntry(entryConfig) {
-        var newEntry, currentTime, approximatedTime, newEntryId;
+        let newEntry = {};
+        let newEntryId = this.state.entries.length;
+        const currentTime = new Date().getTime();
+        const approximatedTime = this.createNewTimestamp(entryConfig);
 
-        newEntryId = this.state.entries.length;
         newEntryId = newEntryId === undefined ? 0 : newEntryId;
-        currentTime = new Date().getTime();
-        approximatedTime = this.createNewTimestamp(entryConfig);
-        newEntry = {};
         // tests add all entries in the very same millisecond which causes key-values to not unique
         // => to tackle the we add as many milliseconds as there are entries in the entry list
         newEntry.itemId = currentTime + this.state.entries.length;
@@ -209,11 +281,11 @@ export default class TimeTracking extends LightningElement {
     }
 
     createNewTimestamp(entryConfig) {
-        var currentTime, cuttingType, cuttingAccuracy, method;
+        let currentTime, method;
 
         //set default values for cutting typ and accuracy
-        cuttingType = CUTTING_TYPE_ROUND;
-        cuttingAccuracy = MILISECONDS_PER_FIFTEEN_MINUTE;
+        let cuttingType = CUTTING_TYPE_ROUND;
+        let cuttingAccuracy = MILISECONDS_PER_FIFTEEN_MINUTE;
 
         if (entryConfig !== undefined) {
             // set cutting type
@@ -247,7 +319,7 @@ export default class TimeTracking extends LightningElement {
         return currentTime;
     }
 
-    isEmpty() {
+    get isEmpty() {
         if (this.state.entries === undefined) return true;
         if (this.state.entries === null) return true;
         if (this.state.entries.length === 0) return true;
@@ -258,6 +330,10 @@ export default class TimeTracking extends LightningElement {
         this.getClearModal().show();
     }
 
+    hideClearModal() {
+        this.getClearModal().hide();
+    }
+
     //----------------------
     // Element selectors
     //----------------------
@@ -265,4 +341,29 @@ export default class TimeTracking extends LightningElement {
     getClearModal() {
         return this.template.querySelector('.modal-clear');
     }
+}
+
+//----------------------------
+// Date/Time Utils (should be exported as being used in entrycmp too)
+//----------------------------
+
+function extractTimeStringFromTimeStamp(timestamp) {
+    let fullDate, timeString;
+
+    fullDate = new Date(timestamp);
+    timeString = fullDate.toLocaleTimeString().substr(0, 5);
+
+    return timeString;
+}
+
+function extractDateStringFromTimeStamp(timestamp) {
+    let fullDate, dateString;
+    fullDate = new Date(timestamp);
+    dateString = fullDate.toISOString().split('T')[0];
+    return dateString;
+}
+
+function getdifference(startTimeStamp, endTimeStamp) {
+    let difference = endTimeStamp - startTimeStamp;
+    return difference / (1000 * 60 * 60);
 }

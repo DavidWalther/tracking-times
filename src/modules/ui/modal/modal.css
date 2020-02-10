@@ -1,39 +1,3 @@
-/* The Modal (background) */
-.modal {
-    justify-content: center;
-    align-items: center;
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0); /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-    /* white border */
-    border: 1px solid #888;
-    background-color: #fefefe;
-    border-radius: 10px;
-
-    /* layout of content */
-    display: grid;
-    grid-template-rows: 39px auto 56px;
-    overflow: auto;
-
-    /* sizing */
-    height: calc(80vh - 35px);
-    max-height: 330px;
-    min-height: 50px;
-    width: 80%;
-    max-width: 600px;
-}
-
 .modal-header {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;

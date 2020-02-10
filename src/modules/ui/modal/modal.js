@@ -54,15 +54,13 @@ export default class Entry extends LightningElement {
     }
 
     hideModal() {
-        var modalElem;
-        modalElem = this.getModalContainer();
-        this.setElemDisplay(modalElem, 'none');
+        let modalElem = this.getModalContainer();
+        modalElem.hide();
     }
 
     showModal() {
-        var modalElem;
-        modalElem = this.getModalContainer();
-        this.setElemDisplay(modalElem, 'flex');
+        let modalElem = this.getModalContainer();
+        modalElem.show();
     }
 
     setElemDisplay(elem, displayValue) {
@@ -74,6 +72,7 @@ export default class Entry extends LightningElement {
     //----------------------
 
     getModalContainer() {
-        return this.template.querySelector('div.modal');
+        let modal = this.template.querySelector('.modal');
+        return modal;
     }
 }

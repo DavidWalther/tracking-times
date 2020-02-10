@@ -37,10 +37,14 @@ describe('check loading based on version', () => {
             // not a best practice but necessary/fast for
             // make sure nothing breakes
 
+            /**
+             * ToDo
+             * reduce test to only check whether the correct values are passed into ui-entry cmp
+             */
             const outputSpans = entries[0].shadowRoot.querySelectorAll('span');
             expect(outputSpans).toBeTruthy();
             expect(outputSpans.length).toBeTruthy();
-            expect(outputSpans.length).toBe(6);
+            expect(outputSpans.length).toBe(7);
             expect(outputSpans[0].classList[0]).toBe('start-date');
             expect(outputSpans[0].textContent).toBe('1970-01-01');
 
@@ -75,10 +79,14 @@ describe('check loading based on version', () => {
 
             // penetrate component border
 
+            /**
+             * ToDo
+             * reduce test to only check whether the correct values are passed into ui-entry cmp
+             */
             const outputSpans = entries[0].shadowRoot.querySelectorAll('span');
             expect(outputSpans).toBeTruthy();
             expect(outputSpans.length).toBeTruthy();
-            expect(outputSpans.length).toBe(6);
+            expect(outputSpans.length).toBe(7);
             expect(outputSpans[0].textContent).toBe('1970-01-01');
         });
     });

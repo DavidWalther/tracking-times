@@ -1,5 +1,72 @@
 import { createElement } from 'lwc';
 import Entry from 'ui/entry';
+
+describe('check edit modal', () => {
+    afterEach(() => {
+        // The jsdom instance is shared across test cases in a single file so reset the DOM
+        while (document.body.firstChild) {
+            document.body.removeChild(document.body.firstChild);
+        }
+    });
+
+    test('check modal exists', () => {
+        const element = createElement('ui-entry', { is: Entry });
+        document.body.appendChild(element);
+
+        const modalElement = element.shadowRoot.querySelector(
+            'ui-modal-generic'
+        );
+
+        expect(modalElement).toBeTruthy();
+    });
+
+    test('check modal has three children', () => {
+        const element = createElement('ui-entry', { is: Entry });
+        document.body.appendChild(element);
+
+        const headerElement = element.shadowRoot.querySelector(
+            'div[slot=header]'
+        );
+        expect(headerElement).toBeTruthy();
+        const bodyElement = element.shadowRoot.querySelector('div[slot=body]');
+        expect(bodyElement).toBeTruthy();
+        const footerElement = element.shadowRoot.querySelector(
+            'div[slot=footer]'
+        );
+        expect(footerElement).toBeTruthy();
+    });
+
+    test('check header span', () => {
+        const element = createElement('ui-entry', { is: Entry });
+        document.body.appendChild(element);
+
+        const headerSpanElement = element.shadowRoot.querySelector(
+            'span.header'
+        );
+        expect(headerSpanElement).toBeTruthy();
+    });
+
+    test('modal has save button', () => {
+        const element = createElement('ui-entry', { is: Entry });
+        document.body.appendChild(element);
+
+        const saveButton = element.shadowRoot.querySelector(
+            'div[slot=footer] > input.edit-save'
+        );
+        expect(saveButton).toBeTruthy();
+    });
+
+    test('modal has cancel button', () => {
+        const element = createElement('ui-entry', { is: Entry });
+        document.body.appendChild(element);
+
+        const cancelButton = element.shadowRoot.querySelector(
+            'div[slot=footer] > input.edit-cancel'
+        );
+        expect(cancelButton).toBeTruthy();
+    });
+});
+
 describe('check elements for existence', () => {
     afterEach(() => {
         while (document.body.firstChild) {
@@ -22,7 +89,9 @@ describe('check elements for existence', () => {
         const element = createElement('ui-entry', { is: Entry });
         document.body.appendChild(element);
 
-        const modalContainer = element.shadowRoot.querySelector('ui-modal');
+        const modalContainer = element.shadowRoot.querySelector(
+            'ui-modal-generic'
+        );
 
         expect(modalContainer).toBeTruthy();
     });
@@ -254,14 +323,14 @@ describe('check Update of Outputs on Input change', () => {
         element.start = probeStartTimestamp;
         document.body.appendChild(element);
 
-        const modalContainer = element.shadowRoot.querySelector('ui-modal');
-
         const editButton = element.shadowRoot.querySelector('input.edit');
         editButton.dispatchEvent(new CustomEvent('click'));
 
         const input = element.shadowRoot.querySelector('input.start-date');
         input.value = newInputValue;
-        modalContainer.dispatchEvent(new CustomEvent('confirm'));
+
+        const saveButton = element.shadowRoot.querySelector('input.edit-save');
+        saveButton.dispatchEvent(new CustomEvent('click'));
 
         return Promise.resolve().then(() => {
             const output = element.shadowRoot.querySelector('span.start-date');
@@ -278,14 +347,14 @@ describe('check Update of Outputs on Input change', () => {
         element.start = probeStartTimestamp;
         document.body.appendChild(element);
 
-        const modalContainer = element.shadowRoot.querySelector('ui-modal');
-
         const editButton = element.shadowRoot.querySelector('input.edit');
         editButton.dispatchEvent(new CustomEvent('click'));
 
         const input = element.shadowRoot.querySelector('input.start-time');
         input.value = newInputValue;
-        modalContainer.dispatchEvent(new CustomEvent('confirm'));
+
+        const saveButton = element.shadowRoot.querySelector('input.edit-save');
+        saveButton.dispatchEvent(new CustomEvent('click'));
 
         return Promise.resolve().then(() => {
             const output = element.shadowRoot.querySelector('span.start-time');
@@ -302,14 +371,14 @@ describe('check Update of Outputs on Input change', () => {
         element.end = probeEndTimestamp;
         document.body.appendChild(element);
 
-        const modalContainer = element.shadowRoot.querySelector('ui-modal');
-
         const editButton = element.shadowRoot.querySelector('input.edit');
         editButton.dispatchEvent(new CustomEvent('click'));
 
         const input = element.shadowRoot.querySelector('input.end-date');
         input.value = newInputValue;
-        modalContainer.dispatchEvent(new CustomEvent('confirm'));
+
+        const saveButton = element.shadowRoot.querySelector('input.edit-save');
+        saveButton.dispatchEvent(new CustomEvent('click'));
 
         return Promise.resolve().then(() => {
             const output = element.shadowRoot.querySelector('span.end-date');
@@ -326,14 +395,14 @@ describe('check Update of Outputs on Input change', () => {
         element.end = probeEndTimestamp;
         document.body.appendChild(element);
 
-        const modalContainer = element.shadowRoot.querySelector('ui-modal');
-
         const editButton = element.shadowRoot.querySelector('input.edit');
         editButton.dispatchEvent(new CustomEvent('click'));
 
         const input = element.shadowRoot.querySelector('input.end-time');
         input.value = newInputValue;
-        modalContainer.dispatchEvent(new CustomEvent('confirm'));
+
+        const saveButton = element.shadowRoot.querySelector('input.edit-save');
+        saveButton.dispatchEvent(new CustomEvent('click'));
 
         return Promise.resolve().then(() => {
             const output = element.shadowRoot.querySelector('span.end-time');
@@ -350,14 +419,14 @@ describe('check Update of Outputs on Input change', () => {
         element.comment = probeComment;
         document.body.appendChild(element);
 
-        const modalContainer = element.shadowRoot.querySelector('ui-modal');
-
         const editButton = element.shadowRoot.querySelector('input.edit');
         editButton.dispatchEvent(new CustomEvent('click'));
 
         const input = element.shadowRoot.querySelector('textarea.comment');
         input.value = newInputValue;
-        modalContainer.dispatchEvent(new CustomEvent('confirm'));
+
+        const saveButton = element.shadowRoot.querySelector('input.edit-save');
+        saveButton.dispatchEvent(new CustomEvent('click'));
 
         return Promise.resolve().then(() => {
             const output = element.shadowRoot.querySelector('span.comment');
@@ -376,14 +445,14 @@ describe('check Update of Outputs on Input change', () => {
         element.end = probeEndTimestamp;
         document.body.appendChild(element);
 
-        const modalContainer = element.shadowRoot.querySelector('ui-modal');
-
         const editButton = element.shadowRoot.querySelector('input.edit');
         editButton.dispatchEvent(new CustomEvent('click'));
 
         const input = element.shadowRoot.querySelector('input.end-time');
         input.value = newInputValue;
-        modalContainer.dispatchEvent(new CustomEvent('confirm'));
+
+        const saveButton = element.shadowRoot.querySelector('input.edit-save');
+        saveButton.dispatchEvent(new CustomEvent('click'));
 
         return Promise.resolve().then(() => {
             const output = element.shadowRoot.querySelector('span.diff');
@@ -395,6 +464,13 @@ describe('check Update of Outputs on Input change', () => {
 
 describe('check events on changed values', () => {
     test('new values are in change event', () => {
+        /**
+         * Given
+         * The entry component is added to a component with
+         * filled start, end and comment
+         *
+         */
+
         const handler = jest.fn();
         const baseDate = '1970-01-01';
 
@@ -412,11 +488,16 @@ describe('check events on changed values', () => {
         element.addEventListener('change', handler);
         document.body.appendChild(element);
 
-        const modalContainer = element.shadowRoot.querySelector('ui-modal');
-
         const editButton = element.shadowRoot.querySelector('input.edit');
         editButton.dispatchEvent(new CustomEvent('click'));
 
+        /**
+         * When
+         * 1. The start time and end time are changed
+         * 2. The Save-Buttom is clicked
+         */
+
+        // When.1
         const startTimeInput = element.shadowRoot.querySelector(
             'input.start-time'
         );
@@ -424,14 +505,25 @@ describe('check events on changed values', () => {
         const endTimeInput = element.shadowRoot.querySelector('input.end-time');
         endTimeInput.value = newEndTimeValue;
 
-        modalContainer.dispatchEvent(new CustomEvent('confirm'));
+        // When.2
+        const saveButton = element.shadowRoot.querySelector('input.edit-save');
+        saveButton.dispatchEvent(new CustomEvent('click'));
 
         return Promise.resolve().then(() => {
+            /**
+             * Then
+             * 1. Change-event is fired
+             * 2. The event contains the all information of the entry cmp
+             */
+
+            // Then.1
             expect(handler).toHaveBeenCalled();
             expect(handler.mock.calls.length).toBe(1);
             expect(handler.mock.calls[0].length).toBe(1);
             expect(handler.mock.calls[0][0].bubbles).toBe(true);
             expect(handler.mock.calls[0][0].composed).toBe(true);
+
+            // Then.2
             expect(handler.mock.calls[0][0].detail).toBeTruthy();
             expect(handler.mock.calls[0][0].detail.start).toBeTruthy();
             expect(handler.mock.calls[0][0].detail.start).toBe(
@@ -472,13 +564,11 @@ describe('check single entry delete', () => {
         document.body.appendChild(element);
 
         // select delete button
-        const deleteButton = element.shadowRoot.querySelector(
-            'input.button-delete'
-        );
-        expect(deleteButton).toBeTruthy();
+        const deleteModal = element.shadowRoot.querySelector('.modal-delete');
+        expect(deleteModal).toBeTruthy();
 
         // click delete button
-        deleteButton.dispatchEvent(new CustomEvent('click'));
+        deleteModal.dispatchEvent(new CustomEvent('confirm'));
 
         // check for event of type 'delete'
         return Promise.resolve().then(() => {

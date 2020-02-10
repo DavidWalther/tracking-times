@@ -1,12 +1,9 @@
 div.content {
-    padding: 2px;
-    padding-bottom: 5px;
-    margin-bottom: 15px;
-    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
     border-width: thin;
     border-color: lightgrey;
     border-style: solid;
-    width: 100%;
+    border-radius: 5px;
+
     display: grid;
     grid-auto-columns: 50%;
     grid-template-areas:
@@ -66,26 +63,76 @@ div.container-button-bar > input {
     display: block;
 }
 
-div.container-modal {
+.modal-edit > div[slot='body'] {
     display: grid;
     grid-row-gap: 10px;
     grid-template-columns: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: lightgray;
+    border-left-style: none;
+    border-right-style: none;
 }
 
-div.container-modal > .modal-input {
+.modal-edit > div[slot='header'] {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: medium;
+    color: rgb(160, 160, 160);
+    margin-bottom: 10px;
+}
+
+.modal-edit > div[slot='body'] > .modal-input {
     color: hsl(0, 0%, 30%);
     font-family: Arial, Helvetica, sans-serif;
     font-size: medium;
     resize: none;
 }
 
-div.container-modal > label {
+.modal-edit > div[slot='body'] > label {
     color: hsl(0, 0%, 60%);
     font-size: small;
 }
 
+.modal-edit > div[slot='footer'] {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.modal-edit > div[slot='footer'] > input.button {
+    width: fit-content;
+    border-radius: 5px;
+    border: 0;
+    padding: 8px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    user-select: none;
+    border-width: 1px;
+    border-style: solid;
+}
+
+.modal-edit > div[slot='footer'] > input.edit-cancel {
+    color: white;
+    background-color: hsl(7, 92%, 64%);
+    border-color: hsl(7, 92%, 64%);
+}
+
+.modal-edit > div[slot='footer'] > input.edit-save {
+    color: rgb(54, 51, 255);
+    background-color: white;
+    border-color: rgb(54, 51, 255);
+    margin-right: 10px;
+}
+
+ui-modal-confirmable > div {
+    text-align: center;
+}
+
 @media (min-width: 500px) {
-    div.container-modal {
+    .modal-edit > div[slot='body'] {
         display: grid;
         grid-row-gap: 15px;
         grid-template-columns: 50% 50%;

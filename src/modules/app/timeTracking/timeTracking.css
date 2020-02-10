@@ -5,6 +5,8 @@ body {
 }
 
 div.content {
+    max-width: 1000px;
+    margin: auto;
     display: grid;
     gap: 5px;
     grid-template-columns: auto;
@@ -19,6 +21,7 @@ div.button-bar {
     gap: 5px;
     grid-template-areas:
         'clear'
+        'export'
         'add';
 }
 
@@ -33,6 +36,10 @@ div.container-add {
 
 div.container-clear {
     grid-area: clear;
+}
+
+div.container-export {
+    grid-area: export;
 }
 
 div.container-github {
@@ -53,9 +60,15 @@ a.button-github {
     text-decoration: none;
 }
 
+.container-list {
+    display: grid;
+    grid-auto-columns: 100%;
+    grid-row-gap: 5px;
+}
+
 @media (min-width: 500px) {
     div.button-bar {
         grid-template-columns: auto auto;
-        grid-template-areas: 'clear add';
+        grid-template-areas: 'clear export add';
     }
 }
