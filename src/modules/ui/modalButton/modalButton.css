@@ -1,8 +1,7 @@
-input[type='button'] {
+.button {
     border-radius: 5px;
     padding: 8px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
     font-weight: bold;
     border-width: 1px;
     border-style: solid;
@@ -38,4 +37,7 @@ input[type='button'] {
     color: white;
     border-color: hsl(125, 60%, 53%);
     background-color: hsl(125, 60%, 53%);
+}
+
+.classic {
 }
