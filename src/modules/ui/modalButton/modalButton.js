@@ -41,6 +41,6 @@ export default class ModalButton extends LightningElement {
     }
 
     get isDesignFallback() {
-        return this.designs.has(this.design);
+        return !this.designs.has(this.design);
     }
 }
