@@ -1,20 +1,20 @@
 <template>
-    <ui-modal-generic class="modal-base">
-        <div slot="header"><span>{title}</span></div>
-        <slot slot="body"></slot>
-        <div slot="footer">
-            <ui-modal-button
-                class="confirm"
-                design={confirmDesign}
-                value={confirmLabel}
-                onclick={handleButtonClickConfirm}
-            ></ui-modal-button>
-            <ui-modal-button
-                class="cancel"
-                design={cancelDesign}
-                value={cancelLabel}
-                onclick={handleButtonClickCancel}
-            ></ui-modal-button>
-        </div>
-    </ui-modal-generic>
+  <ui-modal-generic class="modal-base">
+    <div slot="header"><span>{title}</span></div>
+    <slot slot="body"></slot>
+    <div slot="footer">
+      <ui-button
+        class="confirm"
+        design={confirmDesign}
+        value={confirmLabel}
+        onclick={handleButtonClickConfirm}
+      ></ui-button>
+      <ui-button
+        class="cancel"
+        design={cancelDesign}
+        value={cancelLabel}
+        onclick={handleButtonClickCancel}
+      ></ui-button>
+    </div>
+  </ui-modal-generic>
 </template>
