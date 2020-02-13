@@ -7,15 +7,6 @@ export default class ModalButton extends LightningElement {
     @api
     value;
 
-    designs = new Set([
-        'accept',
-        'info',
-        'deny',
-        'cancel',
-        'confirm',
-        'classic'
-    ]);
-
     get isDesignAccept() {
         return this.design === 'accept';
     }
@@ -41,6 +32,13 @@ export default class ModalButton extends LightningElement {
     }
 
     get isDesignFallback() {
-        return !this.designs.has(this.design);
+        return (
+            !this.isDesignAccept &&
+            !this.isDesignInfo &&
+            !this.isDesignDeny &&
+            !this.isDesignCancel &&
+            !this.isDesignConfirm &&
+            !this.isDesignClassic
+        );
     }
 }
