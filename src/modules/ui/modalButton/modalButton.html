@@ -14,4 +14,10 @@
     <template if:true={isDesignAccept}>
         <input type="button" value={value} class="button accept" />
     </template>
+    <template if:true={isDesignClassic}>
+        <input type="button" value={value} class="button classic" />
+    </template>
+    <template if:true={isDesignFallback}>
+        <input type="button" value={value} />
+    </template>
 </template>
