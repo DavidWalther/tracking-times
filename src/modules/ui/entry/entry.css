@@ -63,71 +63,27 @@ div.container-button-bar > input {
     display: block;
 }
 
-.modal-edit > div[slot='body'] {
+.modal-edit > div {
     display: grid;
     grid-row-gap: 10px;
     grid-template-columns: 100%;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: lightgray;
-    border-left-style: none;
-    border-right-style: none;
 }
 
-.modal-edit > div[slot='header'] {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: medium;
-    color: rgb(160, 160, 160);
-    margin-bottom: 10px;
-}
-
-.modal-edit > div[slot='body'] > .modal-input {
+.modal-edit > div > .modal-input {
     color: hsl(0, 0%, 30%);
     font-family: Arial, Helvetica, sans-serif;
     font-size: medium;
     resize: none;
 }
 
-.modal-edit > div[slot='body'] > label {
+.modal-edit > div > label {
     color: hsl(0, 0%, 60%);
     font-size: small;
 }
 
-.modal-edit > div[slot='footer'] {
-    text-align: right;
-    margin-top: 10px;
-}
-
-.modal-edit > div[slot='footer'] > input.button {
-    width: fit-content;
-    border-radius: 5px;
-    border: 0;
-    padding: 8px;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-}
-
-.modal-edit > div[slot='footer'] > input.edit-cancel {
-    color: white;
-    background-color: hsl(7, 92%, 64%);
-    border-color: hsl(7, 92%, 64%);
-}
-
-.modal-edit > div[slot='footer'] > input.edit-save {
-    color: rgb(54, 51, 255);
-    background-color: white;
-    border-color: rgb(54, 51, 255);
-    margin-right: 10px;
-}
-
-ui-modal-confirmable > div {
+.ui-modal-confirmable > div {
     text-align: center;
 }
 
