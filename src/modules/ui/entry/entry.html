@@ -56,37 +56,6 @@
       <textarea class="modal-input comment"></textarea>
     </div>
   </ui-modal-confirmable>
-  <ui-modal-generic class="modal-edit">
-    <div slot="header">
-      <span class="header">{label.modal.title}</span>
-    </div>
-    <div slot="body">
-      <label class="start-date">{label.input.startdate}</label>
-      <input class="modal-input start-date" type="date" />
-      <label class="start-time">{label.input.starttime}</label>
-      <input class="modal-input start-time" step="900" type="time" />
-      <label class="end-date">{label.input.enddate}</label>
-      <input class="modal-input end-date" type="date" />
-      <label class="end-time">{label.input.endtime}</label>
-      <input class="modal-input end-time" step="900" type="time" />
-      <label class="comment">{label.input.comment}</label>
-      <textarea class="modal-input comment"></textarea>
-    </div>
-    <div slot="footer">
-      <input
-        type="button"
-        class="button edit-save"
-        value={label.button.save}
-        onclick={handleButtonClickModalSave}
-      />
-      <input
-        type="button"
-        class="button edit-cancel"
-        value={label.button.cancel}
-        onclick={handleButtonClickModalCancel}
-      />
-    </div>
-  </ui-modal-generic>
   <ui-modal-confirmable
     class="modal-delete"
     title={label.modal.delete.title}
