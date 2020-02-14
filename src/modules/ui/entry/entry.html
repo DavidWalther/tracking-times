@@ -33,6 +33,29 @@
       />
     </div>
   </div>
+  <ui-modal-confirmable
+    title={label.modal.title}
+    class="modal-edit"
+    onconfirm={handleButtonClickModalSave}
+    confirm-label={label.button.save}
+    confirm-design="info"
+    oncancel={handleButtonClickModalCancel}
+    cancel-label={label.button.cancel}
+    cancel-design="cancel"
+  >
+    <div>
+      <label class="start-date">{label.input.startdate}</label>
+      <input class="modal-input start-date" type="date" />
+      <label class="start-time">{label.input.starttime}</label>
+      <input class="modal-input start-time" step="900" type="time" />
+      <label class="end-date">{label.input.enddate}</label>
+      <input class="modal-input end-date" type="date" />
+      <label class="end-time">{label.input.endtime}</label>
+      <input class="modal-input end-time" step="900" type="time" />
+      <label class="comment">{label.input.comment}</label>
+      <textarea class="modal-input comment"></textarea>
+    </div>
+  </ui-modal-confirmable>
   <ui-modal-generic class="modal-edit">
     <div slot="header">
       <span class="header">{label.modal.title}</span>
