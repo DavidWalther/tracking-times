@@ -1,79 +1,79 @@
 <template
-    ><div class="content">
-        <div class="container container-start-date bg-color-grey1">
-            <span class="start-date">{displayState.startdate}</span>
-        </div>
-        <div class="container container-start-time bg-color-grey2">
-            <span class="start-time">{displayState.starttime}</span>
-        </div>
-        <div class="container container-end-date bg-color-grey1">
-            <span class="end-date">{displayState.enddate}</span>
-        </div>
-        <div class="container container-end-time bg-color-grey2">
-            <span class="end-time">{displayState.endtime}</span>
-        </div>
-        <div class="container container-diff bg-color-grey3">
-            <span class="diff">{difference}</span>
-        </div>
-        <div class="container container-comment bg-color-grey4">
-            <span class="comment">{displayState.comment}</span>
-        </div>
-        <div class="container container-button-bar">
-            <input
-                class="button edit"
-                type="button"
-                value={label.button.edit}
-                onclick={handleButtonClickEdit}
-            />
-            <input
-                class="button button-delete"
-                value={label.button.delete}
-                onclick={handleButtonClickDelete}
-                type="button"
-            />
-        </div>
+  ><div class="content">
+    <div class="container container-start-date bg-color-grey1">
+      <span class="start-date">{displayState.startdate}</span>
     </div>
-    <ui-modal-generic class="modal-edit">
-        <div slot="header">
-            <span class="header">{label.modal.title}</span>
-        </div>
-        <div slot="body">
-            <label class="start-date">{label.input.startdate}</label>
-            <input class="modal-input start-date" type="date" />
-            <label class="start-time">{label.input.starttime}</label>
-            <input class="modal-input start-time" step="900" type="time" />
-            <label class="end-date">{label.input.enddate}</label>
-            <input class="modal-input end-date" type="date" />
-            <label class="end-time">{label.input.endtime}</label>
-            <input class="modal-input end-time" step="900" type="time" />
-            <label class="comment">{label.input.comment}</label>
-            <textarea class="modal-input comment"></textarea>
-        </div>
-        <div slot="footer">
-            <input
-                type="button"
-                class="button edit-save"
-                value={label.button.save}
-                onclick={handleButtonClickModalSave}
-            />
-            <input
-                type="button"
-                class="button edit-cancel"
-                value={label.button.cancel}
-                onclick={handleButtonClickModalCancel}
-            />
-        </div>
-    </ui-modal-generic>
-    <ui-modal-confirmable
-        class="modal-delete"
-        title={label.modal.delete.title}
-        confirm-label={label.modal.delete.button.confirm}
-        confirm-design="deny"
-        onconfirm={handleButtonClickDeleteConfirm}
-        cancel-design="info"
-        cancel-label={label.modal.delete.button.cancel}
-        oncancel={handleButtonClickDeleteCancel}
-    >
-        <div>{label.modal.delete.body}</div>
-    </ui-modal-confirmable>
+    <div class="container container-start-time bg-color-grey2">
+      <span class="start-time">{displayState.starttime}</span>
+    </div>
+    <div class="container container-end-date bg-color-grey1">
+      <span class="end-date">{displayState.enddate}</span>
+    </div>
+    <div class="container container-end-time bg-color-grey2">
+      <span class="end-time">{displayState.endtime}</span>
+    </div>
+    <div class="container container-diff bg-color-grey3">
+      <span class="diff">{difference}</span>
+    </div>
+    <div class="container container-comment bg-color-grey4">
+      <span class="comment">{displayState.comment}</span>
+    </div>
+    <div class="container container-button-bar">
+      <input
+        class="button edit"
+        type="button"
+        value={label.button.edit}
+        onclick={handleButtonClickEdit}
+      />
+      <input
+        class="button button-delete"
+        value={label.button.delete}
+        onclick={handleButtonClickDelete}
+        type="button"
+      />
+    </div>
+  </div>
+  <ui-modal-generic class="modal-edit">
+    <div slot="header">
+      <span class="header">{label.modal.title}</span>
+    </div>
+    <div slot="body">
+      <label class="start-date">{label.input.startdate}</label>
+      <input class="modal-input start-date" type="date" />
+      <label class="start-time">{label.input.starttime}</label>
+      <input class="modal-input start-time" step="900" type="time" />
+      <label class="end-date">{label.input.enddate}</label>
+      <input class="modal-input end-date" type="date" />
+      <label class="end-time">{label.input.endtime}</label>
+      <input class="modal-input end-time" step="900" type="time" />
+      <label class="comment">{label.input.comment}</label>
+      <textarea class="modal-input comment"></textarea>
+    </div>
+    <div slot="footer">
+      <input
+        type="button"
+        class="button edit-save"
+        value={label.button.save}
+        onclick={handleButtonClickModalSave}
+      />
+      <input
+        type="button"
+        class="button edit-cancel"
+        value={label.button.cancel}
+        onclick={handleButtonClickModalCancel}
+      />
+    </div>
+  </ui-modal-generic>
+  <ui-modal-confirmable
+    class="modal-delete"
+    title={label.modal.delete.title}
+    confirm-label={label.modal.delete.button.confirm}
+    confirm-design="deny"
+    onconfirm={handleButtonClickDeleteConfirm}
+    cancel-design="info"
+    cancel-label={label.modal.delete.button.cancel}
+    oncancel={handleButtonClickDeleteCancel}
+  >
+    <div>{label.modal.delete.body}</div>
+  </ui-modal-confirmable>
 </template>
