@@ -20,6 +20,27 @@ describe('check edit modal', () => {
         expect(modalElement).toBeTruthy();
     });
 
+    test('check edit modal has start date input', () => {
+        /**
+         * Given
+         * -
+         */
+
+         /**
+          * When
+          * The enty cmp is added to DOM
+          */
+        const element = createElement('ui-entry', { is: Entry });
+        document.body.appendChild(element);
+
+        /**
+         * Then
+         * The edit-modal contains an input for start date
+         */
+        const component = element.shadowRoot.querySelector('.modal-edit > div > input.start-date');
+        expect(component).toBeTruthy();
+    });
+
     test('check modal has three children', () => {
         const element = createElement('ui-entry', { is: Entry });
         document.body.appendChild(element);
@@ -168,15 +189,6 @@ describe('Check for Inputs', () => {
         while (document.body.firstChild) {
             document.body.removeChild(document.body.firstChild);
         }
-    });
-
-    test('start date input exists', () => {
-        const element = createElement('ui-entry', { is: Entry });
-        document.body.appendChild(element);
-
-        const component = element.shadowRoot.querySelector('input.start-date');
-
-        expect(component).toBeTruthy();
     });
 
     test('start time input exists', () => {
