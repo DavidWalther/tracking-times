@@ -404,14 +404,14 @@ function setVersion4DummyData() {
 }
 
 function getAddButton(shadowRoot) {
-  return getButton(shadowRoot, '.button-add');
+  return getElementBySelectorAll(shadowRoot, '.button-add');
 }
 
 function getClearButton(shadowRoot) {
-  return getButton(shadowRoot, '.button-clear');
+  return getElementBySelectorAll(shadowRoot, '.button-clear');
 }
 
-function getButton(shadowRoot, classname) {
+function getElementBySelectorAll(shadowRoot, classname) {
   const resultList = shadowRoot.querySelectorAll(classname);
   expect(resultList).toBeTruthy();
   expect(resultList.length).toBe(1);
