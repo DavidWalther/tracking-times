@@ -229,8 +229,8 @@ describe('check Update of Outputs on Input change', () => {
     const input = element.shadowRoot.querySelector('input.start-date');
     input.value = newInputValue;
 
-    const saveButton = element.shadowRoot.querySelector('input.edit-save');
-    saveButton.dispatchEvent(new CustomEvent('click'));
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
       const output = element.shadowRoot.querySelector('span.start-date');
@@ -253,8 +253,8 @@ describe('check Update of Outputs on Input change', () => {
     const input = element.shadowRoot.querySelector('input.start-time');
     input.value = newInputValue;
 
-    const saveButton = element.shadowRoot.querySelector('input.edit-save');
-    saveButton.dispatchEvent(new CustomEvent('click'));
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
       const output = element.shadowRoot.querySelector('span.start-time');
@@ -277,8 +277,8 @@ describe('check Update of Outputs on Input change', () => {
     const input = element.shadowRoot.querySelector('input.end-date');
     input.value = newInputValue;
 
-    const saveButton = element.shadowRoot.querySelector('input.edit-save');
-    saveButton.dispatchEvent(new CustomEvent('click'));
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
       const output = element.shadowRoot.querySelector('span.end-date');
@@ -301,8 +301,8 @@ describe('check Update of Outputs on Input change', () => {
     const input = element.shadowRoot.querySelector('input.end-time');
     input.value = newInputValue;
 
-    const saveButton = element.shadowRoot.querySelector('input.edit-save');
-    saveButton.dispatchEvent(new CustomEvent('click'));
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
       const output = element.shadowRoot.querySelector('span.end-time');
@@ -325,8 +325,8 @@ describe('check Update of Outputs on Input change', () => {
     const input = element.shadowRoot.querySelector('textarea.comment');
     input.value = newInputValue;
 
-    const saveButton = element.shadowRoot.querySelector('input.edit-save');
-    saveButton.dispatchEvent(new CustomEvent('click'));
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
       const output = element.shadowRoot.querySelector('span.comment');
@@ -351,8 +351,8 @@ describe('check Update of Outputs on Input change', () => {
     const input = element.shadowRoot.querySelector('input.end-time');
     input.value = newInputValue;
 
-    const saveButton = element.shadowRoot.querySelector('input.edit-save');
-    saveButton.dispatchEvent(new CustomEvent('click'));
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
       const output = element.shadowRoot.querySelector('span.diff');
@@ -404,8 +404,8 @@ describe('check events on changed values', () => {
     endTimeInput.value = newEndTimeValue;
 
     // When.2
-    const saveButton = element.shadowRoot.querySelector('input.edit-save');
-    saveButton.dispatchEvent(new CustomEvent('click'));
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
       /**
