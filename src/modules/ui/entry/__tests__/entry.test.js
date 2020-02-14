@@ -10,13 +10,23 @@ describe('check edit modal', () => {
     });
 
     test('check modal exists', () => {
+        /**
+         * Given
+         * -
+         */
+
+         /**
+          * When
+          * The enty cmp is added to DOM
+          */
         const element = createElement('ui-entry', { is: Entry });
         document.body.appendChild(element);
 
-        const modalElement = element.shadowRoot.querySelector(
-            'ui-modal-generic'
-        );
-
+        /**
+         * Then
+         * The component conrains a modal for editing data
+         */
+        const modalElement = getEditModal(element.shadowRoot);
         expect(modalElement).toBeTruthy();
     });
 
@@ -589,3 +599,12 @@ describe('check single entry delete', () => {
         });
     });
 });
+
+function getEditModal(shadowRoot) {
+    return getElementBySelector(shadowRoot, '.modal-edit');
+}
+
+function getElementBySelector(shadowRoot, selectorString) {
+    const resultElement = shadowRoot.querySelector(selectorString);
+    return resultElement;
+}
