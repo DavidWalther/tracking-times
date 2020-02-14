@@ -50,52 +50,6 @@ describe('check edit modal', () => {
         const component = element.shadowRoot.querySelector('.modal-edit > div > input.start-date');
         expect(component).toBeTruthy();
     });
-
-    test('check modal has three children', () => {
-        const element = createElement('ui-entry', { is: Entry });
-        document.body.appendChild(element);
-
-        const headerElement = element.shadowRoot.querySelector(
-            'div[slot=header]'
-        );
-        expect(headerElement).toBeTruthy();
-        const bodyElement = element.shadowRoot.querySelector('div[slot=body]');
-        expect(bodyElement).toBeTruthy();
-        const footerElement = element.shadowRoot.querySelector(
-            'div[slot=footer]'
-        );
-        expect(footerElement).toBeTruthy();
-    });
-
-    test('check header span', () => {
-        const element = createElement('ui-entry', { is: Entry });
-        document.body.appendChild(element);
-
-        const headerSpanElement = element.shadowRoot.querySelector(
-            'span.header'
-        );
-        expect(headerSpanElement).toBeTruthy();
-    });
-
-    test('modal has save button', () => {
-        const element = createElement('ui-entry', { is: Entry });
-        document.body.appendChild(element);
-
-        const saveButton = element.shadowRoot.querySelector(
-            'div[slot=footer] > input.edit-save'
-        );
-        expect(saveButton).toBeTruthy();
-    });
-
-    test('modal has cancel button', () => {
-        const element = createElement('ui-entry', { is: Entry });
-        document.body.appendChild(element);
-
-        const cancelButton = element.shadowRoot.querySelector(
-            'div[slot=footer] > input.edit-cancel'
-        );
-        expect(cancelButton).toBeTruthy();
-    });
 });
 
 describe('check elements for existence', () => {
