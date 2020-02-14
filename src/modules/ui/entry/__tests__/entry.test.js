@@ -30,7 +30,7 @@ describe('check edit modal', () => {
     expect(modalElement).toBeTruthy();
   });
 
-  test('check edit modal has start date input', () => {
+  test('check edit modal has inputs for entry', () => {
     /**
      * Given
      * -
@@ -45,38 +45,29 @@ describe('check edit modal', () => {
 
     /**
      * Then
-     * The edit-modal contains an input for start date
+     * The edit-modal contains an inputs for time tarcking
      */
-    const component = element.shadowRoot.querySelector(
+    const inputStartDate = element.shadowRoot.querySelector(
       '.modal-edit > div > input.start-date'
     );
-    expect(component).toBeTruthy();
-  });
-});
+    const inputStartTime = element.shadowRoot.querySelector(
+      '.modal-edit > div > input.start-time'
+    );
+    const inputEndDate = element.shadowRoot.querySelector(
+      '.modal-edit > div > input.end-date'
+    );
+    const inputEndTime = element.shadowRoot.querySelector(
+      '.modal-edit > div > input.end-time'
+    );
+    const textAreaComment = element.shadowRoot.querySelector(
+      '.modal-edit > div > textarea.comment'
+    );
 
-describe('check elements for existence', () => {
-  afterEach(() => {
-    while (document.body.firstChild) {
-      document.body.removeChild(document.body.firstChild);
-    }
-  });
-
-  test('outer container exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const contentContainer = element.shadowRoot.querySelector('div.content');
-
-    expect(contentContainer).toBeTruthy();
-  });
-
-  test('modal exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const modalContainer = element.shadowRoot.querySelector('ui-modal-generic');
-
-    expect(modalContainer).toBeTruthy();
+    expect(inputStartDate).toBeTruthy();
+    expect(inputStartTime).toBeTruthy();
+    expect(inputEndDate).toBeTruthy();
+    expect(inputEndTime).toBeTruthy();
+    expect(textAreaComment).toBeTruthy();
   });
 });
 
@@ -137,59 +128,6 @@ describe('Check for Outputs', () => {
     document.body.appendChild(element);
 
     const component = element.shadowRoot.querySelector('span.diff');
-
-    expect(component).toBeTruthy();
-  });
-});
-
-describe('Check for Inputs', () => {
-  afterEach(() => {
-    while (document.body.firstChild) {
-      document.body.removeChild(document.body.firstChild);
-    }
-  });
-
-  test('start time input exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('input.start-time');
-
-    expect(component).toBeTruthy();
-  });
-
-  test('end date input exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('input.end-date');
-
-    expect(component).toBeTruthy();
-  });
-
-  test('end time input exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('input.end-time');
-
-    expect(component).toBeTruthy();
-  });
-
-  test('comment textarea exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('textarea.comment');
-
-    expect(component).toBeTruthy();
-  });
-
-  test('edit button exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('input.edit');
 
     expect(component).toBeTruthy();
   });
