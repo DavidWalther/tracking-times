@@ -65,9 +65,7 @@ div.container > input {
 }
 
 div.container-comment {
-  /* sizing */
-  max-height: 50px;
-  overflow: scroll;
+  overflow-x: scroll;
 }
 
 div.container-button-bar > input {
