@@ -60,15 +60,18 @@
                 for:item="entry"
                 for:index="index"
             >
+            <div
+                key={entry.itemId}
+class="entry">
                 <ui-entry
-                    key={entry.itemId}
-                    data-index={entry.sortnumber}
-                    start={entry.start}
-                    end={entry.end}
-                    comment={entry.comment}
-                    onchange={handleChangeEntry}
-                    ondelete={handleEventDelete}
+                data-index={entry.sortnumber}
+                start={entry.start}
+                end={entry.end}
+                comment={entry.comment}
+                onchange={handleChangeEntry}
+                ondelete={handleEventDelete}
                 ></ui-entry>
+            </div>
             </template>
         </div>
     </div>

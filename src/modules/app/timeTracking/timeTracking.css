@@ -16,6 +16,9 @@ input {
     font-size: medium;
 }
 
+.entry {
+}
+
 div.button-bar {
     display: grid;
     gap: 5px;
