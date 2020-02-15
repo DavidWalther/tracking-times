@@ -1,89 +1,86 @@
 <template>
-    <div class="content">
-        <div class="container-github">
-            <a
-                target="_blank"
-                href="https://github.com/DavidWalther/tracking-times/"
-                class="button-github"
-                >See the code on Github</a
-            >
-        </div>
-        <div class="button-bar">
-            <template if:false={isEmpty}>
-                <div class="button container-clear">
-                    <input
-                        type="button"
-                        class="button button-clear"
-                        onclick={handleClickClear}
-                        value={state.label.button.clear}
-                    />
-                </div>
-                <div class="button container-export">
-                    <input
-                        type="button"
-                        class="button button-export"
-                        onclick={handleClickExport}
-                        value="Download"
-                    />
-                </div>
-            </template>
-            <template if:true={isEmpty}>
-                <div class="button container-clear">
-                    <input
-                        type="button"
-                        class="button button-clear"
-                        value={state.label.button.clear}
-                        disabled
-                    />
-                </div>
-                <div class="button container-export">
-                    <input
-                        type="button"
-                        class="button button-export"
-                        value="Download"
-                        disabled
-                    />
-                </div>
-            </template>
-            <div class="button container-add">
-                <input
-                    type="button"
-                    class="button button-add"
-                    onclick={handleClickAdd}
-                    value={state.label.button.add}
-                />
-            </div>
-        </div>
-        <div class="container-list entries">
-            <template
-                for:each={state.entries}
-                for:item="entry"
-                for:index="index"
-            >
-                <ui-entry
-                    key={entry.itemId}
-                    data-index={entry.sortnumber}
-                    start={entry.start}
-                    end={entry.end}
-                    comment={entry.comment}
-                    onchange={handleChangeEntry}
-                    ondelete={handleEventDelete}
-                ></ui-entry>
-            </template>
-        </div>
+  <div class="content">
+    <div class="container-github">
+      <a
+        target="_blank"
+        href="https://github.com/DavidWalther/tracking-times/"
+        class="button-github"
+        >See the code on Github</a
+      >
     </div>
-    <ui-modal-confirmable
-        class="modal-clear"
-        title={state.label.modal.clear.title}
-        confirm-design="deny"
-        confirm-label="Clear"
-        onconfirm={handleClickClearConfirm}
-        cancel-design="info"
-        cancel-label="Cancel"
-        oncancel={handleClickClearCancel}
-    >
-        <div class="modal-clear-body">
-            <span>{state.label.modal.clear.body}</span>
+    <div class="button-bar">
+      <template if:false={isEmpty}>
+        <div class="button container-clear">
+          <input
+            type="button"
+            class="button button-clear"
+            onclick={handleClickClear}
+            value={state.label.button.clear}
+          />
         </div>
-    </ui-modal-confirmable>
+        <div class="button container-export">
+          <input
+            type="button"
+            class="button button-export"
+            onclick={handleClickExport}
+            value="Download"
+          />
+        </div>
+      </template>
+      <template if:true={isEmpty}>
+        <div class="button container-clear">
+          <input
+            type="button"
+            class="button button-clear"
+            value={state.label.button.clear}
+            disabled
+          />
+        </div>
+        <div class="button container-export">
+          <input
+            type="button"
+            class="button button-export"
+            value="Download"
+            disabled
+          />
+        </div>
+      </template>
+      <div class="button container-add">
+        <input
+          type="button"
+          class="button button-add"
+          onclick={handleClickAdd}
+          value={state.label.button.add}
+        />
+      </div>
+    </div>
+    <div class="container-list entries">
+      <template for:each={state.entries} for:item="entry" for:index="index">
+        <div key={entry.itemId}>
+          <ui-entry
+            data-index={entry.sortnumber}
+            start={entry.start}
+            end={entry.end}
+            comment={entry.comment}
+            onchange={handleChangeEntry}
+            ondelete={handleEventDelete}
+          ></ui-entry>
+        </div>
+      </template>
+    </div>
+  </div>
+  <ui-modal-confirmable
+    class="modal-clear"
+    title={state.label.modal.clear.title}
+    confirm-design="deny"
+    confirm-label="Clear"
+    onconfirm={handleClickClearConfirm}
+    cancel-design="info"
+    cancel-label="Cancel"
+    oncancel={handleClickClearCancel}
+  >
+    <div class="modal-clear-body">
+      <span>{state.label.modal.clear.body}</span>
+    </div>
+  </ui-modal-confirmable>
 </template>

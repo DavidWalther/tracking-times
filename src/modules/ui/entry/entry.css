@@ -1,9 +1,8 @@
-div.content {
-  border-width: thin;
-  border-color: lightgrey;
-  border-style: solid;
-  border-radius: 5px;
+/*
+Layout rules
+*/
 
+div.layout {
   display: grid;
   grid-auto-columns: 50%;
   grid-template-areas:
@@ -11,6 +10,47 @@ div.content {
     'endDate endTime'
     'comment comment'
     'buttons diff';
+}
+
+div.area-startdate {
+  grid-area: startDate;
+}
+
+div.area-starttime {
+  grid-area: startTime;
+}
+
+div.area-enddate {
+  grid-area: endDate;
+}
+
+div.area-endtime {
+  grid-area: endTime;
+}
+
+div.area-diff {
+  grid-area: diff;
+}
+
+div.area-comment {
+  grid-area: comment;
+}
+
+div.area-buttons {
+  grid-area: buttons;
+}
+
+/*
+Style rules
+*/
+
+div.content {
+  height: 100%;
+
+  border-width: thin;
+  border-color: lightgrey;
+  border-style: solid;
+  border-radius: 5px;
 }
 
 div.container {
@@ -26,37 +66,8 @@ div.container > input {
   height: 100%;
 }
 
-div.container-start-date {
-  grid-area: startDate;
-}
-
-div.container-start-time {
-  grid-area: startTime;
-}
-
-div.container-end-date {
-  grid-area: endDate;
-}
-
-div.container-end-time {
-  grid-area: endTime;
-}
-
-div.container-diff {
-  grid-area: diff;
-}
-
 div.container-comment {
-  /* assign to grid area */
-  grid-area: comment;
-
-  /* sizing */
-  max-height: 50px;
-  overflow: scroll;
-}
-
-div.container-button-bar {
-  grid-area: buttons;
+  overflow-x: scroll;
 }
 
 div.container-button-bar > input {
@@ -96,8 +107,9 @@ div.container-button-bar > input {
 }
 
 @media (min-width: 786px) {
-  div.content {
+  div.layout {
     grid-auto-columns: 33.33%;
+    grid-auto-rows: 33.33% 33.33% auto;
     grid-template-areas:
       'startDate startTime comment'
       'endDate endTime comment'
