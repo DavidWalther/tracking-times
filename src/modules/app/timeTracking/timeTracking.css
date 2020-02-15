@@ -16,7 +16,8 @@ input {
   font-size: medium;
 }
 
-.entry {
+div.entries > div {
+    height: 150px;
 }
 
 div.button-bar {
