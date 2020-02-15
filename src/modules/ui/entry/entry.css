@@ -45,6 +45,8 @@ Style rules
 */
 
 div.content {
+  height: 100%;
+
   border-width: thin;
   border-color: lightgrey;
   border-style: solid;
@@ -107,6 +109,7 @@ div.container-button-bar > input {
 @media (min-width: 786px) {
   div.layout {
     grid-auto-columns: 33.33%;
+    grid-auto-rows: 33.33% 33.33% auto;
     grid-template-areas:
       'startDate startTime comment'
       'endDate endTime comment'
