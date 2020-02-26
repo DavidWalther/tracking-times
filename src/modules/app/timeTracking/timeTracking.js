@@ -66,10 +66,10 @@ export default class TimeTracking extends LightningElement {
   //----------------------------
 
   proccessExport() {
-    this.doExportCsv();
+    this.doExportTxt();
   }
 
-  doExportCsv() {
+  doExportTxt() {
     const output = [];
     const firstLine =
       ' Startdate | Starttime |    Enddate | Endtime | Duration (h) | Comment\n';
