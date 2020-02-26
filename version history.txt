@@ -1,4 +1,21 @@
-version 1.0
+//----------------------------
+// version 1.0.1
+//----------------------------
+
+bugfixes:
+- comment input is now only scrollable in x-axis
+- when app is on max-width comment-output now extends over whole entry-height
+
+tec dept:
+- Export method is renamed from '...Csv' to '...Txt'
+- remove obsolete clear-confirm
+- button-cmp now has a fallback
+- button-cmp name does not look like being connected to modal
+- edit-modal uses the new modal cmp now
+
+//----------------------------
+// version 1.0
+//----------------------------
 
 features:
 - more button styles
