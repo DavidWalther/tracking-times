@@ -1,74 +1,78 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: medium;
-    padding: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: medium;
+  padding: 5px;
 }
 
 div.content {
-    max-width: 1000px;
-    margin: auto;
-    display: grid;
-    gap: 5px;
-    grid-template-columns: auto;
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  gap: 5px;
+  grid-template-columns: auto;
 }
 
 input {
-    font-size: medium;
+  font-size: medium;
+}
+
+div.entries > div {
+  height: 150px;
 }
 
 div.button-bar {
-    display: grid;
-    gap: 5px;
-    grid-template-areas:
-        'clear'
-        'export'
-        'add';
+  display: grid;
+  gap: 5px;
+  grid-template-areas:
+    'clear'
+    'export'
+    'add';
 }
 
 div.button > input {
-    width: 100%;
-    margin: auto;
+  width: 100%;
+  margin: auto;
 }
 
 div.container-add {
-    grid-area: add;
+  grid-area: add;
 }
 
 div.container-clear {
-    grid-area: clear;
+  grid-area: clear;
 }
 
 div.container-export {
-    grid-area: export;
+  grid-area: export;
 }
 
 div.container-github {
-    background-color: lightslategray;
-    border-radius: 7px;
-    padding: 10px;
-    text-align: center;
+  background-color: lightslategray;
+  border-radius: 7px;
+  padding: 10px;
+  text-align: center;
 }
 
 div.modal-clear-body {
-    height: 100%;
-    text-align: center;
+  height: 100%;
+  text-align: center;
 }
 
 a.button-github {
-    margin: auto;
-    color: white;
-    text-decoration: none;
+  margin: auto;
+  color: white;
+  text-decoration: none;
 }
 
 .container-list {
-    display: grid;
-    grid-auto-columns: 100%;
-    grid-row-gap: 5px;
+  display: grid;
+  grid-auto-columns: 100%;
+  grid-row-gap: 5px;
 }
 
 @media (min-width: 500px) {
-    div.button-bar {
-        grid-template-columns: auto auto;
-        grid-template-areas: 'clear export add';
-    }
+  div.button-bar {
+    grid-template-columns: auto auto;
+    grid-template-areas: 'clear export add';
+  }
 }

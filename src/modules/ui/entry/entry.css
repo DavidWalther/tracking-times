@@ -1,150 +1,117 @@
-div.content {
-    border-width: thin;
-    border-color: lightgrey;
-    border-style: solid;
-    border-radius: 5px;
+/*
+Layout rules
+*/
 
-    display: grid;
-    grid-auto-columns: 50%;
-    grid-template-areas:
-        'startDate startTime'
-        'endDate endTime'
-        'comment comment'
-        'buttons diff';
+div.layout {
+  display: grid;
+  grid-auto-columns: 50%;
+  grid-template-areas:
+    'startDate startTime'
+    'endDate endTime'
+    'comment comment'
+    'buttons diff';
+}
+
+div.area-startdate {
+  grid-area: startDate;
+}
+
+div.area-starttime {
+  grid-area: startTime;
+}
+
+div.area-enddate {
+  grid-area: endDate;
+}
+
+div.area-endtime {
+  grid-area: endTime;
+}
+
+div.area-diff {
+  grid-area: diff;
+}
+
+div.area-comment {
+  grid-area: comment;
+}
+
+div.area-buttons {
+  grid-area: buttons;
+}
+
+/*
+Style rules
+*/
+
+div.content {
+  height: 100%;
+
+  border-width: thin;
+  border-color: lightgrey;
+  border-style: solid;
+  border-radius: 5px;
 }
 
 div.container {
-    padding: 5px;
-    min-height: 15px;
-    border-width: thin;
-    border-color: rgb(250, 250, 250);
-    border-style: solid;
+  padding: 5px;
+  min-height: 15px;
+  border-width: thin;
+  border-color: rgb(250, 250, 250);
+  border-style: solid;
 }
 
 div.container > input {
-    width: 100%;
-    height: 100%;
-}
-
-div.container-start-date {
-    grid-area: startDate;
-}
-
-div.container-start-time {
-    grid-area: startTime;
-}
-
-div.container-end-date {
-    grid-area: endDate;
-}
-
-div.container-end-time {
-    grid-area: endTime;
-}
-
-div.container-diff {
-    grid-area: diff;
+  width: 100%;
 }
 
 div.container-comment {
-    /* assign to grid area */
-    grid-area: comment;
-
-    /* sizing */
-    max-height: 50px;
-    overflow: scroll;
-}
-
-div.container-button-bar {
-    grid-area: buttons;
+  overflow-x: scroll;
 }
 
 div.container-button-bar > input {
-    display: block;
+  display: block;
 }
 
-.modal-edit > div[slot='body'] {
-    display: grid;
-    grid-row-gap: 10px;
-    grid-template-columns: 100%;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-style: solid;
-    border-width: 1px;
-    border-color: lightgray;
-    border-left-style: none;
-    border-right-style: none;
+.modal-edit > div {
+  display: grid;
+  grid-row-gap: 10px;
+  grid-template-columns: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.modal-edit > div[slot='header'] {
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    font-size: medium;
-    color: rgb(160, 160, 160);
-    margin-bottom: 10px;
+.modal-edit > div > .modal-input {
+  color: hsl(0, 0%, 30%);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: medium;
+  resize: none;
 }
 
-.modal-edit > div[slot='body'] > .modal-input {
-    color: hsl(0, 0%, 30%);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: medium;
-    resize: none;
+.modal-edit > div > label {
+  color: hsl(0, 0%, 60%);
+  font-size: small;
 }
 
-.modal-edit > div[slot='body'] > label {
-    color: hsl(0, 0%, 60%);
-    font-size: small;
-}
-
-.modal-edit > div[slot='footer'] {
-    text-align: right;
-    margin-top: 10px;
-}
-
-.modal-edit > div[slot='footer'] > input.button {
-    width: fit-content;
-    border-radius: 5px;
-    border: 0;
-    padding: 8px;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 10pt;
-    user-select: none;
-    border-width: 1px;
-    border-style: solid;
-}
-
-.modal-edit > div[slot='footer'] > input.edit-cancel {
-    color: white;
-    background-color: hsl(7, 92%, 64%);
-    border-color: hsl(7, 92%, 64%);
-}
-
-.modal-edit > div[slot='footer'] > input.edit-save {
-    color: rgb(54, 51, 255);
-    background-color: white;
-    border-color: rgb(54, 51, 255);
-    margin-right: 10px;
-}
-
-ui-modal-confirmable > div {
-    text-align: center;
+.ui-modal-confirmable > div {
+  text-align: center;
 }
 
 @media (min-width: 500px) {
-    .modal-edit > div[slot='body'] {
-        display: grid;
-        grid-row-gap: 15px;
-        grid-template-columns: 50% 50%;
-    }
+  .modal-edit > div[slot='body'] {
+    display: grid;
+    grid-row-gap: 15px;
+    grid-template-columns: 50% 50%;
+  }
 }
 
 @media (min-width: 786px) {
-    div.content {
-        grid-auto-columns: 33.33%;
-        grid-template-areas:
-            'startDate startTime comment'
-            'endDate endTime comment'
-            'buttons diff comment';
-    }
+  div.layout {
+    grid-auto-columns: 33.33%;
+    grid-auto-rows: 33.33% 33.33% auto;
+    grid-template-areas:
+      'startDate startTime comment'
+      'endDate endTime comment'
+      'buttons diff comment';
+  }
 }

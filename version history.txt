@@ -1,0 +1,14 @@
+version 1.0
+
+features:
+- more button styles
+- confirm before deleting entry 
+- assign a maximum width for app
+- disable clear when list is empty
+
+bugfixes:
+- entry does not extend beyond frame anymore
+- spacing between entries is now consistent with other spacings
+
+tec dept:
+- unified modal cmp
