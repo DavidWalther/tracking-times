@@ -251,36 +251,6 @@ describe('Clear related tests', () => {
     });
   });
 
-  test('confirm of the clear modal clears storage', () => {
-    /**
-     * Given
-     * 1. Component is Loaded
-     * 2. Has existing Entries
-     *
-     * When
-     * Clear-Modal is confirmed
-     *
-     * Then
-     * Storage is cleared
-     */
-
-    // Given
-    setCurrentVersionDummyData();
-    const element = createElement('app-timeTracking', { is: TimeTracking });
-    document.body.appendChild(element);
-
-    // When
-    const clearingModal = element.shadowRoot.querySelector('.modal-clear');
-    clearingModal.dispatchEvent(new CustomEvent('confirm'));
-
-    //wait for confirm-click to be processed
-    return Promise.resolve().then(() => {
-      // Then
-      let storageString = localStorage.getItem('storage');
-      expect(storageString).toBe(null);
-    });
-  });
-
   test('clear does not delete storage', () => {
     /**
      * Given
