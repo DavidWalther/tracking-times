@@ -280,6 +280,40 @@ describe('Clear related tests', () => {
       expect(storageString).toBe(null);
     });
   });
+
+  test('clear does not delete storage', () => {
+    /**
+     * Given
+     * 1. Existing data with current data version
+     * 2. Component is Loaded
+     */
+    setCurrentVersionDummyData();
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * The clear modal is confirmed
+     */
+    const clearingModal = element.shadowRoot.querySelector('.modal-clear');
+    clearingModal.dispatchEvent(new CustomEvent('confirm'));
+
+    //wait for confirm-click to be processed
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * 1. The storage is not null
+       * 2. The entry list is empty
+       */
+      let storageString = localStorage.getItem('storage');
+      expect(storageString).not.toBe(null);
+      let storage = JSON.parse(storageString);
+      expect(storage).toBeTruthy();
+      expect(storage.settings).toBeTruthy();
+      expect(Array.isArray(storage.entries)).toBe(true);
+      expect(storage.entries.length).toBe(0);
+    });
+  });
 });
 
 describe('check delete', () => {
