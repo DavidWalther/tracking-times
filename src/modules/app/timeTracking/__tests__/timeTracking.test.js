@@ -351,6 +351,7 @@ describe('Download', () => {
     while (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }
+    clearStorage();
   });
 
   test('Download button exists and as enabled when data exists', () => {
