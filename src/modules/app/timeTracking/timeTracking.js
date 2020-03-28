@@ -335,6 +335,10 @@ export default class TimeTracking extends LightningElement {
   getClearModal() {
     return this.template.querySelector('.modal-clear');
   }
+
+  getDownLoadButton() {
+    return this.template.querySelector('.button-export');
+  }
 }
 
 //----------------------------
