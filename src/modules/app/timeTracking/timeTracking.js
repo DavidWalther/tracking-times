@@ -33,9 +33,7 @@ export default class TimeTracking extends LightningElement {
   }
 
   renderedCallback() {
-    if (!this.isEmpty) {
-      this.enableDownloadButton();
-    }
+    this.enableOrDisableDownloadButtonBasedOnEntries();
   }
 
   handleClickAdd() {
@@ -149,6 +147,8 @@ export default class TimeTracking extends LightningElement {
       const element = this.state.entries[i];
       element.sortnumber = newlength - i;
     }
+
+    this.enableOrDisableDownloadButtonBasedOnEntries();
   }
 
   saveData() {
@@ -221,13 +221,12 @@ export default class TimeTracking extends LightningElement {
   }
 
   processClearData() {
+    this.enableOrDisableDownloadButtonBasedOnEntries();
     this.state.entries = [];
     clear();
   }
 
   processClickAdd() {
-    let imEmptyBeforeAdding = this.isEmpty;
-
     // create new entry
     const entryConfig = {
       cuttingType: CUTTING_TYPE_ROUND,
@@ -240,9 +239,7 @@ export default class TimeTracking extends LightningElement {
     this.state.entries.unshift(newEntry);
 
     // enable Download button *after* the first element was added
-    if (imEmptyBeforeAdding) {
-      this.enableDownloadButton();
-    }
+    this.enableOrDisableDownloadButtonBasedOnEntries();
   }
 
   processEntryChange(index, newDetail) {
@@ -345,7 +342,7 @@ export default class TimeTracking extends LightningElement {
   }
 
   enableOrDisableDownloadButtonBasedOnEntries() {
-    if(this.isEmpty) {
+    if (this.isEmpty) {
       this.disableDownloadButton();
     } else {
       this.enableDownloadButton();
