@@ -370,17 +370,10 @@ describe('Download', () => {
 
     /**
      * Then
-     * 1. The Download button exists
-     * 2. The Buttom is enabled
+     * The button is enabled
      */
-    const listOfDownloadButtons = element.shadowRoot.querySelectorAll(
-      '.button-export'
-    );
-    expect(listOfDownloadButtons).toBeTruthy();
-    expect(listOfDownloadButtons.length).toBe(1);
-    const downloadButton = listOfDownloadButtons[0];
-    expect(downloadButton).toBeTruthy();
-    expect(downloadButton.hasAttribute('disabled')).toBe(false);
+    const downloadButton = getDownloadButton(element.shadowRoot);
+    expect(downloadButton.disabled).toBe(false);
   });
 
   test('Download button exists and is disabled when no data exists', () => {
@@ -388,7 +381,6 @@ describe('Download', () => {
      * Given
      * -
      */
-    setCurrentVersionDummyData();
 
     /**
      * When
@@ -399,17 +391,10 @@ describe('Download', () => {
 
     /**
      * Then
-     * 1. The Download button exists
-     * 2. The Buttom is enabled
+     * The button is disabled
      */
-    const listOfDownloadButtons = element.shadowRoot.querySelectorAll(
-      '.button-export'
-    );
-    expect(listOfDownloadButtons).toBeTruthy();
-    expect(listOfDownloadButtons.length).toBe(1);
-    const downloadButton = listOfDownloadButtons[0];
-    expect(downloadButton).toBeTruthy();
-    expect(downloadButton.hasAttribute('disabled')).toBe(true);
+    const downloadButton = getDownloadButton(element.shadowRoot);
+    expect(downloadButton.disabled).toBe(true);
   });
 });
 
@@ -477,6 +462,10 @@ function getAddButton(shadowRoot) {
 
 function getClearButton(shadowRoot) {
   return getElementBySelectorAll(shadowRoot, '.button-clear');
+}
+
+function getDownloadButton(shadowRoot) {
+  return getElementBySelectorAll(shadowRoot, '.button-export');
 }
 
 function getElementBySelectorAll(shadowRoot, classname) {
