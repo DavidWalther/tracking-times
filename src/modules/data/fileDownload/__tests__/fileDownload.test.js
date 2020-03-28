@@ -9,5 +9,7 @@ describe('Download', () => {
     }
   });
 
-  test('', () => {});
+  /*   test('startDownload is defined', () => {
+    expect(startDownload).toBeTruthy(startDownload);
+  }); */
 });
