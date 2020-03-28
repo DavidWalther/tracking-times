@@ -193,6 +193,7 @@ describe('Clear related tests', () => {
     while (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }
+    clearStorage();
   });
 
   test('Clear button exists and is disabled by defaut', () => {
