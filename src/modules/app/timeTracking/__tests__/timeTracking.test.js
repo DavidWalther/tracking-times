@@ -247,15 +247,7 @@ describe('Clear related tests', () => {
      * Given
      * 1. Component is Loaded
      * 2. Has existing Entries
-     *
-     * When
-     * Clear-Modal is confirmed
-     *
-     * Then
-     * All entries are removed
      */
-
-    // Given
     setCurrentVersionDummyData();
     const element = createElement('app-timeTracking', { is: TimeTracking });
     document.body.appendChild(element);
@@ -265,13 +257,19 @@ describe('Clear related tests', () => {
     );
     expect(entriesBeforeClearing.length).toBe(2);
 
-    // When
+    /**
+     * When
+     * Clear-Modal is confirmed
+     */
     const clearingModal = element.shadowRoot.querySelector('.modal-clear');
     clearingModal.dispatchEvent(new CustomEvent('confirm'));
 
     //wait for confirm-click to be processed
     return Promise.resolve().then(() => {
-      // Then
+      /**
+       * Then
+       * All entries are removed
+       */
       const entriesAfterClearing = element.shadowRoot.querySelectorAll(
         'ui-entry'
       );
