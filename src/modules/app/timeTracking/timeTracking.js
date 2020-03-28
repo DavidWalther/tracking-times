@@ -359,6 +359,16 @@ export default class TimeTracking extends LightningElement {
     downloadBtn.disabled = false;
   }
 
+  disableClearButton() {
+    const clearBtn = this.getDownloadButton();
+    clearBtn.disabled = true;
+  }
+
+  enableClearButton() {
+    const clearBtn = this.getDownloadButton();
+    clearBtn.disabled = false;
+  }
+
   //----------------------
   // Element selectors
   //----------------------
