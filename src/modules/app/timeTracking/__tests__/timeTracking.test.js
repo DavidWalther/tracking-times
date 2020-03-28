@@ -193,25 +193,54 @@ describe('Clear related tests', () => {
     while (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }
+    clearStorage();
   });
 
-  test('Clear button exists', () => {
+  test('Clear button exists and is disabled by defaut', () => {
     /**
      * Given
-     * Component is Loaded
-     *
-     * Then
-     * The Clear-button exists
-     *
+     * -
      */
 
-    // Given
+    /**
+     * When
+     * Component is Loaded
+     */
     const element = createElement('app-timeTracking', { is: TimeTracking });
     document.body.appendChild(element);
 
-    // Then
+    /**
+     * Then
+     * 1. The Clear-button exists
+     * 2. The clear-button is disabled
+     */
     const clearButton = getClearButton(element.shadowRoot);
     expect(clearButton).toBeTruthy();
+    expect(clearButton.disabled).toBe(true);
+  });
+
+  test('Clear is enabled if data was loaded', () => {
+    /**
+     * Given
+     * data of current version is loaded
+     */
+    setCurrentVersionDummyData();
+
+    /**
+     * When
+     * Component is Loaded
+     */
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * 1. The Clear-button exists
+     * 2. The clear-button is disabled
+     */
+    const clearButton = getClearButton(element.shadowRoot);
+    expect(clearButton).toBeTruthy();
+    expect(clearButton.disabled).toBe(false);
   });
 
   test('confirm of the clear modal resets list', () => {
@@ -219,15 +248,7 @@ describe('Clear related tests', () => {
      * Given
      * 1. Component is Loaded
      * 2. Has existing Entries
-     *
-     * When
-     * Clear-Modal is confirmed
-     *
-     * Then
-     * All entries are removed
      */
-
-    // Given
     setCurrentVersionDummyData();
     const element = createElement('app-timeTracking', { is: TimeTracking });
     document.body.appendChild(element);
@@ -237,17 +258,26 @@ describe('Clear related tests', () => {
     );
     expect(entriesBeforeClearing.length).toBe(2);
 
-    // When
+    /**
+     * When
+     * Clear-Modal is confirmed
+     */
     const clearingModal = element.shadowRoot.querySelector('.modal-clear');
     clearingModal.dispatchEvent(new CustomEvent('confirm'));
 
     //wait for confirm-click to be processed
     return Promise.resolve().then(() => {
-      // Then
+      /**
+       * Then
+       * All entries are removed
+       */
       const entriesAfterClearing = element.shadowRoot.querySelectorAll(
         'ui-entry'
       );
       expect(entriesAfterClearing.length).toBe(0);
+
+      const clearButton = getClearButton(element.shadowRoot);
+      expect(clearButton.disabled).toBe(true);
     });
   });
 
@@ -349,6 +379,110 @@ describe('check delete', () => {
   });
 });
 
+describe('Download', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+    clearStorage();
+  });
+
+  test('Button esists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component added
+     */
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The Download button exists
+     */
+    const downloadButton = getDownloadButton(element.shadowRoot);
+    expect(downloadButton).toBeTruthy();
+  });
+
+  test('Download button exists and as enabled when data exists', () => {
+    /**
+     * Given
+     * Data in current data version
+     */
+    setCurrentVersionDummyData();
+
+    /**
+     * When
+     * The component added
+     */
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The button is enabled
+     */
+    const downloadButton = getDownloadButton(element.shadowRoot);
+    expect(downloadButton.disabled).toBe(false);
+  });
+
+  test('Download button exists and is disabled when no data exists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component added
+     */
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The button is disabled
+     */
+    const downloadButton = getDownloadButton(element.shadowRoot);
+    expect(downloadButton.disabled).toBe(true);
+  });
+
+  test('On clear button is disabled', () => {
+    /**
+     * Given
+     * 1. Data in current data version
+     * 2. The component is added
+     */
+    setCurrentVersionDummyData();
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * The list is cleared
+     */
+    const clearConfirmButton = element.shadowRoot.querySelector(
+      'ui-modal-confirmable'
+    );
+    clearConfirmButton.dispatchEvent(new CustomEvent('confirm'));
+
+    //wait for click event to be processed
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * The button is disabled
+       */
+      const downloadButton = getDownloadButton(element.shadowRoot);
+      expect(downloadButton.disabled).toBe(true);
+    });
+  });
+});
+
 function clearStorage() {
   localStorage.setItem('storage', JSON.stringify({}));
 }
@@ -413,6 +547,10 @@ function getAddButton(shadowRoot) {
 
 function getClearButton(shadowRoot) {
   return getElementBySelectorAll(shadowRoot, '.button-clear');
+}
+
+function getDownloadButton(shadowRoot) {
+  return getElementBySelectorAll(shadowRoot, '.button-export');
 }
 
 function getElementBySelectorAll(shadowRoot, classname) {
