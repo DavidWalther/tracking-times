@@ -328,6 +328,11 @@ export default class TimeTracking extends LightningElement {
     this.getClearModal().hide();
   }
 
+  enableDownloadButton() {
+    const downloadBtn = this.getDownLoadButton();
+    downloadBtn.disabled = false;
+  }
+
   //----------------------
   // Element selectors
   //----------------------
