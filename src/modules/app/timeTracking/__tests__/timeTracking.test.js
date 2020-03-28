@@ -195,7 +195,7 @@ describe('Clear related tests', () => {
     }
   });
 
-  test('Clear button exists', () => {
+  test('Clear button exists and is disabled by defaut', () => {
     /**
      * Given
      * -
@@ -210,10 +210,12 @@ describe('Clear related tests', () => {
 
     /**
      * Then
-     * The Clear-button exists
+     * 1. The Clear-button exists
+     * 2. The clear-button is disabled
      */
     const clearButton = getClearButton(element.shadowRoot);
     expect(clearButton).toBeTruthy();
+    expect(clearButton.disabled).toBe(true);
   });
 
   test('confirm of the clear modal resets list', () => {
