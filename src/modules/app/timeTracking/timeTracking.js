@@ -339,7 +339,7 @@ export default class TimeTracking extends LightningElement {
   }
 
   enableDownloadButton() {
-    const downloadBtn = this.getDownLoadButton();
+    const downloadBtn = this.getDownloadButton();
     downloadBtn.disabled = false;
   }
 
@@ -351,7 +351,7 @@ export default class TimeTracking extends LightningElement {
     return this.template.querySelector('.modal-clear');
   }
 
-  getDownLoadButton() {
+  getDownloadButton() {
     return this.template.querySelector('.button-export');
   }
 }
