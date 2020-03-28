@@ -220,13 +220,23 @@ export default class TimeTracking extends LightningElement {
   }
 
   processClickAdd() {
+    let imEmptyBeforeAdding = this.isEmpty;
+
+    // create new entry
     const entryConfig = {
       cuttingType: CUTTING_TYPE_ROUND,
       cuttingAccuracy: MILISECONDS_PER_FIFTEEN_MINUTE,
       defaultDuration: MILISECONDS_PER_HOUR
     };
     const newEntry = this.createListEntry(entryConfig);
+
+    // add entry to the start of list
     this.state.entries.unshift(newEntry);
+
+    // enable Download button *after* the first element was added
+    if (imEmptyBeforeAdding) {
+      this.enableDownloadButton();
+    }
   }
 
   processEntryChange(index, newDetail) {
