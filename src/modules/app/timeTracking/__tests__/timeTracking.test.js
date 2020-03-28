@@ -274,6 +274,9 @@ describe('Clear related tests', () => {
         'ui-entry'
       );
       expect(entriesAfterClearing.length).toBe(0);
+
+      const clearButton = getClearButton(element.shadowRoot);
+      expect(clearButton.disabled).toBe(true);
     });
   });
 
