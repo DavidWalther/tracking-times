@@ -193,25 +193,54 @@ describe('Clear related tests', () => {
     while (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }
+    clearStorage();
   });
 
-  test('Clear button exists', () => {
+  test('Clear button exists and is disabled by defaut', () => {
     /**
      * Given
-     * Component is Loaded
-     *
-     * Then
-     * The Clear-button exists
-     *
+     * -
      */
 
-    // Given
+    /**
+     * When
+     * Component is Loaded
+     */
     const element = createElement('app-timeTracking', { is: TimeTracking });
     document.body.appendChild(element);
 
-    // Then
+    /**
+     * Then
+     * 1. The Clear-button exists
+     * 2. The clear-button is disabled
+     */
     const clearButton = getClearButton(element.shadowRoot);
     expect(clearButton).toBeTruthy();
+    expect(clearButton.disabled).toBe(true);
+  });
+
+  test('Clear is enabled if data was loaded', () => {
+    /**
+     * Given
+     * data of current version is loaded
+     */
+    setCurrentVersionDummyData();
+
+    /**
+     * When
+     * Component is Loaded
+     */
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * 1. The Clear-button exists
+     * 2. The clear-button is disabled
+     */
+    const clearButton = getClearButton(element.shadowRoot);
+    expect(clearButton).toBeTruthy();
+    expect(clearButton.disabled).toBe(false);
   });
 
   test('confirm of the clear modal resets list', () => {
@@ -219,15 +248,7 @@ describe('Clear related tests', () => {
      * Given
      * 1. Component is Loaded
      * 2. Has existing Entries
-     *
-     * When
-     * Clear-Modal is confirmed
-     *
-     * Then
-     * All entries are removed
      */
-
-    // Given
     setCurrentVersionDummyData();
     const element = createElement('app-timeTracking', { is: TimeTracking });
     document.body.appendChild(element);
@@ -237,47 +258,60 @@ describe('Clear related tests', () => {
     );
     expect(entriesBeforeClearing.length).toBe(2);
 
-    // When
+    /**
+     * When
+     * Clear-Modal is confirmed
+     */
     const clearingModal = element.shadowRoot.querySelector('.modal-clear');
     clearingModal.dispatchEvent(new CustomEvent('confirm'));
 
     //wait for confirm-click to be processed
     return Promise.resolve().then(() => {
-      // Then
+      /**
+       * Then
+       * All entries are removed
+       */
       const entriesAfterClearing = element.shadowRoot.querySelectorAll(
         'ui-entry'
       );
       expect(entriesAfterClearing.length).toBe(0);
+
+      const clearButton = getClearButton(element.shadowRoot);
+      expect(clearButton.disabled).toBe(true);
     });
   });
 
-  test('confirm of the clear modal clears storage', () => {
+  test('clear does not delete storage', () => {
     /**
      * Given
-     * 1. Component is Loaded
-     * 2. Has existing Entries
-     *
-     * When
-     * Clear-Modal is confirmed
-     *
-     * Then
-     * Storage is cleared
+     * 1. Existing data with current data version
+     * 2. Component is Loaded
      */
-
-    // Given
     setCurrentVersionDummyData();
     const element = createElement('app-timeTracking', { is: TimeTracking });
     document.body.appendChild(element);
 
-    // When
+    /**
+     * When
+     * The clear modal is confirmed
+     */
     const clearingModal = element.shadowRoot.querySelector('.modal-clear');
     clearingModal.dispatchEvent(new CustomEvent('confirm'));
 
     //wait for confirm-click to be processed
     return Promise.resolve().then(() => {
-      // Then
+      /**
+       * Then
+       * 1. The storage is not null
+       * 2. The entry list is empty
+       */
       let storageString = localStorage.getItem('storage');
-      expect(storageString).toBe(null);
+      expect(storageString).not.toBe(null);
+      let storage = JSON.parse(storageString);
+      expect(storage).toBeTruthy();
+      expect(storage.settings).toBeTruthy();
+      expect(Array.isArray(storage.entries)).toBe(true);
+      expect(storage.entries.length).toBe(0);
     });
   });
 });

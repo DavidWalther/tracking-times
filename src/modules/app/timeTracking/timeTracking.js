@@ -1,6 +1,6 @@
 import { LightningElement, track } from 'lwc';
 import { startDownload } from 'data/fileDownload';
-import { save, load, clear } from 'data/localStorage';
+import { save, load } from 'data/localStorage';
 
 const MILISECONDS_PER_MINUTE = 1000 * 60;
 const MILISECONDS_PER_FIFTEEN_MINUTE = MILISECONDS_PER_MINUTE * 15;
@@ -33,7 +33,7 @@ export default class TimeTracking extends LightningElement {
   }
 
   renderedCallback() {
-    this.enableOrDisableDownloadButtonBasedOnEntries();
+    this.entryBasedEnablingOfButtons();
   }
 
   handleClickAdd() {
@@ -148,7 +148,7 @@ export default class TimeTracking extends LightningElement {
       element.sortnumber = newlength - i;
     }
 
-    this.enableOrDisableDownloadButtonBasedOnEntries();
+    this.entryBasedEnablingOfButtons();
   }
 
   saveData() {
@@ -221,9 +221,9 @@ export default class TimeTracking extends LightningElement {
   }
 
   processClearData() {
-    this.enableOrDisableDownloadButtonBasedOnEntries();
+    this.entryBasedEnablingOfButtons();
     this.state.entries = [];
-    clear();
+    this.saveData();
   }
 
   processClickAdd() {
@@ -239,7 +239,7 @@ export default class TimeTracking extends LightningElement {
     this.state.entries.unshift(newEntry);
 
     // enable Download button *after* the first element was added
-    this.enableOrDisableDownloadButtonBasedOnEntries();
+    this.entryBasedEnablingOfButtons();
   }
 
   processEntryChange(index, newDetail) {
@@ -341,11 +341,13 @@ export default class TimeTracking extends LightningElement {
     this.getClearModal().hide();
   }
 
-  enableOrDisableDownloadButtonBasedOnEntries() {
+  entryBasedEnablingOfButtons() {
     if (this.isEmpty) {
       this.disableDownloadButton();
+      this.disableClearButton();
     } else {
       this.enableDownloadButton();
+      this.enableClearButton();
     }
   }
 
@@ -359,6 +361,16 @@ export default class TimeTracking extends LightningElement {
     downloadBtn.disabled = false;
   }
 
+  disableClearButton() {
+    const clearBtn = this.getClearButton();
+    clearBtn.disabled = true;
+  }
+
+  enableClearButton() {
+    const clearBtn = this.getClearButton();
+    clearBtn.disabled = false;
+  }
+
   //----------------------
   // Element selectors
   //----------------------
@@ -369,6 +381,10 @@ export default class TimeTracking extends LightningElement {
 
   getDownloadButton() {
     return this.template.querySelector('.button-export');
+  }
+
+  getClearButton() {
+    return this.template.querySelector('.button-clear');
   }
 }
 
