@@ -345,6 +345,73 @@ describe('check delete', () => {
   });
 });
 
+describe('Download', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('Download button exists and as enabled when data exists', () => {
+    /**
+     * Given
+     * 1. Data in current data version
+     */
+    setCurrentVersionDummyData();
+
+    /**
+     * When
+     * The component added
+     */
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * 1. The Download button exists
+     * 2. The Buttom is enabled
+     */
+    const listOfDownloadButtons = element.shadowRoot.querySelectorAll(
+      '.button-export'
+    );
+    expect(listOfDownloadButtons).toBeTruthy();
+    expect(listOfDownloadButtons.length).toBe(1);
+    const downloadButton = listOfDownloadButtons[0];
+    expect(downloadButton).toBeTruthy();
+    expect(downloadButton.hasAttribute('disabled')).toBe(false);
+  });
+
+  test('Download button exists and is disabled when no data exists', () => {
+    /**
+     * Given
+     * -
+     */
+    setCurrentVersionDummyData();
+
+    /**
+     * When
+     * The component added
+     */
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * 1. The Download button exists
+     * 2. The Buttom is enabled
+     */
+    const listOfDownloadButtons = element.shadowRoot.querySelectorAll(
+      '.button-export'
+    );
+    expect(listOfDownloadButtons).toBeTruthy();
+    expect(listOfDownloadButtons.length).toBe(1);
+    const downloadButton = listOfDownloadButtons[0];
+    expect(downloadButton).toBeTruthy();
+    expect(downloadButton.hasAttribute('disabled')).toBe(true);
+  });
+});
+
 function clearStorage() {
   localStorage.setItem('storage', JSON.stringify({}));
 }
