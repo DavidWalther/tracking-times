@@ -18,14 +18,6 @@
             value={state.label.button.clear}
           />
         </div>
-        <div class="button container-export">
-          <input
-            type="button"
-            class="button button-export"
-            onclick={handleClickExport}
-            value="Download"
-          />
-        </div>
       </template>
       <template if:true={isEmpty}>
         <div class="button container-clear">
@@ -36,15 +28,16 @@
             disabled
           />
         </div>
-        <div class="button container-export">
-          <input
-            type="button"
-            class="button button-export"
-            value="Download"
-            disabled
-          />
-        </div>
       </template>
+      <div class="button container-export">
+        <input
+          type="button"
+          class="button button-export"
+          value="Download"
+          onclick={handleClickExport}
+          disabled
+        />
+      </div>
       <div class="button container-add">
         <input
           type="button"

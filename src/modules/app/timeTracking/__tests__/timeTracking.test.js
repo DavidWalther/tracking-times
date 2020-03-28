@@ -351,12 +351,34 @@ describe('Download', () => {
     while (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }
+    clearStorage();
+  });
+
+  test('Button esists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component added
+     */
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The Download button exists
+     */
+    const downloadButton = getDownloadButton(element.shadowRoot);
+    expect(downloadButton).toBeTruthy();
   });
 
   test('Download button exists and as enabled when data exists', () => {
     /**
      * Given
-     * 1. Data in current data version
+     * Data in current data version
      */
     setCurrentVersionDummyData();
 
@@ -369,17 +391,10 @@ describe('Download', () => {
 
     /**
      * Then
-     * 1. The Download button exists
-     * 2. The Buttom is enabled
+     * The button is enabled
      */
-    const listOfDownloadButtons = element.shadowRoot.querySelectorAll(
-      '.button-export'
-    );
-    expect(listOfDownloadButtons).toBeTruthy();
-    expect(listOfDownloadButtons.length).toBe(1);
-    const downloadButton = listOfDownloadButtons[0];
-    expect(downloadButton).toBeTruthy();
-    expect(downloadButton.hasAttribute('disabled')).toBe(false);
+    const downloadButton = getDownloadButton(element.shadowRoot);
+    expect(downloadButton.disabled).toBe(false);
   });
 
   test('Download button exists and is disabled when no data exists', () => {
@@ -387,7 +402,6 @@ describe('Download', () => {
      * Given
      * -
      */
-    setCurrentVersionDummyData();
 
     /**
      * When
@@ -398,17 +412,40 @@ describe('Download', () => {
 
     /**
      * Then
-     * 1. The Download button exists
-     * 2. The Buttom is enabled
+     * The button is disabled
      */
-    const listOfDownloadButtons = element.shadowRoot.querySelectorAll(
-      '.button-export'
+    const downloadButton = getDownloadButton(element.shadowRoot);
+    expect(downloadButton.disabled).toBe(true);
+  });
+
+  test('On clear button is disabled', () => {
+    /**
+     * Given
+     * 1. Data in current data version
+     * 2. The component is added
+     */
+    setCurrentVersionDummyData();
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * The list is cleared
+     */
+    const clearConfirmButton = element.shadowRoot.querySelector(
+      'ui-modal-confirmable'
     );
-    expect(listOfDownloadButtons).toBeTruthy();
-    expect(listOfDownloadButtons.length).toBe(1);
-    const downloadButton = listOfDownloadButtons[0];
-    expect(downloadButton).toBeTruthy();
-    expect(downloadButton.hasAttribute('disabled')).toBe(true);
+    clearConfirmButton.dispatchEvent(new CustomEvent('confirm'));
+
+    //wait for click event to be processed
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * The button is disabled
+       */
+      const downloadButton = getDownloadButton(element.shadowRoot);
+      expect(downloadButton.disabled).toBe(true);
+    });
   });
 });
 
@@ -476,6 +513,10 @@ function getAddButton(shadowRoot) {
 
 function getClearButton(shadowRoot) {
   return getElementBySelectorAll(shadowRoot, '.button-clear');
+}
+
+function getDownloadButton(shadowRoot) {
+  return getElementBySelectorAll(shadowRoot, '.button-export');
 }
 
 function getElementBySelectorAll(shadowRoot, classname) {

@@ -32,6 +32,10 @@ export default class TimeTracking extends LightningElement {
     this.loadData();
   }
 
+  renderedCallback() {
+    this.enableOrDisableDownloadButtonBasedOnEntries();
+  }
+
   handleClickAdd() {
     this.processClickAdd();
     this.saveData();
@@ -143,6 +147,8 @@ export default class TimeTracking extends LightningElement {
       const element = this.state.entries[i];
       element.sortnumber = newlength - i;
     }
+
+    this.enableOrDisableDownloadButtonBasedOnEntries();
   }
 
   saveData() {
@@ -215,18 +221,25 @@ export default class TimeTracking extends LightningElement {
   }
 
   processClearData() {
+    this.enableOrDisableDownloadButtonBasedOnEntries();
     this.state.entries = [];
     clear();
   }
 
   processClickAdd() {
+    // create new entry
     const entryConfig = {
       cuttingType: CUTTING_TYPE_ROUND,
       cuttingAccuracy: MILISECONDS_PER_FIFTEEN_MINUTE,
       defaultDuration: MILISECONDS_PER_HOUR
     };
     const newEntry = this.createListEntry(entryConfig);
+
+    // add entry to the start of list
     this.state.entries.unshift(newEntry);
+
+    // enable Download button *after* the first element was added
+    this.enableOrDisableDownloadButtonBasedOnEntries();
   }
 
   processEntryChange(index, newDetail) {
@@ -328,12 +341,34 @@ export default class TimeTracking extends LightningElement {
     this.getClearModal().hide();
   }
 
+  enableOrDisableDownloadButtonBasedOnEntries() {
+    if (this.isEmpty) {
+      this.disableDownloadButton();
+    } else {
+      this.enableDownloadButton();
+    }
+  }
+
+  disableDownloadButton() {
+    const downloadBtn = this.getDownloadButton();
+    downloadBtn.disabled = true;
+  }
+
+  enableDownloadButton() {
+    const downloadBtn = this.getDownloadButton();
+    downloadBtn.disabled = false;
+  }
+
   //----------------------
   // Element selectors
   //----------------------
 
   getClearModal() {
     return this.template.querySelector('.modal-clear');
+  }
+
+  getDownloadButton() {
+    return this.template.querySelector('.button-export');
   }
 }
 
