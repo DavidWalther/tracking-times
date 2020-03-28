@@ -370,6 +370,10 @@ export default class TimeTracking extends LightningElement {
   getDownloadButton() {
     return this.template.querySelector('.button-export');
   }
+
+  getClearButton() {
+    return this.template.querySelector('.button-clear');
+  }
 }
 
 //----------------------------
