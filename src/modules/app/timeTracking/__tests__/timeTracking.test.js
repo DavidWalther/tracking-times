@@ -218,6 +218,30 @@ describe('Clear related tests', () => {
     expect(clearButton.disabled).toBe(true);
   });
 
+  test('Clear is enabled if data was loaded', () => {
+    /**
+     * Given
+     * data of current version is loaded
+     */
+    setCurrentVersionDummyData();
+
+    /**
+     * When
+     * Component is Loaded
+     */
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * 1. The Clear-button exists
+     * 2. The clear-button is disabled
+     */
+    const clearButton = getClearButton(element.shadowRoot);
+    expect(clearButton).toBeTruthy();
+    expect(clearButton.disabled).toBe(false);
+  });
+
   test('confirm of the clear modal resets list', () => {
     /**
      * Given
