@@ -1,6 +1,6 @@
 import { LightningElement, track } from 'lwc';
 import { startDownload } from 'data/fileDownload';
-import { save, load, clear } from 'data/localStorage';
+import { save, load } from 'data/localStorage';
 
 const MILISECONDS_PER_MINUTE = 1000 * 60;
 const MILISECONDS_PER_FIFTEEN_MINUTE = MILISECONDS_PER_MINUTE * 15;
@@ -223,7 +223,7 @@ export default class TimeTracking extends LightningElement {
   processClearData() {
     this.enableOrDisableDownloadButtonBasedOnEntries();
     this.state.entries = [];
-    clear();
+    this.saveData();
   }
 
   processClickAdd() {
