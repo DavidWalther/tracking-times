@@ -198,18 +198,20 @@ describe('Clear related tests', () => {
   test('Clear button exists', () => {
     /**
      * Given
-     * Component is Loaded
-     *
-     * Then
-     * The Clear-button exists
-     *
+     * -
      */
 
-    // Given
+    /**
+     * When
+     * Component is Loaded
+     */
     const element = createElement('app-timeTracking', { is: TimeTracking });
     document.body.appendChild(element);
 
-    // Then
+    /**
+     * Then
+     * The Clear-button exists
+     */
     const clearButton = getClearButton(element.shadowRoot);
     expect(clearButton).toBeTruthy();
   });
