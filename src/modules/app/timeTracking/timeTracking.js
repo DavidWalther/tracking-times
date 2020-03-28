@@ -33,7 +33,7 @@ export default class TimeTracking extends LightningElement {
   }
 
   renderedCallback() {
-    this.enableOrDisableDownloadButtonBasedOnEntries();
+    this.entryBasedEnablingOfButtons();
   }
 
   handleClickAdd() {
@@ -148,7 +148,7 @@ export default class TimeTracking extends LightningElement {
       element.sortnumber = newlength - i;
     }
 
-    this.enableOrDisableDownloadButtonBasedOnEntries();
+    this.entryBasedEnablingOfButtons();
   }
 
   saveData() {
@@ -221,7 +221,7 @@ export default class TimeTracking extends LightningElement {
   }
 
   processClearData() {
-    this.enableOrDisableDownloadButtonBasedOnEntries();
+    this.entryBasedEnablingOfButtons();
     this.state.entries = [];
     this.saveData();
   }
@@ -239,7 +239,7 @@ export default class TimeTracking extends LightningElement {
     this.state.entries.unshift(newEntry);
 
     // enable Download button *after* the first element was added
-    this.enableOrDisableDownloadButtonBasedOnEntries();
+    this.entryBasedEnablingOfButtons();
   }
 
   processEntryChange(index, newDetail) {
@@ -341,7 +341,7 @@ export default class TimeTracking extends LightningElement {
     this.getClearModal().hide();
   }
 
-  enableOrDisableDownloadButtonBasedOnEntries() {
+  entryBasedEnablingOfButtons() {
     if (this.isEmpty) {
       this.disableDownloadButton();
       this.disableClearButton();
