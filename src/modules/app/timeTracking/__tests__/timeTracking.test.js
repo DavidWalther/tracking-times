@@ -378,7 +378,7 @@ describe('Download', () => {
   test('Download button exists and as enabled when data exists', () => {
     /**
      * Given
-     * 1. Data in current data version
+     * Data in current data version
      */
     setCurrentVersionDummyData();
 
@@ -416,6 +416,36 @@ describe('Download', () => {
      */
     const downloadButton = getDownloadButton(element.shadowRoot);
     expect(downloadButton.disabled).toBe(true);
+  });
+
+  test('On clear button is disabled', () => {
+    /**
+     * Given
+     * 1. Data in current data version
+     * 2. The component is added
+     */
+    setCurrentVersionDummyData();
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * The list is cleared
+     */
+    const clearConfirmButton = element.shadowRoot.querySelector(
+      'ui-modal-confirmable'
+    );
+    clearConfirmButton.dispatchEvent(new CustomEvent('confirm'));
+
+    //wait for click event to be processed
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * The button is disabled
+       */
+      const downloadButton = getDownloadButton(element.shadowRoot);
+      expect(downloadButton.disabled).toBe(true);
+    });
   });
 });
 
