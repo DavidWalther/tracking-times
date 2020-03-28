@@ -354,6 +354,27 @@ describe('Download', () => {
     clearStorage();
   });
 
+  test('Button esists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component added
+     */
+    const element = createElement('app-timeTracking', { is: TimeTracking });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The Download button exists
+     */
+    const downloadButton = getDownloadButton(element.shadowRoot);
+    expect(downloadButton).toBeTruthy();
+  });
+
   test('Download button exists and as enabled when data exists', () => {
     /**
      * Given
