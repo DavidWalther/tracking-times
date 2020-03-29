@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
 // eslint-disable-next-line no-unused-vars
-const designs = ['accept', 'info', 'deny', 'cancel', 'confirm', 'classic'];
+const DESIGNS = ['accept', 'info', 'deny', 'cancel', 'confirm', 'classic'];
 
 export default class Button extends LightningElement {
   //----------------------------
@@ -100,7 +100,19 @@ export default class Button extends LightningElement {
   }
 
   applyDesign() {
+    const design = this.design;
+    let storedDesignIsDefined = DESIGNS.includes(design);
     
+    const button = this.getInputButton();
+    // remove all existing designs
+    DESIGNS.forEach(designCls => {
+      button.classList.remove(designCls);
+    });
+
+    if(storedDesignIsDefined ) {
+      button.classList.add('button');
+      button.classList.add(design);
+    }
   }
 
   processClick() {
