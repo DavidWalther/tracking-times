@@ -1,6 +1,6 @@
 import { LightningElement, api } from 'lwc';
 
-export default class ModalButton extends LightningElement {
+export default class Button extends LightningElement {
   @api
   design;
 

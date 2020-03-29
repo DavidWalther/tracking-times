@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { createElement } from 'lwc';
 // eslint-disable-next-line no-unused-vars
-import ModalButton from 'ui/entry';
+import Button from 'ui/entry';
 
 describe('Layout', () => {
   afterEach(() => {
