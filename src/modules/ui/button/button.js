@@ -1,6 +1,10 @@
 import { LightningElement, api } from 'lwc';
 
 export default class Button extends LightningElement {
+  //----------------------------
+  // API
+  //----------------------------
+
   @api
   design;
 
@@ -15,7 +19,9 @@ export default class Button extends LightningElement {
     this.state.disabled = value !== undefined;
   }
 
-  state = { disabled: false };
+  //----------------------------
+  // Properties
+  //----------------------------
 
   get isDesignAccept() {
     return this.design === 'accept';
@@ -53,6 +59,12 @@ export default class Button extends LightningElement {
   }
 
   //----------------------------
+  // Variables
+  //----------------------------
+
+  state = { disabled: false };
+
+  //----------------------------
   // Handler
   //----------------------------
 
@@ -60,6 +72,10 @@ export default class Button extends LightningElement {
     originalevent.stopPropagation();
     this.processClick();
   }
+
+  //----------------------------
+  // Actions
+  //----------------------------
 
   processClick() {
     const relayEvent = new CustomEvent('click');
