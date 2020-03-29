@@ -24,10 +24,12 @@ describe('General', () => {
 
     /**
      * Then
-     * the DOM contains only one import Button
+     * 1. The DOM contains only one import Button
+     * 2. The button is enabled
      */
     const buttonList = element.shadowRoot.querySelectorAll('input');
     expect(buttonList.length).toBe(1);
+    expect(buttonList[0].disabled).toBe(false);
   });
 });
 
