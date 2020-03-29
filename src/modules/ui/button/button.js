@@ -65,6 +65,14 @@ export default class Button extends LightningElement {
   state = { disabled: false };
 
   //----------------------------
+  // Callbacks
+  //----------------------------
+
+  renderedCallback() {
+    this.setDisabled();
+  }
+
+  //----------------------------
   // Handler
   //----------------------------
 
@@ -76,6 +84,11 @@ export default class Button extends LightningElement {
   //----------------------------
   // Actions
   //----------------------------
+
+  setDisabled() {
+    const button = this.getInputButton();
+    button.disabled = this.state.disabled;
+  }
 
   processClick() {
     const relayEvent = new CustomEvent('click');
