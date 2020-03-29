@@ -49,6 +49,7 @@ export default class Button extends LightningElement {
   // Handler
   //----------------------------
 
+
   handleClick(originalevent) {
     originalevent.stopPropagation();
     this.processClick();
@@ -57,5 +58,13 @@ export default class Button extends LightningElement {
   processClick() {
     const relayEvent = new CustomEvent('click');
     this.dispatchEvent(relayEvent);
+  }
+
+//----------------------------
+// Element selectors
+//----------------------------
+
+  getInputButton() {
+    return this.template.querySelector('input');
   }
 }
