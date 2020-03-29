@@ -71,13 +71,14 @@ describe('Behavior', () => {
      */
     const element = createElement('ui-button', { is: Button });
     element.addEventListener('click', handler);
+    element.design = 'info';
     document.body.appendChild(element);
 
     /**
      * When
      * The the button is clicked
      */
-    const button = element.shadowRoot.querySelector('input');
+    const button = element.shadowRoot.querySelector('.button');
     expect(button).toBeDefined();
     button.dispatchEvent(new CustomEvent('click'));
 
