@@ -476,9 +476,13 @@ describe('check single entry delete', () => {
   });
 });
 
-// eslint-disable-next-line no-unused-vars
 function getEditButton(shadowRoot) {
   return getElementBySelector(shadowRoot, '.edit');
+}
+
+// eslint-disable-next-line no-unused-vars
+function getDeleteButton(shadowRoot) {
+  return getElementBySelector(shadowRoot, '.button-delete');
 }
 
 function getEditModal(shadowRoot) {
