@@ -10,6 +10,8 @@ export default class Button extends LightningElement {
   @api
   disabled;
 
+  state={};
+
   get isDesignAccept() {
     return this.design === 'accept';
   }
