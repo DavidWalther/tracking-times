@@ -448,9 +448,7 @@ describe('check single entry delete', () => {
     const element = createElement('ui-entry', { is: Entry });
     document.body.appendChild(element);
 
-    const deleteButton = element.shadowRoot.querySelector(
-      'input.button-delete'
-    );
+    const deleteButton = getDeleteButton(element.shadowRoot);
     expect(deleteButton).toBeTruthy();
   });
 
@@ -476,9 +474,12 @@ describe('check single entry delete', () => {
   });
 });
 
-// eslint-disable-next-line no-unused-vars
 function getEditButton(shadowRoot) {
   return getElementBySelector(shadowRoot, '.edit');
+}
+
+function getDeleteButton(shadowRoot) {
+  return getElementBySelector(shadowRoot, '.button-delete');
 }
 
 function getEditModal(shadowRoot) {
