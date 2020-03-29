@@ -28,45 +28,6 @@ export default class Button extends LightningElement {
   }
 
   //----------------------------
-  // Properties
-  //----------------------------
-
-  get isDesignAccept() {
-    return this.design === 'accept';
-  }
-
-  get isDesignInfo() {
-    return this.design === 'info';
-  }
-
-  get isDesignDeny() {
-    return this.design === 'deny';
-  }
-
-  get isDesignCancel() {
-    return this.design === 'cancel';
-  }
-
-  get isDesignConfirm() {
-    return this.design === 'confirm';
-  }
-
-  get isDesignClassic() {
-    return this.design === 'classic';
-  }
-
-  get isDesignFallback() {
-    return (
-      !this.isDesignAccept &&
-      !this.isDesignInfo &&
-      !this.isDesignDeny &&
-      !this.isDesignCancel &&
-      !this.isDesignConfirm &&
-      !this.isDesignClassic
-    );
-  }
-
-  //----------------------------
   // Variables
   //----------------------------
 
@@ -102,14 +63,14 @@ export default class Button extends LightningElement {
   applyDesign() {
     const design = this.design;
     let storedDesignIsDefined = DESIGNS.includes(design);
-    
+
     const button = this.getInputButton();
     // remove all existing designs
     DESIGNS.forEach(designCls => {
       button.classList.remove(designCls);
     });
 
-    if(storedDesignIsDefined ) {
+    if (storedDesignIsDefined) {
       button.classList.add('button');
       button.classList.add(design);
     }
