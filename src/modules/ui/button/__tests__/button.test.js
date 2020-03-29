@@ -1,5 +1,4 @@
 import { createElement } from 'lwc';
-// eslint-disable-next-line no-unused-vars
 import Button from 'ui/button';
 
 describe('Layout', () => {
@@ -21,7 +20,6 @@ describe('Layout', () => {
      * The component is added to DOM
      */
     const element = createElement('ui-button', { is: Button });
-    element.design = 'info';
     document.body.appendChild(element);
 
     /**
@@ -30,5 +28,28 @@ describe('Layout', () => {
      */
     const buttonList = element.shadowRoot.querySelectorAll('input');
     expect(buttonList.length).toBe(1);
+  });
+
+  test('Button has class with given Layout', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component is added to DOM with a specified design
+     */
+    const element = createElement('ui-button', { is: Button });
+    element.design = 'info';
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The button has that special design class
+     */
+    const button = element.shadowRoot.querySelector('input');
+    expect(button.classList.contains('button')).toBe(true);
+    expect(button.classList.contains('info')).toBe(true);
   });
 });
