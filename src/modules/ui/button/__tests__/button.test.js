@@ -84,6 +84,28 @@ describe('Attribute', () => {
     expect(button.classList.contains('button')).toBe(true);
     expect(button.classList.contains('info')).toBe(true);
   });
+
+  test('diabled: setting the attribute to true render the button disabled', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component is added with 'info' design
+     */
+    const element = createElement('ui-button', { is: Button });
+    element.disabled = true;
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The button has that special design class
+     */
+    const button = element.shadowRoot.querySelector('input');
+    expect(button.disabled).toBe(true);
+  });
 });
 
 describe('Behavior', () => {
