@@ -61,6 +61,29 @@ describe('Attribute', () => {
       document.body.removeChild(document.body.firstChild);
     }
   });
+
+  test('value: Button has the passed label', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component is added with a value attribute
+     */
+    const TEST_VALUE = 'I am a Button';
+    const element = createElement('ui-button', { is: Button });
+    element.value = TEST_VALUE;
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The button has the given label
+     */
+    const button = element.shadowRoot.querySelector('input');
+    expect(button.value).toBe(TEST_VALUE);
+  });
 });
 
 describe('Behavior', () => {
@@ -87,7 +110,7 @@ describe('Behavior', () => {
      * When
      * The the button is clicked
      */
-    const button = element.shadowRoot.querySelector('.button');
+    const button = element.shadowRoot.querySelector('input');
     expect(button).toBeDefined();
     button.dispatchEvent(new CustomEvent('click'));
 
