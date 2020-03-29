@@ -8,9 +8,14 @@ export default class Button extends LightningElement {
   value;
 
   @api
-  disabled;
+  get disabled() {
+    return this.state.disabled;
+  }
+  set disabled(value) {
+    this.state.disabled = value;
+  }
 
-  state={};
+  state = {};
 
   get isDesignAccept() {
     return this.design === 'accept';
@@ -51,7 +56,6 @@ export default class Button extends LightningElement {
   // Handler
   //----------------------------
 
-
   handleClick(originalevent) {
     originalevent.stopPropagation();
     this.processClick();
@@ -62,9 +66,9 @@ export default class Button extends LightningElement {
     this.dispatchEvent(relayEvent);
   }
 
-//----------------------------
-// Element selectors
-//----------------------------
+  //----------------------------
+  // Element selectors
+  //----------------------------
 
   getInputButton() {
     return this.template.querySelector('input');
