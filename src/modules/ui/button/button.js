@@ -9,7 +9,12 @@ export default class Button extends LightningElement {
   //----------------------------
 
   @api
-  design;
+  get design() {
+    return this.state.design;
+  }
+  set design(value) {
+    this.state.design = value;
+  }
 
   @api
   value;
