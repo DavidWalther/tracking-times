@@ -78,6 +78,7 @@ export default class Button extends LightningElement {
 
   renderedCallback() {
     this.setDisabled();
+    this.applyDesign();
   }
 
   //----------------------------
@@ -96,6 +97,10 @@ export default class Button extends LightningElement {
   setDisabled() {
     const button = this.getInputButton();
     button.disabled = this.state.disabled;
+  }
+
+  applyDesign() {
+    
   }
 
   processClick() {
