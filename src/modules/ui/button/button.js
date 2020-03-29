@@ -1,5 +1,8 @@
 import { LightningElement, api } from 'lwc';
 
+// eslint-disable-next-line no-unused-vars
+const designs = ['accept', 'info', 'deny', 'cancel', 'confirm', 'classic'];
+
 export default class Button extends LightningElement {
   //----------------------------
   // API
