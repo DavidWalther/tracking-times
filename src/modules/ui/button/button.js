@@ -44,4 +44,18 @@ export default class Button extends LightningElement {
       !this.isDesignClassic
     );
   }
+
+  //----------------------------
+  // Handler
+  //----------------------------
+
+  handleClick(originalevent) {
+    originalevent.stopPropagation();
+    this.processClick();
+  }
+
+  processClick() {
+    const relayEvent = new CustomEvent('click');
+    this.dispatchEvent(relayEvent);
+  }
 }
