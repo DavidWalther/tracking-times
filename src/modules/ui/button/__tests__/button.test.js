@@ -1,7 +1,7 @@
 import { createElement } from 'lwc';
 import Button from 'ui/button';
 
-describe('Layout', () => {
+describe('General', () => {
   afterEach(() => {
     // The jsdom instance is shared across test cases in a single file so reset the DOM
     while (document.body.firstChild) {
@@ -28,29 +28,6 @@ describe('Layout', () => {
      */
     const buttonList = element.shadowRoot.querySelectorAll('input');
     expect(buttonList.length).toBe(1);
-  });
-
-  test('Button has class with given Layout', () => {
-    /**
-     * Given
-     * -
-     */
-
-    /**
-     * When
-     * The component is added to DOM with a specified design
-     */
-    const element = createElement('ui-button', { is: Button });
-    element.design = 'info';
-    document.body.appendChild(element);
-
-    /**
-     * Then
-     * The button has that special design class
-     */
-    const button = element.shadowRoot.querySelector('input');
-    expect(button.classList.contains('button')).toBe(true);
-    expect(button.classList.contains('info')).toBe(true);
   });
 });
 
@@ -83,6 +60,29 @@ describe('Attribute', () => {
      */
     const button = element.shadowRoot.querySelector('input');
     expect(button.value).toBe(TEST_VALUE);
+  });
+
+  test('design: The passed design value determines the css-design class', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component is added with 'info' design
+     */
+    const element = createElement('ui-button', { is: Button });
+    element.design = 'info';
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The button has that special design class
+     */
+    const button = element.shadowRoot.querySelector('input');
+    expect(button.classList.contains('button')).toBe(true);
+    expect(button.classList.contains('info')).toBe(true);
   });
 });
 
