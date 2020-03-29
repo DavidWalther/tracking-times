@@ -1,23 +1,48 @@
 <template>
   <template if:true={isDesignInfo}>
-    <input type="button" value={value} class="button info" />
+    <input
+      type="button"
+      value={value}
+      class="button info"
+      onclick={handleClick}
+    />
   </template>
   <template if:true={isDesignDeny}>
-    <input type="button" value={value} class="button deny" />
+    <input
+      type="button"
+      value={value}
+      class="button deny"
+      onclick={handleClick}
+    />
   </template>
   <template if:true={isDesignCancel}>
-    <input type="button" value={value} class="button cancel" />
+    <input
+      type="button"
+      value={value}
+      class="button cancel"
+      onclick={handleClick}
+    />
   </template>
   <template if:true={isDesignConfirm}>
-    <input type="button" value={value} class="button confirm" />
+    <input
+      type="button"
+      value={value}
+      class="button confirm"
+      onclick={handleClick}
+    />
   </template>
   <template if:true={isDesignAccept}>
-    <input type="button" value={value} class="button accept" />
+    <input
+      type="button"
+      value={value}
+      class="button accept"
+      onclick={handleClick}
+    />
   </template>
   <template if:true={isDesignClassic}>
-    <input type="button" value={value} class="button" />
+    <input type="button" value={value} class="button" onclick={handleClick} />
   </template>
   <template if:true={isDesignFallback}>
-    <input type="button" value={value} />
+    <input type="button" value={value} onclick={handleClick} />
   </template>
 </template>
