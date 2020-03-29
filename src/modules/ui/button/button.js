@@ -12,10 +12,10 @@ export default class Button extends LightningElement {
     return this.state.disabled;
   }
   set disabled(value) {
-    this.state.disabled = value;
+    this.state.disabled = value !== undefined;
   }
 
-  state = {};
+  state = { disabled: false };
 
   get isDesignAccept() {
     return this.design === 'accept';
