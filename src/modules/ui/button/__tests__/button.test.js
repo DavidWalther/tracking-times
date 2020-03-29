@@ -52,4 +52,13 @@ describe('Layout', () => {
     expect(button.classList.contains('button')).toBe(true);
     expect(button.classList.contains('info')).toBe(true);
   });
+
+  describe('Behavior', () => {
+    afterEach(() => {
+      // The jsdom instance is shared across test cases in a single file so reset the DOM
+      while (document.body.firstChild) {
+        document.body.removeChild(document.body.firstChild);
+      }
+    });
+  });
 });
