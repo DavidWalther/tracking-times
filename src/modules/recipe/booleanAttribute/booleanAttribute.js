@@ -7,6 +7,7 @@ export default class BooleanAttribute extends LightningElement {
     return this.vToggle;
   }
   set toggle(value) {
+    // Everything but 'undefined' and 'false' will evaluate to true
     let valueIsNotUndefined = value !== undefined;
     let valueIsNotFalse = value !== false;
     this.vToggle = valueIsNotUndefined && valueIsNotFalse;
