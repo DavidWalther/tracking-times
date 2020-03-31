@@ -1,1 +1,8 @@
-<template></template>
+<template>
+  <template if:true={toggle}>
+    <span class="positive"></span>
+  </template>
+  <template if:false={toggle}>
+    <span class="negative"></span>
+  </template>
+</template>
