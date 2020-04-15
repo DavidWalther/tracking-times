@@ -47,6 +47,7 @@ export default class Button extends LightningElement {
   applyDesign() {
     const design = this.design;
     let storedDesignIsDefined = DESIGNS.includes(design);
+    const designIsClassic = design === 'classic';
 
     const button = this.getInputButton();
     // remove all existing designs
@@ -56,6 +57,9 @@ export default class Button extends LightningElement {
 
     if (storedDesignIsDefined) {
       button.classList.add('button');
+    }
+
+    if (!designIsClassic) {
       button.classList.add(design);
     }
   }
