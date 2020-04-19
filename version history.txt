@@ -6,6 +6,8 @@ tec dept:
 - On clearing only remove stored entries instead of whole storge
 - remove duplicate buttons which were rendered conditionally
 - remove repeated unnecessary font definitions
+- add version history file
+
 
 //----------------------------
 // version 1.0.1
