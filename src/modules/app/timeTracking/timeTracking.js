@@ -357,8 +357,6 @@ export default class TimeTracking extends LightningElement {
   }
 
   enableDownloadButton() {
-    // eslint-disable-next-line no-console
-    console.log('enable download button');
     const downloadBtn = this.getDownloadButton();
     downloadBtn.disabled = false;
   }
