@@ -13,6 +13,10 @@ input {
   font-weight: bold;
 }
 
+.button:disabled {
+  opacity: 0.5;
+}
+
 .accept {
   color: white;
   border-color: hsl(241, 100%, 60%);
