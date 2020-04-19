@@ -15,7 +15,13 @@ export default class Button extends LightningElement {
   value;
 
   @api
-  disabled;
+  get disabled() {
+    return this._disabled ? this._disabled : false;
+  }
+  set disabled(value) {
+    this._disabled = value;
+    this.setDisabled();
+  }
 
   //----------------------------
   // Callbacks
@@ -41,7 +47,7 @@ export default class Button extends LightningElement {
 
   setDisabled() {
     const button = this.getInputButton();
-    button.disabled = this.disabled;
+    if (button) button.disabled = this.disabled;
   }
 
   applyDesign() {
