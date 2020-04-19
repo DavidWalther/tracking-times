@@ -19,18 +19,18 @@
       <span class="comment">{displayState.comment}</span>
     </div>
     <div class="area-buttons container container-button-bar">
-      <input
-        class="button edit"
-        type="button"
-        value={label.button.edit}
-        onclick={handleButtonClickEdit}
-      />
-      <input
-        class="button button-delete"
-        value={label.button.delete}
-        onclick={handleButtonClickDelete}
-        type="button"
-      />
+      <div class="buttons">
+        <ui-button
+          class="button edit"
+          value={label.button.edit}
+          onclick={handleButtonClickEdit}
+        ></ui-button>
+        <ui-button
+          class="button button-delete"
+          value={label.button.delete}
+          onclick={handleButtonClickDelete}
+        ></ui-button>
+      </div>
     </div>
   </div>
   <!--

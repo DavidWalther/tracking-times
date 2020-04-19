@@ -40,6 +40,22 @@ div.area-buttons {
   grid-area: buttons;
 }
 
+div.buttons {
+  display: grid;
+  grid-auto-columns: 100%;
+  grid-template-areas:
+    'btnEdit'
+    'btnDelete';
+}
+
+.edit {
+  grid-area: btnEdit;
+}
+
+.button-delete {
+  grid-area: btnDelete;
+}
+
 /*
 Style rules
 */
@@ -83,14 +99,11 @@ div.container-button-bar > input {
 
 .modal-edit > div > .modal-input {
   color: hsl(0, 0%, 30%);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: medium;
   resize: none;
 }
 
 .modal-edit > div > label {
   color: hsl(0, 0%, 60%);
-  font-size: small;
 }
 
 .ui-modal-confirmable > div {

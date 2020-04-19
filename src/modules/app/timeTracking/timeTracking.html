@@ -9,49 +9,26 @@
       >
     </div>
     <div class="button-bar">
-      <template if:false={isEmpty}>
-        <div class="button container-clear">
-          <input
-            type="button"
-            class="button button-clear"
-            onclick={handleClickClear}
-            value={state.label.button.clear}
-          />
-        </div>
-        <div class="button container-export">
-          <input
-            type="button"
-            class="button button-export"
-            onclick={handleClickExport}
-            value="Download"
-          />
-        </div>
-      </template>
-      <template if:true={isEmpty}>
-        <div class="button container-clear">
-          <input
-            type="button"
-            class="button button-clear"
-            value={state.label.button.clear}
-            disabled
-          />
-        </div>
-        <div class="button container-export">
-          <input
-            type="button"
-            class="button button-export"
-            value="Download"
-            disabled
-          />
-        </div>
-      </template>
+      <div class="button container-clear">
+        <ui-button
+          value={label.button.clear.value}
+          class="button-clear"
+          onclick={handleClickClear}
+        ></ui-button>
+      </div>
+      <div class="button container-export">
+        <ui-button
+          value={label.button.download.value}
+          class="button-export"
+          onclick={handleClickExport}
+        ></ui-button>
+      </div>
       <div class="button container-add">
-        <input
-          type="button"
-          class="button button-add"
+        <ui-button
+          value={label.button.add.value}
+          class="button-add"
           onclick={handleClickAdd}
-          value={state.label.button.add}
-        />
+        ></ui-button>
       </div>
     </div>
     <div class="container-list entries">

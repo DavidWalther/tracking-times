@@ -1,44 +1,85 @@
 import { LightningElement, api } from 'lwc';
 
-export default class ModalButton extends LightningElement {
+// eslint-disable-next-line no-unused-vars
+const DESIGNS = ['accept', 'info', 'deny', 'cancel', 'confirm', 'plain'];
+
+export default class Button extends LightningElement {
+  //----------------------------
+  // API
+  //----------------------------
+
   @api
   design;
 
   @api
   value;
 
-  get isDesignAccept() {
-    return this.design === 'accept';
+  @api
+  get disabled() {
+    return this._disabled ? this._disabled : false;
+  }
+  set disabled(value) {
+    this._disabled = value;
+    this.setDisabled();
   }
 
-  get isDesignInfo() {
-    return this.design === 'info';
+  //----------------------------
+  // Callbacks
+  //----------------------------
+
+  renderedCallback() {
+    this.setDisabled();
+    this.applyDesign();
   }
 
-  get isDesignDeny() {
-    return this.design === 'deny';
+  //----------------------------
+  // Handler
+  //----------------------------
+
+  handleClick(originalevent) {
+    originalevent.stopPropagation();
+    this.processClick();
   }
 
-  get isDesignCancel() {
-    return this.design === 'cancel';
+  //----------------------------
+  // Actions
+  //----------------------------
+
+  setDisabled() {
+    const button = this.getInputButton();
+    if (button) button.disabled = this.disabled;
   }
 
-  get isDesignConfirm() {
-    return this.design === 'confirm';
+  applyDesign() {
+    const design = this.design;
+    let storedDesignIsDefined = DESIGNS.includes(design);
+    const designIsClassic = design === 'plain';
+
+    const button = this.getInputButton();
+    // remove all existing designs
+    DESIGNS.forEach(designCls => {
+      button.classList.remove(designCls);
+    });
+
+    if (storedDesignIsDefined) {
+      button.classList.add('button');
+    }
+
+    if (!designIsClassic) {
+      button.classList.add(design);
+    }
   }
 
-  get isDesignClassic() {
-    return this.design === 'classic';
+  processClick() {
+    const relayEvent = new CustomEvent('click');
+    this.dispatchEvent(relayEvent);
   }
 
-  get isDesignFallback() {
-    return (
-      !this.isDesignAccept &&
-      !this.isDesignInfo &&
-      !this.isDesignDeny &&
-      !this.isDesignCancel &&
-      !this.isDesignConfirm &&
-      !this.isDesignClassic
-    );
+  //----------------------------
+  // Element selectors
+  //----------------------------
+
+  getInputButton() {
+    return this.template.querySelector('input');
   }
 }

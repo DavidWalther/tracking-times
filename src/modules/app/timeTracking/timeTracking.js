@@ -1,6 +1,6 @@
 import { LightningElement, track } from 'lwc';
 import { startDownload } from 'data/fileDownload';
-import { save, load, clear } from 'data/localStorage';
+import { save, load } from 'data/localStorage';
 
 const MILISECONDS_PER_MINUTE = 1000 * 60;
 const MILISECONDS_PER_FIFTEEN_MINUTE = MILISECONDS_PER_MINUTE * 15;
@@ -27,9 +27,27 @@ export default class TimeTracking extends LightningElement {
     }
   };
 
+  label = {
+    button: {
+      add: {
+        value: 'Add'
+      },
+      download: {
+        value: 'Download'
+      },
+      clear: {
+        value: 'Clear'
+      }
+    }
+  };
+
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
+  }
+
+  renderedCallback() {
+    this.entryBasedEnablingOfButtons();
   }
 
   handleClickAdd() {
@@ -143,6 +161,8 @@ export default class TimeTracking extends LightningElement {
       const element = this.state.entries[i];
       element.sortnumber = newlength - i;
     }
+
+    this.entryBasedEnablingOfButtons();
   }
 
   saveData() {
@@ -215,18 +235,25 @@ export default class TimeTracking extends LightningElement {
   }
 
   processClearData() {
+    this.entryBasedEnablingOfButtons();
     this.state.entries = [];
-    clear();
+    this.saveData();
   }
 
   processClickAdd() {
+    // create new entry
     const entryConfig = {
       cuttingType: CUTTING_TYPE_ROUND,
       cuttingAccuracy: MILISECONDS_PER_FIFTEEN_MINUTE,
       defaultDuration: MILISECONDS_PER_HOUR
     };
     const newEntry = this.createListEntry(entryConfig);
+
+    // add entry to the start of list
     this.state.entries.unshift(newEntry);
+
+    // enable Download button *after* the first element was added
+    this.entryBasedEnablingOfButtons();
   }
 
   processEntryChange(index, newDetail) {
@@ -328,12 +355,50 @@ export default class TimeTracking extends LightningElement {
     this.getClearModal().hide();
   }
 
+  entryBasedEnablingOfButtons() {
+    if (this.isEmpty) {
+      this.disableDownloadButton();
+      this.disableClearButton();
+    } else {
+      this.enableDownloadButton();
+      this.enableClearButton();
+    }
+  }
+
+  disableDownloadButton() {
+    const downloadBtn = this.getDownloadButton();
+    downloadBtn.disabled = true;
+  }
+
+  enableDownloadButton() {
+    const downloadBtn = this.getDownloadButton();
+    downloadBtn.disabled = false;
+  }
+
+  disableClearButton() {
+    const clearBtn = this.getClearButton();
+    clearBtn.disabled = true;
+  }
+
+  enableClearButton() {
+    const clearBtn = this.getClearButton();
+    clearBtn.disabled = false;
+  }
+
   //----------------------
   // Element selectors
   //----------------------
 
   getClearModal() {
     return this.template.querySelector('.modal-clear');
+  }
+
+  getDownloadButton() {
+    return this.template.querySelector('.button-export');
+  }
+
+  getClearButton() {
+    return this.template.querySelector('.button-clear');
   }
 }
 
