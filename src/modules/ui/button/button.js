@@ -1,7 +1,7 @@
 import { LightningElement, api } from 'lwc';
 
 // eslint-disable-next-line no-unused-vars
-const DESIGNS = ['accept', 'info', 'deny', 'cancel', 'confirm', 'classic'];
+const DESIGNS = ['accept', 'info', 'deny', 'cancel', 'confirm', 'plain'];
 
 export default class Button extends LightningElement {
   //----------------------------
@@ -9,29 +9,19 @@ export default class Button extends LightningElement {
   //----------------------------
 
   @api
-  get design() {
-    return this.state.design;
-  }
-  set design(value) {
-    this.state.design = value;
-  }
+  design;
 
   @api
   value;
 
   @api
   get disabled() {
-    return this.state.disabled;
+    return this._disabled ? this._disabled : false;
   }
   set disabled(value) {
-    this.state.disabled = value !== undefined;
+    this._disabled = value;
+    this.setDisabled();
   }
-
-  //----------------------------
-  // Variables
-  //----------------------------
-
-  state = { disabled: false };
 
   //----------------------------
   // Callbacks
@@ -57,12 +47,13 @@ export default class Button extends LightningElement {
 
   setDisabled() {
     const button = this.getInputButton();
-    button.disabled = this.state.disabled;
+    if (button) button.disabled = this.disabled;
   }
 
   applyDesign() {
     const design = this.design;
     let storedDesignIsDefined = DESIGNS.includes(design);
+    const designIsClassic = design === 'plain';
 
     const button = this.getInputButton();
     // remove all existing designs
@@ -72,6 +63,9 @@ export default class Button extends LightningElement {
 
     if (storedDesignIsDefined) {
       button.classList.add('button');
+    }
+
+    if (!designIsClassic) {
       button.classList.add(design);
     }
   }
