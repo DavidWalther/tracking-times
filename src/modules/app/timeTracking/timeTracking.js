@@ -28,6 +28,9 @@ export default class TimeTracking extends LightningElement {
   };
 
   label = {
+    sidemenu: {
+      icon: '\u2630'
+    },
     button: {
       add: {
         value: 'Add'
