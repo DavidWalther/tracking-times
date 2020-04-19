@@ -10,30 +10,25 @@
     </div>
     <div class="button-bar">
       <div class="button container-clear">
-        <input
-          type="button"
-          class="button button-clear"
-          value={state.label.button.clear}
+        <ui-button
+          value={label.button.clear.value}
+          class="button-clear"
           onclick={handleClickClear}
-          disabled
-        />
+        ></ui-button>
       </div>
       <div class="button container-export">
-        <input
-          type="button"
-          class="button button-export"
-          value="Download"
+        <ui-button
+          value={label.button.download.value}
+          class="button-export"
           onclick={handleClickExport}
-          disabled
-        />
+        ></ui-button>
       </div>
       <div class="button container-add">
-        <input
-          type="button"
-          class="button button-add"
+        <ui-button
+          value={label.button.add.value}
+          class="button-add"
           onclick={handleClickAdd}
-          value={state.label.button.add}
-        />
+        ></ui-button>
       </div>
     </div>
     <div class="container-list entries">

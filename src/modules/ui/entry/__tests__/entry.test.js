@@ -223,7 +223,7 @@ describe('check Update of Outputs on Input change', () => {
     element.start = probeStartTimestamp;
     document.body.appendChild(element);
 
-    const editButton = element.shadowRoot.querySelector('input.edit');
+    const editButton = getEditButton(element.shadowRoot);
     editButton.dispatchEvent(new CustomEvent('click'));
 
     const input = element.shadowRoot.querySelector('input.start-date');
@@ -247,7 +247,7 @@ describe('check Update of Outputs on Input change', () => {
     element.start = probeStartTimestamp;
     document.body.appendChild(element);
 
-    const editButton = element.shadowRoot.querySelector('input.edit');
+    const editButton = getEditButton(element.shadowRoot);
     editButton.dispatchEvent(new CustomEvent('click'));
 
     const input = element.shadowRoot.querySelector('input.start-time');
@@ -271,7 +271,7 @@ describe('check Update of Outputs on Input change', () => {
     element.end = probeEndTimestamp;
     document.body.appendChild(element);
 
-    const editButton = element.shadowRoot.querySelector('input.edit');
+    const editButton = getEditButton(element.shadowRoot);
     editButton.dispatchEvent(new CustomEvent('click'));
 
     const input = element.shadowRoot.querySelector('input.end-date');
@@ -295,7 +295,7 @@ describe('check Update of Outputs on Input change', () => {
     element.end = probeEndTimestamp;
     document.body.appendChild(element);
 
-    const editButton = element.shadowRoot.querySelector('input.edit');
+    const editButton = getEditButton(element.shadowRoot);
     editButton.dispatchEvent(new CustomEvent('click'));
 
     const input = element.shadowRoot.querySelector('input.end-time');
@@ -319,7 +319,7 @@ describe('check Update of Outputs on Input change', () => {
     element.comment = probeComment;
     document.body.appendChild(element);
 
-    const editButton = element.shadowRoot.querySelector('input.edit');
+    const editButton = getEditButton(element.shadowRoot);
     editButton.dispatchEvent(new CustomEvent('click'));
 
     const input = element.shadowRoot.querySelector('textarea.comment');
@@ -345,7 +345,7 @@ describe('check Update of Outputs on Input change', () => {
     element.end = probeEndTimestamp;
     document.body.appendChild(element);
 
-    const editButton = element.shadowRoot.querySelector('input.edit');
+    const editButton = getEditButton(element.shadowRoot);
     editButton.dispatchEvent(new CustomEvent('click'));
 
     const input = element.shadowRoot.querySelector('input.end-time');
@@ -388,7 +388,7 @@ describe('check events on changed values', () => {
     element.addEventListener('change', handler);
     document.body.appendChild(element);
 
-    const editButton = element.shadowRoot.querySelector('input.edit');
+    const editButton = getEditButton(element.shadowRoot);
     editButton.dispatchEvent(new CustomEvent('click'));
 
     /**
@@ -448,9 +448,7 @@ describe('check single entry delete', () => {
     const element = createElement('ui-entry', { is: Entry });
     document.body.appendChild(element);
 
-    const deleteButton = element.shadowRoot.querySelector(
-      'input.button-delete'
-    );
+    const deleteButton = getDeleteButton(element.shadowRoot);
     expect(deleteButton).toBeTruthy();
   });
 
@@ -475,6 +473,14 @@ describe('check single entry delete', () => {
     });
   });
 });
+
+function getEditButton(shadowRoot) {
+  return getElementBySelector(shadowRoot, '.edit');
+}
+
+function getDeleteButton(shadowRoot) {
+  return getElementBySelector(shadowRoot, '.button-delete');
+}
 
 function getEditModal(shadowRoot) {
   return getElementBySelector(shadowRoot, '.modal-edit');
