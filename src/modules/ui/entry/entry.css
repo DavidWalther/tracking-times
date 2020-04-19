@@ -40,6 +40,22 @@ div.area-buttons {
   grid-area: buttons;
 }
 
+div.buttons {
+  display: grid;
+  grid-auto-columns: 100%;
+  grid-template-areas:
+    'btnEdit'
+    'btnDelete';
+}
+
+.edit {
+  grid-area: btnEdit;
+}
+
+.button-delete {
+  grid-area: btnDelete;
+}
+
 /*
 Style rules
 */
