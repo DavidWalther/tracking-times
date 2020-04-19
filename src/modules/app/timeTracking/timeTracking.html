@@ -24,12 +24,11 @@
         ></ui-button>
       </div>
       <div class="button container-add">
-        <input
-          type="button"
+        <ui-button
+          value={state.label.button.add}
           class="button button-add"
           onclick={handleClickAdd}
-          value={state.label.button.add}
-        />
+        ></ui-button>
       </div>
     </div>
     <div class="container-list entries">
