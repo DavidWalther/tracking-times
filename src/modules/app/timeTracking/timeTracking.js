@@ -27,6 +27,20 @@ export default class TimeTracking extends LightningElement {
     }
   };
 
+  label = {
+    button: {
+      add: {
+        value: 'Add'
+      },
+      download: {
+        value: 'Download'
+      },
+      clear: {
+        value: 'Clear'
+      }
+    }
+  };
+
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
