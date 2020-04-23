@@ -1,0 +1,24 @@
+<template>
+  <div class="content">
+    <div>
+      <span class="icon icon-open" onclick={onClickIconOpen}
+        >{label.icon.open}</span
+      >
+    </div>
+  </div>
+  <div class="menu">
+    <div class="menu-header">
+      <div class="menu-header-close">
+        <span class="icon icon-close" onclick={onClickIconClose}
+          >{label.icon.close}</span
+        >
+      </div>
+      <div class="menu-header-title">
+        <span>{label.title}</span>
+      </div>
+    </div>
+    <div class="menu-body">
+      <slot name="menu"></slot>
+    </div>
+  </div>
+</template>

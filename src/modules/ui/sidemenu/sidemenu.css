@@ -1,0 +1,42 @@
+div.content {
+  display: inline;
+}
+
+div.icon-open {
+  display: inline;
+}
+
+div.menu-header {
+  height: 10vh;
+  vertical-align: middle;
+}
+
+div.menu-header-close {
+  text-align: right;
+}
+div.menu-header-close > span {
+  padding: 5px;
+}
+
+div.menu-header-title {
+  text-align: center;
+}
+
+div.menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 70%;
+  max-width: 200px;
+  background-color: rgb(56, 56, 56);
+}
+
+.icon-open {
+  font-size: x-large;
+}
+
+.icon-close {
+  font-size: xx-large;
+}
