@@ -1,9 +1,5 @@
-div.content {
-  display: inline;
-}
-
 div.icon-open {
-  display: inline;
+  width: fit-content;
 }
 
 div.menu-header {
