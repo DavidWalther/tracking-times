@@ -6,10 +6,14 @@ export default class Sidemenu extends LightningElement {
   //----------------------------
 
   @api
-  open() {}
+  open() {
+    this.openMenu();
+  }
 
   @api
-  close() {}
+  close() {
+    this.closeMenu();
+  }
 
   @api
   menuHeaderTitleLabel = 'Menu';
