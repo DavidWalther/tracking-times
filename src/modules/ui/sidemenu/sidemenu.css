@@ -1,0 +1,42 @@
+div.icon-open {
+  width: fit-content;
+}
+
+div.menu-header {
+  height: 10vh;
+  max-height: 70px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #ddd;
+  margin-bottom: 15px;
+}
+
+div.menu-header-close {
+  text-align: right;
+}
+div.menu-header-close > span {
+  padding: 5px;
+}
+
+div.menu-header-title {
+  text-align: center;
+}
+
+div.menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 85%;
+  max-width: 350px;
+  padding: 10px;
+}
+
+.icon-open {
+  font-size: x-large;
+}
+
+.icon-close {
+  font-size: xx-large;
+}

@@ -10,20 +10,23 @@ div.content {
   grid-template-columns: auto;
 }
 
-input {
+.button-bar_mobile {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 30px auto;
+}
+
+ui-sidemenu div {
+  margin-bottom: 10px;
 }
 
 div.entries > div {
   height: 150px;
 }
 
-div.button-bar {
-  display: grid;
+div.button-bar_wide {
+  display: none;
   gap: 5px;
-  grid-template-areas:
-    'clear'
-    'export'
-    'add';
 }
 
 div.button > input {
@@ -67,8 +70,22 @@ a.button-github {
   grid-row-gap: 5px;
 }
 
-@media (min-width: 500px) {
-  div.button-bar {
+@media (min-width: 450px) {
+  .button-bar_mobile {
+    display: none;
+  }
+
+  div.button-bar_wide {
+    display: grid;
+    grid-template-areas:
+      'clear'
+      'export'
+      'add';
+  }
+}
+
+@media (min-width: 600px) {
+  div.button-bar_wide {
     grid-template-columns: auto auto;
     grid-template-areas: 'clear export add';
   }
