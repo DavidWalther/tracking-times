@@ -1,36 +1,36 @@
 <template>
   <div class="content">
-    <div class="container-github">
-      <a
-        target="_blank"
-        href="https://github.com/DavidWalther/tracking-times/"
-        class="button-github"
-        >See the code on Github</a
-      >
-    </div>
     <div class="button-bar_mobile">
       <ui-sidemenu>
+        <div class="container-github">
+          <a
+            target="_blank"
+            href="https://github.com/DavidWalther/tracking-times/"
+            class="button-github"
+            >See the code on Github</a
+          >
+        </div>
         <div>
           <ui-button
-            design="plain"
-            value={label.button.clear.value}
-            class="button-clear"
-            onclick={handleClickClear}
+            design="info"
+            value={label.button.download.value}
+            class="button-export"
+            onclick={handleClickExport}
           ></ui-button>
         </div>
         <div>
           <ui-button
-            design="plain"
-            value={label.button.download.value}
-            class="button-export"
-            onclick={handleClickExport}
+            design="deny"
+            value={label.button.clear.value}
+            class="button-clear"
+            onclick={handleClickClear}
           ></ui-button>
         </div>
       </ui-sidemenu>
       <div class="buttons">
         <div>
           <ui-button
-            design="plain"
+            design="info"
             value={label.button.add.value}
             class="button-add"
             onclick={handleClickAdd}
