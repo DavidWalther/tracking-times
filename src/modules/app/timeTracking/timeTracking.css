@@ -12,7 +12,12 @@ div.content {
 
 .button-bar_mobile {
   display: grid;
+  gap: 10px;
   grid-template-columns: 30px auto;
+}
+
+ui-sidemenu div {
+  margin-bottom: 10px;
 }
 
 div.entries > div {
