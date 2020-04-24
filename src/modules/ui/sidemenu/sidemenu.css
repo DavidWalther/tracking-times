@@ -8,7 +8,9 @@ div.icon-open {
 
 div.menu-header {
   height: 10vh;
-  vertical-align: middle;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #ddd;
 }
 
 div.menu-header-close {
@@ -28,9 +30,8 @@ div.menu {
   top: 0;
   left: 0;
   height: 100%;
-  width: 70%;
-  max-width: 200px;
-  background-color: rgb(56, 56, 56);
+  width: 85%;
+  max-width: 350px;
 }
 
 .icon-open {
