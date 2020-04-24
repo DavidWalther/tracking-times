@@ -8,6 +8,38 @@
         >See the code on Github</a
       >
     </div>
+    <div class="button-bar_mobile">
+      <div class="menu">
+        <ui-sidemenu>
+          <div>
+            <ui-button
+              design="plain"
+              value={label.button.clear.value}
+              class="button-clear"
+              onclick={handleClickClear}
+            ></ui-button>
+          </div>
+          <div>
+            <ui-button
+              design="plain"
+              value={label.button.download.value}
+              class="button-export"
+              onclick={handleClickExport}
+            ></ui-button>
+          </div>
+        </ui-sidemenu>
+      </div>
+      <div class="buttons">
+        <div class="new-add">
+          <ui-button
+            design="plain"
+            value={label.button.add.value}
+            class="button-add"
+            onclick={handleClickAdd}
+          ></ui-button>
+        </div>
+      </div>
+    </div>
     <div class="button-bar">
       <div class="button container-clear">
         <ui-button
