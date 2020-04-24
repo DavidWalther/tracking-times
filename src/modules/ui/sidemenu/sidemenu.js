@@ -12,7 +12,7 @@ export default class Sidemenu extends LightningElement {
   close() {}
 
   @api
-  menuHeaderTitleLabel = '';
+  menuHeaderTitleLabel = 'Menu';
 
   @api
   iconOpenColor = '#000';
@@ -22,7 +22,7 @@ export default class Sidemenu extends LightningElement {
 
   @api
   menuBackgroundColor = '#fff';
-  
+
   @api
   menuHeaderTitleColor = '#000';
 
@@ -43,16 +43,18 @@ export default class Sidemenu extends LightningElement {
   // callbacks
   //----------------------------
   connectedCallback() {}
-  
+
   renderedCallback() {
-    this.template.querySelector('.icon-open')
-      .style.color = this.iconOpenColor;
-    this.template.querySelector('.icon-close')
-      .style.color = this.iconCloseColor;
-    this.template.querySelector('.menu')
-      .style.backgroundColor = this.menuBackgroundColor;
-    this.template.querySelector('.menu-header-title')
-    .style.color = this.menuHeaderTitleColor;
+    this.template.querySelector('.icon-open').style.color = this.iconOpenColor;
+    this.template.querySelector(
+      '.icon-close'
+    ).style.color = this.iconCloseColor;
+    this.template.querySelector(
+      '.menu'
+    ).style.backgroundColor = this.menuBackgroundColor;
+    this.template.querySelector(
+      '.menu-header-title'
+    ).style.color = this.menuHeaderTitleColor;
   }
 
   //----------------------------
