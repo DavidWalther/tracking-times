@@ -60,6 +60,7 @@ export default class TimeTracking extends LightningElement {
 
   handleClickClear() {
     this.showClearModal();
+    this.template.querySelector('ui-sidemenu').close();
   }
 
   handleClickClearCancel() {
@@ -80,6 +81,7 @@ export default class TimeTracking extends LightningElement {
 
   handleClickExport() {
     this.proccessExport();
+    this.template.querySelector('ui-sidemenu').close();
   }
 
   //----------------------------
