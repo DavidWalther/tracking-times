@@ -16,6 +16,10 @@ div.content {
   grid-template-columns: 30px auto;
 }
 
+.wide {
+  display: none;
+}
+
 ui-sidemenu div {
   margin-bottom: 10px;
 }
@@ -73,6 +77,10 @@ a.button-github {
 @media (min-width: 450px) {
   .button-bar_mobile {
     display: none;
+  }
+
+  .wide {
+    display: block;
   }
 
   div.button-bar_wide {
