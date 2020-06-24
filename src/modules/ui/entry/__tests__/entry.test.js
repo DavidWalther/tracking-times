@@ -188,21 +188,6 @@ describe('check initial values', () => {
     expect(commentOutput).toBeTruthy();
     expect(commentOutput.textContent).toBe(probeText);
   });
-
-  test('output initial diff calculation', () => {
-    const probeStartTimestamp = new Date('2000-01-01T13:00:00.0000').getTime();
-    const probeEndTimestamp = new Date('2000-01-01T13:30:00.0000').getTime();
-
-    const element = createElement('ui-entry', { is: Entry });
-    element.start = probeStartTimestamp;
-    element.end = probeEndTimestamp;
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('span.diff');
-
-    expect(component).toBeTruthy();
-    expect(component.textContent).toBe('0.5');
-  });
 });
 
 describe('check Update of Outputs on Input change', () => {
@@ -417,6 +402,21 @@ describe('feature - difference', () => {
     const component = element.shadowRoot.querySelector('span.diff');
 
     expect(component).toBeTruthy();
+  });
+
+  test('output initial diff calculation', () => {
+    const probeStartTimestamp = new Date('2000-01-01T13:00:00.0000').getTime();
+    const probeEndTimestamp = new Date('2000-01-01T13:30:00.0000').getTime();
+
+    const element = createElement('ui-entry', { is: Entry });
+    element.start = probeStartTimestamp;
+    element.end = probeEndTimestamp;
+    document.body.appendChild(element);
+
+    const component = element.shadowRoot.querySelector('span.diff');
+
+    expect(component).toBeTruthy();
+    expect(component.textContent).toBe('0.5');
   });
 
   test('diff output changes on input change', () => {
