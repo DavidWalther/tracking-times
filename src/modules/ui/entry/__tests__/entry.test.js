@@ -437,6 +437,15 @@ describe('check events on changed values', () => {
   });
 });
 
+describe('feature - difference', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+});
+
 describe('feature - break time', () => {
   afterEach(() => {
     // The jsdom instance is shared across test cases in a single file so reset the DOM
