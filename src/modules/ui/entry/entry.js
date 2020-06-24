@@ -2,7 +2,14 @@ import { LightningElement, api, track } from 'lwc';
 
 export default class Entry extends LightningElement {
   @api
-  breaktime;
+  get break() {
+    return this.internalState.break;
+  }
+  set break(value) {
+    if (value !== undefined) {
+      this.internalState.break = value;
+    }
+  }
 
   @api
   get version() {
@@ -53,7 +60,9 @@ export default class Entry extends LightningElement {
     }
   }
 
-  internalState = {};
+  internalState = {
+    break: 0
+  };
 
   label = {
     modal: {
@@ -221,6 +230,7 @@ export default class Entry extends LightningElement {
       result.enddate = end.toISOString().split('T')[0];
       result.endtime = end.toLocaleTimeString().substr(0, 5);
     }
+    result.break = this.break;
     result.comment = this.internalState.comment;
     return result;
   }
@@ -267,6 +277,7 @@ export default class Entry extends LightningElement {
     this.getInputEndDate().value = values.enddate;
     this.getInputEndTime().value = values.endtime;
     this.getInputComment().value = values.comment;
+    this.getInputBreak().value = values.break;
   }
 
   readModalInputs() {
@@ -348,5 +359,9 @@ export default class Entry extends LightningElement {
 
   getInputComment() {
     return this.template.querySelector('textarea.comment');
+  }
+
+  getInputBreak() {
+    return this.template.querySelector('input.break');
   }
 }
