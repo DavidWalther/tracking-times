@@ -122,15 +122,6 @@ describe('Check for Outputs', () => {
 
     expect(commentOutput).toBeTruthy();
   });
-
-  test('difference output exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('span.diff');
-
-    expect(component).toBeTruthy();
-  });
 });
 
 describe('check initial values', () => {
@@ -196,21 +187,6 @@ describe('check initial values', () => {
 
     expect(commentOutput).toBeTruthy();
     expect(commentOutput.textContent).toBe(probeText);
-  });
-
-  test('output initial diff calculation', () => {
-    const probeStartTimestamp = new Date('2000-01-01T13:00:00.0000').getTime();
-    const probeEndTimestamp = new Date('2000-01-01T13:30:00.0000').getTime();
-
-    const element = createElement('ui-entry', { is: Entry });
-    element.start = probeStartTimestamp;
-    element.end = probeEndTimestamp;
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('span.diff');
-
-    expect(component).toBeTruthy();
-    expect(component.textContent).toBe('0.5');
   });
 });
 
@@ -334,32 +310,6 @@ describe('check Update of Outputs on Input change', () => {
       expect(output.textContent).toBe(newInputValue);
     });
   });
-
-  test('diff output changes on input change', () => {
-    const probeStartTimestamp = 0;
-    const probeEndTimestamp = 1000 * 60 * 60;
-    const newInputValue = '05:00';
-
-    const element = createElement('ui-entry', { is: Entry });
-    element.start = probeStartTimestamp;
-    element.end = probeEndTimestamp;
-    document.body.appendChild(element);
-
-    const editButton = getEditButton(element.shadowRoot);
-    editButton.dispatchEvent(new CustomEvent('click'));
-
-    const input = element.shadowRoot.querySelector('input.end-time');
-    input.value = newInputValue;
-
-    const editModal = getEditModal(element.shadowRoot);
-    editModal.dispatchEvent(new CustomEvent('confirm'));
-
-    return Promise.resolve().then(() => {
-      const output = element.shadowRoot.querySelector('span.diff');
-      expect(output).toBeTruthy();
-      expect(output.textContent).toBe('4');
-    });
-  });
 });
 
 describe('check events on changed values', () => {
@@ -433,6 +383,65 @@ describe('check events on changed values', () => {
       );
       expect(handler.mock.calls[0][0].detail.comment).toBeTruthy();
       expect(handler.mock.calls[0][0].detail.comment).toBe(probeComment);
+    });
+  });
+});
+
+describe('feature - difference', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('difference output exists', () => {
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    const component = element.shadowRoot.querySelector('span.diff');
+
+    expect(component).toBeTruthy();
+  });
+
+  test('output initial diff calculation', () => {
+    const probeStartTimestamp = new Date('2000-01-01T13:00:00.0000').getTime();
+    const probeEndTimestamp = new Date('2000-01-01T13:30:00.0000').getTime();
+
+    const element = createElement('ui-entry', { is: Entry });
+    element.start = probeStartTimestamp;
+    element.end = probeEndTimestamp;
+    document.body.appendChild(element);
+
+    const component = element.shadowRoot.querySelector('span.diff');
+
+    expect(component).toBeTruthy();
+    expect(component.textContent).toBe('0.5');
+  });
+
+  test('diff output changes on input change', () => {
+    const probeStartTimestamp = 0;
+    const probeEndTimestamp = 1000 * 60 * 60;
+    const newInputValue = '05:00';
+
+    const element = createElement('ui-entry', { is: Entry });
+    element.start = probeStartTimestamp;
+    element.end = probeEndTimestamp;
+    document.body.appendChild(element);
+
+    const editButton = getEditButton(element.shadowRoot);
+    editButton.dispatchEvent(new CustomEvent('click'));
+
+    const input = element.shadowRoot.querySelector('input.end-time');
+    input.value = newInputValue;
+
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
+
+    return Promise.resolve().then(() => {
+      const output = element.shadowRoot.querySelector('span.diff');
+      expect(output).toBeTruthy();
+      expect(output.textContent).toBe('4');
     });
   });
 });
