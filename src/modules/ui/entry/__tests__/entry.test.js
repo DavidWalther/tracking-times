@@ -122,15 +122,6 @@ describe('Check for Outputs', () => {
 
     expect(commentOutput).toBeTruthy();
   });
-
-  test('difference output exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('span.diff');
-
-    expect(component).toBeTruthy();
-  });
 });
 
 describe('check initial values', () => {
@@ -334,32 +325,6 @@ describe('check Update of Outputs on Input change', () => {
       expect(output.textContent).toBe(newInputValue);
     });
   });
-
-  test('diff output changes on input change', () => {
-    const probeStartTimestamp = 0;
-    const probeEndTimestamp = 1000 * 60 * 60;
-    const newInputValue = '05:00';
-
-    const element = createElement('ui-entry', { is: Entry });
-    element.start = probeStartTimestamp;
-    element.end = probeEndTimestamp;
-    document.body.appendChild(element);
-
-    const editButton = getEditButton(element.shadowRoot);
-    editButton.dispatchEvent(new CustomEvent('click'));
-
-    const input = element.shadowRoot.querySelector('input.end-time');
-    input.value = newInputValue;
-
-    const editModal = getEditModal(element.shadowRoot);
-    editModal.dispatchEvent(new CustomEvent('confirm'));
-
-    return Promise.resolve().then(() => {
-      const output = element.shadowRoot.querySelector('span.diff');
-      expect(output).toBeTruthy();
-      expect(output.textContent).toBe('4');
-    });
-  });
 });
 
 describe('check events on changed values', () => {
@@ -443,6 +408,15 @@ describe('feature - difference', () => {
     while (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }
+  });
+
+  test('difference output exists', () => {
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    const component = element.shadowRoot.querySelector('span.diff');
+
+    expect(component).toBeTruthy();
   });
 });
 
