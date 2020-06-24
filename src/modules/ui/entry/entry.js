@@ -8,6 +8,7 @@ export default class Entry extends LightningElement {
   set break(value) {
     if (value !== undefined) {
       this.internalState.break = value;
+      this.setDisplayStateBreak();
     }
   }
 
@@ -87,7 +88,8 @@ export default class Entry extends LightningElement {
       starttime: 'Start time',
       enddate: 'End date',
       endtime: 'End time',
-      comment: 'Comment'
+      comment: 'Comment',
+      break: 'Break (min)'
     }
   };
 
@@ -120,6 +122,10 @@ export default class Entry extends LightningElement {
 
   setDisplayStateComment() {
     this.displayState.comment = this.internalState.comment;
+  }
+
+  setDisplayStateBreak() {
+    this.displayState.break = this.internalState.break;
   }
 
   extractDateStringFromTimeStamp(timestamp) {
@@ -253,15 +259,18 @@ export default class Entry extends LightningElement {
     this.displayState.enddate = values.enddate;
     this.displayState.endtime = values.endtime;
     this.displayState.comment = values.comment;
+    this.setDisplayStateBreak();
   }
 
   writeValuesToInternalState(values) {
-    let start, end, comment;
+    let start, end, breakValue, comment;
     start = new Date(values.startDateStr + 'T' + values.startTimeStr);
     end = new Date(values.endDateStr + 'T' + values.endTimeStr);
     comment = values.comment;
+    breakValue = values.break;
     this.internalState.startTimeStamp = start.getTime();
     this.internalState.endTimeStamp = end.getTime();
+    this.internalState.break = breakValue;
     this.internalState.comment = comment;
   }
 
@@ -287,6 +296,8 @@ export default class Entry extends LightningElement {
     values.startTimeStr = this.getInputStartTime().value;
     values.endDateStr = this.getInputEndDate().value;
     values.endTimeStr = this.getInputEndTime().value;
+    values.break = this.getInputBreak().value;
+    values.break = parseInt(values.break, 10);
     values.comment = this.getInputComment().value;
     return values;
   }

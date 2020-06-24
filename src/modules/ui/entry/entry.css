@@ -8,7 +8,9 @@ div.layout {
   grid-template-areas:
     'startDate startTime'
     'endDate endTime'
+    'break break'
     'comment comment'
+    'buttons diff'
     'buttons diff';
 }
 
@@ -30,6 +32,10 @@ div.area-endtime {
 
 div.area-diff {
   grid-area: diff;
+}
+
+div.area-break {
+  grid-area: break;
 }
 
 div.area-comment {
@@ -125,6 +131,6 @@ div.container-button-bar > input {
     grid-template-areas:
       'startDate startTime comment'
       'endDate endTime comment'
-      'buttons diff comment';
+      'buttons break diff';
   }
 }

@@ -12,6 +12,9 @@
     <div class="area-endtime container container-end-time">
       <span class="end-time">{displayState.endtime}</span>
     </div>
+    <div class="area-break container container-break">
+      <output class="break">{displayState.break}</output>
+    </div>
     <div class="area-diff container container-diff">
       <span class="diff">{difference}</span>
     </div>
@@ -54,8 +57,9 @@
       <label class="end-date">{label.input.enddate}</label>
       <input class="modal-input end-date" type="date" />
       <label class="end-time">{label.input.endtime}</label>
-      <input class="modal-input break" type="number" />
       <input class="modal-input end-time" step="900" type="time" />
+      <label class="end-time">{label.input.break}</label>
+      <input class="modal-input break" type="number" min="0" step="15" />
       <label class="comment">{label.input.comment}</label>
       <textarea class="modal-input comment"></textarea>
     </div>
