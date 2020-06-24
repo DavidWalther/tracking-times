@@ -496,6 +496,27 @@ describe('feature - break time', () => {
       expect(breakInput.value).toBe(breakValue.toString());
     });
   });
+
+  test('has an output', () => {
+    const breakValue = 78;
+    /**
+     * Given
+     * The component is created with a given value for break
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    element.break = breakValue;
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the edit button is clicked
+     */
+
+    const breakOutput = element.shadowRoot.querySelector('output.break');
+    expect(breakOutput).toBeTruthy();
+    expect(breakOutput.value).toBeTruthy();
+    expect(breakOutput.value).toBe(breakValue.toString());
+  });
 });
 
 describe('check single entry delete', () => {
