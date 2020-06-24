@@ -437,6 +437,38 @@ describe('check events on changed values', () => {
   });
 });
 
+describe('feature - break time', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('input for exists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * the entry cmp is added
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * An input for breaktime exists
+       */
+      const entryElem = element.shadowRoot.querySelector('input.break');
+      expect(entryElem).toBeTruthy();
+    });
+  });
+});
+
 describe('check single entry delete', () => {
   afterEach(() => {
     while (document.body.firstChild) {
