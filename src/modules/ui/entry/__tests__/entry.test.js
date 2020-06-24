@@ -526,6 +526,10 @@ describe('feature - break time', () => {
     expect(breakOutput.value).toBeTruthy();
     expect(breakOutput.value).toBe(breakValue.toString());
   });
+
+  test('difference calculation accounts for break', () => {
+    expect(0).toBe(1);
+  });
 });
 
 describe('check single entry delete', () => {
