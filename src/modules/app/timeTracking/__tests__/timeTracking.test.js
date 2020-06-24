@@ -542,20 +542,30 @@ function setVersion4DummyData() {
 }
 
 function getAddButton(shadowRoot) {
-  return getElementBySelectorAll(shadowRoot, '.button-add');
+  const allFoundElements = getElementBySelectorAll(shadowRoot, '.button-add');
+  // check whether there is one for each layout
+  expect(allFoundElements.length).toBe(2);
+  return allFoundElements[0];
 }
 
 function getClearButton(shadowRoot) {
-  return getElementBySelectorAll(shadowRoot, '.button-clear');
+  const allFoundElements = getElementBySelectorAll(shadowRoot, '.button-clear');
+  // check whether there is one for each layout
+  expect(allFoundElements.length).toBe(2);
+  return allFoundElements[0];
 }
 
 function getDownloadButton(shadowRoot) {
-  return getElementBySelectorAll(shadowRoot, '.button-export');
+  const allFoundElements = getElementBySelectorAll(
+    shadowRoot,
+    '.button-export'
+  );
+  // check whether there is one for each layout
+  expect(allFoundElements.length).toBe(2);
+  return allFoundElements[0];
 }
 
 function getElementBySelectorAll(shadowRoot, classname) {
   const resultList = shadowRoot.querySelectorAll(classname);
-  expect(resultList).toBeTruthy();
-  expect(resultList.length).toBe(1);
-  return resultList[0];
+  return resultList;
 }
