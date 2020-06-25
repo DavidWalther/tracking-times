@@ -220,7 +220,8 @@ export default class Entry extends LightningElement {
       detail: {
         start: this.start,
         end: this.end,
-        comment: this.comment
+        comment: this.comment,
+        break: this.break
       }
     });
     this.dispatchEvent(externalEvent);
