@@ -472,7 +472,7 @@ describe('feature - difference', () => {
      */
 
     const differenceOutput = element.shadowRoot.querySelector('output.diff');
-    expect(differenceOutput.innerHTML).toBe(1.5);
+    expect(differenceOutput.value).toBe((1.5).toString());
   });
 });
 
