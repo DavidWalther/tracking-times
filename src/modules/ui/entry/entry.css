@@ -8,10 +8,9 @@ div.layout {
   grid-template-areas:
     'startDate startTime'
     'endDate endTime'
-    'break break'
     'comment comment'
-    'buttons diff'
-    'buttons diff';
+    'btnEdit break'
+    'btnDelete diff';
 }
 
 div.area-startdate {
@@ -42,29 +41,17 @@ div.area-comment {
   grid-area: comment;
 }
 
-div.area-buttons {
-  grid-area: buttons;
-}
-
-div.buttons {
-  display: grid;
-  grid-auto-columns: 100%;
-  grid-template-areas:
-    'btnEdit'
-    'btnDelete';
-}
-
-.edit {
+div.area-buttons-edit {
   grid-area: btnEdit;
 }
 
-.button-delete {
+div.area-buttons-delete {
   grid-area: btnDelete;
 }
 
-/*
-Style rules
-*/
+div.container-button {
+  padding: 5px;
+}
 
 div.content {
   height: 100%;
@@ -127,10 +114,10 @@ div.container-button-bar > input {
 @media (min-width: 786px) {
   div.layout {
     grid-auto-columns: 33.33%;
-    grid-auto-rows: 33.33% 33.33% auto;
     grid-template-areas:
       'startDate startTime comment'
       'endDate endTime comment'
-      'buttons break diff';
+      'btnEdit break comment'
+      'btnDelete diff comment';
   }
 }
