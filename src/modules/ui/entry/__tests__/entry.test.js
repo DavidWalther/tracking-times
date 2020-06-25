@@ -399,7 +399,7 @@ describe('feature - difference', () => {
     const element = createElement('ui-entry', { is: Entry });
     document.body.appendChild(element);
 
-    const component = element.shadowRoot.querySelector('span.diff');
+    const component = element.shadowRoot.querySelector('output.diff');
 
     expect(component).toBeTruthy();
   });
@@ -413,7 +413,7 @@ describe('feature - difference', () => {
     element.end = probeEndTimestamp;
     document.body.appendChild(element);
 
-    const component = element.shadowRoot.querySelector('span.diff');
+    const component = element.shadowRoot.querySelector('output.diff');
 
     expect(component).toBeTruthy();
     expect(component.textContent).toBe('0.5');
@@ -439,7 +439,7 @@ describe('feature - difference', () => {
     editModal.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
-      const output = element.shadowRoot.querySelector('span.diff');
+      const output = element.shadowRoot.querySelector('output.diff');
       expect(output).toBeTruthy();
       expect(output.textContent).toBe('4');
     });
@@ -455,7 +455,7 @@ describe('feature - difference', () => {
      * Given
      * -
      */
-    
+
     /**
      * When
      * The entry cmp ist created with start, end and break
@@ -465,13 +465,13 @@ describe('feature - difference', () => {
     element.end = TIMESTAMP_END;
     element.break = THIRTY_MINUTES;
     document.body.appendChild(element);
-    
+
     /**
      * Then
      * The difference is reduced by the break time
      */
-    
-    const differenceOutput = element.shadowRoot.querySelector('span.diff');
+
+    const differenceOutput = element.shadowRoot.querySelector('output.diff');
     expect(differenceOutput.innerHTML).toBe(1.5);
   });
 });
