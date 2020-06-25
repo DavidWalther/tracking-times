@@ -197,6 +197,9 @@ export default class TimeTracking extends LightningElement {
         if (loaded.settings.version === 'v0.4') {
           this.loadDataV04(loaded);
         }
+        if (loaded.settings.version === 'v0.5') {
+          this.loadDataV05(loaded);
+        }
       }
     }
   }
@@ -211,6 +214,7 @@ export default class TimeTracking extends LightningElement {
           itemId: entryData.start.value + this.state.entries.length,
           start: entryData.start.value,
           end: entryData.end.value,
+          break: entryData.break,
           comment: entryData.comment
         };
         this.state.entries.push(tempEntry);
@@ -230,6 +234,11 @@ export default class TimeTracking extends LightningElement {
   }
 
   loadDataV04(loaded) {
+    this.state.version = loaded.settings.version;
+    this.state.entries = loaded.entries;
+  }
+
+  loadDataV05(loaded) {
     this.state.version = loaded.settings.version;
     this.state.entries = loaded.entries;
   }
