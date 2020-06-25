@@ -21,20 +21,25 @@
     <div class="area-comment container container-comment">
       <span class="comment">{displayState.comment}</span>
     </div>
-    <div class="area-buttons container container-button-bar">
-      <div class="buttons">
-        <ui-button
-          class="button edit"
-          value={label.button.edit}
-          onclick={handleButtonClickEdit}
-        ></ui-button>
-        <ui-button
-          class="button button-delete"
-          value={label.button.delete}
-          onclick={handleButtonClickDelete}
-        ></ui-button>
-      </div>
+    <div class="area-buttons-edit">
+      <ui-button
+        class="button edit"
+        value={label.button.edit}
+        onclick={handleButtonClickEdit}
+      ></ui-button>
     </div>
+    <div class="area-buttons-edit">
+      <ui-button
+        class="button button-delete"
+        value={label.button.delete}
+        onclick={handleButtonClickDelete}
+      ></ui-button>
+    </div>
+    <!--     <div class="area-buttons container container-button-bar">
+      <div class="buttons">
+        
+      </div>
+    </div> -->
   </div>
   <!--
       Edit Modal
