@@ -122,15 +122,6 @@ describe('Check for Outputs', () => {
 
     expect(commentOutput).toBeTruthy();
   });
-
-  test('difference output exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('span.diff');
-
-    expect(component).toBeTruthy();
-  });
 });
 
 describe('check initial values', () => {
@@ -196,21 +187,6 @@ describe('check initial values', () => {
 
     expect(commentOutput).toBeTruthy();
     expect(commentOutput.textContent).toBe(probeText);
-  });
-
-  test('output initial diff calculation', () => {
-    const probeStartTimestamp = new Date('2000-01-01T13:00:00.0000').getTime();
-    const probeEndTimestamp = new Date('2000-01-01T13:30:00.0000').getTime();
-
-    const element = createElement('ui-entry', { is: Entry });
-    element.start = probeStartTimestamp;
-    element.end = probeEndTimestamp;
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('span.diff');
-
-    expect(component).toBeTruthy();
-    expect(component.textContent).toBe('0.5');
   });
 });
 
@@ -334,32 +310,6 @@ describe('check Update of Outputs on Input change', () => {
       expect(output.textContent).toBe(newInputValue);
     });
   });
-
-  test('diff output changes on input change', () => {
-    const probeStartTimestamp = 0;
-    const probeEndTimestamp = 1000 * 60 * 60;
-    const newInputValue = '05:00';
-
-    const element = createElement('ui-entry', { is: Entry });
-    element.start = probeStartTimestamp;
-    element.end = probeEndTimestamp;
-    document.body.appendChild(element);
-
-    const editButton = getEditButton(element.shadowRoot);
-    editButton.dispatchEvent(new CustomEvent('click'));
-
-    const input = element.shadowRoot.querySelector('input.end-time');
-    input.value = newInputValue;
-
-    const editModal = getEditModal(element.shadowRoot);
-    editModal.dispatchEvent(new CustomEvent('confirm'));
-
-    return Promise.resolve().then(() => {
-      const output = element.shadowRoot.querySelector('span.diff');
-      expect(output).toBeTruthy();
-      expect(output.textContent).toBe('4');
-    });
-  });
 });
 
 describe('check events on changed values', () => {
@@ -434,6 +384,183 @@ describe('check events on changed values', () => {
       expect(handler.mock.calls[0][0].detail.comment).toBeTruthy();
       expect(handler.mock.calls[0][0].detail.comment).toBe(probeComment);
     });
+  });
+});
+
+describe('feature - difference', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('difference output exists', () => {
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    const component = element.shadowRoot.querySelector('output.diff');
+
+    expect(component).toBeTruthy();
+  });
+
+  test('output initial diff calculation', () => {
+    const probeStartTimestamp = new Date('2000-01-01T13:00:00.0000').getTime();
+    const probeEndTimestamp = new Date('2000-01-01T13:30:00.0000').getTime();
+
+    const element = createElement('ui-entry', { is: Entry });
+    element.start = probeStartTimestamp;
+    element.end = probeEndTimestamp;
+    document.body.appendChild(element);
+
+    const component = element.shadowRoot.querySelector('output.diff');
+
+    expect(component).toBeTruthy();
+    expect(component.textContent).toBe('0.5');
+  });
+
+  test('diff output changes on input change', () => {
+    const probeStartTimestamp = 0;
+    const probeEndTimestamp = 1000 * 60 * 60;
+    const newInputValue = '05:00';
+
+    const element = createElement('ui-entry', { is: Entry });
+    element.start = probeStartTimestamp;
+    element.end = probeEndTimestamp;
+    document.body.appendChild(element);
+
+    const editButton = getEditButton(element.shadowRoot);
+    editButton.dispatchEvent(new CustomEvent('click'));
+
+    const input = element.shadowRoot.querySelector('input.end-time');
+    input.value = newInputValue;
+
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
+
+    return Promise.resolve().then(() => {
+      const output = element.shadowRoot.querySelector('output.diff');
+      expect(output).toBeTruthy();
+      expect(output.textContent).toBe('4');
+    });
+  });
+
+  test('difference calculation accounts for break', () => {
+    const TWO_HOURS = 2 * 60 * 60 * 1000;
+    const THIRTY_MINUTES = 30 * 60 * 1000;
+    const TIMESTAMP_START = new Date().getTime();
+    const TIMESTAMP_END = new Date(TIMESTAMP_START + TWO_HOURS).getTime();
+
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The entry cmp ist created with start, end and break
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    element.start = TIMESTAMP_START;
+    element.end = TIMESTAMP_END;
+    element.break = THIRTY_MINUTES;
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The difference is reduced by the break time
+     */
+
+    const differenceOutput = element.shadowRoot.querySelector('output.diff');
+    expect(differenceOutput.value).toBe((1.5).toString());
+  });
+});
+
+describe('feature - break time', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('input for exists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * the entry cmp is added
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * An input for breaktime exists
+       */
+      const entryElem = element.shadowRoot.querySelector('input.break');
+      expect(entryElem).toBeTruthy();
+    });
+  });
+
+  test('input takes value from api', () => {
+    const breakValue = 78;
+    const breakValueInMilliseconds = breakValue * 60 * 1000;
+
+    /**
+     * Given
+     * The component is created with a given value for break
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    element.break = breakValueInMilliseconds;
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the edit button is clicked
+     */
+    const editButton = getEditButton(element.shadowRoot);
+    editButton.dispatchEvent(new CustomEvent('click'));
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * An input for breaktime exists
+       */
+      const breakInput = element.shadowRoot.querySelector('input.break');
+      expect(breakInput).toBeTruthy();
+      expect(breakInput.value).toBe(breakValue.toString());
+    });
+  });
+
+  test('has an output', () => {
+    const breakValue = 78;
+    const breakValueInMilliseconds = breakValue * 60 * 1000;
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component is created with a given value for break
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    element.break = breakValueInMilliseconds;
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     *
+     */
+    const breakOutput = element.shadowRoot.querySelector('output.break');
+    expect(breakOutput).toBeTruthy();
+    expect(breakOutput.value).toBeTruthy();
+    expect(breakOutput.value).toBe(breakValue.toString());
   });
 });
 
