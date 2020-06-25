@@ -8,6 +8,7 @@ const MILISECONDS_PER_HOUR = MILISECONDS_PER_MINUTE * 60;
 const CUTTING_TYPE_CEIL = 'ceil';
 const CUTTING_TYPE_FLOOR = 'floor';
 const CUTTING_TYPE_ROUND = 'round';
+const DATA_CURRENT_VERSION = 'v0.5';
 
 export default class TimeTracking extends LightningElement {
   @track state = {
@@ -173,7 +174,7 @@ export default class TimeTracking extends LightningElement {
   saveData() {
     const data = {
       settings: {
-        version: 'v0.4'
+        version: DATA_CURRENT_VERSION
       },
       entries: this.state.entries
     };
@@ -196,6 +197,9 @@ export default class TimeTracking extends LightningElement {
         if (loaded.settings.version === 'v0.4') {
           this.loadDataV04(loaded);
         }
+        if (loaded.settings.version === 'v0.5') {
+          this.loadDataV05(loaded);
+        }
       }
     }
   }
@@ -210,6 +214,7 @@ export default class TimeTracking extends LightningElement {
           itemId: entryData.start.value + this.state.entries.length,
           start: entryData.start.value,
           end: entryData.end.value,
+          break: entryData.break,
           comment: entryData.comment
         };
         this.state.entries.push(tempEntry);
@@ -229,6 +234,11 @@ export default class TimeTracking extends LightningElement {
   }
 
   loadDataV04(loaded) {
+    this.state.version = loaded.settings.version;
+    this.state.entries = loaded.entries;
+  }
+
+  loadDataV05(loaded) {
     this.state.version = loaded.settings.version;
     this.state.entries = loaded.entries;
   }
@@ -265,6 +275,7 @@ export default class TimeTracking extends LightningElement {
     let entry;
     const startValue = newDetail.start;
     const endValue = newDetail.end;
+    const breakValue = newDetail.break;
     const commentValue = newDetail.comment;
 
     if (index !== undefined) {
@@ -280,6 +291,9 @@ export default class TimeTracking extends LightningElement {
         }
         if (endValue !== undefined) {
           entry.end = endValue;
+        }
+        if (breakValue !== undefined) {
+          entry.break = breakValue;
         }
         if (commentValue !== undefined) {
           entry.comment = commentValue;
