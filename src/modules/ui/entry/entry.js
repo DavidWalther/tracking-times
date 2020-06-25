@@ -1,5 +1,7 @@
 import { LightningElement, api, track } from 'lwc';
 
+const MILLISECONDS_PER_MINUTE = 1000 * 60;
+
 export default class Entry extends LightningElement {
   @api
   get break() {
@@ -125,7 +127,8 @@ export default class Entry extends LightningElement {
   }
 
   setDisplayStateBreak() {
-    this.displayState.break = this.internalState.break;
+    this.displayState.break =
+      this.internalState.break / MILLISECONDS_PER_MINUTE;
   }
 
   extractDateStringFromTimeStamp(timestamp) {
@@ -237,7 +240,7 @@ export default class Entry extends LightningElement {
       result.enddate = end.toISOString().split('T')[0];
       result.endtime = end.toLocaleTimeString().substr(0, 5);
     }
-    result.break = this.break;
+    result.break = this.break / MILLISECONDS_PER_MINUTE;
     result.comment = this.internalState.comment;
     return result;
   }
@@ -298,7 +301,7 @@ export default class Entry extends LightningElement {
     values.endDateStr = this.getInputEndDate().value;
     values.endTimeStr = this.getInputEndTime().value;
     values.break = this.getInputBreak().value;
-    values.break = parseInt(values.break, 10);
+    values.break = parseInt(values.break, 10) * MILLISECONDS_PER_MINUTE;
     values.comment = this.getInputComment().value;
     return values;
   }

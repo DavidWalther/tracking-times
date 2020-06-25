@@ -509,19 +509,20 @@ describe('feature - break time', () => {
 
   test('input takes value from api', () => {
     const breakValue = 78;
+    const breakValueInMilliseconds = breakValue * 60 * 1000;
+
     /**
      * Given
      * The component is created with a given value for break
      */
     const element = createElement('ui-entry', { is: Entry });
-    element.break = breakValue;
+    element.break = breakValueInMilliseconds;
     document.body.appendChild(element);
 
     /**
      * When
      * the edit button is clicked
      */
-
     const editButton = getEditButton(element.shadowRoot);
     editButton.dispatchEvent(new CustomEvent('click'));
 
@@ -538,19 +539,24 @@ describe('feature - break time', () => {
 
   test('has an output', () => {
     const breakValue = 78;
+    const breakValueInMilliseconds = breakValue * 60 * 1000;
     /**
      * Given
-     * The component is created with a given value for break
+     * -
      */
-    const element = createElement('ui-entry', { is: Entry });
-    element.break = breakValue;
-    document.body.appendChild(element);
 
     /**
      * When
-     * the edit button is clicked
+     * The component is created with a given value for break
      */
+    const element = createElement('ui-entry', { is: Entry });
+    element.break = breakValueInMilliseconds;
+    document.body.appendChild(element);
 
+    /**
+     * Then
+     *
+     */
     const breakOutput = element.shadowRoot.querySelector('output.break');
     expect(breakOutput).toBeTruthy();
     expect(breakOutput.value).toBeTruthy();
