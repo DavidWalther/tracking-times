@@ -265,6 +265,7 @@ export default class TimeTracking extends LightningElement {
     let entry;
     const startValue = newDetail.start;
     const endValue = newDetail.end;
+    const breakValue = newDetail.break;
     const commentValue = newDetail.comment;
 
     if (index !== undefined) {
@@ -280,6 +281,9 @@ export default class TimeTracking extends LightningElement {
         }
         if (endValue !== undefined) {
           entry.end = endValue;
+        }
+        if (breakValue !== undefined) {
+          entry.break = breakValue;
         }
         if (commentValue !== undefined) {
           entry.comment = commentValue;
