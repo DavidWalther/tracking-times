@@ -8,6 +8,7 @@ const MILISECONDS_PER_HOUR = MILISECONDS_PER_MINUTE * 60;
 const CUTTING_TYPE_CEIL = 'ceil';
 const CUTTING_TYPE_FLOOR = 'floor';
 const CUTTING_TYPE_ROUND = 'round';
+const DATA_CURRENT_VERSION = 'v0.5';
 
 export default class TimeTracking extends LightningElement {
   @track state = {
@@ -173,7 +174,7 @@ export default class TimeTracking extends LightningElement {
   saveData() {
     const data = {
       settings: {
-        version: 'v0.4'
+        version: DATA_CURRENT_VERSION
       },
       entries: this.state.entries
     };
