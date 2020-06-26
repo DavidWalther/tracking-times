@@ -44,7 +44,7 @@ describe('check loading based on version', () => {
       const outputSpans = entries[0].shadowRoot.querySelectorAll('span');
       expect(outputSpans).toBeTruthy();
       expect(outputSpans.length).toBeTruthy();
-      expect(outputSpans.length).toBe(5);
+      expect(outputSpans.length).toBe(4);
       expect(outputSpans[0].classList[0]).toBe('start-date');
       expect(outputSpans[0].textContent).toBe('1970-01-01');
 
@@ -57,8 +57,8 @@ describe('check loading based on version', () => {
       expect(outputSpans[3].classList[0]).toBe('end-time');
       expect(outputSpans[3].textContent).toBe('01:03');
 
-      expect(outputSpans[4].classList[0]).toBe('comment');
-      expect(outputSpans[4].textContent).toBe('legacy entry');
+      /*       expect(outputSpans[4].classList[0]).toBe('comment');
+      expect(outputSpans[4].textContent).toBe('legacy entry'); */
 
       const outputTags = entries[0].shadowRoot.querySelectorAll('output.diff');
       expect(outputTags.length).toBe(1);
@@ -88,7 +88,7 @@ describe('check loading based on version', () => {
       const outputSpans = entries[0].shadowRoot.querySelectorAll('span');
       expect(outputSpans).toBeTruthy();
       expect(outputSpans.length).toBeTruthy();
-      expect(outputSpans.length).toBe(5);
+      //expect(outputSpans.length).toBe(5);
       expect(outputSpans[0].textContent).toBe('1970-01-01');
     });
   });
