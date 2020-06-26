@@ -118,7 +118,7 @@ describe('Check for Outputs', () => {
     const element = createElement('ui-entry', { is: Entry });
     document.body.appendChild(element);
 
-    const commentOutput = element.shadowRoot.querySelector('span.comment');
+    const commentOutput = element.shadowRoot.querySelector('.input-comment');
 
     expect(commentOutput).toBeTruthy();
   });
