@@ -183,7 +183,7 @@ describe('check initial values', () => {
     element.comment = probeText;
     document.body.appendChild(element);
 
-    const commentOutput = element.shadowRoot.querySelector('span.comment');
+    const commentOutput = element.shadowRoot.querySelector('.input-comment');
 
     expect(commentOutput).toBeTruthy();
     expect(commentOutput.textContent).toBe(probeText);
@@ -305,7 +305,7 @@ describe('check Update of Outputs on Input change', () => {
     editModal.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
-      const output = element.shadowRoot.querySelector('span.comment');
+      const output = element.shadowRoot.querySelector('.input-comment');
       expect(output).toBeTruthy();
       expect(output.textContent).toBe(newInputValue);
     });
