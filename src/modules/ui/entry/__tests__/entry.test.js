@@ -59,15 +59,11 @@ describe('check edit modal', () => {
     const inputEndTime = element.shadowRoot.querySelector(
       '.modal-edit > div > input.end-time'
     );
-    const textAreaComment = element.shadowRoot.querySelector(
-      '.modal-edit > div > textarea.comment'
-    );
 
     expect(inputStartDate).toBeTruthy();
     expect(inputStartTime).toBeTruthy();
     expect(inputEndDate).toBeTruthy();
     expect(inputEndTime).toBeTruthy();
-    expect(textAreaComment).toBeTruthy();
   });
 });
 
@@ -526,12 +522,47 @@ describe('feature - comment', () => {
     }
   });
 
-  test('comment output exists', () => {
+  test('commet input exists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The entry-cmp is created
+     */
     const element = createElement('ui-entry', { is: Entry });
     document.body.appendChild(element);
 
-    const commentOutput = element.shadowRoot.querySelector('.input-comment');
+    /**
+     * Then
+     * It has an input for comments
+     */
+    const textAreaComment = element.shadowRoot.querySelector(
+      '.modal-edit > div > textarea.comment'
+    );
+    expect(textAreaComment).toBeTruthy();
+  });
 
+  test('comment output exists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The entry-cmp is created
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * It has an output for comments
+     */
+    const commentOutput = element.shadowRoot.querySelector('.input-comment');
     expect(commentOutput).toBeTruthy();
   });
 
