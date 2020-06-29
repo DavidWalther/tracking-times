@@ -59,15 +59,11 @@ describe('check edit modal', () => {
     const inputEndTime = element.shadowRoot.querySelector(
       '.modal-edit > div > input.end-time'
     );
-    const textAreaComment = element.shadowRoot.querySelector(
-      '.modal-edit > div > textarea.comment'
-    );
 
     expect(inputStartDate).toBeTruthy();
     expect(inputStartTime).toBeTruthy();
     expect(inputEndDate).toBeTruthy();
     expect(inputEndTime).toBeTruthy();
-    expect(textAreaComment).toBeTruthy();
   });
 });
 
@@ -112,15 +108,6 @@ describe('Check for Outputs', () => {
     const endTimeOutput = element.shadowRoot.querySelector('span.end-time');
 
     expect(endTimeOutput).toBeTruthy();
-  });
-
-  test('comment output exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const commentOutput = element.shadowRoot.querySelector('.input-comment');
-
-    expect(commentOutput).toBeTruthy();
   });
 });
 
@@ -174,30 +161,6 @@ describe('check initial values', () => {
 
     expect(endTimeOutput).toBeTruthy();
     expect(endTimeOutput.textContent).toBe('13:00');
-  });
-
-  test('output comment', () => {
-    /**
-     * Given
-     * -
-     */
-
-    /**
-     * When
-     * The component is initialized with a comment
-     */
-    const probeText = '1234abcd';
-    const element = createElement('ui-entry', { is: Entry });
-    element.comment = probeText;
-    document.body.appendChild(element);
-
-    /**
-     * Then
-     * The comment is displayed
-     */
-    const commentOutput = element.shadowRoot.querySelector('textarea.comment');
-    expect(commentOutput).toBeTruthy();
-    expect(commentOutput.value).toBe(probeText);
   });
 });
 
@@ -297,42 +260,6 @@ describe('check Update of Outputs on Input change', () => {
       expect(output.textContent).toBe(newInputValue);
     });
   });
-
-  test('comment output changes on input change', () => {
-    /**
-     * Given
-     * The entry-cmp exists with initialized comment
-     */
-    const probeComment = 'abcd';
-    const element = createElement('ui-entry', { is: Entry });
-    element.comment = probeComment;
-    document.body.appendChild(element);
-
-    /**
-     * When
-     * - A new comment value is entered
-     * - save is clicked
-     */
-    const editButton = getEditButton(element.shadowRoot);
-    editButton.dispatchEvent(new CustomEvent('click'));
-
-    const newInputValue = 'a1b2c3d4';
-    const input = element.shadowRoot.querySelector('textarea.comment');
-    input.value = newInputValue;
-
-    const editModal = getEditModal(element.shadowRoot);
-    editModal.dispatchEvent(new CustomEvent('confirm'));
-
-    return Promise.resolve().then(() => {
-      /**
-       * Then
-       * The output displayes the new value
-       */
-      const commentInput = element.shadowRoot.querySelector('textarea.comment');
-      expect(commentInput).toBeTruthy();
-      expect(commentInput.value).toBe(newInputValue);
-    });
-  });
 });
 
 describe('check events on changed values', () => {
@@ -349,7 +276,6 @@ describe('check events on changed values', () => {
 
     const probeStartTimestamp = new Date(baseDate + 'T04:00').getTime();
     const probeEndTimestamp = new Date(baseDate + 'T09:00').getTime();
-    const probeComment = 'a1b2c3d4';
 
     const newStartTimeValue = '05:00';
     const newEndTimeValue = '08:00';
@@ -357,7 +283,6 @@ describe('check events on changed values', () => {
     const element = createElement('ui-entry', { is: Entry });
     element.start = probeStartTimestamp;
     element.end = probeEndTimestamp;
-    element.comment = probeComment;
     element.addEventListener('change', handler);
     document.body.appendChild(element);
 
@@ -404,8 +329,6 @@ describe('check events on changed values', () => {
       expect(handler.mock.calls[0][0].detail.end).toBe(
         new Date(baseDate + 'T' + newEndTimeValue).getTime()
       );
-      expect(handler.mock.calls[0][0].detail.comment).toBeTruthy();
-      expect(handler.mock.calls[0][0].detail.comment).toBe(probeComment);
     });
   });
 });
@@ -584,6 +507,147 @@ describe('feature - break time', () => {
     expect(breakOutput).toBeTruthy();
     expect(breakOutput.value).toBeTruthy();
     expect(breakOutput.value).toBe(breakValue.toString());
+  });
+});
+
+describe('feature - comment', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('commet input exists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The entry-cmp is created
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * It has an input for comments
+     */
+    const textAreaComment = element.shadowRoot.querySelector('.output.comment');
+    expect(textAreaComment).toBeTruthy();
+  });
+
+  test('comment output exists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The entry-cmp is created
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * It has an output for comments
+     */
+    const commentOutput = element.shadowRoot.querySelector('.input.comment');
+    expect(commentOutput).toBeTruthy();
+  });
+
+  test('comment can be initialized', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component is initialized with a comment
+     */
+    const probeText = '1234abcd';
+    const element = createElement('ui-entry', { is: Entry });
+    element.comment = probeText;
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The comment is displayed
+     */
+    const commentOutput = element.shadowRoot.querySelector('textarea.comment');
+    expect(commentOutput).toBeTruthy();
+    expect(commentOutput.value).toBe(probeText);
+  });
+
+  test('comment output changes on input change', () => {
+    /**
+     * Given
+     * The entry-cmp exists with initialized comment
+     */
+    const probeComment = 'abcd';
+    const element = createElement('ui-entry', { is: Entry });
+    element.comment = probeComment;
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * - A new comment value is entered
+     * - save is clicked
+     */
+    const editButton = getEditButton(element.shadowRoot);
+    editButton.dispatchEvent(new CustomEvent('click'));
+
+    const newInputValue = 'a1b2c3d4';
+    const input = element.shadowRoot.querySelector('textarea.comment');
+    input.value = newInputValue;
+
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * The output displayes the new value
+       */
+      const commentInput = element.shadowRoot.querySelector('textarea.comment');
+      expect(commentInput).toBeTruthy();
+      expect(commentInput.value).toBe(newInputValue);
+    });
+  });
+
+  test('comment is part of change-event', () => {
+    const handler = jest.fn();
+    /**
+     * Given
+     * The component with a comment
+     */
+    const oldComment = 'abcd';
+    const element = createElement('ui-entry', { is: Entry });
+    element.comment = oldComment;
+    element.addEventListener('change', handler);
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the comment is changed
+     */
+    const newComment = 'a1b2c3d4';
+    const commentInput = element.shadowRoot.querySelector('.input.comment');
+    commentInput.value = newComment;
+
+    const editModal = element.shadowRoot.querySelector('ui-modal-confirmable');
+    editModal.dispatchEvent(new CustomEvent('confirm'));
+
+    /**
+     * Then
+     * the new comment is part of the change event
+     */
+    expect(handler.mock.calls[0][0].detail.comment).toBe(newComment);
   });
 });
 
