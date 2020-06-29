@@ -539,9 +539,7 @@ describe('feature - comment', () => {
      * Then
      * It has an input for comments
      */
-    const textAreaComment = element.shadowRoot.querySelector(
-      '.modal-edit > div > textarea.comment'
-    );
+    const textAreaComment = element.shadowRoot.querySelector('.output.comment');
     expect(textAreaComment).toBeTruthy();
   });
 
@@ -562,7 +560,7 @@ describe('feature - comment', () => {
      * Then
      * It has an output for comments
      */
-    const commentOutput = element.shadowRoot.querySelector('.input-comment');
+    const commentOutput = element.shadowRoot.querySelector('.input.comment');
     expect(commentOutput).toBeTruthy();
   });
 

@@ -374,7 +374,7 @@ export default class Entry extends LightningElement {
   }
 
   getInputComment() {
-    return this.template.querySelector('.input-comment');
+    return this.template.querySelector('.input.comment');
   }
 
   getInputBreak() {
