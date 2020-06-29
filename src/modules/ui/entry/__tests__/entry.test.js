@@ -299,16 +299,24 @@ describe('check Update of Outputs on Input change', () => {
   });
 
   test('comment output changes on input change', () => {
+    /**
+     * Given
+     * The entry-cmp exists with initialized comment
+     */
     const probeComment = 'abcd';
-    const newInputValue = 'a1b2c3d4';
-
     const element = createElement('ui-entry', { is: Entry });
     element.comment = probeComment;
     document.body.appendChild(element);
 
+    /**
+     * When
+     * - A new comment value is entered
+     * - save is clicked
+     */
     const editButton = getEditButton(element.shadowRoot);
     editButton.dispatchEvent(new CustomEvent('click'));
 
+    const newInputValue = 'a1b2c3d4';
     const input = element.shadowRoot.querySelector('textarea.comment');
     input.value = newInputValue;
 
@@ -316,9 +324,13 @@ describe('check Update of Outputs on Input change', () => {
     editModal.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
-      const output = element.shadowRoot.querySelector('.input-comment');
-      expect(output).toBeTruthy();
-      expect(output.textContent).toBe(newInputValue);
+      /**
+       * Then
+       * The output displayes the new value
+       */
+      const commentInput = element.shadowRoot.querySelector('textarea.comment');
+      expect(commentInput).toBeTruthy();
+      expect(commentInput.value).toBe(newInputValue);
     });
   });
 });
