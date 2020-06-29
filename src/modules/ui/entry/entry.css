@@ -2,6 +2,19 @@
 Layout rules
 */
 
+.font_sans * {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+.border_no {
+  border-width: 0px;
+  border-style: solid;
+}
+
+textarea.comment {
+  resize: none;
+}
+
 div.layout {
   display: grid;
   grid-auto-columns: 50%;
@@ -70,7 +83,7 @@ div.container {
   border-style: solid;
 }
 
-div.container > *{
+div.container > * {
   padding: 0;
   width: calc(100% - 3px);
   height: calc(100% - 3px);
