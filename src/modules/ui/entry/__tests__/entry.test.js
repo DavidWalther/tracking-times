@@ -175,30 +175,6 @@ describe('check initial values', () => {
     expect(endTimeOutput).toBeTruthy();
     expect(endTimeOutput.textContent).toBe('13:00');
   });
-
-  test('output comment', () => {
-    /**
-     * Given
-     * -
-     */
-
-    /**
-     * When
-     * The component is initialized with a comment
-     */
-    const probeText = '1234abcd';
-    const element = createElement('ui-entry', { is: Entry });
-    element.comment = probeText;
-    document.body.appendChild(element);
-
-    /**
-     * Then
-     * The comment is displayed
-     */
-    const commentOutput = element.shadowRoot.querySelector('textarea.comment');
-    expect(commentOutput).toBeTruthy();
-    expect(commentOutput.value).toBe(probeText);
-  });
 });
 
 describe('check Update of Outputs on Input change', () => {
@@ -557,6 +533,30 @@ describe('feature - comment', () => {
     while (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }
+  });
+
+  test('comment can be initialized', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component is initialized with a comment
+     */
+    const probeText = '1234abcd';
+    const element = createElement('ui-entry', { is: Entry });
+    element.comment = probeText;
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The comment is displayed
+     */
+    const commentOutput = element.shadowRoot.querySelector('textarea.comment');
+    expect(commentOutput).toBeTruthy();
+    expect(commentOutput.value).toBe(probeText);
   });
 
   test('comment output changes on input change', () => {
