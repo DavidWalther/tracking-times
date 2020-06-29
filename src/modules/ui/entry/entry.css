@@ -2,6 +2,10 @@
 Layout rules
 */
 
+.font_sans * {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
 div.layout {
   display: grid;
   grid-auto-columns: 50%;
@@ -70,7 +74,7 @@ div.container {
   border-style: solid;
 }
 
-div.container > *{
+div.container > * {
   padding: 0;
   width: calc(100% - 3px);
   height: calc(100% - 3px);
