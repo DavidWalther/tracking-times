@@ -297,42 +297,6 @@ describe('check Update of Outputs on Input change', () => {
       expect(output.textContent).toBe(newInputValue);
     });
   });
-
-  test('comment output changes on input change', () => {
-    /**
-     * Given
-     * The entry-cmp exists with initialized comment
-     */
-    const probeComment = 'abcd';
-    const element = createElement('ui-entry', { is: Entry });
-    element.comment = probeComment;
-    document.body.appendChild(element);
-
-    /**
-     * When
-     * - A new comment value is entered
-     * - save is clicked
-     */
-    const editButton = getEditButton(element.shadowRoot);
-    editButton.dispatchEvent(new CustomEvent('click'));
-
-    const newInputValue = 'a1b2c3d4';
-    const input = element.shadowRoot.querySelector('textarea.comment');
-    input.value = newInputValue;
-
-    const editModal = getEditModal(element.shadowRoot);
-    editModal.dispatchEvent(new CustomEvent('confirm'));
-
-    return Promise.resolve().then(() => {
-      /**
-       * Then
-       * The output displayes the new value
-       */
-      const commentInput = element.shadowRoot.querySelector('textarea.comment');
-      expect(commentInput).toBeTruthy();
-      expect(commentInput.value).toBe(newInputValue);
-    });
-  });
 });
 
 describe('check events on changed values', () => {
@@ -595,7 +559,41 @@ describe('feature - comment', () => {
     }
   });
 
-  
+  test('comment output changes on input change', () => {
+    /**
+     * Given
+     * The entry-cmp exists with initialized comment
+     */
+    const probeComment = 'abcd';
+    const element = createElement('ui-entry', { is: Entry });
+    element.comment = probeComment;
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * - A new comment value is entered
+     * - save is clicked
+     */
+    const editButton = getEditButton(element.shadowRoot);
+    editButton.dispatchEvent(new CustomEvent('click'));
+
+    const newInputValue = 'a1b2c3d4';
+    const input = element.shadowRoot.querySelector('textarea.comment');
+    input.value = newInputValue;
+
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * The output displayes the new value
+       */
+      const commentInput = element.shadowRoot.querySelector('textarea.comment');
+      expect(commentInput).toBeTruthy();
+      expect(commentInput.value).toBe(newInputValue);
+    });
+  });
 });
 
 describe('check single entry delete', () => {
