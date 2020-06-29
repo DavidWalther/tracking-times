@@ -19,7 +19,7 @@
       <output class="diff">{difference}</output>
     </div>
     <div class="area-comment container container-comment">
-      <span class="comment">{displayState.comment}</span>
+      <textarea readonly class="comment">{displayState.comment}</textarea>
     </div>
     <div class="area-buttons-edit container-button">
       <ui-button
@@ -61,7 +61,7 @@
       <label class="end-time">{label.input.break}</label>
       <input class="modal-input break" type="number" min="0" step="15" />
       <label class="comment">{label.input.comment}</label>
-      <textarea class="modal-input comment"></textarea>
+      <textarea class="modal-input comment input-comment"></textarea>
     </div>
   </ui-modal-confirmable>
   <!-- 

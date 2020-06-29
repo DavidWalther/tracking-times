@@ -63,11 +63,17 @@ div.content {
 }
 
 div.container {
-  padding: 5px;
+  padding: 3px;
   min-height: 15px;
   border-width: thin;
   border-color: rgb(250, 250, 250);
   border-style: solid;
+}
+
+div.container > *{
+  padding: 0;
+  width: calc(100% - 3px);
+  height: calc(100% - 3px);
 }
 
 div.container > input {

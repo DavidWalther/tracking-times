@@ -118,7 +118,7 @@ describe('Check for Outputs', () => {
     const element = createElement('ui-entry', { is: Entry });
     document.body.appendChild(element);
 
-    const commentOutput = element.shadowRoot.querySelector('span.comment');
+    const commentOutput = element.shadowRoot.querySelector('.input-comment');
 
     expect(commentOutput).toBeTruthy();
   });
@@ -177,16 +177,27 @@ describe('check initial values', () => {
   });
 
   test('output comment', () => {
-    const probeText = '1234abcd';
+    /**
+     * Given
+     * -
+     */
 
+    /**
+     * When
+     * The component is initialized with a comment
+     */
+    const probeText = '1234abcd';
     const element = createElement('ui-entry', { is: Entry });
     element.comment = probeText;
     document.body.appendChild(element);
 
-    const commentOutput = element.shadowRoot.querySelector('span.comment');
-
+    /**
+     * Then
+     * The comment is displayed
+     */
+    const commentOutput = element.shadowRoot.querySelector('textarea.comment');
     expect(commentOutput).toBeTruthy();
-    expect(commentOutput.textContent).toBe(probeText);
+    expect(commentOutput.value).toBe(probeText);
   });
 });
 
@@ -288,16 +299,24 @@ describe('check Update of Outputs on Input change', () => {
   });
 
   test('comment output changes on input change', () => {
+    /**
+     * Given
+     * The entry-cmp exists with initialized comment
+     */
     const probeComment = 'abcd';
-    const newInputValue = 'a1b2c3d4';
-
     const element = createElement('ui-entry', { is: Entry });
     element.comment = probeComment;
     document.body.appendChild(element);
 
+    /**
+     * When
+     * - A new comment value is entered
+     * - save is clicked
+     */
     const editButton = getEditButton(element.shadowRoot);
     editButton.dispatchEvent(new CustomEvent('click'));
 
+    const newInputValue = 'a1b2c3d4';
     const input = element.shadowRoot.querySelector('textarea.comment');
     input.value = newInputValue;
 
@@ -305,9 +324,13 @@ describe('check Update of Outputs on Input change', () => {
     editModal.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
-      const output = element.shadowRoot.querySelector('span.comment');
-      expect(output).toBeTruthy();
-      expect(output.textContent).toBe(newInputValue);
+      /**
+       * Then
+       * The output displayes the new value
+       */
+      const commentInput = element.shadowRoot.querySelector('textarea.comment');
+      expect(commentInput).toBeTruthy();
+      expect(commentInput.value).toBe(newInputValue);
     });
   });
 });
