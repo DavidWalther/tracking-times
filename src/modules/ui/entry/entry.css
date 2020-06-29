@@ -6,6 +6,11 @@ Layout rules
   font-family: Helvetica, Arial, sans-serif;
 }
 
+.border_no {
+  border-width: 0px;
+  border-style: solid;
+}
+
 div.layout {
   display: grid;
   grid-auto-columns: 50%;
