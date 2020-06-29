@@ -113,15 +113,6 @@ describe('Check for Outputs', () => {
 
     expect(endTimeOutput).toBeTruthy();
   });
-
-  test('comment output exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const commentOutput = element.shadowRoot.querySelector('.input-comment');
-
-    expect(commentOutput).toBeTruthy();
-  });
 });
 
 describe('check initial values', () => {
@@ -533,6 +524,15 @@ describe('feature - comment', () => {
     while (document.body.firstChild) {
       document.body.removeChild(document.body.firstChild);
     }
+  });
+
+  test('comment output exists', () => {
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    const commentOutput = element.shadowRoot.querySelector('.input-comment');
+
+    expect(commentOutput).toBeTruthy();
   });
 
   test('comment can be initialized', () => {
