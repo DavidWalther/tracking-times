@@ -276,7 +276,6 @@ describe('check events on changed values', () => {
 
     const probeStartTimestamp = new Date(baseDate + 'T04:00').getTime();
     const probeEndTimestamp = new Date(baseDate + 'T09:00').getTime();
-    const probeComment = 'a1b2c3d4';
 
     const newStartTimeValue = '05:00';
     const newEndTimeValue = '08:00';
@@ -284,7 +283,6 @@ describe('check events on changed values', () => {
     const element = createElement('ui-entry', { is: Entry });
     element.start = probeStartTimestamp;
     element.end = probeEndTimestamp;
-    element.comment = probeComment;
     element.addEventListener('change', handler);
     document.body.appendChild(element);
 
@@ -331,8 +329,6 @@ describe('check events on changed values', () => {
       expect(handler.mock.calls[0][0].detail.end).toBe(
         new Date(baseDate + 'T' + newEndTimeValue).getTime()
       );
-      expect(handler.mock.calls[0][0].detail.comment).toBeTruthy();
-      expect(handler.mock.calls[0][0].detail.comment).toBe(probeComment);
     });
   });
 });
@@ -622,6 +618,36 @@ describe('feature - comment', () => {
       expect(commentInput).toBeTruthy();
       expect(commentInput.value).toBe(newInputValue);
     });
+  });
+
+  test('comment is part of change-event', () => {
+    const handler = jest.fn();
+    /**
+     * Given
+     * The component with a comment
+     */
+    const oldComment = 'abcd';
+    const element = createElement('ui-entry', { is: Entry });
+    element.comment = oldComment;
+    element.addEventListener('change', handler);
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the comment is changed
+     */
+    const newComment = 'a1b2c3d4';
+    const commentInput = element.shadowRoot.querySelector('.input.comment');
+    commentInput.value = newComment;
+
+    const editModal = element.shadowRoot.querySelector('ui-modal-confirmable');
+    editModal.dispatchEvent(new CustomEvent('confirm'));
+
+    /**
+     * Then
+     * the new comment is part of the change event
+     */
+    expect(handler.mock.calls[0][0].detail.comment).toBe(newComment);
   });
 });
 
