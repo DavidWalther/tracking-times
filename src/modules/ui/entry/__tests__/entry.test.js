@@ -177,16 +177,27 @@ describe('check initial values', () => {
   });
 
   test('output comment', () => {
-    const probeText = '1234abcd';
+    /**
+     * Given
+     * -
+     */
 
+    /**
+     * When
+     * The component is initialized with a comment
+     */
+    const probeText = '1234abcd';
     const element = createElement('ui-entry', { is: Entry });
     element.comment = probeText;
     document.body.appendChild(element);
 
-    const commentOutput = element.shadowRoot.querySelector('.input-comment');
-
+    /**
+     * Then
+     * The comment is displayed
+     */
+    const commentOutput = element.shadowRoot.querySelector('textarea.comment');
     expect(commentOutput).toBeTruthy();
-    expect(commentOutput.textContent).toBe(probeText);
+    expect(commentOutput.value).toBe(probeText);
   });
 });
 
