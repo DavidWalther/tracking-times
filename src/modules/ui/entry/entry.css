@@ -11,6 +11,10 @@ Layout rules
   border-style: solid;
 }
 
+textarea.comment {
+  resize: none;
+}
+
 div.layout {
   display: grid;
   grid-auto-columns: 50%;
