@@ -1,5 +1,5 @@
 <template
-  ><div class="layout content">
+  ><div class="layout content font_sans">
     <div class="area-startdate container container-start-date">
       <span class="start-date">{displayState.startdate}</span>
     </div>
@@ -19,7 +19,9 @@
       <output class="diff">{difference}</output>
     </div>
     <div class="area-comment container container-comment">
-      <span class="comment">{displayState.comment}</span>
+      <textarea readonly class="output comment border_no">
+{displayState.comment}</textarea
+      >
     </div>
     <div class="area-buttons-edit container-button">
       <ui-button
@@ -41,7 +43,7 @@
   -->
   <ui-modal-confirmable
     title={label.modal.title}
-    class="modal-edit"
+    class="modal-edit font_sans"
     onconfirm={handleButtonClickModalSave}
     confirm-label={label.button.save}
     confirm-design="info"
@@ -61,7 +63,7 @@
       <label class="end-time">{label.input.break}</label>
       <input class="modal-input break" type="number" min="0" step="15" />
       <label class="comment">{label.input.comment}</label>
-      <textarea class="modal-input comment"></textarea>
+      <textarea class="modal-input input comment"></textarea>
     </div>
   </ui-modal-confirmable>
   <!-- 

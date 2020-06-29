@@ -6,6 +6,9 @@ features:
 - add sidemenu for slim screen
 - add break time
 
+bugfixes:
+- shows linebreaks in comment output
+
 //----------------------------
 // version 1.0.2
 //----------------------------
