@@ -10,7 +10,7 @@ jobs:
       - node/with-cache:
           steps:
             - run: npm install
-            - run: npm run unit:test:watch
+            - run: npm run test:unit:watch
 workflows:
     build-and-test:
       jobs:
