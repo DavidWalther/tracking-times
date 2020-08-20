@@ -44,7 +44,7 @@ describe('check loading based on version', () => {
       const outputSpans = entries[0].shadowRoot.querySelectorAll('span');
       expect(outputSpans).toBeTruthy();
       expect(outputSpans.length).toBeTruthy();
-      expect(outputSpans.length).toBe(6);
+      expect(outputSpans.length).toBe(4);
       expect(outputSpans[0].classList[0]).toBe('start-date');
       expect(outputSpans[0].textContent).toBe('1970-01-01');
 
@@ -57,11 +57,13 @@ describe('check loading based on version', () => {
       expect(outputSpans[3].classList[0]).toBe('end-time');
       expect(outputSpans[3].textContent).toBe('01:03');
 
-      expect(outputSpans[4].classList[0]).toBe('diff');
-      expect(outputSpans[4].textContent).toBe('0.05');
+      /*       expect(outputSpans[4].classList[0]).toBe('comment');
+      expect(outputSpans[4].textContent).toBe('legacy entry'); */
 
-      expect(outputSpans[5].classList[0]).toBe('comment');
-      expect(outputSpans[5].textContent).toBe('legacy entry');
+      const outputTags = entries[0].shadowRoot.querySelectorAll('output.diff');
+      expect(outputTags.length).toBe(1);
+      expect(outputTags[0].classList[0]).toBe('diff');
+      expect(outputTags[0].textContent).toBe('0.05');
     });
   });
 
@@ -86,7 +88,7 @@ describe('check loading based on version', () => {
       const outputSpans = entries[0].shadowRoot.querySelectorAll('span');
       expect(outputSpans).toBeTruthy();
       expect(outputSpans.length).toBeTruthy();
-      expect(outputSpans.length).toBe(6);
+      //expect(outputSpans.length).toBe(5);
       expect(outputSpans[0].textContent).toBe('1970-01-01');
     });
   });
@@ -542,11 +544,17 @@ function setVersion4DummyData() {
 }
 
 function getAddButton(shadowRoot) {
-  return getElementBySelectorAll(shadowRoot, '.button-add');
+  const allFoundElements = getElementBySelectorAll(shadowRoot, '.button-add');
+  // check whether there is one for each layout
+  expect(allFoundElements.length).toBe(2);
+  return allFoundElements[0];
 }
 
 function getClearButton(shadowRoot) {
-  return getElementBySelectorAll(shadowRoot, '.button-clear');
+  const allFoundElements = getElementBySelectorAll(shadowRoot, '.button-clear');
+  // check whether there is one for each layout
+  expect(allFoundElements.length).toBe(2);
+  return allFoundElements[0];
 }
 
 function getDownloadButton(shadowRoot) {
@@ -555,7 +563,5 @@ function getDownloadButton(shadowRoot) {
 
 function getElementBySelectorAll(shadowRoot, classname) {
   const resultList = shadowRoot.querySelectorAll(classname);
-  expect(resultList).toBeTruthy();
-  expect(resultList.length).toBe(1);
-  return resultList[0];
+  return resultList;
 }

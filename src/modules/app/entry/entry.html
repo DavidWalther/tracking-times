@@ -1,5 +1,5 @@
 <template
-  ><div class="layout content">
+  ><div class="layout content font_sans">
     <div class="area-startdate container container-start-date">
       <span class="start-date">{displayState.startdate}</span>
     </div>
@@ -12,51 +12,58 @@
     <div class="area-endtime container container-end-time">
       <span class="end-time">{displayState.endtime}</span>
     </div>
+    <div class="area-break container container-break">
+      <output class="break">{displayState.break}</output>
+    </div>
     <div class="area-diff container container-diff">
-      <span class="diff">{difference}</span>
+      <output class="diff">{difference}</output>
     </div>
     <div class="area-comment container container-comment">
-      <span class="comment">{displayState.comment}</span>
+      <textarea readonly class="output comment border_no">
+{displayState.comment}</textarea
+      >
     </div>
-    <div class="area-buttons container container-button-bar">
-      <div class="buttons">
-        <ui-button
-          class="button edit"
-          value={label.button.edit}
-          onclick={handleButtonClickEdit}
-        ></ui-button>
-        <ui-button
-          class="button button-delete"
-          value={label.button.delete}
-          onclick={handleButtonClickDelete}
-        ></ui-button>
-      </div>
+    <div class="area-buttons-edit container-button">
+      <ui-button
+        class="button edit"
+        value={label.button.edit}
+        onclick={handleButtonClickEdit}
+      ></ui-button>
+    </div>
+    <div class="area-buttons-delete container-button">
+      <ui-button
+        class="button button-delete"
+        value={label.button.delete}
+        onclick={handleButtonClickDelete}
+      ></ui-button>
     </div>
   </div>
   <!--
       Edit Modal
   -->
   <ui-modal-confirmable
-    title={label.modal.title}
-    class="modal-edit"
+    title={label.modal.edit.title}
+    class="modal-edit font_sans"
     onconfirm={handleButtonClickModalSave}
-    confirm-label={label.button.save}
+    confirm-label={label.modal.edit.button.save}
     confirm-design="info"
     oncancel={handleButtonClickModalCancel}
-    cancel-label={label.button.cancel}
+    cancel-label={label.modal.edit.button.cancel}
     cancel-design="deny"
   >
     <div>
-      <label class="start-date">{label.input.startdate}</label>
+      <label class="start-date">{label.modal.edit.input.startdate}</label>
       <input class="modal-input start-date" type="date" />
-      <label class="start-time">{label.input.starttime}</label>
+      <label class="start-time">{label.modal.edit.input.starttime}</label>
       <input class="modal-input start-time" step="900" type="time" />
-      <label class="end-date">{label.input.enddate}</label>
+      <label class="end-date">{label.modal.edit.input.enddate}</label>
       <input class="modal-input end-date" type="date" />
-      <label class="end-time">{label.input.endtime}</label>
+      <label class="end-time">{label.modal.edit.input.endtime}</label>
       <input class="modal-input end-time" step="900" type="time" />
-      <label class="comment">{label.input.comment}</label>
-      <textarea class="modal-input comment"></textarea>
+      <label class="end-time">{label.modal.edit.input.break}</label>
+      <input class="modal-input break" type="number" min="0" step="15" />
+      <label class="comment">{label.modal.edit.input.comment}</label>
+      <textarea class="modal-input input comment"></textarea>
     </div>
   </ui-modal-confirmable>
   <!-- 

@@ -1,4 +1,19 @@
 //----------------------------
+// version 1.1.0
+//----------------------------
+
+features:
+- add sidemenu for slim screen
+- add break time
+
+bugfixes:
+- shows linebreaks in comment output
+
+tec dept:
+- sort label in entry cmp
+- move entry cmp to app folder
+
+//----------------------------
 // version 1.0.2
 //----------------------------
 
@@ -7,7 +22,6 @@ tec dept:
 - remove duplicate buttons which were rendered conditionally
 - remove repeated unnecessary font definitions
 - add version history file
-
 
 //----------------------------
 // version 1.0.1

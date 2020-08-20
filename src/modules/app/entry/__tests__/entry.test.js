@@ -59,15 +59,11 @@ describe('check edit modal', () => {
     const inputEndTime = element.shadowRoot.querySelector(
       '.modal-edit > div > input.end-time'
     );
-    const textAreaComment = element.shadowRoot.querySelector(
-      '.modal-edit > div > textarea.comment'
-    );
 
     expect(inputStartDate).toBeTruthy();
     expect(inputStartTime).toBeTruthy();
     expect(inputEndDate).toBeTruthy();
     expect(inputEndTime).toBeTruthy();
-    expect(textAreaComment).toBeTruthy();
   });
 });
 
@@ -112,24 +108,6 @@ describe('Check for Outputs', () => {
     const endTimeOutput = element.shadowRoot.querySelector('span.end-time');
 
     expect(endTimeOutput).toBeTruthy();
-  });
-
-  test('comment output exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const commentOutput = element.shadowRoot.querySelector('span.comment');
-
-    expect(commentOutput).toBeTruthy();
-  });
-
-  test('difference output exists', () => {
-    const element = createElement('ui-entry', { is: Entry });
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('span.diff');
-
-    expect(component).toBeTruthy();
   });
 });
 
@@ -183,34 +161,6 @@ describe('check initial values', () => {
 
     expect(endTimeOutput).toBeTruthy();
     expect(endTimeOutput.textContent).toBe('13:00');
-  });
-
-  test('output comment', () => {
-    const probeText = '1234abcd';
-
-    const element = createElement('ui-entry', { is: Entry });
-    element.comment = probeText;
-    document.body.appendChild(element);
-
-    const commentOutput = element.shadowRoot.querySelector('span.comment');
-
-    expect(commentOutput).toBeTruthy();
-    expect(commentOutput.textContent).toBe(probeText);
-  });
-
-  test('output initial diff calculation', () => {
-    const probeStartTimestamp = new Date('2000-01-01T13:00:00.0000').getTime();
-    const probeEndTimestamp = new Date('2000-01-01T13:30:00.0000').getTime();
-
-    const element = createElement('ui-entry', { is: Entry });
-    element.start = probeStartTimestamp;
-    element.end = probeEndTimestamp;
-    document.body.appendChild(element);
-
-    const component = element.shadowRoot.querySelector('span.diff');
-
-    expect(component).toBeTruthy();
-    expect(component.textContent).toBe('0.5');
   });
 });
 
@@ -310,56 +260,6 @@ describe('check Update of Outputs on Input change', () => {
       expect(output.textContent).toBe(newInputValue);
     });
   });
-
-  test('comment output changes on input change', () => {
-    const probeComment = 'abcd';
-    const newInputValue = 'a1b2c3d4';
-
-    const element = createElement('ui-entry', { is: Entry });
-    element.comment = probeComment;
-    document.body.appendChild(element);
-
-    const editButton = getEditButton(element.shadowRoot);
-    editButton.dispatchEvent(new CustomEvent('click'));
-
-    const input = element.shadowRoot.querySelector('textarea.comment');
-    input.value = newInputValue;
-
-    const editModal = getEditModal(element.shadowRoot);
-    editModal.dispatchEvent(new CustomEvent('confirm'));
-
-    return Promise.resolve().then(() => {
-      const output = element.shadowRoot.querySelector('span.comment');
-      expect(output).toBeTruthy();
-      expect(output.textContent).toBe(newInputValue);
-    });
-  });
-
-  test('diff output changes on input change', () => {
-    const probeStartTimestamp = 0;
-    const probeEndTimestamp = 1000 * 60 * 60;
-    const newInputValue = '05:00';
-
-    const element = createElement('ui-entry', { is: Entry });
-    element.start = probeStartTimestamp;
-    element.end = probeEndTimestamp;
-    document.body.appendChild(element);
-
-    const editButton = getEditButton(element.shadowRoot);
-    editButton.dispatchEvent(new CustomEvent('click'));
-
-    const input = element.shadowRoot.querySelector('input.end-time');
-    input.value = newInputValue;
-
-    const editModal = getEditModal(element.shadowRoot);
-    editModal.dispatchEvent(new CustomEvent('confirm'));
-
-    return Promise.resolve().then(() => {
-      const output = element.shadowRoot.querySelector('span.diff');
-      expect(output).toBeTruthy();
-      expect(output.textContent).toBe('4');
-    });
-  });
 });
 
 describe('check events on changed values', () => {
@@ -376,7 +276,6 @@ describe('check events on changed values', () => {
 
     const probeStartTimestamp = new Date(baseDate + 'T04:00').getTime();
     const probeEndTimestamp = new Date(baseDate + 'T09:00').getTime();
-    const probeComment = 'a1b2c3d4';
 
     const newStartTimeValue = '05:00';
     const newEndTimeValue = '08:00';
@@ -384,7 +283,6 @@ describe('check events on changed values', () => {
     const element = createElement('ui-entry', { is: Entry });
     element.start = probeStartTimestamp;
     element.end = probeEndTimestamp;
-    element.comment = probeComment;
     element.addEventListener('change', handler);
     document.body.appendChild(element);
 
@@ -431,9 +329,325 @@ describe('check events on changed values', () => {
       expect(handler.mock.calls[0][0].detail.end).toBe(
         new Date(baseDate + 'T' + newEndTimeValue).getTime()
       );
-      expect(handler.mock.calls[0][0].detail.comment).toBeTruthy();
-      expect(handler.mock.calls[0][0].detail.comment).toBe(probeComment);
     });
+  });
+});
+
+describe('feature - difference', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('difference output exists', () => {
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    const component = element.shadowRoot.querySelector('output.diff');
+
+    expect(component).toBeTruthy();
+  });
+
+  test('output initial diff calculation', () => {
+    const probeStartTimestamp = new Date('2000-01-01T13:00:00.0000').getTime();
+    const probeEndTimestamp = new Date('2000-01-01T13:30:00.0000').getTime();
+
+    const element = createElement('ui-entry', { is: Entry });
+    element.start = probeStartTimestamp;
+    element.end = probeEndTimestamp;
+    document.body.appendChild(element);
+
+    const component = element.shadowRoot.querySelector('output.diff');
+
+    expect(component).toBeTruthy();
+    expect(component.textContent).toBe('0.5');
+  });
+
+  test('diff output changes on input change', () => {
+    const probeStartTimestamp = 0;
+    const probeEndTimestamp = 1000 * 60 * 60;
+    const newInputValue = '05:00';
+
+    const element = createElement('ui-entry', { is: Entry });
+    element.start = probeStartTimestamp;
+    element.end = probeEndTimestamp;
+    document.body.appendChild(element);
+
+    const editButton = getEditButton(element.shadowRoot);
+    editButton.dispatchEvent(new CustomEvent('click'));
+
+    const input = element.shadowRoot.querySelector('input.end-time');
+    input.value = newInputValue;
+
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
+
+    return Promise.resolve().then(() => {
+      const output = element.shadowRoot.querySelector('output.diff');
+      expect(output).toBeTruthy();
+      expect(output.textContent).toBe('4');
+    });
+  });
+
+  test('difference calculation accounts for break', () => {
+    const TWO_HOURS = 2 * 60 * 60 * 1000;
+    const THIRTY_MINUTES = 30 * 60 * 1000;
+    const TIMESTAMP_START = new Date().getTime();
+    const TIMESTAMP_END = new Date(TIMESTAMP_START + TWO_HOURS).getTime();
+
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The entry cmp ist created with start, end and break
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    element.start = TIMESTAMP_START;
+    element.end = TIMESTAMP_END;
+    element.break = THIRTY_MINUTES;
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The difference is reduced by the break time
+     */
+
+    const differenceOutput = element.shadowRoot.querySelector('output.diff');
+    expect(differenceOutput.value).toBe((1.5).toString());
+  });
+});
+
+describe('feature - break time', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('input for exists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * the entry cmp is added
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * An input for breaktime exists
+       */
+      const entryElem = element.shadowRoot.querySelector('input.break');
+      expect(entryElem).toBeTruthy();
+    });
+  });
+
+  test('input takes value from api', () => {
+    const breakValue = 78;
+    const breakValueInMilliseconds = breakValue * 60 * 1000;
+
+    /**
+     * Given
+     * The component is created with a given value for break
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    element.break = breakValueInMilliseconds;
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the edit button is clicked
+     */
+    const editButton = getEditButton(element.shadowRoot);
+    editButton.dispatchEvent(new CustomEvent('click'));
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * An input for breaktime exists
+       */
+      const breakInput = element.shadowRoot.querySelector('input.break');
+      expect(breakInput).toBeTruthy();
+      expect(breakInput.value).toBe(breakValue.toString());
+    });
+  });
+
+  test('has an output', () => {
+    const breakValue = 78;
+    const breakValueInMilliseconds = breakValue * 60 * 1000;
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component is created with a given value for break
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    element.break = breakValueInMilliseconds;
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     *
+     */
+    const breakOutput = element.shadowRoot.querySelector('output.break');
+    expect(breakOutput).toBeTruthy();
+    expect(breakOutput.value).toBeTruthy();
+    expect(breakOutput.value).toBe(breakValue.toString());
+  });
+});
+
+describe('feature - comment', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('commet input exists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The entry-cmp is created
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * It has an input for comments
+     */
+    const textAreaComment = element.shadowRoot.querySelector('.output.comment');
+    expect(textAreaComment).toBeTruthy();
+  });
+
+  test('comment output exists', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The entry-cmp is created
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * It has an output for comments
+     */
+    const commentOutput = element.shadowRoot.querySelector('.input.comment');
+    expect(commentOutput).toBeTruthy();
+  });
+
+  test('comment can be initialized', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The component is initialized with a comment
+     */
+    const probeText = '1234abcd';
+    const element = createElement('ui-entry', { is: Entry });
+    element.comment = probeText;
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The comment is displayed
+     */
+    const commentOutput = element.shadowRoot.querySelector('textarea.comment');
+    expect(commentOutput).toBeTruthy();
+    expect(commentOutput.value).toBe(probeText);
+  });
+
+  test('comment output changes on input change', () => {
+    /**
+     * Given
+     * The entry-cmp exists with initialized comment
+     */
+    const probeComment = 'abcd';
+    const element = createElement('ui-entry', { is: Entry });
+    element.comment = probeComment;
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * - A new comment value is entered
+     * - save is clicked
+     */
+    const editButton = getEditButton(element.shadowRoot);
+    editButton.dispatchEvent(new CustomEvent('click'));
+
+    const newInputValue = 'a1b2c3d4';
+    const input = element.shadowRoot.querySelector('textarea.comment');
+    input.value = newInputValue;
+
+    const editModal = getEditModal(element.shadowRoot);
+    editModal.dispatchEvent(new CustomEvent('confirm'));
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * The output displayes the new value
+       */
+      const commentInput = element.shadowRoot.querySelector('textarea.comment');
+      expect(commentInput).toBeTruthy();
+      expect(commentInput.value).toBe(newInputValue);
+    });
+  });
+
+  test('comment is part of change-event', () => {
+    const handler = jest.fn();
+    /**
+     * Given
+     * The component with a comment
+     */
+    const oldComment = 'abcd';
+    const element = createElement('ui-entry', { is: Entry });
+    element.comment = oldComment;
+    element.addEventListener('change', handler);
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the comment is changed
+     */
+    const newComment = 'a1b2c3d4';
+    const commentInput = element.shadowRoot.querySelector('.input.comment');
+    commentInput.value = newComment;
+
+    const editModal = element.shadowRoot.querySelector('ui-modal-confirmable');
+    editModal.dispatchEvent(new CustomEvent('confirm'));
+
+    /**
+     * Then
+     * the new comment is part of the change event
+     */
+    expect(handler.mock.calls[0][0].detail.comment).toBe(newComment);
   });
 });
 
