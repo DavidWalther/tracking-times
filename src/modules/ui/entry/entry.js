@@ -70,7 +70,10 @@ export default class Entry extends LightningElement {
   label = {
     modal: {
       edit: {
-        title: 'Entry Details'
+        title: 'Entry Details',
+        button: {
+          save: 'Save'
+        }
       },
       delete: {
         title: 'Delete',
@@ -84,7 +87,6 @@ export default class Entry extends LightningElement {
     button: {
       edit: 'Edit',
       delete: 'Delete',
-      save: 'Save',
       cancel: 'Cancel'
     },
     input: {
