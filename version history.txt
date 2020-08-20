@@ -11,6 +11,7 @@ bugfixes:
 
 tec dept:
 - sort label in entry cmp
+- move entry cmp to app folder
 
 //----------------------------
 // version 1.0.2

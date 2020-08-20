@@ -72,7 +72,7 @@
     <div class="container-list entries">
       <template for:each={state.entries} for:item="entry" for:index="index">
         <div key={entry.itemId}>
-          <ui-entry
+          <app-entry
             data-index={entry.sortnumber}
             start={entry.start}
             end={entry.end}
@@ -80,7 +80,7 @@
             comment={entry.comment}
             onchange={handleChangeEntry}
             ondelete={handleEventDelete}
-          ></ui-entry>
+          ></app-entry>
         </div>
       </template>
     </div>
