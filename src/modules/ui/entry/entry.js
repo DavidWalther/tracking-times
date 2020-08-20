@@ -70,6 +70,9 @@ export default class Entry extends LightningElement {
   label = {
     modal: {
       title: 'Entry Details',
+      edit:{
+
+      },
       delete: {
         title: 'Delete',
         body: 'Delete Entry?',
