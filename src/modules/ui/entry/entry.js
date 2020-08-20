@@ -68,8 +68,26 @@ export default class Entry extends LightningElement {
   };
 
   label = {
+    button: {
+      edit: 'Edit',
+      delete: 'Delete'
+    },
     modal: {
-      title: 'Entry Details',
+      edit: {
+        title: 'Entry Details',
+        button: {
+          save: 'Save',
+          cancel: 'Cancel'
+        },
+        input: {
+          startdate: 'Start date',
+          starttime: 'Start time',
+          enddate: 'End date',
+          endtime: 'End time',
+          comment: 'Comment',
+          break: 'Break (min)'
+        }
+      },
       delete: {
         title: 'Delete',
         body: 'Delete Entry?',
@@ -78,20 +96,6 @@ export default class Entry extends LightningElement {
           cancel: 'Cancel'
         }
       }
-    },
-    button: {
-      edit: 'Edit',
-      delete: 'Delete',
-      save: 'Save',
-      cancel: 'Cancel'
-    },
-    input: {
-      startdate: 'Start date',
-      starttime: 'Start time',
-      enddate: 'End date',
-      endtime: 'End time',
-      comment: 'Comment',
-      break: 'Break (min)'
     }
   };
 

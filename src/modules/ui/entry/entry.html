@@ -42,27 +42,27 @@
       Edit Modal
   -->
   <ui-modal-confirmable
-    title={label.modal.title}
+    title={label.modal.edit.title}
     class="modal-edit font_sans"
     onconfirm={handleButtonClickModalSave}
-    confirm-label={label.button.save}
+    confirm-label={label.modal.edit.button.save}
     confirm-design="info"
     oncancel={handleButtonClickModalCancel}
-    cancel-label={label.button.cancel}
+    cancel-label={label.modal.edit.button.cancel}
     cancel-design="deny"
   >
     <div>
-      <label class="start-date">{label.input.startdate}</label>
+      <label class="start-date">{label.modal.edit.input.startdate}</label>
       <input class="modal-input start-date" type="date" />
-      <label class="start-time">{label.input.starttime}</label>
+      <label class="start-time">{label.modal.edit.input.starttime}</label>
       <input class="modal-input start-time" step="900" type="time" />
-      <label class="end-date">{label.input.enddate}</label>
+      <label class="end-date">{label.modal.edit.input.enddate}</label>
       <input class="modal-input end-date" type="date" />
-      <label class="end-time">{label.input.endtime}</label>
+      <label class="end-time">{label.modal.edit.input.endtime}</label>
       <input class="modal-input end-time" step="900" type="time" />
-      <label class="end-time">{label.input.break}</label>
+      <label class="end-time">{label.modal.edit.input.break}</label>
       <input class="modal-input break" type="number" min="0" step="15" />
-      <label class="comment">{label.input.comment}</label>
+      <label class="comment">{label.modal.edit.input.comment}</label>
       <textarea class="modal-input input comment"></textarea>
     </div>
   </ui-modal-confirmable>
