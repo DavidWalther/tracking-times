@@ -9,6 +9,9 @@ features:
 bugfixes:
 - shows linebreaks in comment output
 
+tec dept:
+- sort label in entry cmp
+
 //----------------------------
 // version 1.0.2
 //----------------------------
