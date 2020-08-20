@@ -74,6 +74,14 @@ export default class Entry extends LightningElement {
         button: {
           save: 'Save',
           cancel: 'Cancel'
+        },
+        input: {
+          startdate: 'Start date',
+          starttime: 'Start time',
+          enddate: 'End date',
+          endtime: 'End time',
+          comment: 'Comment',
+          break: 'Break (min)'
         }
       },
       delete: {
@@ -88,14 +96,6 @@ export default class Entry extends LightningElement {
     button: {
       edit: 'Edit',
       delete: 'Delete'
-    },
-    input: {
-      startdate: 'Start date',
-      starttime: 'Start time',
-      enddate: 'End date',
-      endtime: 'End time',
-      comment: 'Comment',
-      break: 'Break (min)'
     }
   };
 
