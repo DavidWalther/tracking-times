@@ -72,7 +72,8 @@ export default class Entry extends LightningElement {
       edit: {
         title: 'Entry Details',
         button: {
-          save: 'Save'
+          save: 'Save',
+          cancel: 'Cancel'
         }
       },
       delete: {
@@ -86,8 +87,7 @@ export default class Entry extends LightningElement {
     },
     button: {
       edit: 'Edit',
-      delete: 'Delete',
-      cancel: 'Cancel'
+      delete: 'Delete'
     },
     input: {
       startdate: 'Start date',
