@@ -9,6 +9,9 @@ features:
 bugfixes:
 - shows linebreaks in comment output
 
+tec debt:
+- move entry cmp to app folder
+
 //----------------------------
 // version 1.0.2
 //----------------------------
