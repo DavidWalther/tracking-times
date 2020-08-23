@@ -54,5 +54,6 @@ describe('Date input', () => {
      */
     const inputTime = element.shadowRoot.querySelector('input.input-date');
     expect(inputTime).toBeTruthy();
+    expect(inputTime.type).toBe('date');
   });
 });
