@@ -24,7 +24,7 @@ describe('Time Input', () => {
      * Then
      * It has an input for time values
      */
-    const inputTime = element.shadowRoot.querySelector('.input-time');
+    const inputTime = element.shadowRoot.querySelector('input.input-time');
     expect(inputTime).toBeTruthy();
   });
 });
@@ -50,9 +50,9 @@ describe('Date input', () => {
     document.body.appendChild(element);
     /**
      * Then
-     * It has an input for time values
+     * It has an input for date values
      */
-    const inputTime = element.shadowRoot.querySelector('.input-date');
+    const inputTime = element.shadowRoot.querySelector('input.input-date');
     expect(inputTime).toBeTruthy();
   });
 });
