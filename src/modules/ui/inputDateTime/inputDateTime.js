@@ -12,4 +12,9 @@ export default class InputDateTime extends LightningElement {
     const tempDate = new Date(this.value);
     return tempDate.toISOString().split('T')[0];
   }
+
+  get timeValue() {
+    const tempDate = new Date(this.value);
+    return tempDate.toLocaleTimeString().substr(0, 5);
+  }
 }

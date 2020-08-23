@@ -48,6 +48,26 @@ describe('Time Input', () => {
     const inputTime = element.shadowRoot.querySelector('input.input-time');
     expect(inputTime).toBeFalsy();
   });
+
+  test('Time shows <NOW> if no value is provided', () => {
+    const nowString = new Date().toLocaleTimeString().substr(0, 5);
+    /**
+     * Given
+     * -
+     */
+    /**
+     * When
+     * The component is added to DOM
+     */
+    const element = createElement('ui-input-date-time', { is: InputDateTime });
+    document.body.appendChild(element);
+    /**
+     * Then
+     * the input shows the current time
+     */
+    const inputDate = element.shadowRoot.querySelector('input.input-time');
+    expect(inputDate.value).toBe(nowString);
+  });
 });
 
 describe('Date input', () => {

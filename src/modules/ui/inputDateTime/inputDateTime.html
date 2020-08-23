@@ -1,6 +1,6 @@
 <template>
   <template if:false={noTime}>
-    <input class="input-time" type="time" />
+    <input class="input-time" type="time" value={timeValue} />
   </template>
   <template if:false={noDate}>
     <input class="input-date" type="date" value={dateValue} />
