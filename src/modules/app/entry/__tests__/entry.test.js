@@ -423,7 +423,7 @@ describe('feature - difference', () => {
 
   test('bugfix: difference calculation evaluates invalid break input as 0', () => {
     const TWO_HOURS = 2 * 60 * 60 * 1000;
-    const EMPTY_STRING = 'k';
+    const EMPTY_STRING = '';
     const TIMESTAMP_START = new Date().getTime();
     const TIMESTAMP_END = new Date(TIMESTAMP_START + TWO_HOURS).getTime();
 

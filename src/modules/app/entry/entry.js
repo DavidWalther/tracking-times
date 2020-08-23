@@ -154,10 +154,7 @@ export default class Entry extends LightningElement {
   get difference() {
     let startDate = this.internalState.startTimeStamp;
     let endDate = this.internalState.endTimeStamp;
-
-    let parsedBreakIntegerValue = parseInt(this.break, 10);
-    let breakValueIsValidInteger = !isNaN(parsedBreakIntegerValue);
-    let breakTime = breakValueIsValidInteger ? this.break : 0;
+    let breakTime = this.break;
 
     let difference = endDate - startDate - breakTime;
     return difference / (1000 * 60 * 60);
@@ -311,7 +308,9 @@ export default class Entry extends LightningElement {
     values.break = this.getInputBreak().value;
 
     let breakIsValidInteger = !isNaN(parseInt(values.break, 10));
-    values.break = breakIsValidInteger ? parseInt(values.break, 10) * MILLISECONDS_PER_MINUTE : 0;
+    values.break = breakIsValidInteger
+      ? parseInt(values.break, 10) * MILLISECONDS_PER_MINUTE
+      : 0;
     values.comment = this.getInputComment().value;
     return values;
   }
