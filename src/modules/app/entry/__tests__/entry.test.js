@@ -421,7 +421,7 @@ describe('feature - difference', () => {
     expect(differenceOutput.value).toBe((1.5).toString());
   });
 
-  test('difference calculation evaluates invalid break input as 0', () => {
+  test('bugfix: difference calculation evaluates invalid break input as 0', () => {
     const TWO_HOURS = 2 * 60 * 60 * 1000;
     const EMPTY_STRING = 'k';
     const TIMESTAMP_START = new Date().getTime();
