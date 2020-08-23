@@ -154,7 +154,10 @@ export default class Entry extends LightningElement {
   get difference() {
     let startDate = this.internalState.startTimeStamp;
     let endDate = this.internalState.endTimeStamp;
-    let breakTime = this.break;
+
+    let parsedBreakIntegerValue = parseInt(this.break, 10);
+    let breakValueIsValidInteger = !isNaN(parsedBreakIntegerValue);
+    let breakTime = breakValueIsValidInteger ? this.break : 0;
 
     let difference = endDate - startDate - breakTime;
     return difference / (1000 * 60 * 60);
