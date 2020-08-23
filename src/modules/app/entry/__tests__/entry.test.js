@@ -460,7 +460,7 @@ describe('feature - break time', () => {
     }
   });
 
-  test('input for exists', () => {
+  test('input for break exists', () => {
     /**
      * Given
      * -
