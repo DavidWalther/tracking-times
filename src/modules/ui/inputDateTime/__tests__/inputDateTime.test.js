@@ -68,6 +68,29 @@ describe('Time Input', () => {
     const inputDate = element.shadowRoot.querySelector('input.input-time');
     expect(inputDate.value).toBe(nowString);
   });
+
+  test('Time shows time if value is provided', () => {
+    /**
+     * Given
+     * -
+     */
+    /**
+     * When
+     * The component is added to DOM with a given value
+     */
+    const timeString = '18:43';
+    const inputValue = new Date('2020-01-01T' + timeString).getTime();
+
+    const element = createElement('ui-input-date-time', { is: InputDateTime });
+    element.value = inputValue;
+    document.body.appendChild(element);
+    /**
+     * Then
+     * the input shows the given time
+     */
+    const inputDate = element.shadowRoot.querySelector('input.input-time');
+    expect(inputDate.value).toBe(timeString);
+  });
 });
 
 describe('Date input', () => {
@@ -139,22 +162,23 @@ describe('Date input', () => {
   });
 
   test('Date shows Date if value is provided', () => {
-    const dateString = '1982-01-20';
-    const inputValue = new Date(dateString + 'T15:30:00Z').getTime();
     /**
      * Given
      * -
      */
     /**
      * When
-     * The component is added to DOM
+     * The component is added to DOM with a given value
      */
+    const dateString = '1982-01-20';
+    const inputValue = new Date(dateString + 'T15:30:00Z').getTime();
+
     const element = createElement('ui-input-date-time', { is: InputDateTime });
     element.value = inputValue;
     document.body.appendChild(element);
     /**
      * Then
-     * the input shows the date of today
+     * the input shows the given date
      */
     const inputDate = element.shadowRoot.querySelector('input.input-date');
     expect(inputDate.value).toBe(dateString);
