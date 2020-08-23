@@ -1,5 +1,5 @@
 import { createElement } from 'lwc';
-import Entry from 'ui/entry';
+import Entry from 'app/entry';
 
 describe('check edit modal', () => {
   afterEach(() => {

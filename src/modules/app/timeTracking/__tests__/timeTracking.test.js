@@ -27,7 +27,7 @@ describe('check loading based on version', () => {
     document.body.appendChild(element);
 
     return Promise.resolve().then(() => {
-      const entries = element.shadowRoot.querySelectorAll('ui-entry');
+      const entries = element.shadowRoot.querySelectorAll('app-entry');
       expect(entries).toBeTruthy();
       expect(entries.length).toBeTruthy();
       expect(entries.length).toBe(1);
@@ -39,7 +39,7 @@ describe('check loading based on version', () => {
 
       /**
        * ToDo
-       * reduce test to only check whether the correct values are passed into ui-entry cmp
+       * reduce test to only check whether the correct values are passed into app-entry cmp
        */
       const outputSpans = entries[0].shadowRoot.querySelectorAll('span');
       expect(outputSpans).toBeTruthy();
@@ -74,7 +74,7 @@ describe('check loading based on version', () => {
     document.body.appendChild(element);
 
     return Promise.resolve().then(() => {
-      const entries = element.shadowRoot.querySelectorAll('ui-entry');
+      const entries = element.shadowRoot.querySelectorAll('app-entry');
       expect(entries).toBeTruthy();
       expect(entries.length).toBeTruthy();
       expect(entries.length).toBe(2);
@@ -83,7 +83,7 @@ describe('check loading based on version', () => {
 
       /**
        * ToDo
-       * reduce test to only check whether the correct values are passed into ui-entry cmp
+       * reduce test to only check whether the correct values are passed into app-entry cmp
        */
       const outputSpans = entries[0].shadowRoot.querySelectorAll('span');
       expect(outputSpans).toBeTruthy();
@@ -152,7 +152,7 @@ describe('Add related tests', () => {
 
     return Promise.resolve().then(() => {
       // Then
-      const entries = element.shadowRoot.querySelectorAll('ui-entry');
+      const entries = element.shadowRoot.querySelectorAll('app-entry');
 
       expect(entries).toBeTruthy();
       expect(entries.length).toBeTruthy();
@@ -256,7 +256,7 @@ describe('Clear related tests', () => {
     document.body.appendChild(element);
 
     const entriesBeforeClearing = element.shadowRoot.querySelectorAll(
-      'ui-entry'
+      'app-entry'
     );
     expect(entriesBeforeClearing.length).toBe(2);
 
@@ -274,7 +274,7 @@ describe('Clear related tests', () => {
        * All entries are removed
        */
       const entriesAfterClearing = element.shadowRoot.querySelectorAll(
-        'ui-entry'
+        'app-entry'
       );
       expect(entriesAfterClearing.length).toBe(0);
 
@@ -352,7 +352,7 @@ describe('check delete', () => {
     addButton.dispatchEvent(new CustomEvent('click'));
 
     return Promise.resolve().then(() => {
-      const entriesOriginal = element.shadowRoot.querySelectorAll('ui-entry');
+      const entriesOriginal = element.shadowRoot.querySelectorAll('app-entry');
       expect(entriesOriginal.length).toBe(4);
 
       // add comment for identifying entries
@@ -368,7 +368,7 @@ describe('check delete', () => {
       // Then
       return Promise.resolve().then(() => {
         // get list of new entries
-        const entriesResult = element.shadowRoot.querySelectorAll('ui-entry');
+        const entriesResult = element.shadowRoot.querySelectorAll('app-entry');
 
         // check one Entry was removed
         expect(entriesResult.length).toBe(3);
