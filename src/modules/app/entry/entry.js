@@ -306,7 +306,11 @@ export default class Entry extends LightningElement {
     values.endDateStr = this.getInputEndDate().value;
     values.endTimeStr = this.getInputEndTime().value;
     values.break = this.getInputBreak().value;
-    values.break = parseInt(values.break, 10) * MILLISECONDS_PER_MINUTE;
+
+    let breakIsValidInteger = !isNaN(parseInt(values.break, 10));
+    values.break = breakIsValidInteger
+      ? parseInt(values.break, 10) * MILLISECONDS_PER_MINUTE
+      : 0;
     values.comment = this.getInputComment().value;
     return values;
   }

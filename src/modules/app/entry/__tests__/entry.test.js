@@ -420,6 +420,36 @@ describe('feature - difference', () => {
     const differenceOutput = element.shadowRoot.querySelector('output.diff');
     expect(differenceOutput.value).toBe((1.5).toString());
   });
+
+  test('bugfix: difference calculation evaluates invalid break input as 0', () => {
+    const TWO_HOURS = 2 * 60 * 60 * 1000;
+    const EMPTY_STRING = '';
+    const TIMESTAMP_START = new Date().getTime();
+    const TIMESTAMP_END = new Date(TIMESTAMP_START + TWO_HOURS).getTime();
+
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * The entry cmp ist created with start, end and break
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    element.start = TIMESTAMP_START;
+    element.end = TIMESTAMP_END;
+    element.break = EMPTY_STRING;
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * The difference is reduced by the break time
+     */
+
+    const differenceOutput = element.shadowRoot.querySelector('output.diff');
+    expect(differenceOutput.value).toBe('2');
+  });
 });
 
 describe('feature - break time', () => {
@@ -430,7 +460,7 @@ describe('feature - break time', () => {
     }
   });
 
-  test('input for exists', () => {
+  test('input for break exists', () => {
     /**
      * Given
      * -
