@@ -1,5 +1,7 @@
 <template>
-  <input class="input-time" type="time" />
+  <template if:false={noTime}>
+    <input class="input-time" type="time" />
+  </template>
   <input class="input-date" type="date" />
   <!--
     will be replaced at som time. see:

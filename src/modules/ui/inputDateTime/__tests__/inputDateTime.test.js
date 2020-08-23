@@ -9,7 +9,7 @@ describe('Time Input', () => {
     }
   });
 
-  test('component has an input for time', () => {
+  test('Component has an input for time', () => {
     /**
      * Given
      * -
@@ -27,6 +27,26 @@ describe('Time Input', () => {
     const inputTime = element.shadowRoot.querySelector('input.input-time');
     expect(inputTime).toBeTruthy();
     expect(inputTime.type).toBe('time');
+  });
+
+  test('Time input can be hidden', () => {
+    /**
+     * Given
+     * -
+     */
+    /**
+     * When
+     * the component is added to DOM with 'noTime' set to true
+     */
+    const element = createElement('ui-input-date-time', { is: InputDateTime });
+    element.noTime = true;
+    document.body.appendChild(element);
+    /**
+     * Then
+     * It has an input for time values
+     */
+    const inputTime = element.shadowRoot.querySelector('input.input-time');
+    expect(inputTime).toBeFalsy();
   });
 });
 
