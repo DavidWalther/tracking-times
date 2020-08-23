@@ -26,6 +26,7 @@ describe('Time Input', () => {
      */
     const inputTime = element.shadowRoot.querySelector('input.input-time');
     expect(inputTime).toBeTruthy();
+    expect(inputTime.type).toBe('time');
   });
 });
 
