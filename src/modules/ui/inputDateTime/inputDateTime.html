@@ -2,7 +2,10 @@
   <template if:false={noTime}>
     <input class="input-time" type="time" />
   </template>
-  <input class="input-date" type="date" />
+  <template if:false={noDate}>
+    <input class="input-date" type="date" />
+  </template>
+
   <!--
     will be replaced at som time. see:
     https://www.w3schools.com/tags/att_input_type_datetime-local.asp

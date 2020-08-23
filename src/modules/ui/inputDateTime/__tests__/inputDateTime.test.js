@@ -43,7 +43,7 @@ describe('Time Input', () => {
     document.body.appendChild(element);
     /**
      * Then
-     * It has an input for time values
+     * It has no input for time values
      */
     const inputTime = element.shadowRoot.querySelector('input.input-time');
     expect(inputTime).toBeFalsy();
@@ -58,7 +58,7 @@ describe('Date input', () => {
     }
   });
 
-  test('component has an input for date', () => {
+  test('Component has an input for date', () => {
     /**
      * Given
      * -
@@ -73,8 +73,28 @@ describe('Date input', () => {
      * Then
      * It has an input for date values
      */
-    const inputTime = element.shadowRoot.querySelector('input.input-date');
-    expect(inputTime).toBeTruthy();
-    expect(inputTime.type).toBe('date');
+    const inputDate = element.shadowRoot.querySelector('input.input-date');
+    expect(inputDate).toBeTruthy();
+    expect(inputDate.type).toBe('date');
+  });
+
+  test('Date input can be hidden', () => {
+    /**
+     * Given
+     * -
+     */
+    /**
+     * When
+     * the component is added to DOM with 'noDate' set to true
+     */
+    const element = createElement('ui-input-date-time', { is: InputDateTime });
+    element.noDate = true;
+    document.body.appendChild(element);
+    /**
+     * Then
+     * It has no input for date values
+     */
+    const inputDate = element.shadowRoot.querySelector('input.input-date');
+    expect(inputDate).toBeFalsy();
   });
 });
