@@ -4,6 +4,7 @@
 //----------------------------
 
 bugfixes:
+- interpret "" as 0 for difference calculation
 
 tec dept:
 - broken jest test for entry cmp are fixed
