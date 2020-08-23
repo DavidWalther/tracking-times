@@ -97,4 +97,46 @@ describe('Date input', () => {
     const inputDate = element.shadowRoot.querySelector('input.input-date');
     expect(inputDate).toBeFalsy();
   });
+
+  test('Date shows <TODAY> if no value is provided', () => {
+    const todayString = new Date().toISOString().split('T')[0];
+    /**
+     * Given
+     * -
+     */
+    /**
+     * When
+     * The component is added to DOM
+     */
+    const element = createElement('ui-input-date-time', { is: InputDateTime });
+    document.body.appendChild(element);
+    /**
+     * Then
+     * the input shows the date of today
+     */
+    const inputDate = element.shadowRoot.querySelector('input.input-date');
+    expect(inputDate.value).toBe(todayString);
+  });
+
+  test('Date shows Date if value is provided', () => {
+    const dateString = '1982-01-20';
+    const inputValue = new Date(dateString + 'T15:30:00Z').getTime();
+    /**
+     * Given
+     * -
+     */
+    /**
+     * When
+     * The component is added to DOM
+     */
+    const element = createElement('ui-input-date-time', { is: InputDateTime });
+    element.value = inputValue;
+    document.body.appendChild(element);
+    /**
+     * Then
+     * the input shows the date of today
+     */
+    const inputDate = element.shadowRoot.querySelector('input.input-date');
+    expect(inputDate.value).toBe(dateString);
+  });
 });
