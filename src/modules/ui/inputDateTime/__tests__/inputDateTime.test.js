@@ -225,6 +225,44 @@ describe('Change', () => {
     });
   });
 
+  test('Change event contains integer values of date and time - on time change', () => {
+    const handler = jest.fn();
+    /**
+     * Given
+     * The component is added to DOM with a specific value
+     */
+
+    const timeString = '18:43';
+    const dateString = '2020-02-07';
+    const inputValue = new Date(dateString + 'T' + timeString).getTime();
+
+    const element = createElement('ui-input-date-time', { is: InputDateTime });
+    element.addEventListener('change', handler);
+    element.value = inputValue;
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the time input is changed
+     */
+    const newTimeString = '19:43';
+    const inputTime = element.shadowRoot.querySelector('input.input-time');
+    inputTime.value = newTimeString;
+    inputTime.dispatchEvent(new CustomEvent('change'));
+
+    /**
+     * Then
+     * the change event contains the interger values of date and time
+     */
+    return Promise.resolve().then(() => {
+      const expectedTimeInteger = new Date(
+        '1970-01-01T' + newTimeString
+      ).getTime();
+      expect(handler.mock.calls[0][0].detail).toBeTruthy();
+      expect(handler.mock.calls[0][0].detail.time).toBe(expectedTimeInteger);
+    });
+  });
+
   test("Change of date input triggers a custom 'change' event", () => {
     const handler = jest.fn();
     /**
