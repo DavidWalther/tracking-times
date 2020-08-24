@@ -255,11 +255,13 @@ describe('Change', () => {
      * the change event contains the interger values of date and time
      */
     return Promise.resolve().then(() => {
+      const expectedDateInteger = new Date(dateString).getTime();
       const expectedTimeInteger = new Date(
         '1970-01-01T' + newTimeString
       ).getTime();
       expect(handler.mock.calls[0][0].detail).toBeTruthy();
       expect(handler.mock.calls[0][0].detail.time).toBe(expectedTimeInteger);
+      expect(handler.mock.calls[0][0].detail.date).toBe(expectedDateInteger);
     });
   });
 

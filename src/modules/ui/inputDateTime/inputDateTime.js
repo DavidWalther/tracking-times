@@ -31,10 +31,12 @@ export default class InputDateTime extends LightningElement {
 
     const newValue = new Date(this.dateValue + 'T' + enteredTime).getTime();
     const timeInteger = newValue % MILLISECONDS_PER_DAY;
+    const dateInteger = newValue - timeInteger;
 
     //create and fire custom event
     const timestampsData = {
-      time: timeInteger
+      time: timeInteger,
+      date: dateInteger
     };
     const newEvent = new CustomEvent('change', {
       detail: timestampsData
