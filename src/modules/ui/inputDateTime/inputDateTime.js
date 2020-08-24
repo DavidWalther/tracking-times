@@ -30,6 +30,8 @@ export default class InputDateTime extends LightningElement {
     const enteredTime = event.target.value;
 
     const newValue = new Date(this.dateValue + 'T' + enteredTime).getTime();
+    this.value = newValue;
+
     const timeInteger = newValue % MILLISECONDS_PER_DAY;
     const dateInteger = newValue - timeInteger;
 
