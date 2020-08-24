@@ -8,7 +8,12 @@
     />
   </template>
   <template if:false={noDate}>
-    <input class="input-date" type="date" value={dateValue} />
+    <input
+      class="input-date"
+      type="date"
+      value={dateValue}
+      onchange={handleChangeDate}
+    />
   </template>
 
   <!--

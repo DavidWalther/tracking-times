@@ -224,4 +224,36 @@ describe('Change', () => {
       expect(handler).toHaveBeenCalledTimes(1);
     });
   });
+
+  test("Change of date input triggers a custom 'change' event", () => {
+    const handler = jest.fn();
+    /**
+     * Given
+     * The componen is added to DOM with a specific value
+     */
+    const dateString = '2020-01-30';
+    const inputValue = new Date(dateString + 'T15:00:00.0000Z').getTime();
+
+    const element = createElement('ui-input-date-time', { is: InputDateTime });
+    element.addEventListener('change', handler);
+    element.value = inputValue;
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the time input is changed
+     */
+    const newDateString = '19:43';
+    const inputDate = element.shadowRoot.querySelector('input.input-date');
+    inputDate.value = newDateString;
+    inputDate.dispatchEvent(new CustomEvent('change'));
+
+    /**
+     * Then
+     * A single change event is fired
+     */
+    return Promise.resolve().then(() => {
+      expect(handler).toHaveBeenCalledTimes(1);
+    });
+  });
 });
