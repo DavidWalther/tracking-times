@@ -1,6 +1,11 @@
 <template>
   <template if:false={noTime}>
-    <input class="input-time" type="time" value={timeValue} />
+    <input
+      class="input-time"
+      type="time"
+      value={timeValue}
+      onchange={handleChangeTime}
+    />
   </template>
   <template if:false={noDate}>
     <input class="input-date" type="date" value={dateValue} />

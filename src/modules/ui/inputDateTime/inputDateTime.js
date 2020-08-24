@@ -17,4 +17,21 @@ export default class InputDateTime extends LightningElement {
     const tempDate = new Date(this.value);
     return tempDate.toLocaleTimeString().substr(0, 5);
   }
+
+  handleChangeTime(event) {
+    // stop normal event
+    event.preventDefault();
+    event.stopPropagation();
+
+    //create an firecustom event
+    const timestampsData = {};
+    const newEvent = new CustomEvent('change', {
+      detail: timestampsData
+    });
+    this.dispatchEvent(newEvent);
+  }
+
+  getTimeInput() {
+    this.template.querySelector('input.input-time');
+  }
 }

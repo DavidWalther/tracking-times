@@ -65,8 +65,8 @@ describe('Time Input', () => {
      * Then
      * the input shows the current time
      */
-    const inputDate = element.shadowRoot.querySelector('input.input-time');
-    expect(inputDate.value).toBe(nowString);
+    const inputTime = element.shadowRoot.querySelector('input.input-time');
+    expect(inputTime.value).toBe(nowString);
   });
 
   test('Time shows time if value is provided', () => {
@@ -88,8 +88,8 @@ describe('Time Input', () => {
      * Then
      * the input shows the given time
      */
-    const inputDate = element.shadowRoot.querySelector('input.input-time');
-    expect(inputDate.value).toBe(timeString);
+    const inputTime = element.shadowRoot.querySelector('input.input-time');
+    expect(inputTime.value).toBe(timeString);
   });
 });
 
@@ -182,5 +182,46 @@ describe('Date input', () => {
      */
     const inputDate = element.shadowRoot.querySelector('input.input-date');
     expect(inputDate.value).toBe(dateString);
+  });
+});
+
+describe('Change', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test("Change of time input triggers a custom 'change' event", () => {
+    const handler = jest.fn();
+    /**
+     * Given
+     * The componen is added to DOM with a specific value
+     */
+    const timeString = '18:43';
+    const inputValue = new Date('2020-01-01T' + timeString).getTime();
+
+    const element = createElement('ui-input-date-time', { is: InputDateTime });
+    element.addEventListener('change', handler);
+    element.value = inputValue;
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the time input is changed
+     */
+    const newTimeString = '19:43';
+    const inputTime = element.shadowRoot.querySelector('input.input-time');
+    inputTime.value = newTimeString;
+    inputTime.dispatchEvent(new CustomEvent('change'));
+
+    /**
+     * Then
+     * A single change event is fired
+     */
+    return Promise.resolve().then(() => {
+      expect(handler).toHaveBeenCalledTimes(1);
+    });
   });
 });
