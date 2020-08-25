@@ -51,8 +51,19 @@ export default class InputDateTime extends LightningElement {
     event.preventDefault();
     event.stopPropagation();
 
-    //create an firecustom event
-    const timestampsData = {};
+    const enteredDate = event.target.value;
+
+    const newValue = new Date(enteredDate + 'T' + this.timeValue).getTime();
+    this.value = newValue;
+
+    const timeInteger = newValue % MILLISECONDS_PER_DAY;
+    const dateInteger = newValue - timeInteger;
+
+    //create and fire custom event
+    const timestampsData = {
+      time: timeInteger,
+      date: dateInteger
+    };
     const newEvent = new CustomEvent('change', {
       detail: timestampsData
     });
