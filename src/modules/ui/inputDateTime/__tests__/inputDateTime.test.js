@@ -283,7 +283,7 @@ describe('Change', () => {
      * When
      * the time input is changed
      */
-    const newDateString = '19:43';
+    const newDateString = '2020-02-17';
     const inputDate = element.shadowRoot.querySelector('input.input-date');
     inputDate.value = newDateString;
     inputDate.dispatchEvent(new CustomEvent('change'));
