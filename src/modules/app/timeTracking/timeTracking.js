@@ -1,6 +1,7 @@
 import { LightningElement, track } from 'lwc';
 import { startDownload } from 'data/fileDownload';
 import { save, load } from 'data/localStorage';
+import { startAuthentication } from 'data/auth';
 
 const MILISECONDS_PER_MINUTE = 1000 * 60;
 const MILISECONDS_PER_FIFTEEN_MINUTE = MILISECONDS_PER_MINUTE * 15;
@@ -48,6 +49,7 @@ export default class TimeTracking extends LightningElement {
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
+    startAuthentication();
   }
 
   renderedCallback() {
