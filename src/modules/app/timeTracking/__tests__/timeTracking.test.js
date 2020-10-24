@@ -429,7 +429,7 @@ describe('Download', () => {
      * Then
      * The button is enabled
      */
-    const downloadButton = getDownloadButton(element.shadowRoot);
+    const downloadButton = getDownloadButton(element.shadowRoot)[0];
     expect(downloadButton.disabled).toBe(false);
   });
 
@@ -450,7 +450,7 @@ describe('Download', () => {
      * Then
      * The button is disabled
      */
-    const downloadButton = getDownloadButton(element.shadowRoot);
+    const downloadButton = getDownloadButton(element.shadowRoot)[0];
     expect(downloadButton.disabled).toBe(true);
   });
 
@@ -479,7 +479,7 @@ describe('Download', () => {
        * Then
        * The button is disabled
        */
-      const downloadButton = getDownloadButton(element.shadowRoot);
+      const downloadButton = getDownloadButton(element.shadowRoot)[0];
       expect(downloadButton.disabled).toBe(true);
     });
   });
@@ -558,13 +558,7 @@ function getClearButton(shadowRoot) {
 }
 
 function getDownloadButton(shadowRoot) {
-  const allFoundElements = getElementBySelectorAll(
-    shadowRoot,
-    '.button-export'
-  );
-  // check whether there is one for each layout
-  expect(allFoundElements.length).toBe(2);
-  return allFoundElements[0];
+  return getElementBySelectorAll(shadowRoot, '.button-export');
 }
 
 function getElementBySelectorAll(shadowRoot, classname) {

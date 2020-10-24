@@ -412,13 +412,20 @@ describe('feature - difference', () => {
     element.break = THIRTY_MINUTES;
     document.body.appendChild(element);
 
-    /**
-     * Then
-     * The difference is reduced by the break time
-     */
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * 1. The difference is reduced by the break time
+       * 2. the duration is accessible via function
+       */
 
-    const differenceOutput = element.shadowRoot.querySelector('output.diff');
-    expect(differenceOutput.value).toBe((1.5).toString());
+      // 1.
+      const differenceOutput = element.shadowRoot.querySelector('output.diff');
+      expect(differenceOutput.value).toBe((1.5).toString());
+
+      // 2.
+      expect(element.duration()).toBe(TWO_HOURS - THIRTY_MINUTES);
+    });
   });
 
   test('bugfix: difference calculation evaluates invalid break input as 0', () => {
