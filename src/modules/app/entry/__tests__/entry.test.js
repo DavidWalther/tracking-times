@@ -424,7 +424,7 @@ describe('feature - difference', () => {
       expect(differenceOutput.value).toBe((1.5).toString());
 
       // 2.
-      expect(element.duration()).toBe(TWO_HOURS);
+      expect(element.duration()).toBe(TWO_HOURS - THIRTY_MINUTES);
     });
   });
 
