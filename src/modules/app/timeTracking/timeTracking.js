@@ -5,6 +5,8 @@ import { save, load } from 'data/localStorage';
 const MILISECONDS_PER_MINUTE = 1000 * 60;
 const MILISECONDS_PER_FIFTEEN_MINUTE = MILISECONDS_PER_MINUTE * 15;
 const MILISECONDS_PER_HOUR = MILISECONDS_PER_MINUTE * 60;
+const MILISECONDS_PER_DAY = MILISECONDS_PER_HOUR * 24;
+
 const CUTTING_TYPE_CEIL = 'ceil';
 const CUTTING_TYPE_FLOOR = 'floor';
 const CUTTING_TYPE_ROUND = 'round';
@@ -129,7 +131,9 @@ export default class TimeTracking extends LightningElement {
       outputLine += columnSeparator;
 
       // add difference column
-      let differenceStr = '' + getdifference(entry.start, entry.end);
+      let duration = entry.end - entry.start;
+      duration = duration - (entry.break && entry.break > 0 ? entry.break : 0);
+      let differenceStr = formatDuration(duration);
       let columnWidth = 13;
       //leading spaces
       outputLine += ' '.repeat(columnWidth - differenceStr.length - 1);
@@ -441,7 +445,27 @@ function extractDateStringFromTimeStamp(timestamp) {
   return dateString;
 }
 
-function getdifference(startTimeStamp, endTimeStamp) {
-  let difference = endTimeStamp - startTimeStamp;
-  return difference / (1000 * 60 * 60);
+function formatDuration(durationInMilliseconds) {
+  const resultObj = {};
+  // extract days
+  let baseValue = durationInMilliseconds;
+  let remainder = baseValue % MILISECONDS_PER_DAY;
+  resultObj.days = (baseValue - remainder) / MILISECONDS_PER_DAY;
+
+  // extract hours
+  baseValue = remainder;
+  remainder = baseValue % MILISECONDS_PER_HOUR;
+  resultObj.hours = (baseValue - remainder) / MILISECONDS_PER_HOUR;
+
+  // extract minutes
+  baseValue = remainder;
+  remainder = baseValue % MILISECONDS_PER_MINUTE;
+  resultObj.minutes = (baseValue - remainder) / MILISECONDS_PER_MINUTE;
+
+  let result = '';
+  result += resultObj.days > 0 ? '' + resultObj.days + 'd ' : '';
+  result += resultObj.hours > 0 ? '' + resultObj.hours + 'h ' : '';
+  result += resultObj.minutes > 0 ? '' + resultObj.minutes + 'm ' : '';
+  result = result.substr(0, result.length - 1);
+  return result;
 }

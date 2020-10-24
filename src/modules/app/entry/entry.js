@@ -63,6 +63,11 @@ export default class Entry extends LightningElement {
     }
   }
 
+  @api
+  duration() {
+    return this.end - this.start - this.break;
+  }
+
   internalState = {
     break: 0
   };
