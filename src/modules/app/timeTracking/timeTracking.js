@@ -129,7 +129,9 @@ export default class TimeTracking extends LightningElement {
       outputLine += columnSeparator;
 
       // add difference column
-      let differenceStr = '' + getdifference(entry.start, entry.end);
+      let duration = entry.end - entry.start;
+      duration = duration - (entry.break && entry.break >0 ? entry.break : 0);
+      let differenceStr = '' + duration;
       let columnWidth = 13;
       //leading spaces
       outputLine += ' '.repeat(columnWidth - differenceStr.length - 1);
@@ -439,9 +441,4 @@ function extractDateStringFromTimeStamp(timestamp) {
   fullDate = new Date(timestamp);
   dateString = fullDate.toISOString().split('T')[0];
   return dateString;
-}
-
-function getdifference(startTimeStamp, endTimeStamp) {
-  let difference = endTimeStamp - startTimeStamp;
-  return difference / (1000 * 60 * 60);
 }
