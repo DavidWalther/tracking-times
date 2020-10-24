@@ -2,8 +2,9 @@
 // version 1.1.1.1
 //----------------------------
 
-hotfixes:#
+hotfixes:
 - add breaktime to export
+- improve duration output for export
 
 //----------------------------
 // version 1.1.1
