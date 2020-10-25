@@ -97,60 +97,157 @@ export default class TimeTracking extends LightningElement {
     this.doExportTxt();
   }
 
+  createExportTxtLinte(formatingInformation, cellContent) {
+    let entryOutput = '';
+    const LINE_TPL = '{0} | {1} | {2}  | {3}  | {4} | {5}\n';
+
+    let isFirstline = true;
+    cellContent.comment.split('\n').forEach(commentLine => {
+      let outputLine = LINE_TPL;
+
+      outputLine = outputLine.replace('{5}', commentLine);
+
+      // add start date column
+      let startDateStr = isFirstline ? cellContent.startDate : '';
+      while (
+        startDateStr.length - 1 <
+        formatingInformation.columnWidth.startDate
+      ) {
+        startDateStr = ' ' + startDateStr;
+      }
+      outputLine = outputLine.replace('{0}', ' ' + startDateStr);
+
+      //add start time column
+      let startTimeStr = isFirstline ? cellContent.startTime : '';
+      while (
+        startTimeStr.length - 1 <
+        formatingInformation.columnWidth.startTime
+      ) {
+        startTimeStr = ' ' + startTimeStr;
+      }
+      outputLine = outputLine.replace('{1}', startTimeStr);
+
+      // add end date column
+      let endDateStr = isFirstline ? cellContent.endDate : '';
+      while (endDateStr.length - 1 < formatingInformation.columnWidth.endDate) {
+        endDateStr = ' ' + endDateStr;
+      }
+      outputLine = outputLine.replace('{2}', endDateStr);
+
+      //add end time column
+      let endTimeStr = isFirstline ? cellContent.endTime : '';
+      while (endTimeStr.length - 1 < formatingInformation.columnWidth.endTime) {
+        endTimeStr = ' ' + endTimeStr;
+      }
+      outputLine = outputLine.replace('{3}', endTimeStr);
+
+      //add end time column
+      let durationStr = isFirstline ? cellContent.duration : '';
+      while (
+        durationStr.length - 1 <
+        formatingInformation.columnWidth.duration
+      ) {
+        durationStr = ' ' + durationStr;
+      }
+      outputLine = outputLine.replace('{4}', durationStr);
+
+      isFirstline = false;
+
+      entryOutput += outputLine;
+    });
+    return entryOutput;
+  }
+
   doExportTxt() {
     const output = [];
-    const firstLine =
-      ' Startdate | Starttime |    Enddate | Endtime | Duration (h) | Comment\n';
+    const COLUMN_HEAD_START_DATE = 'Startdate';
+    const COLUMN_HEAD_START_TIME = 'Starttime';
+    const COLUMN_HEAD_END_DATE = 'Enddate';
+    const COLUMN_HEAD_END_TIME = 'Endtime';
+    const COLUMN_HEAD_DURATION = 'Duration';
+    const COLUMN_HEAD_COMMMENT = 'Comment';
+
+    const formatingInformation = {
+      columnWidth: {
+        startDate: COLUMN_HEAD_START_DATE.length,
+        startTime: COLUMN_HEAD_START_TIME.length,
+        endDate: COLUMN_HEAD_END_DATE.length,
+        endTime: COLUMN_HEAD_END_TIME.length,
+        duration: COLUMN_HEAD_DURATION.length,
+        comment: COLUMN_HEAD_COMMMENT.length
+      }
+    };
+
+    const exportContent = [];
+    this.state.entries.forEach(entry => {
+      // calculate duration
+      let duration = entry.end - entry.start;
+      duration = duration - (entry.break && entry.break > 0 ? entry.break : 0);
+      let differenceStr = formatDuration(duration);
+
+      const entryContent = {
+        startDate: extractDateStringFromTimeStamp(entry.start),
+        startTime: extractTimeStringFromTimeStamp(entry.start),
+        endDate: extractDateStringFromTimeStamp(entry.end),
+        endTime: extractTimeStringFromTimeStamp(entry.end),
+        duration: differenceStr,
+        comment: entry.comment
+      };
+      exportContent.push(entryContent);
+
+      formatingInformation.columnWidth.startDate = Math.max(
+        formatingInformation.columnWidth.startDate,
+        entryContent.startDate.length
+      );
+
+      formatingInformation.columnWidth.startTime = Math.max(
+        formatingInformation.columnWidth.startTime,
+        entryContent.startTime.length
+      );
+
+      formatingInformation.columnWidth.endDate = Math.max(
+        formatingInformation.columnWidth.endDate,
+        entryContent.endDate.length
+      );
+
+      formatingInformation.columnWidth.endTime = Math.max(
+        formatingInformation.columnWidth.endTime,
+        entryContent.endTime.length
+      );
+
+      formatingInformation.columnWidth.duration = Math.max(
+        formatingInformation.columnWidth.duration,
+        entryContent.duration.length
+      );
+
+      entry.comment.split('\n').forEach(commentLine => {
+        formatingInformation.columnWidth.comment = Math.max(
+          formatingInformation.columnWidth.comment,
+          commentLine.length
+        );
+      });
+    });
+
+    const firstLine = this.createExportTxtLinte(formatingInformation, {
+      startDate: COLUMN_HEAD_START_DATE,
+      startTime: COLUMN_HEAD_START_TIME,
+      endDate: COLUMN_HEAD_END_DATE,
+      endTime: COLUMN_HEAD_END_TIME,
+      duration: COLUMN_HEAD_DURATION,
+      comment: COLUMN_HEAD_COMMMENT
+    });
+
     output.push(firstLine);
     const secondLine =
       '===================================================================================\n';
     output.push(secondLine);
 
-    const columnSeparator = ' | ';
-    this.state.entries.forEach(entry => {
-      let outputLine = '';
-
-      // add start date column
-      let startDateStr = extractDateStringFromTimeStamp(entry.start);
-      outputLine += startDateStr;
-      outputLine += columnSeparator;
-
-      //add start time column
-      let startTimeStr = extractTimeStringFromTimeStamp(entry.start);
-      outputLine += '    ';
-      outputLine += startTimeStr;
-      outputLine += columnSeparator;
-
-      // add end date column
-      let endDateStr = extractDateStringFromTimeStamp(entry.end);
-      outputLine += endDateStr;
-      outputLine += columnSeparator;
-
-      //add start time column
-      let endTimeStr = extractTimeStringFromTimeStamp(entry.end);
-      outputLine += '  ';
-      outputLine += endTimeStr;
-      outputLine += columnSeparator;
-
-      // add difference column
-      let duration = entry.end - entry.start;
-      duration = duration - (entry.break && entry.break > 0 ? entry.break : 0);
-      let differenceStr = formatDuration(duration);
-      let columnWidth = 13;
-      //leading spaces
-      outputLine += ' '.repeat(columnWidth - differenceStr.length - 1);
-
-      outputLine += differenceStr;
-      outputLine += columnSeparator;
-
-      // add comment
-      let commentStr = entry.comment;
-      commentStr = commentStr ? commentStr : '';
-      outputLine += commentStr;
-
-      // add line break
-      outputLine += '\n';
-      output.push(outputLine);
+    exportContent.forEach(entryContent => {
+      output.push(
+        this.createExportTxtLinte(formatingInformation, entryContent)
+      );
+      //output.push('---------------------------------------------------------------------------------\n');
+      output.push('\n');
     });
     startDownload('export.txt', output, 'test/plain');
   }
