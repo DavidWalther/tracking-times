@@ -254,7 +254,7 @@ export default class Entry extends LightningElement {
       end = new Date(this.internalState.endTimeStamp);
 
       let localTimestamp = new Date(
-        end.getTime() - end.getTimezoneOffset() * 1000 * 60
+        end.getTime() - end.getTimezoneOffset() * MILLISECONDS_PER_MINUTE
       );
       let stringArray = localTimestamp
         .toISOString()
