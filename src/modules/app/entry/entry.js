@@ -145,19 +145,13 @@ export default class Entry extends LightningElement {
   }
 
   extractDateStringFromTimeStamp(timestamp) {
-    let fullDate, dateString;
-    fullDate = new Date(timestamp);
-    dateString = fullDate.toISOString().split('T')[0];
-    return dateString;
+    let fullDate = new Date(timestamp);
+    return this.getStringsFromDateTime(fullDate).dateString;
   }
 
   extractTimeStringFromTimeStamp(timestamp) {
-    let fullDate, timeString;
-
-    fullDate = new Date(timestamp);
-    timeString = fullDate.toLocaleTimeString().substr(0, 5);
-
-    return timeString;
+    let fullDate = new Date(timestamp);
+    return this.getStringsFromDateTime(fullDate).timeString;
   }
 
   get difference() {
