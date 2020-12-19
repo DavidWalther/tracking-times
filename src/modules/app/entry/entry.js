@@ -193,6 +193,10 @@ export default class Entry extends LightningElement {
     this.getDeleteModal().hide();
   }
 
+  handleChangeSelect(event) {
+    this.processChangeSelect(event);
+  }
+
   //----------------------------
   // process events
   //----------------------------
@@ -218,6 +222,14 @@ export default class Entry extends LightningElement {
   processEdit() {
     this.fillModalInputs();
     this.getEditModal().show();
+  }
+
+  processChangeSelect(stdEvent) {
+    stdEvent.preventDefault();
+
+    const eventParams = {};
+    const custEvt = new CustomEvent('select', eventParams);
+    this.dispatchEvent(custEvt);
   }
 
   createAndFireChangeEvent() {

@@ -754,6 +754,33 @@ describe('feature - Make entries selectable', () => {
     expect(selectCheckbox).toBeTruthy();
     expect(selectCheckbox.type).toBe('checkbox');
   });
+
+  test('entry cmp fires select event', () => {
+    const handler = jest.fn();
+    /**
+     * Given
+     * the entry component is added to DOM
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    element.addEventListener('select', handler);
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the selection checkbox is checked
+     */
+    const selectCheckbox = element.shadowRoot.querySelector('input.selection');
+    selectCheckbox.value = true;
+    selectCheckbox.dispatchEvent(new CustomEvent('change'));
+
+    /**
+     * Then
+     * a select-event is fired by cmp
+     */
+    return Promise.resolve().then(() => {
+      expect(handler).toHaveBeenCalled();
+    });
+  });
 });
 
 function getEditButton(shadowRoot) {
