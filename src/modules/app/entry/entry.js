@@ -247,8 +247,16 @@ export default class Entry extends LightningElement {
 
     if (this.isStartDefined()) {
       start = new Date(this.internalState.startTimeStamp);
-      result.startdate = start.toISOString().split('T')[0];
-      result.starttime = start.toLocaleTimeString().substr(0, 5);
+
+      let localTimestamp = new Date(
+        start.getTime() - start.getTimezoneOffset() * MILLISECONDS_PER_MINUTE
+      );
+      let stringArray = localTimestamp
+        .toISOString()
+        .slice(0, 16)
+        .split('T');
+      result.startdate = stringArray[0];
+      result.starttime = stringArray[1];
     }
     if (this.isEndDefined()) {
       end = new Date(this.internalState.endTimeStamp);
