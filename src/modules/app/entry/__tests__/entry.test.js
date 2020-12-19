@@ -732,6 +732,23 @@ describe('feature - Make entries selectable', () => {
       document.body.removeChild(document.body.firstChild);
     }
   });
+
+  test('entry has select check box', () => {
+    /**
+     * Given
+     * -
+     */
+    
+    /**
+     * When
+     * the entry component is added to DOM
+     */
+    
+    /**
+     * Then
+     * the checkbox for selecting exits
+     */
+  });
 });
 
 function getEditButton(shadowRoot) {
