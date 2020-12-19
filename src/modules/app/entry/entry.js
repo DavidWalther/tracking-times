@@ -252,8 +252,17 @@ export default class Entry extends LightningElement {
     }
     if (this.isEndDefined()) {
       end = new Date(this.internalState.endTimeStamp);
-      result.enddate = end.toISOString().split('T')[0];
-      result.endtime = end.toLocaleTimeString().substr(0, 5);
+
+      let localTimestamp = new Date(
+        end.getTime() - end.getTimezoneOffset() * 1000 * 60
+      );
+      let stringArray = localTimestamp
+        .toISOString()
+        .slice(0, 16)
+        .split('T');
+
+      result.enddate = stringArray[0];
+      result.endtime = stringArray[1];
     }
     result.break = this.break / MILLISECONDS_PER_MINUTE;
     result.comment = this.internalState.comment;
