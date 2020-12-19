@@ -738,16 +738,21 @@ describe('feature - Make entries selectable', () => {
      * Given
      * -
      */
-    
+
     /**
      * When
      * the entry component is added to DOM
      */
-    
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
     /**
      * Then
      * the checkbox for selecting exits
      */
+    const selectCheckbox = element.shadowRoot.querySelector('input.selection');
+    expect(selectCheckbox).toBeTruthy();
+    expect(selectCheckbox.type).toBe('checkbox');
   });
 });
 
