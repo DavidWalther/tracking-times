@@ -5,7 +5,7 @@ const MILLISECONDS_PER_MINUTE = 1000 * 60;
 export default class Entry extends LightningElement {
   @api
   get break() {
-    return this.internalState.break;
+    return this.internalState.break ? this.internalState.break : 0;
   }
   set break(value) {
     if (value !== undefined) {
@@ -37,7 +37,9 @@ export default class Entry extends LightningElement {
 
   @api
   get start() {
-    return this.internalState.startTimeStamp;
+    return this.internalState.startTimeStamp
+      ? this.internalState.startTimeStamp
+      : 0;
   }
   set start(value) {
     let integerValue;
@@ -51,7 +53,9 @@ export default class Entry extends LightningElement {
 
   @api
   get end() {
-    return this.internalState.endTimeStamp;
+    return this.internalState.endTimeStamp
+      ? this.internalState.endTimeStamp
+      : 0;
   }
   set end(value) {
     let integerValue;
@@ -157,11 +161,12 @@ export default class Entry extends LightningElement {
   }
 
   get difference() {
-    let startDate = this.internalState.startTimeStamp;
+    let startDate = this.start;
     let endDate = this.internalState.endTimeStamp;
     let breakTime = this.break;
 
     let difference = endDate - startDate - breakTime;
+
     return difference / (1000 * 60 * 60);
   }
 
