@@ -247,30 +247,17 @@ export default class Entry extends LightningElement {
 
     if (this.isStartDefined()) {
       start = new Date(this.internalState.startTimeStamp);
+      const tempResult = this.getStringsFromDateTime(start);
 
-      let localTimestamp = new Date(
-        start.getTime() - start.getTimezoneOffset() * MILLISECONDS_PER_MINUTE
-      );
-      let stringArray = localTimestamp
-        .toISOString()
-        .slice(0, 16)
-        .split('T');
-      result.startdate = stringArray[0];
-      result.starttime = stringArray[1];
+      result.startdate = tempResult.dateString;
+      result.starttime = tempResult.timeString;
     }
     if (this.isEndDefined()) {
       end = new Date(this.internalState.endTimeStamp);
+      const tempResult = this.getStringsFromDateTime(end);
 
-      let localTimestamp = new Date(
-        end.getTime() - end.getTimezoneOffset() * MILLISECONDS_PER_MINUTE
-      );
-      let stringArray = localTimestamp
-        .toISOString()
-        .slice(0, 16)
-        .split('T');
-
-      result.enddate = stringArray[0];
-      result.endtime = stringArray[1];
+      result.enddate = tempResult.dateString;
+      result.endtime = tempResult.timeString;
     }
     result.break = this.break / MILLISECONDS_PER_MINUTE;
     result.comment = this.internalState.comment;
@@ -414,5 +401,22 @@ export default class Entry extends LightningElement {
 
   getInputBreak() {
     return this.template.querySelector('input.break');
+  }
+
+  getStringsFromDateTime(datetime) {
+    const result = {};
+
+    let localTimestamp = new Date(
+      datetime.getTime() -
+        datetime.getTimezoneOffset() * MILLISECONDS_PER_MINUTE
+    );
+
+    let stringArray = localTimestamp
+      .toISOString()
+      .slice(0, 16)
+      .split('T');
+    result.dateString = stringArray[0];
+    result.timeString = stringArray[1];
+    return result;
   }
 }
