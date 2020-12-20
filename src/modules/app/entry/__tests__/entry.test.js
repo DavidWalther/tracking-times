@@ -798,6 +798,31 @@ describe('feature - Make entries selectable', () => {
         expect(unselectHandler).toHaveBeenCalled();
       });
   });
+
+  test('entry cmp has an unselect method', () => {
+    /**
+     * Given
+     * - the entry component is added to DOM
+     * - is selected
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    const selectCheckbox = element.shadowRoot.querySelector('input.selection');
+    selectCheckbox.checked = true;
+
+    /**
+     * When
+     * the unselect method is called
+     */
+    element.unselect();
+
+    /**
+     * Then
+     * the select checkbox is unchecked
+     */
+    expect(selectCheckbox.checked).toBe(false);
+  });
 });
 
 function getEditButton(shadowRoot) {
