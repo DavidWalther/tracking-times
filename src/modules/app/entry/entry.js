@@ -72,6 +72,11 @@ export default class Entry extends LightningElement {
     return this.end - this.start - this.break;
   }
 
+  @api
+  unselect() {
+    this.template.querySelector('.selection').checked = false;
+  }
+
   internalState = {
     break: 0
   };
@@ -193,6 +198,10 @@ export default class Entry extends LightningElement {
     this.getDeleteModal().hide();
   }
 
+  handleChangeSelect(event) {
+    this.processChangeSelect(event);
+  }
+
   //----------------------------
   // process events
   //----------------------------
@@ -218,6 +227,18 @@ export default class Entry extends LightningElement {
   processEdit() {
     this.fillModalInputs();
     this.getEditModal().show();
+  }
+
+  processChangeSelect(stdEvent) {
+    stdEvent.preventDefault();
+
+    let checked = stdEvent.target.checked;
+    const eventParams = {};
+    if (checked) {
+      this.dispatchEvent(new CustomEvent('select', eventParams));
+    } else {
+      this.dispatchEvent(new CustomEvent('unselect', eventParams));
+    }
   }
 
   createAndFireChangeEvent() {

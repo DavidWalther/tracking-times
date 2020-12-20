@@ -725,6 +725,106 @@ describe('check single entry delete', () => {
   });
 });
 
+describe('feature - Make entries selectable', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('entry has select check box', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     * the entry component is added to DOM
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    /**
+     * Then
+     * the checkbox for selecting exits
+     */
+    const selectCheckbox = element.shadowRoot.querySelector('input.selection');
+    expect(selectCheckbox).toBeTruthy();
+    expect(selectCheckbox.type).toBe('checkbox');
+  });
+
+  test('entry cmp fires events on check and uncheck', () => {
+    const handler = jest.fn();
+    const unselectHandler = jest.fn();
+    /**
+     * Given
+     * the entry component is added to DOM
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    element.addEventListener('select', handler);
+    element.addEventListener('unselect', unselectHandler);
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the selection checkbox is checked
+     */
+    const selectCheckbox = element.shadowRoot.querySelector('input.selection');
+    selectCheckbox.checked = true;
+    selectCheckbox.dispatchEvent(new CustomEvent('change'));
+
+    /**
+     * Then
+     * a select-event is fired by cmp
+     */
+    return Promise.resolve()
+      .then(() => {
+        expect(handler).toHaveBeenCalled();
+
+        /**
+         * When
+         * the checkbox is unchecked
+         */
+        selectCheckbox.checked = false;
+        selectCheckbox.dispatchEvent(new CustomEvent('change'));
+      })
+      .then(() => {
+        /**
+         * Then
+         * an unselect event is fired
+         */
+        expect(unselectHandler).toHaveBeenCalled();
+      });
+  });
+
+  test('entry cmp has an unselect method', () => {
+    /**
+     * Given
+     * - the entry component is added to DOM
+     * - is selected
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+
+    const selectCheckbox = element.shadowRoot.querySelector('input.selection');
+    selectCheckbox.checked = true;
+
+    /**
+     * When
+     * the unselect method is called
+     */
+    element.unselect();
+
+    /**
+     * Then
+     * the select checkbox is unchecked
+     */
+    expect(selectCheckbox.checked).toBe(false);
+  });
+});
+
 function getEditButton(shadowRoot) {
   return getElementBySelector(shadowRoot, '.edit');
 }
