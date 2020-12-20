@@ -755,14 +755,16 @@ describe('feature - Make entries selectable', () => {
     expect(selectCheckbox.type).toBe('checkbox');
   });
 
-  test('entry cmp fires select event', () => {
+  test('entry cmp fires events on check and uncheck', () => {
     const handler = jest.fn();
+    const unselectHandler = jest.fn();
     /**
      * Given
      * the entry component is added to DOM
      */
     const element = createElement('ui-entry', { is: Entry });
     element.addEventListener('select', handler);
+    element.addEventListener('unselect', unselectHandler);
     document.body.appendChild(element);
 
     /**
@@ -770,16 +772,31 @@ describe('feature - Make entries selectable', () => {
      * the selection checkbox is checked
      */
     const selectCheckbox = element.shadowRoot.querySelector('input.selection');
-    selectCheckbox.value = true;
+    selectCheckbox.checked = true;
     selectCheckbox.dispatchEvent(new CustomEvent('change'));
 
     /**
      * Then
      * a select-event is fired by cmp
      */
-    return Promise.resolve().then(() => {
-      expect(handler).toHaveBeenCalled();
-    });
+    return Promise.resolve()
+      .then(() => {
+        expect(handler).toHaveBeenCalled();
+
+        /**
+         * When
+         * the checkbox is unchecked
+         */
+        selectCheckbox.checked = false;
+        selectCheckbox.dispatchEvent(new CustomEvent('change'));
+      })
+      .then(() => {
+        /**
+         * Then
+         * an unselect event is fired
+         */
+        expect(unselectHandler).toHaveBeenCalled();
+      });
   });
 });
 

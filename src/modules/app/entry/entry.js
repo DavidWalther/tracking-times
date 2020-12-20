@@ -227,9 +227,13 @@ export default class Entry extends LightningElement {
   processChangeSelect(stdEvent) {
     stdEvent.preventDefault();
 
+    let checked = stdEvent.target.checked;
     const eventParams = {};
-    const custEvt = new CustomEvent('select', eventParams);
-    this.dispatchEvent(custEvt);
+    if (checked) {
+      this.dispatchEvent(new CustomEvent('select', eventParams));
+    } else {
+      this.dispatchEvent(new CustomEvent('unselect', eventParams));
+    }
   }
 
   createAndFireChangeEvent() {
