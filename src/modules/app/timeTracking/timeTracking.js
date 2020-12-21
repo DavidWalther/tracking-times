@@ -77,6 +77,11 @@ export default class TimeTracking extends LightningElement {
     this.processClearData();
   }
 
+  handleClickExport() {
+    this.proccessExport();
+    this.template.querySelector('ui-sidemenu').close();
+  }
+
   handleEventDelete(event) {
     const itemSortNumber = event.target.getAttribute('data-index');
 
@@ -84,9 +89,10 @@ export default class TimeTracking extends LightningElement {
     this.saveData();
   }
 
-  handleClickExport() {
-    this.proccessExport();
-    this.template.querySelector('ui-sidemenu').close();
+  // eslint-disable-next-line no-unused-vars
+  handleEventSelect(event) {
+    // eslint-disable-next-line no-debugger
+    debugger;
   }
 
   //----------------------------
