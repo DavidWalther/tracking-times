@@ -224,11 +224,12 @@ export default class Entry extends LightningElement {
   }
 
   processDelete() {
-    this.dispatchEvent(new CustomEvent('delete'), {
+    const event = new CustomEvent('delete', {
       detail: {
         id: this.itemId
       }
     });
+    this.dispatchEvent(event);
   }
 
   processEdit() {

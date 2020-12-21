@@ -78,9 +78,9 @@ export default class TimeTracking extends LightningElement {
   }
 
   handleEventDelete(event) {
-    const itemSortNumber = event.target.getAttribute('data-index');
+    const itemId = event.detail.id;
 
-    this.processEntryDelete(itemSortNumber);
+    this.processEntryDelete(itemId);
     this.saveData();
   }
 
@@ -258,12 +258,11 @@ export default class TimeTracking extends LightningElement {
     startDownload('export.txt', output, 'test/plain');
   }
 
-  processEntryDelete(itemSortNumber) {
-    let index, entryIndex, newlength;
+  processEntryDelete(itemId) {
+    let entryIndex, newlength;
 
-    index = parseInt(itemSortNumber, 10);
     entryIndex = this.state.entries.findIndex(entry => {
-      return entry.sortnumber === index;
+      return entry.itemId === itemId;
     });
 
     // delete entry
