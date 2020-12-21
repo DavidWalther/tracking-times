@@ -90,8 +90,9 @@ export default class TimeTracking extends LightningElement {
   }
 
   handleChangeEntry(event) {
-    let index = event.srcElement.getAttribute('data-index');
-    this.processEntryChange(index, event.detail);
+    const itemId = event.detail.id;
+
+    this.processEntryChange(itemId, event.detail);
     this.saveData();
   }
 
@@ -373,18 +374,16 @@ export default class TimeTracking extends LightningElement {
     this.entryBasedEnablingOfButtons();
   }
 
-  processEntryChange(index, newDetail) {
+  processEntryChange(itemId, newDetail) {
     let entry;
     const startValue = newDetail.start;
     const endValue = newDetail.end;
     const breakValue = newDetail.break;
     const commentValue = newDetail.comment;
 
-    if (index !== undefined) {
-      let entryIndex = parseInt(index, 10);
-
+    if (itemId !== undefined) {
       entry = this.state.entries.find(function(tempEntry) {
-        return tempEntry.sortnumber === entryIndex;
+        return tempEntry.itemId === itemId;
       });
 
       if (entry !== undefined) {
