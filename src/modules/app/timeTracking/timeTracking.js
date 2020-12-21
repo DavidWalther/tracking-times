@@ -89,6 +89,12 @@ export default class TimeTracking extends LightningElement {
     this.template.querySelector('ui-sidemenu').close();
   }
 
+  handleChangeEntry(event) {
+    let index = event.srcElement.getAttribute('data-index');
+    this.processEntryChange(index, event.detail);
+    this.saveData();
+  }
+
   //----------------------------
   // Actions
   //----------------------------
@@ -344,12 +350,6 @@ export default class TimeTracking extends LightningElement {
   loadDataV05(loaded) {
     this.state.version = loaded.settings.version;
     this.state.entries = loaded.entries;
-  }
-
-  handleChangeEntry(event) {
-    let index = event.srcElement.getAttribute('data-index');
-    this.processEntryChange(index, event.detail);
-    this.saveData();
   }
 
   processClearData() {
