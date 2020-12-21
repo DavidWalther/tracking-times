@@ -360,10 +360,14 @@ describe('check delete', () => {
         const entryOriginal = entriesOriginal[index];
         entryOriginal.comment = 'entry ' + index;
       }
+      let thirdEntryId = entriesOriginal[2].itemId;
+      expect(thirdEntryId).toBeTruthy();
 
       // When
       let thirdEntry = entriesOriginal[2];
-      thirdEntry.dispatchEvent(new CustomEvent('delete'));
+      thirdEntry.dispatchEvent(
+        new CustomEvent('delete', { detail: { id: thirdEntryId } })
+      );
 
       // Then
       return Promise.resolve().then(() => {
