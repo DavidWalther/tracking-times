@@ -258,7 +258,7 @@ describe('Clear related tests', () => {
     const entriesBeforeClearing = element.shadowRoot.querySelectorAll(
       'app-entry'
     );
-    expect(entriesBeforeClearing.length).toBe(2);
+    expect(entriesBeforeClearing.length).toBe(3);
 
     /**
      * When
@@ -521,7 +521,7 @@ describe('feature: make entries selectable', () => {
     });
   });
 
-  test('selecting records enables actions for multiple records', () => {
+  test('selecting two records enables actions for multiple records', () => {
     /**
      * Given
      * - Data in current data version (three entries)
@@ -534,7 +534,9 @@ describe('feature: make entries selectable', () => {
      * - the second entry is selected
      */
     const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
     expect(secondEntry).toBeTruthy();
+    expect(thirdEntry).toBeTruthy();
     secondEntry.dispatchEvent(
       new CustomEvent('select', { detail: { id: secondEntry.itemId } })
     );
@@ -612,6 +614,13 @@ function setVersion4DummyData() {
         comment: 'entry2',
         start: 50,
         end: 1800000
+      },
+      {
+        itemId: 2,
+        sortnumber: 2,
+        comment: 'entry3',
+        start: 2000,
+        end: 2500
       }
     ]
   };
