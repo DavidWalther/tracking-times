@@ -68,6 +68,9 @@ export default class Entry extends LightningElement {
   }
 
   @api
+  itemId;
+
+  @api
   duration() {
     return this.end - this.start - this.break;
   }
@@ -221,7 +224,12 @@ export default class Entry extends LightningElement {
   }
 
   processDelete() {
-    this.dispatchEvent(new CustomEvent('delete'));
+    const event = new CustomEvent('delete', {
+      detail: {
+        id: this.itemId
+      }
+    });
+    this.dispatchEvent(event);
   }
 
   processEdit() {
@@ -233,7 +241,11 @@ export default class Entry extends LightningElement {
     stdEvent.preventDefault();
 
     let checked = stdEvent.target.checked;
-    const eventParams = {};
+    const eventParams = {
+      detail: {
+        id: this.itemId
+      }
+    };
     if (checked) {
       this.dispatchEvent(new CustomEvent('select', eventParams));
     } else {
@@ -247,6 +259,7 @@ export default class Entry extends LightningElement {
       bubbles: true,
       composed: true,
       detail: {
+        id: this.itemId,
         start: this.start,
         end: this.end,
         comment: this.comment,

@@ -1,4 +1,11 @@
 //----------------------------
+// version 1.2
+//----------------------------
+
+tec dept:
+- use itemId for identifying entries instead of sortnumber
+
+//----------------------------
 // version 1.1.1.1
 //----------------------------
 

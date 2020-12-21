@@ -83,9 +83,9 @@ export default class TimeTracking extends LightningElement {
   }
 
   handleEventDelete(event) {
-    const itemSortNumber = event.target.getAttribute('data-index');
+    const itemId = event.detail.id;
 
-    this.processEntryDelete(itemSortNumber);
+    this.processEntryDelete(itemId);
     this.saveData();
   }
 
@@ -93,6 +93,13 @@ export default class TimeTracking extends LightningElement {
   handleEventSelect(event) {
     // eslint-disable-next-line no-debugger
     debugger;
+  }
+
+  handleChangeEntry(event) {
+    const itemId = event.detail.id;
+
+    this.processEntryChange(itemId, event.detail);
+    this.saveData();
   }
 
   //----------------------------
@@ -258,12 +265,11 @@ export default class TimeTracking extends LightningElement {
     startDownload('export.txt', output, 'test/plain');
   }
 
-  processEntryDelete(itemSortNumber) {
-    let index, entryIndex, newlength;
+  processEntryDelete(itemId) {
+    let entryIndex, newlength;
 
-    index = parseInt(itemSortNumber, 10);
     entryIndex = this.state.entries.findIndex(entry => {
-      return entry.sortnumber === index;
+      return entry.itemId === itemId;
     });
 
     // delete entry
@@ -352,12 +358,6 @@ export default class TimeTracking extends LightningElement {
     this.state.entries = loaded.entries;
   }
 
-  handleChangeEntry(event) {
-    let index = event.srcElement.getAttribute('data-index');
-    this.processEntryChange(index, event.detail);
-    this.saveData();
-  }
-
   processClearData() {
     this.entryBasedEnablingOfButtons();
     this.state.entries = [];
@@ -380,18 +380,16 @@ export default class TimeTracking extends LightningElement {
     this.entryBasedEnablingOfButtons();
   }
 
-  processEntryChange(index, newDetail) {
+  processEntryChange(itemId, newDetail) {
     let entry;
     const startValue = newDetail.start;
     const endValue = newDetail.end;
     const breakValue = newDetail.break;
     const commentValue = newDetail.comment;
 
-    if (index !== undefined) {
-      let entryIndex = parseInt(index, 10);
-
+    if (itemId !== undefined) {
       entry = this.state.entries.find(function(tempEntry) {
-        return tempEntry.sortnumber === entryIndex;
+        return tempEntry.itemId === itemId;
       });
 
       if (entry !== undefined) {
