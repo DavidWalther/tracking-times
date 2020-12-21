@@ -224,7 +224,11 @@ export default class Entry extends LightningElement {
   }
 
   processDelete() {
-    this.dispatchEvent(new CustomEvent('delete'));
+    this.dispatchEvent(new CustomEvent('delete'), {
+      detail: {
+        id: this.itemId
+      }
+    });
   }
 
   processEdit() {
@@ -236,7 +240,11 @@ export default class Entry extends LightningElement {
     stdEvent.preventDefault();
 
     let checked = stdEvent.target.checked;
-    const eventParams = {};
+    const eventParams = {
+      detail: {
+        id: this.itemId
+      }
+    };
     if (checked) {
       this.dispatchEvent(new CustomEvent('select', eventParams));
     } else {
@@ -250,6 +258,7 @@ export default class Entry extends LightningElement {
       bubbles: true,
       composed: true,
       detail: {
+        id: this.itemId,
         start: this.start,
         end: this.end,
         comment: this.comment,
