@@ -487,68 +487,66 @@ describe('Download', () => {
       expect(downloadButton.disabled).toBe(true);
     });
   });
+});
 
-  describe('feature: make entries selectable', () => {
-    afterEach(() => {
-      // The jsdom instance is shared across test cases in a single file so reset the DOM
-      while (document.body.firstChild) {
-        document.body.removeChild(document.body.firstChild);
-      }
+describe('feature: make entries selectable', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('actions for multiple records are disabled by default', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     *  - Data in current data version (three entries)
+     *  - The component is added
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * actions are disabled
+       */
+      const buttonSummary = element.shadowRoot.querySelector('.button-summary');
+      expect(buttonSummary).toBeTruthy();
+      expect(buttonSummary.disabled).toBe(true);
     });
+  });
 
-    test('actions for multiple records are disabled by default', () => {
+  test('selecting records enables actions for multiple records', () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     * - The component is added
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+    /**
+     * When
+     * - the second entry is selected
+     */
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    expect(secondEntry).toBeTruthy();
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+
+    return Promise.resolve().then(() => {
       /**
-       * Given
-       * -
+       * Then
+       * actions are enabled
        */
-
-      /**
-       * When
-       *  - Data in current data version (three entries)
-       *  - The component is added
-       */
-      const element = createAndAddMainCmpAndSetCurrentVersionData();
-
-      return Promise.resolve().then(() => {
-        /**
-         * Then
-         * actions are disabled
-         */
-        const buttonSummary = element.shadowRoot.querySelector(
-          '.button-summary'
-        );
-        expect(buttonSummary).toBeTruthy();
-        expect(buttonSummary.disabled).toBe(true);
-      });
-    });
-
-    test('selecting records enables actions for multiple records', () => {
-      /**
-       * Given
-       * - Data in current data version (three entries)
-       * - The component is added
-       */
-      const element = createAndAddMainCmpAndSetCurrentVersionData();
-
-      /**
-       * When
-       * - the second entry is selected
-       */
-      const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
-      expect(secondEntry).toBeTruthy();
-      secondEntry.dispatchEvent(new CustomEvent('select'));
-
-      return Promise.resolve().then(() => {
-        /**
-         * Then
-         * actions are enabled
-         */
-        const buttonSummary = element.shadowRoot.querySelector(
-          '.button-summary'
-        );
-        expect(buttonSummary).toBeTruthy();
-        expect(buttonSummary.disabled).toBe(false);
-      });
+      const buttonSummary = element.shadowRoot.querySelector('.button-summary');
+      expect(buttonSummary).toBeTruthy();
+      expect(buttonSummary.disabled).toBe(false);
     });
   });
 });

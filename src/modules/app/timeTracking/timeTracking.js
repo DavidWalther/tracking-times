@@ -48,6 +48,8 @@ export default class TimeTracking extends LightningElement {
     }
   };
 
+  selectedEntries = [];
+
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
@@ -89,10 +91,9 @@ export default class TimeTracking extends LightningElement {
     this.saveData();
   }
 
-  // eslint-disable-next-line no-unused-vars
   handleEventSelect(event) {
-    // eslint-disable-next-line no-debugger
-    debugger;
+    const itemId = event.detail.id;
+    this.processEntrySelect(itemId);
   }
 
   handleChangeEntry(event) {
@@ -105,6 +106,13 @@ export default class TimeTracking extends LightningElement {
   //----------------------------
   // Actions
   //----------------------------
+
+  processEntrySelect(itemId) {
+    this.selectedEntries.push(itemId);
+    this.template.querySelectorAll('.button-summary').forEach(button => {
+      button.disabled = false;
+    });
+  }
 
   proccessExport() {
     this.doExportTxt();
