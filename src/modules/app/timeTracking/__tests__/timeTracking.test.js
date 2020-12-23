@@ -583,6 +583,49 @@ describe('feature: make entries selectable', () => {
       expect(buttonSummary.disabled).toBe(false);
     });
   });
+
+  test('actions for multiple records are disabled if records are deselected', () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     * - The component is added
+     * - two entries are selected + summary button is enabled
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+    const buttonSummary = element.shadowRoot.querySelector('.button-summary');
+    // summary button is disabled
+    expect(buttonSummary.disabled).toBe(true);
+
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+    expect(secondEntry).toBeTruthy();
+    expect(thirdEntry).toBeTruthy();
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
+    );
+
+    // summary button is enabled
+    expect(buttonSummary.disabled).toBe(false);
+
+    /**
+     * When
+     * one record is deselected
+     */
+    secondEntry.dispatchEvent(
+      new CustomEvent('unselect', { detail: { id: secondEntry.itemId } })
+    );
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * the summary button is disabled
+       */
+      expect(buttonSummary.disabled).toBe(true);
+    });
+  });
 });
 
 function createAndAddMainCmpAndSetCurrentVersionData(elementModifications) {

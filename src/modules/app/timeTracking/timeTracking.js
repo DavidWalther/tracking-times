@@ -96,6 +96,11 @@ export default class TimeTracking extends LightningElement {
     this.processEntrySelect(itemId);
   }
 
+  handleEventUnselect(event) {
+    const itemId = event.detail.id;
+    this.processEntryUnselect(itemId);
+  }
+
   handleChangeEntry(event) {
     const itemId = event.detail.id;
 
@@ -106,6 +111,13 @@ export default class TimeTracking extends LightningElement {
   //----------------------------
   // Actions
   //----------------------------
+
+  processEntryUnselect(itemId) {
+    this.selectedEntries = this.selectedEntries.filter(
+      selectedItemId => selectedItemId !== itemId
+    );
+    this.processMultipleRecordActionAvailability();
+  }
 
   processEntrySelect(itemId) {
     let tempListWithPotentialDuplicate = [...this.selectedEntries];
