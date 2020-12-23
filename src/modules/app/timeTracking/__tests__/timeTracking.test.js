@@ -521,6 +521,35 @@ describe('feature: make entries selectable', () => {
     });
   });
 
+  test('selecting one record does not enables actions for multiple records', () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     * - The component is added
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+    /**
+     * When
+     * - the second entry is selected
+     */
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    expect(secondEntry).toBeTruthy();
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * actions are enabled
+       */
+      const buttonSummary = element.shadowRoot.querySelector('.button-summary');
+      expect(buttonSummary).toBeTruthy();
+      expect(buttonSummary.disabled).toBe(true);
+    });
+  });
+
   test('selecting two records enables actions for multiple records', () => {
     /**
      * Given
@@ -539,6 +568,9 @@ describe('feature: make entries selectable', () => {
     expect(thirdEntry).toBeTruthy();
     secondEntry.dispatchEvent(
       new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
     );
 
     return Promise.resolve().then(() => {

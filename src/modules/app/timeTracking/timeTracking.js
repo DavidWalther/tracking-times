@@ -108,9 +108,22 @@ export default class TimeTracking extends LightningElement {
   //----------------------------
 
   processEntrySelect(itemId) {
-    this.selectedEntries.push(itemId);
-    this.template.querySelectorAll('.button-summary').forEach(button => {
-      button.disabled = false;
+    let tempListWithPotentialDuplicate = [...this.selectedEntries];
+
+    tempListWithPotentialDuplicate.push(itemId);
+    const uniqueItemIds = [...new Set(tempListWithPotentialDuplicate)];
+
+    this.selectedEntries = uniqueItemIds;
+    this.processMultipleRecordActionAvailability();
+  }
+
+  processMultipleRecordActionAvailability() {
+    const summaryButtons = this.template.querySelectorAll('.button-summary');
+
+    let disable = this.selectedEntries.length < 2;
+
+    summaryButtons.forEach(button => {
+      button.disabled = disable;
     });
   }
 
