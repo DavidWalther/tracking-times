@@ -39,3 +39,16 @@
 
   overflow: auto;
 }
+
+.modal-close {
+  text-align: right;
+}
+
+.button-close {
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: larger;
+  color: #222;
+  border: 0;
+  background: none;
+}
