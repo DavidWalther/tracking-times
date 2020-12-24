@@ -108,6 +108,10 @@ export default class TimeTracking extends LightningElement {
     this.saveData();
   }
 
+  handleClickSummary() {
+    this.getSummaryModal().show();
+  }
+
   //----------------------------
   // Actions
   //----------------------------
@@ -558,6 +562,10 @@ export default class TimeTracking extends LightningElement {
 
   getClearButton() {
     return this.template.querySelector('.button-clear');
+  }
+
+  getSummaryModal() {
+    return this.template.querySelector('.modal-summary');
   }
 }
 

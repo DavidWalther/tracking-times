@@ -521,7 +521,7 @@ describe('feature: make entries selectable', () => {
     });
   });
 
-  test('selecting one record does not enables actions for multiple records', () => {
+  test('selecting a single record does not enables actions for multiple records', () => {
     /**
      * Given
      * - Data in current data version (three entries)
@@ -626,7 +626,72 @@ describe('feature: make entries selectable', () => {
       expect(buttonSummary.disabled).toBe(true);
     });
   });
+
+  describe('sub-feature: summary', () => {
+    afterEach(() => {
+      // The jsdom instance is shared across test cases in a single file so reset the DOM
+      while (document.body.firstChild) {
+        document.body.removeChild(document.body.firstChild);
+      }
+    });
+
+    test('click on summary opens the summary modal', () => {
+      /**
+       * Given
+       * - the cmp is added to the DOM
+       * - Data in current data version (three entries)
+       * - two entries are selected
+       */
+
+      const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+      // select entries
+      const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+      secondEntry.dispatchEvent(
+        new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+      );
+
+      const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+      secondEntry.dispatchEvent(
+        new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
+      );
+
+      /**
+       * When
+       * the summary button is clicked
+       */
+      clickButtonSummary(element.shadowRoot);
+
+      /**
+       * Then
+       * the summary modal is opened
+       */
+      const summaryModal = getSummaryModal(element.shadowRoot);
+      expect(summaryModal.isVisible()).toBe(true);
+    });
+  });
 });
+
+function clickButtonSummary(shadowRoot) {
+  const buttonSummary = shadowRoot.querySelector('.button-summary');
+  if (!buttonSummary || buttonSummary.disabled) {
+    const errorObj = { message: 'button is disabled' };
+    throw errorObj;
+  }
+
+  buttonSummary.dispatchEvent(new CustomEvent('click'));
+}
+
+function getSummaryModal(shadowRoot) {
+  const summaryModal = shadowRoot.querySelector('.modal-summary');
+
+  if (!summaryModal) {
+    const errorObj = { message: 'summary modal not found' };
+    throw errorObj;
+  }
+
+  return summaryModal;
+}
 
 function createAndAddMainCmpAndSetCurrentVersionData(elementModifications) {
   setCurrentVersionDummyData();
