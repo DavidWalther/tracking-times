@@ -258,7 +258,7 @@ describe('Clear related tests', () => {
     const entriesBeforeClearing = element.shadowRoot.querySelectorAll(
       'app-entry'
     );
-    expect(entriesBeforeClearing.length).toBe(2);
+    expect(entriesBeforeClearing.length).toBe(3);
 
     /**
      * When
@@ -360,10 +360,14 @@ describe('check delete', () => {
         const entryOriginal = entriesOriginal[index];
         entryOriginal.comment = 'entry ' + index;
       }
+      let thirdEntryId = entriesOriginal[2].itemId;
+      expect(thirdEntryId).toBeTruthy();
 
       // When
       let thirdEntry = entriesOriginal[2];
-      thirdEntry.dispatchEvent(new CustomEvent('delete'));
+      thirdEntry.dispatchEvent(
+        new CustomEvent('delete', { detail: { id: thirdEntryId } })
+      );
 
       // Then
       return Promise.resolve().then(() => {
@@ -485,6 +489,155 @@ describe('Download', () => {
   });
 });
 
+describe('feature: make entries selectable', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('actions for multiple records are disabled by default', () => {
+    /**
+     * Given
+     * -
+     */
+
+    /**
+     * When
+     *  - Data in current data version (three entries)
+     *  - The component is added
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * actions are disabled
+       */
+      const buttonSummary = element.shadowRoot.querySelector('.button-summary');
+      expect(buttonSummary).toBeTruthy();
+      expect(buttonSummary.disabled).toBe(true);
+    });
+  });
+
+  test('selecting one record does not enables actions for multiple records', () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     * - The component is added
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+    /**
+     * When
+     * - the second entry is selected
+     */
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    expect(secondEntry).toBeTruthy();
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * actions are enabled
+       */
+      const buttonSummary = element.shadowRoot.querySelector('.button-summary');
+      expect(buttonSummary).toBeTruthy();
+      expect(buttonSummary.disabled).toBe(true);
+    });
+  });
+
+  test('selecting two records enables actions for multiple records', () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     * - The component is added
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+    /**
+     * When
+     * - the second entry is selected
+     */
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+    expect(secondEntry).toBeTruthy();
+    expect(thirdEntry).toBeTruthy();
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
+    );
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * actions are enabled
+       */
+      const buttonSummary = element.shadowRoot.querySelector('.button-summary');
+      expect(buttonSummary).toBeTruthy();
+      expect(buttonSummary.disabled).toBe(false);
+    });
+  });
+
+  test('actions for multiple records are disabled if records are deselected', () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     * - The component is added
+     * - two entries are selected + summary button is enabled
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+    const buttonSummary = element.shadowRoot.querySelector('.button-summary');
+    // summary button is disabled
+    expect(buttonSummary.disabled).toBe(true);
+
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+    expect(secondEntry).toBeTruthy();
+    expect(thirdEntry).toBeTruthy();
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
+    );
+
+    // summary button is enabled
+    expect(buttonSummary.disabled).toBe(false);
+
+    /**
+     * When
+     * one record is deselected
+     */
+    secondEntry.dispatchEvent(
+      new CustomEvent('unselect', { detail: { id: secondEntry.itemId } })
+    );
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * the summary button is disabled
+       */
+      expect(buttonSummary.disabled).toBe(true);
+    });
+  });
+});
+
+function createAndAddMainCmpAndSetCurrentVersionData(elementModifications) {
+  setCurrentVersionDummyData();
+  const element = createElement('app-timeTracking', { is: TimeTracking });
+  if (elementModifications) {
+    elementModifications(element);
+  }
+  document.body.appendChild(element);
+  return element;
+}
+
 function clearStorage() {
   localStorage.setItem('storage', JSON.stringify({}));
 }
@@ -536,6 +689,13 @@ function setVersion4DummyData() {
         comment: 'entry2',
         start: 50,
         end: 1800000
+      },
+      {
+        itemId: 2,
+        sortnumber: 2,
+        comment: 'entry3',
+        start: 2000,
+        end: 2500
       }
     ]
   };

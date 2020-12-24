@@ -34,6 +34,14 @@
             onclick={handleClickClear}
           ></ui-button>
         </div>
+        <div>
+          <ui-button
+            design="info"
+            value="Summary"
+            class="button-summary"
+            disabled
+          ></ui-button>
+        </div>
       </ui-sidemenu>
       <div class="buttons">
         <div>
@@ -68,18 +76,24 @@
           onclick={handleClickAdd}
         ></ui-button>
       </div>
+      <div class="button container-summary">
+        <ui-button value="Summary" class="button-summary" disabled></ui-button>
+      </div>
     </div>
     <div class="container-list entries">
       <template for:each={state.entries} for:item="entry" for:index="index">
         <div key={entry.itemId}>
           <app-entry
             data-index={entry.sortnumber}
+            item-id={entry.itemId}
             start={entry.start}
             end={entry.end}
             break={entry.break}
             comment={entry.comment}
             onchange={handleChangeEntry}
             ondelete={handleEventDelete}
+            onselect={handleEventSelect}
+            onunselect={handleEventUnselect}
           ></app-entry>
         </div>
       </template>

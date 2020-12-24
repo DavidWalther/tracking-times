@@ -48,6 +48,8 @@ export default class TimeTracking extends LightningElement {
     }
   };
 
+  selectedEntries = [];
+
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
@@ -77,21 +79,65 @@ export default class TimeTracking extends LightningElement {
     this.processClearData();
   }
 
-  handleEventDelete(event) {
-    const itemSortNumber = event.target.getAttribute('data-index');
-
-    this.processEntryDelete(itemSortNumber);
-    this.saveData();
-  }
-
   handleClickExport() {
     this.proccessExport();
     this.template.querySelector('ui-sidemenu').close();
   }
 
+  handleEventDelete(event) {
+    const itemId = event.detail.id;
+
+    this.processEntryDelete(itemId);
+    this.saveData();
+  }
+
+  handleEventSelect(event) {
+    const itemId = event.detail.id;
+    this.processEntrySelect(itemId);
+  }
+
+  handleEventUnselect(event) {
+    const itemId = event.detail.id;
+    this.processEntryUnselect(itemId);
+  }
+
+  handleChangeEntry(event) {
+    const itemId = event.detail.id;
+
+    this.processEntryChange(itemId, event.detail);
+    this.saveData();
+  }
+
   //----------------------------
   // Actions
   //----------------------------
+
+  processEntryUnselect(itemId) {
+    this.selectedEntries = this.selectedEntries.filter(
+      selectedItemId => selectedItemId !== itemId
+    );
+    this.processMultipleRecordActionAvailability();
+  }
+
+  processEntrySelect(itemId) {
+    let tempListWithPotentialDuplicate = [...this.selectedEntries];
+
+    tempListWithPotentialDuplicate.push(itemId);
+    const uniqueItemIds = [...new Set(tempListWithPotentialDuplicate)];
+
+    this.selectedEntries = uniqueItemIds;
+    this.processMultipleRecordActionAvailability();
+  }
+
+  processMultipleRecordActionAvailability() {
+    const summaryButtons = this.template.querySelectorAll('.button-summary');
+
+    let disable = this.selectedEntries.length < 2;
+
+    summaryButtons.forEach(button => {
+      button.disabled = disable;
+    });
+  }
 
   proccessExport() {
     this.doExportTxt();
@@ -252,12 +298,11 @@ export default class TimeTracking extends LightningElement {
     startDownload('export.txt', output, 'test/plain');
   }
 
-  processEntryDelete(itemSortNumber) {
-    let index, entryIndex, newlength;
+  processEntryDelete(itemId) {
+    let entryIndex, newlength;
 
-    index = parseInt(itemSortNumber, 10);
     entryIndex = this.state.entries.findIndex(entry => {
-      return entry.sortnumber === index;
+      return entry.itemId === itemId;
     });
 
     // delete entry
@@ -346,12 +391,6 @@ export default class TimeTracking extends LightningElement {
     this.state.entries = loaded.entries;
   }
 
-  handleChangeEntry(event) {
-    let index = event.srcElement.getAttribute('data-index');
-    this.processEntryChange(index, event.detail);
-    this.saveData();
-  }
-
   processClearData() {
     this.entryBasedEnablingOfButtons();
     this.state.entries = [];
@@ -374,18 +413,16 @@ export default class TimeTracking extends LightningElement {
     this.entryBasedEnablingOfButtons();
   }
 
-  processEntryChange(index, newDetail) {
+  processEntryChange(itemId, newDetail) {
     let entry;
     const startValue = newDetail.start;
     const endValue = newDetail.end;
     const breakValue = newDetail.break;
     const commentValue = newDetail.comment;
 
-    if (index !== undefined) {
-      let entryIndex = parseInt(index, 10);
-
+    if (itemId !== undefined) {
       entry = this.state.entries.find(function(tempEntry) {
-        return tempEntry.sortnumber === entryIndex;
+        return tempEntry.itemId === itemId;
       });
 
       if (entry !== undefined) {
