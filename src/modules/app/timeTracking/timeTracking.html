@@ -39,6 +39,7 @@
             design="info"
             value="Summary"
             class="button-summary"
+            onclick={handleClickSummary}
             disabled
           ></ui-button>
         </div>
@@ -77,7 +78,12 @@
         ></ui-button>
       </div>
       <div class="button container-summary">
-        <ui-button value="Summary" class="button-summary" disabled></ui-button>
+        <ui-button
+          value="Summary"
+          class="button-summary"
+          disabled
+          onclick={handleClickSummary}
+        ></ui-button>
       </div>
     </div>
     <div class="container-list entries">
@@ -113,4 +119,7 @@
       <span>{state.label.modal.clear.body}</span>
     </div>
   </ui-modal-confirmable>
+  <ui-modal-generic class="modal-summary">
+    <div slot="header">Summary</div>
+  </ui-modal-generic>
 </template>
