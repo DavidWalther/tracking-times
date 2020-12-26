@@ -78,6 +78,12 @@ a.button-github {
   grid-row-gap: 5px;
 }
 
+.modal-summary > div[slot='body'] {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: 30% auto;
+}
+
 @media (min-width: 450px) {
   .button-bar_mobile {
     display: none;

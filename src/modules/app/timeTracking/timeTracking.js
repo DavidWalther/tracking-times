@@ -110,11 +110,59 @@ export default class TimeTracking extends LightningElement {
 
   handleClickSummary() {
     this.getSummaryModal().show();
+    this.setSummaryOutput(this.createSummary());
+  }
+
+  //----------------------------
+  // Properties
+  //----------------------------
+
+  get entries() {
+    return this.state.entries;
+  }
+
+  get isEmpty() {
+    if (this.entries === undefined) return true;
+    if (this.entries === null) return true;
+    if (this.entries.length === 0) return true;
+    return false;
   }
 
   //----------------------------
   // Actions
   //----------------------------
+
+  createSummary() {
+    const result = {
+      difference: 0,
+      comment: ''
+    };
+
+    const allEntries = this.template.querySelectorAll('app-entry');
+
+    const commentArray = [];
+
+    this.selectedEntries.forEach(selectedEntryId => {
+      for (let i = 0; i < allEntries.length; i++) {
+        const entry = allEntries[i];
+        if (entry.itemId === selectedEntryId) {
+          result.difference +=
+            entry.itemId === selectedEntryId ? entry.difference : 0;
+          commentArray.push(entry.comment);
+        }
+      }
+    });
+
+    result.comment = commentArray.join('\n=====\n');
+
+    return result;
+  }
+
+  setSummaryOutput(summary) {
+    this.template.querySelector('.summary-difference').value =
+      summary.difference;
+    this.template.querySelector('.summary-comment').value = summary.comment;
+  }
 
   processEntryUnselect(itemId) {
     this.selectedEntries = this.selectedEntries.filter(
@@ -501,13 +549,6 @@ export default class TimeTracking extends LightningElement {
     currentTime = method(currentTime / cuttingAccuracy) * cuttingAccuracy;
 
     return currentTime;
-  }
-
-  get isEmpty() {
-    if (this.state.entries === undefined) return true;
-    if (this.state.entries === null) return true;
-    if (this.state.entries.length === 0) return true;
-    return false;
   }
 
   showClearModal() {
