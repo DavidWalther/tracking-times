@@ -50,6 +50,10 @@ div.container-export {
   grid-area: export;
 }
 
+div.container-summary {
+  grid-area: summary;
+}
+
 div.container-github {
   background-color: lightslategray;
   border-radius: 7px;
@@ -74,6 +78,18 @@ a.button-github {
   grid-row-gap: 5px;
 }
 
+.modal-summary > div[slot='body'] {
+  display: grid;
+  gap: 5px;
+  grid-template-columns: 30% auto;
+}
+
+.modal-summary > div[slot='body'] > .summary-comment {
+  resize: none;
+  height: 100pt;
+  font-family: inherit;
+}
+
 @media (min-width: 450px) {
   .button-bar_mobile {
     display: none;
@@ -88,13 +104,14 @@ a.button-github {
     grid-template-areas:
       'clear'
       'export'
+      'summary'
       'add';
   }
 }
 
 @media (min-width: 600px) {
   div.button-bar_wide {
-    grid-template-columns: auto auto;
-    grid-template-areas: 'clear export add';
+    grid-template-columns: auto auto auto auto;
+    grid-template-areas: 'clear export add summary';
   }
 }

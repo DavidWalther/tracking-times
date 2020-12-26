@@ -34,6 +34,15 @@
             onclick={handleClickClear}
           ></ui-button>
         </div>
+        <div>
+          <ui-button
+            design="info"
+            value="Summary"
+            class="button-summary"
+            onclick={handleClickSummary}
+            disabled
+          ></ui-button>
+        </div>
       </ui-sidemenu>
       <div class="buttons">
         <div>
@@ -68,6 +77,14 @@
           onclick={handleClickAdd}
         ></ui-button>
       </div>
+      <div class="button container-summary">
+        <ui-button
+          value="Summary"
+          class="button-summary"
+          disabled
+          onclick={handleClickSummary}
+        ></ui-button>
+      </div>
     </div>
     <div class="container-list entries">
       <template for:each={state.entries} for:item="entry" for:index="index">
@@ -81,6 +98,8 @@
             comment={entry.comment}
             onchange={handleChangeEntry}
             ondelete={handleEventDelete}
+            onselect={handleEventSelect}
+            onunselect={handleEventUnselect}
           ></app-entry>
         </div>
       </template>
@@ -100,4 +119,17 @@
       <span>{state.label.modal.clear.body}</span>
     </div>
   </ui-modal-confirmable>
+  <ui-modal-generic class="modal-summary">
+    <div slot="header">Summary</div>
+    <div slot="body">
+      <label for="summary-difference">diff (h)</label>
+      <output id="summary-difference" class="summary-difference"></output>
+      <label for="summary-comment">comment</label>
+      <textarea
+        readonly
+        id="summary-comment"
+        class="summary-comment"
+      ></textarea>
+    </div>
+  </ui-modal-generic>
 </template>

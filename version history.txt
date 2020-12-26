@@ -2,6 +2,10 @@
 // version 1.2
 //----------------------------
 
+features:
+- selectable entries
+- summary for selected entries
+
 tec dept:
 - use itemId for identifying entries instead of sortnumber
 

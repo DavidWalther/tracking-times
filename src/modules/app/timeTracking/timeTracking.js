@@ -48,6 +48,8 @@ export default class TimeTracking extends LightningElement {
     }
   };
 
+  selectedEntries = [];
+
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
@@ -77,6 +79,11 @@ export default class TimeTracking extends LightningElement {
     this.processClearData();
   }
 
+  handleClickExport() {
+    this.proccessExport();
+    this.template.querySelector('ui-sidemenu').close();
+  }
+
   handleEventDelete(event) {
     const itemId = event.detail.id;
 
@@ -84,9 +91,14 @@ export default class TimeTracking extends LightningElement {
     this.saveData();
   }
 
-  handleClickExport() {
-    this.proccessExport();
-    this.template.querySelector('ui-sidemenu').close();
+  handleEventSelect(event) {
+    const itemId = event.detail.id;
+    this.processEntrySelect(itemId);
+  }
+
+  handleEventUnselect(event) {
+    const itemId = event.detail.id;
+    this.processEntryUnselect(itemId);
   }
 
   handleChangeEntry(event) {
@@ -96,9 +108,88 @@ export default class TimeTracking extends LightningElement {
     this.saveData();
   }
 
+  handleClickSummary() {
+    this.getSummaryModal().show();
+    this.setSummaryOutput(this.createSummary());
+  }
+
+  //----------------------------
+  // Properties
+  //----------------------------
+
+  get entries() {
+    return this.state.entries;
+  }
+
+  get isEmpty() {
+    if (this.entries === undefined) return true;
+    if (this.entries === null) return true;
+    if (this.entries.length === 0) return true;
+    return false;
+  }
+
   //----------------------------
   // Actions
   //----------------------------
+
+  createSummary() {
+    const result = {
+      difference: 0,
+      comment: ''
+    };
+
+    const allEntries = this.template.querySelectorAll('app-entry');
+
+    const commentArray = [];
+
+    this.selectedEntries.forEach(selectedEntryId => {
+      for (let i = 0; i < allEntries.length; i++) {
+        const entry = allEntries[i];
+        if (entry.itemId === selectedEntryId) {
+          result.difference +=
+            entry.itemId === selectedEntryId ? entry.difference : 0;
+          commentArray.push(entry.comment);
+        }
+      }
+    });
+
+    result.comment = commentArray.join('\n=====\n');
+
+    return result;
+  }
+
+  setSummaryOutput(summary) {
+    this.template.querySelector('.summary-difference').value =
+      summary.difference;
+    this.template.querySelector('.summary-comment').value = summary.comment;
+  }
+
+  processEntryUnselect(itemId) {
+    this.selectedEntries = this.selectedEntries.filter(
+      selectedItemId => selectedItemId !== itemId
+    );
+    this.processMultipleRecordActionAvailability();
+  }
+
+  processEntrySelect(itemId) {
+    let tempListWithPotentialDuplicate = [...this.selectedEntries];
+
+    tempListWithPotentialDuplicate.push(itemId);
+    const uniqueItemIds = [...new Set(tempListWithPotentialDuplicate)];
+
+    this.selectedEntries = uniqueItemIds;
+    this.processMultipleRecordActionAvailability();
+  }
+
+  processMultipleRecordActionAvailability() {
+    const summaryButtons = this.template.querySelectorAll('.button-summary');
+
+    let disable = this.selectedEntries.length < 2;
+
+    summaryButtons.forEach(button => {
+      button.disabled = disable;
+    });
+  }
 
   proccessExport() {
     this.doExportTxt();
@@ -460,13 +551,6 @@ export default class TimeTracking extends LightningElement {
     return currentTime;
   }
 
-  get isEmpty() {
-    if (this.state.entries === undefined) return true;
-    if (this.state.entries === null) return true;
-    if (this.state.entries.length === 0) return true;
-    return false;
-  }
-
   showClearModal() {
     this.getClearModal().show();
   }
@@ -519,6 +603,10 @@ export default class TimeTracking extends LightningElement {
 
   getClearButton() {
     return this.template.querySelector('.button-clear');
+  }
+
+  getSummaryModal() {
+    return this.template.querySelector('.modal-summary');
   }
 }
 
