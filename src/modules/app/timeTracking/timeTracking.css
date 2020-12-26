@@ -84,6 +84,12 @@ a.button-github {
   grid-template-columns: 30% auto;
 }
 
+.modal-summary > div[slot='body'] > .summary-comment {
+  resize: none;
+  height: 100pt;
+  font-family: inherit;
+}
+
 @media (min-width: 450px) {
   .button-bar_mobile {
     display: none;
