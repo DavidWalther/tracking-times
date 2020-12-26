@@ -162,6 +162,7 @@ export default class Entry extends LightningElement {
     return this.getStringsFromDateTime(fullDate).timeString;
   }
 
+  @api
   get difference() {
     let startDate = this.start;
     let endDate = this.internalState.endTimeStamp;

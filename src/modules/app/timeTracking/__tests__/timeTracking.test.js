@@ -626,48 +626,98 @@ describe('feature: make entries selectable', () => {
       expect(buttonSummary.disabled).toBe(true);
     });
   });
+});
 
-  describe('sub-feature: summary', () => {
-    afterEach(() => {
-      // The jsdom instance is shared across test cases in a single file so reset the DOM
-      while (document.body.firstChild) {
-        document.body.removeChild(document.body.firstChild);
-      }
-    });
+describe('feature: summary', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
 
-    test('click on summary opens the summary modal', () => {
-      /**
-       * Given
-       * - the cmp is added to the DOM
-       * - Data in current data version (three entries)
-       * - two entries are selected
-       */
+  test('click on summary opens the summary modal', () => {
+    /**
+     * Given
+     * - the cmp is added to the DOM
+     * - Data in current data version (three entries)
+     * - two entries are selected
+     */
 
-      const element = createAndAddMainCmpAndSetCurrentVersionData();
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
 
-      // select entries
-      const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
-      secondEntry.dispatchEvent(
-        new CustomEvent('select', { detail: { id: secondEntry.itemId } })
-      );
+    // select entries
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
 
-      const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
-      secondEntry.dispatchEvent(
-        new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
-      );
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
+    );
 
-      /**
-       * When
-       * the summary button is clicked
-       */
-      clickButtonSummary(element.shadowRoot);
+    /**
+     * When
+     * the summary button is clicked
+     */
+    clickButtonSummary(element.shadowRoot);
 
+    /**
+     * Then
+     * the summary modal is opened
+     */
+    const summaryModal = getSummaryModal(element.shadowRoot);
+    expect(summaryModal.isVisible()).toBe(true);
+  });
+
+  test('summary modal contains data of selected entries', () => {
+    /**
+     * Given
+     * - the cmp is added to the DOM
+     * - Data in current data version (three entries)
+     * - two entries are selected
+     */
+
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+    // select entries
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
+    );
+
+    /**
+     * When
+     * the summary button is clicked
+     */
+    clickButtonSummary(element.shadowRoot);
+
+    return Promise.resolve().then(() => {
       /**
        * Then
-       * the summary modal is opened
+       * the summary modal contains summed up data
        */
+
       const summaryModal = getSummaryModal(element.shadowRoot);
-      expect(summaryModal.isVisible()).toBe(true);
+
+      const differenceOutput = summaryModal.querySelector(
+        '.summary-difference'
+      );
+      const expectedDifference = secondEntry.difference + thirdEntry.difference;
+      expect(differenceOutput).toBeTruthy();
+      expect(differenceOutput.value).toBe('' + expectedDifference);
+
+      const commentOutput = summaryModal.querySelector('.summary-comment');
+      const expectedComment =
+        secondEntry.comment + '\n=====\n' + thirdEntry.comment;
+      expect(commentOutput).toBeTruthy();
+      expect(commentOutput.value).toBe(expectedComment);
     });
   });
 });
