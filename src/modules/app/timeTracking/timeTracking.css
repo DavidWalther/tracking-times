@@ -78,6 +78,13 @@ a.button-github {
   grid-row-gap: 5px;
 }
 
+.modal-summary > div[slot='header'] {
+  color: hsl(0, 0%, 60%);
+  font-weight: bold;
+  font-size: larger;
+  margin-bottom: 10pt;
+}
+
 .modal-summary > div[slot='body'] {
   display: grid;
   gap: 5px;
