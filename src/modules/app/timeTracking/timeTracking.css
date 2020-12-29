@@ -16,6 +16,14 @@ div.content {
   grid-template-columns: 30px auto;
 }
 
+.button-bar_mobile > .buttons {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 5px;
+
+  /* z-index: -1; */
+}
+
 .wide {
   display: none;
 }
