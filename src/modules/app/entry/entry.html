@@ -1,8 +1,5 @@
 <template>
   <div class="layout content font_sans">
-    <div class="container">
-      <input class="selection" type="checkbox" onchange={handleChangeSelect} />
-    </div>
     <div class="area-startdate container container-start-date">
       <span class="start-date">{displayState.startdate}</span>
     </div>
@@ -26,19 +23,32 @@
 {displayState.comment}</textarea
       >
     </div>
-    <div class="area-buttons-edit container-button">
-      <ui-button
-        class="button edit"
-        value={label.button.edit}
-        onclick={handleButtonClickEdit}
-      ></ui-button>
-    </div>
-    <div class="area-buttons-delete container-button">
-      <ui-button
-        class="button button-delete"
-        value={label.button.delete}
-        onclick={handleButtonClickDelete}
-      ></ui-button>
+    <div class="area-controls controls">
+      <div class="margin-auto">
+        <div>
+          <input
+            class="selection"
+            type="checkbox"
+            onchange={handleChangeSelect}
+          />
+        </div>
+      </div>
+      <div>
+        <ui-button
+          class="button edit"
+          value={label.button.edit}
+          onclick={handleButtonClickEdit}
+          design="info"
+        ></ui-button>
+      </div>
+      <div>
+        <ui-button
+          class="button button-delete"
+          value={label.button.delete}
+          onclick={handleButtonClickDelete}
+          design="deny"
+        ></ui-button>
+      </div>
     </div>
   </div>
   <!--

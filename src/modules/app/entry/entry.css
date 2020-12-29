@@ -11,8 +11,22 @@ Layout rules
   border-style: solid;
 }
 
+.margin-auto {
+  margin: auto;
+}
+
 textarea.comment {
   resize: none;
+}
+
+div.controls {
+  display: grid;
+  grid-template-columns: auto 43% 43%;
+}
+
+div.controls > div {
+  padding: 3px;
+  text-align: center;
 }
 
 div.layout {
@@ -21,9 +35,9 @@ div.layout {
   grid-template-areas:
     'startDate startTime'
     'endDate endTime'
+    'break diff'
     'comment comment'
-    'btnEdit break'
-    'btnDelete diff';
+    'controls controls';
 }
 
 div.area-startdate {
@@ -54,12 +68,8 @@ div.area-comment {
   grid-area: comment;
 }
 
-div.area-buttons-edit {
-  grid-area: btnEdit;
-}
-
-div.area-buttons-delete {
-  grid-area: btnDelete;
+div.area-controls {
+  grid-area: controls;
 }
 
 div.container-button {
@@ -131,12 +141,16 @@ div.container-button-bar > input {
 }
 
 @media (min-width: 786px) {
+  div.controls {
+    grid-template-columns: auto;
+  }
+
   div.layout {
-    grid-auto-columns: 33.33%;
+    grid-auto-columns: 45% 45% auto;
     grid-template-areas:
-      'startDate startTime comment'
-      'endDate endTime comment'
-      'btnEdit break comment'
-      'btnDelete diff comment';
+      'startDate startTime controls'
+      'endDate endTime controls'
+      'break diff controls'
+      'comment comment controls';
   }
 }
