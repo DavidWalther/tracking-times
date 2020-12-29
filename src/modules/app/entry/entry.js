@@ -5,7 +5,7 @@ const MILLISECONDS_PER_MINUTE = 1000 * 60;
 export default class Entry extends LightningElement {
   @api
   get break() {
-    return this.internalState.break;
+    return this.internalState.break ? this.internalState.break : 0;
   }
   set break(value) {
     if (value !== undefined) {
@@ -37,7 +37,9 @@ export default class Entry extends LightningElement {
 
   @api
   get start() {
-    return this.internalState.startTimeStamp;
+    return this.internalState.startTimeStamp
+      ? this.internalState.startTimeStamp
+      : 0;
   }
   set start(value) {
     let integerValue;
@@ -51,7 +53,9 @@ export default class Entry extends LightningElement {
 
   @api
   get end() {
-    return this.internalState.endTimeStamp;
+    return this.internalState.endTimeStamp
+      ? this.internalState.endTimeStamp
+      : 0;
   }
   set end(value) {
     let integerValue;
@@ -64,8 +68,16 @@ export default class Entry extends LightningElement {
   }
 
   @api
+  itemId;
+
+  @api
   duration() {
     return this.end - this.start - this.break;
+  }
+
+  @api
+  unselect() {
+    this.template.querySelector('.selection').checked = false;
   }
 
   internalState = {
@@ -141,27 +153,23 @@ export default class Entry extends LightningElement {
   }
 
   extractDateStringFromTimeStamp(timestamp) {
-    let fullDate, dateString;
-    fullDate = new Date(timestamp);
-    dateString = fullDate.toISOString().split('T')[0];
-    return dateString;
+    let fullDate = new Date(timestamp);
+    return this.getStringsFromDateTime(fullDate).dateString;
   }
 
   extractTimeStringFromTimeStamp(timestamp) {
-    let fullDate, timeString;
-
-    fullDate = new Date(timestamp);
-    timeString = fullDate.toLocaleTimeString().substr(0, 5);
-
-    return timeString;
+    let fullDate = new Date(timestamp);
+    return this.getStringsFromDateTime(fullDate).timeString;
   }
 
+  @api
   get difference() {
-    let startDate = this.internalState.startTimeStamp;
+    let startDate = this.start;
     let endDate = this.internalState.endTimeStamp;
     let breakTime = this.break;
 
     let difference = endDate - startDate - breakTime;
+
     return difference / (1000 * 60 * 60);
   }
 
@@ -194,6 +202,10 @@ export default class Entry extends LightningElement {
     this.getDeleteModal().hide();
   }
 
+  handleChangeSelect(event) {
+    this.processChangeSelect(event);
+  }
+
   //----------------------------
   // process events
   //----------------------------
@@ -213,12 +225,33 @@ export default class Entry extends LightningElement {
   }
 
   processDelete() {
-    this.dispatchEvent(new CustomEvent('delete'));
+    const event = new CustomEvent('delete', {
+      detail: {
+        id: this.itemId
+      }
+    });
+    this.dispatchEvent(event);
   }
 
   processEdit() {
     this.fillModalInputs();
     this.getEditModal().show();
+  }
+
+  processChangeSelect(stdEvent) {
+    stdEvent.preventDefault();
+
+    let checked = stdEvent.target.checked;
+    const eventParams = {
+      detail: {
+        id: this.itemId
+      }
+    };
+    if (checked) {
+      this.dispatchEvent(new CustomEvent('select', eventParams));
+    } else {
+      this.dispatchEvent(new CustomEvent('unselect', eventParams));
+    }
   }
 
   createAndFireChangeEvent() {
@@ -227,6 +260,7 @@ export default class Entry extends LightningElement {
       bubbles: true,
       composed: true,
       detail: {
+        id: this.itemId,
         start: this.start,
         end: this.end,
         comment: this.comment,
@@ -242,13 +276,17 @@ export default class Entry extends LightningElement {
 
     if (this.isStartDefined()) {
       start = new Date(this.internalState.startTimeStamp);
-      result.startdate = start.toISOString().split('T')[0];
-      result.starttime = start.toLocaleTimeString().substr(0, 5);
+      const tempResult = this.getStringsFromDateTime(start);
+
+      result.startdate = tempResult.dateString;
+      result.starttime = tempResult.timeString;
     }
     if (this.isEndDefined()) {
       end = new Date(this.internalState.endTimeStamp);
-      result.enddate = end.toISOString().split('T')[0];
-      result.endtime = end.toLocaleTimeString().substr(0, 5);
+      const tempResult = this.getStringsFromDateTime(end);
+
+      result.enddate = tempResult.dateString;
+      result.endtime = tempResult.timeString;
     }
     result.break = this.break / MILLISECONDS_PER_MINUTE;
     result.comment = this.internalState.comment;
@@ -392,5 +430,22 @@ export default class Entry extends LightningElement {
 
   getInputBreak() {
     return this.template.querySelector('input.break');
+  }
+
+  getStringsFromDateTime(datetime) {
+    const result = {};
+
+    let localTimestamp = new Date(
+      datetime.getTime() -
+        datetime.getTimezoneOffset() * MILLISECONDS_PER_MINUTE
+    );
+
+    let stringArray = localTimestamp
+      .toISOString()
+      .slice(0, 16)
+      .split('T');
+    result.dateString = stringArray[0];
+    result.timeString = stringArray[1];
+    return result;
   }
 }
