@@ -1,7 +1,14 @@
 <template>
-    <div class="modal">
-        <div class="modal-content">
-            <slot name="body"></slot>
-        </div>
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-close">
+        <button class="button-close" onclick={handleClickClose}>
+          &#10005;
+        </button>
+      </div>
+      <div class="modal-body">
+        <slot name="body"></slot>
+      </div>
     </div>
+  </div>
 </template>

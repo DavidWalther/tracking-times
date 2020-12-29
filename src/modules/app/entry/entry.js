@@ -68,8 +68,16 @@ export default class Entry extends LightningElement {
   }
 
   @api
+  itemId;
+
+  @api
   duration() {
     return this.end - this.start - this.break;
+  }
+
+  @api
+  unselect() {
+    this.template.querySelector('.selection').checked = false;
   }
 
   internalState = {
@@ -154,6 +162,7 @@ export default class Entry extends LightningElement {
     return this.getStringsFromDateTime(fullDate).timeString;
   }
 
+  @api
   get difference() {
     let startDate = this.start;
     let endDate = this.internalState.endTimeStamp;
@@ -193,6 +202,10 @@ export default class Entry extends LightningElement {
     this.getDeleteModal().hide();
   }
 
+  handleChangeSelect(event) {
+    this.processChangeSelect(event);
+  }
+
   //----------------------------
   // process events
   //----------------------------
@@ -212,12 +225,33 @@ export default class Entry extends LightningElement {
   }
 
   processDelete() {
-    this.dispatchEvent(new CustomEvent('delete'));
+    const event = new CustomEvent('delete', {
+      detail: {
+        id: this.itemId
+      }
+    });
+    this.dispatchEvent(event);
   }
 
   processEdit() {
     this.fillModalInputs();
     this.getEditModal().show();
+  }
+
+  processChangeSelect(stdEvent) {
+    stdEvent.preventDefault();
+
+    let checked = stdEvent.target.checked;
+    const eventParams = {
+      detail: {
+        id: this.itemId
+      }
+    };
+    if (checked) {
+      this.dispatchEvent(new CustomEvent('select', eventParams));
+    } else {
+      this.dispatchEvent(new CustomEvent('unselect', eventParams));
+    }
   }
 
   createAndFireChangeEvent() {
@@ -226,6 +260,7 @@ export default class Entry extends LightningElement {
       bubbles: true,
       composed: true,
       detail: {
+        id: this.itemId,
         start: this.start,
         end: this.end,
         comment: this.comment,
