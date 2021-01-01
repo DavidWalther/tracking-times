@@ -9,7 +9,13 @@ const constresponseType = 'token';
 
 /**
  * Notes:
- * 1. Salesforce didn't allow authentication without 'Access-Control-Allow-Origin' Header
+ * - create connected app
+ *
+ * - Auth callout to SF:
+ * -- Error:
+ * 2. (CORS) Salesforce didn't allow authentication without 'Access-Control-Allow-Origin' Header
+ *
+ * Access-Control-Allow-Origin
  */
 
 function startAuthentication() {
@@ -41,7 +47,7 @@ function startAuthentication() {
     }
   };
   xmlHttp.open('GET', theUrl, true); // true for asynchronous
-  xmlHttp.setRequestHeader('Access-Control-Allow-Origin', base_uri);
+  //xmlHttp.setRequestHeader('Access-Control-Allow-Origin', base_uri);
   xmlHttp.send(null);
 }
 
