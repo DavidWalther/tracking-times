@@ -14,8 +14,9 @@ const constresponseType = 'token';
  * - Auth callout to SF:
  * -- Error: has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
  * => Add 'xmlHttp.setRequestHeader('Access-Control-Allow-Origin', base_uri);'
- * 
- * -- (CORS) Salesforce didn't allow authentication without 'Access-Control-Allow-Origin' Header
+ *
+ * -- Error: has been blocked by CORS policy: Response to preflight request doesn't pass access control check: Redirect is not allowed for a preflight request.
+ *
  *
  * Access-Control-Allow-Origin
  */
@@ -50,6 +51,15 @@ function startAuthentication() {
   };
   xmlHttp.open('GET', theUrl, true); // true for asynchronous
   xmlHttp.setRequestHeader('Access-Control-Allow-Origin', base_uri);
+
+  xmlHttp.setRequestHeader(
+    'Access-Control-Allow-Methods',
+    'GET, PUT, POST, DELETE, OPTIONS'
+  );
+  xmlHttp.setRequestHeader(
+    'Access-Control-Allow-Headers',
+    'Content-Type, Content-Range, Content-Disposition, Content-Description'
+  );
   xmlHttp.send(null);
 }
 
