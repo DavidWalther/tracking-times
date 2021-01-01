@@ -12,8 +12,10 @@ const constresponseType = 'token';
  * - create connected app
  *
  * - Auth callout to SF:
- * -- Error:
- * 2. (CORS) Salesforce didn't allow authentication without 'Access-Control-Allow-Origin' Header
+ * -- Error: has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+ * => Add 'xmlHttp.setRequestHeader('Access-Control-Allow-Origin', base_uri);'
+ * 
+ * -- (CORS) Salesforce didn't allow authentication without 'Access-Control-Allow-Origin' Header
  *
  * Access-Control-Allow-Origin
  */
@@ -47,7 +49,7 @@ function startAuthentication() {
     }
   };
   xmlHttp.open('GET', theUrl, true); // true for asynchronous
-  //xmlHttp.setRequestHeader('Access-Control-Allow-Origin', base_uri);
+  xmlHttp.setRequestHeader('Access-Control-Allow-Origin', base_uri);
   xmlHttp.send(null);
 }
 
