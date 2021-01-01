@@ -7,6 +7,11 @@ const clientId =
 const constresponseType = 'token';
 */
 
+/**
+ * Notes:
+ * 1. Salesforce didn't allow authentication without 'Access-Control-Allow-Origin' Header
+ */
+
 function startAuthentication() {
   const client_id =
     '3MVG9SOw8KERNN08rTd9ffUEaR7NhbZLhkeHRF.EJrtEeFZOPFjeILb8DI4niE.ncsCi1OmLauBCA82axhOJI';
@@ -36,6 +41,7 @@ function startAuthentication() {
     }
   };
   xmlHttp.open('GET', theUrl, true); // true for asynchronous
+  xmlHttp.setRequestHeader('Access-Control-Allow-Origin', base_uri);
   xmlHttp.send(null);
 }
 
