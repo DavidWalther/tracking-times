@@ -57,9 +57,13 @@ export default class TimeTracking extends LightningElement {
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
-    // eslint-disable-next-line no-unused-vars
     let authParams = readAuthenticationResponse();
     if (authParams) {
+      // eslint-disable-next-line no-console
+      console.log(authParams);
+      // eslint-disable-next-line no-debugger
+      debugger;
+
       replaceLocation();
     }
   }
