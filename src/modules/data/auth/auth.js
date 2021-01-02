@@ -60,4 +60,12 @@ function readAuthenticationResponse() {
   return null;
 }
 
-export { startAuthentication, readAuthenticationResponse };
+function replaceLocation() {
+  let protocol = window.location.protocol;
+  let host = window.location.hostname;
+  let plainUrl = protocol + '//' + host;
+
+  window.location.replace(plainUrl);
+}
+
+export { startAuthentication, readAuthenticationResponse, replaceLocation };
