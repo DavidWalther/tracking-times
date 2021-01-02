@@ -51,7 +51,7 @@ function readAuthenticationResponse() {
     let params = {};
     parameterString.split('&').forEach(parameter => {
       let tempParam = parameter.split('=');
-      params[tempParam[0]] = tempParam[1];
+      params[tempParam[0]] = decodeURI(tempParam[1]);
     });
 
     return params;
