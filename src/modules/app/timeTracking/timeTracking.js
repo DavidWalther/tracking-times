@@ -1,6 +1,7 @@
 import { LightningElement, track } from 'lwc';
 import { startDownload } from 'data/fileDownload';
 import { save, load } from 'data/localStorage';
+// eslint-disable-next-line no-unused-vars
 import { startAuthentication } from 'data/auth';
 
 const MILISECONDS_PER_MINUTE = 1000 * 60;
@@ -53,7 +54,6 @@ export default class TimeTracking extends LightningElement {
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
-    startAuthentication();
   }
 
   renderedCallback() {
