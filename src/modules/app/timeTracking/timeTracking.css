@@ -62,6 +62,10 @@ div.container-summary {
   grid-area: summary;
 }
 
+div.container-auth {
+  grid-area: auth;
+}
+
 div.container-github {
   background-color: lightslategray;
   border-radius: 7px;
@@ -126,7 +130,7 @@ a.button-github {
 
 @media (min-width: 600px) {
   div.button-bar_wide {
-    grid-template-columns: auto auto auto auto;
-    grid-template-areas: 'clear export add summary';
+    grid-template-columns: auto auto auto auto auto;
+    grid-template-areas: 'clear export add summary auth';
   }
 }
