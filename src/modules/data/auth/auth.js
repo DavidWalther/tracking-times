@@ -18,6 +18,8 @@ const constresponseType = 'token';
  * -- Error: has been blocked by CORS policy: Response to preflight request doesn't pass access control check: Redirect is not allowed for a preflight request.
  *
  *
+ * -- add redirect_uri to remote-sites
+ *
  * Access-Control-Allow-Origin
  */
 
@@ -52,10 +54,7 @@ function startAuthentication() {
   xmlHttp.open('GET', theUrl, true); // true for asynchronous
   xmlHttp.setRequestHeader('Access-Control-Allow-Origin', base_uri);
 
-  xmlHttp.setRequestHeader(
-    'Access-Control-Allow-Methods',
-    'GET, PUT, POST, DELETE, OPTIONS'
-  );
+  xmlHttp.setRequestHeader('Access-Control-Allow-Methods', 'GET');
   xmlHttp.setRequestHeader(
     'Access-Control-Allow-Headers',
     'Content-Type, Content-Range, Content-Disposition, Content-Description'
