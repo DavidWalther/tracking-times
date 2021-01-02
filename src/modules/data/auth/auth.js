@@ -9,18 +9,8 @@ const constresponseType = 'token';
 
 /**
  * Notes:
- * - create connected app
- *
- * - Auth callout to SF:
- * -- Error: has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.
- * => Add 'xmlHttp.setRequestHeader('Access-Control-Allow-Origin', base_uri);'
- *
- * -- Error: has been blocked by CORS policy: Response to preflight request doesn't pass access control check: Redirect is not allowed for a preflight request.
- *
- *
- * -- add redirect_uri to remote-sites
- *
- * Access-Control-Allow-Origin
+ * 1. create connected app
+ * 2. on authentication redirect to authentication endpoint
  */
 
 function startAuthentication() {
@@ -44,22 +34,7 @@ function startAuthentication() {
     'redirect_uri=' +
     redirect_uri;
 
-  var xmlHttp = new XMLHttpRequest();
-  //console.log('do auth');
-  xmlHttp.onreadystatechange = function() {
-    if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-      console.log(xmlHttp.responseText);
-    }
-  };
-  xmlHttp.open('GET', theUrl, true); // true for asynchronous
-  xmlHttp.setRequestHeader('Access-Control-Allow-Origin', base_uri);
-
-  xmlHttp.setRequestHeader('Access-Control-Allow-Methods', 'GET');
-  xmlHttp.setRequestHeader(
-    'Access-Control-Allow-Headers',
-    'Content-Type, Content-Range, Content-Disposition, Content-Description'
-  );
-  xmlHttp.send(null);
+  window.location.href = theUrl;
 }
 
 export { startAuthentication };

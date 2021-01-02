@@ -111,7 +111,7 @@ export default class TimeTracking extends LightningElement {
     this.getSummaryModal().show();
     this.setSummaryOutput(this.createSummary());
   }
-  
+
   handleClickAuth() {
     startAuthentication();
   }
