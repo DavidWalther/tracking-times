@@ -64,7 +64,7 @@ export default class TimeTracking extends LightningElement {
       this.saveData();
       replaceLocation();
     }
-    //this.doCallout();
+    this.doCallout();
   }
 
   async doCallout() {
@@ -73,7 +73,6 @@ export default class TimeTracking extends LightningElement {
 
     const response = await fetch(uri, {
       method: 'GET',
-      body: {},
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
