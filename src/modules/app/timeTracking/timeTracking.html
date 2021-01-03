@@ -101,17 +101,17 @@
         ></ui-button>
       </div>
     </div>
-    <template if:true={authData.salesforce}>
+    <template if:true={authData}>
       <div>
         <table>
           <tr>
             <td>access_token</td>
-            <td>{authData.salesforce.access_token}</td>
+            <td>{authData.access_token}</td>
           </tr>
         </table>
       </div>
       <div>
-        {authData.salesforce}
+        {authData}
       </div>
     </template>
     <div class="container-list entries">
