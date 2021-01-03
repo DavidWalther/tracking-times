@@ -64,7 +64,7 @@ export default class TimeTracking extends LightningElement {
       this.saveData();
       replaceLocation();
     }
-    this.doCallout();
+    //this.doCallout();
   }
 
   async doCallout() {
