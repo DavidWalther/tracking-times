@@ -57,7 +57,6 @@ export default class TimeTracking extends LightningElement {
     salesforce: null
   };
 
-
   connectedCallback() {
     this.state.entries = [];
     this.loadData();

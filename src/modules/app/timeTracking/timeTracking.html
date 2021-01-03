@@ -101,6 +101,19 @@
         ></ui-button>
       </div>
     </div>
+    <template if:true={authData.salesforce}>
+      <div>
+        <table>
+          <tr>
+            <td>access_token</td>
+            <td>{authData.salesforce.access_token}</td>
+          </tr>
+        </table>
+      </div>
+      <div>
+        {authData.salesforce}
+      </div>
+    </template>
     <div class="container-list entries">
       <template for:each={state.entries} for:item="entry" for:index="index">
         <div key={entry.itemId}>
