@@ -109,6 +109,12 @@ a.button-github {
   font-family: inherit;
 }
 
+.code {
+  font-family: monospace;
+  color: #111;
+  background-color: rgb(121, 120, 120);
+}
+
 @media (min-width: 450px) {
   .button-bar_mobile {
     display: none;
