@@ -12,7 +12,7 @@ const constresponseType = 'token';
  * 1. create connected app
  * 2. on authentication click: redirect to authentication endpoint
  * 3. on connect callback:
- * 3.1 store access token
+ * 3.1 store access token (replace '%21' with '!')
  * 3.2 use window.location.replace() to replace url
  */
 
@@ -51,7 +51,7 @@ function readAuthenticationResponse() {
     let params = {};
     parameterString.split('&').forEach(parameter => {
       let tempParam = parameter.split('=');
-      params[tempParam[0]] = tempParam[1];
+      params[tempParam[0]] = decodeURIComponent(tempParam[1]);
     });
 
     return params;

@@ -64,6 +64,26 @@ export default class TimeTracking extends LightningElement {
       this.saveData();
       replaceLocation();
     }
+    this.doCallout();
+  }
+
+  async doCallout() {
+    let uri = this.authData.instance_url + '/services/data/v50.0';
+    let access_token = this.authData.access_token;
+
+    const response = await fetch(uri, {
+      method: 'POST',
+      body: {},
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: 'Bearer ' + access_token
+      }
+    });
+    const myJson = await response.json(); //extract JSON from the http response
+    // eslint-disable-next-line no-console
+    console.log(myJson);
+    // do something with myJson
   }
 
   renderedCallback() {
