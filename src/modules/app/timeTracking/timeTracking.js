@@ -53,16 +53,15 @@ export default class TimeTracking extends LightningElement {
   };
 
   selectedEntries = [];
-  authData = {
-    salesforce: null
-  };
+  authData;
 
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
     let authParams = readAuthenticationResponse();
     if (authParams) {
-      this.authData.salesforce = authParams;
+      this.authData = authParams;
+      this.saveData();
       replaceLocation();
     }
   }
@@ -391,6 +390,7 @@ export default class TimeTracking extends LightningElement {
       settings: {
         version: DATA_CURRENT_VERSION
       },
+      authData: this.authData,
       entries: this.state.entries
     };
 
@@ -456,6 +456,7 @@ export default class TimeTracking extends LightningElement {
   loadDataV05(loaded) {
     this.state.version = loaded.settings.version;
     this.state.entries = loaded.entries;
+    this.authData = loaded.authData;
   }
 
   processClearData() {
