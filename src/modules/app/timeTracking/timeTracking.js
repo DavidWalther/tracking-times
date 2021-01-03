@@ -72,7 +72,7 @@ export default class TimeTracking extends LightningElement {
     let access_token = this.authData.access_token;
 
     const response = await fetch(uri, {
-      method: 'POST',
+      method: 'GET',
       body: {},
       headers: {
         'Content-Type': 'application/json',
