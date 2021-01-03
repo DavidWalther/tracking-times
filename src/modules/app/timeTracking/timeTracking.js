@@ -53,17 +53,17 @@ export default class TimeTracking extends LightningElement {
   };
 
   selectedEntries = [];
+  authData = {
+    salesforce: null
+  };
+
 
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
     let authParams = readAuthenticationResponse();
     if (authParams) {
-      // eslint-disable-next-line no-console
-      console.log(authParams);
-      // eslint-disable-next-line no-debugger
-      debugger;
-
+      this.authData.salesforce = authParams;
       replaceLocation();
     }
   }
