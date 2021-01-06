@@ -3,6 +3,7 @@
 //----------------------------
 
 features:
+- new button: delete selected
 - selecting entry disables delete-button
 
 //----------------------------

@@ -28,6 +28,14 @@
         </div>
         <div>
           <ui-button
+            design="cancel"
+            value={label.labelDeleteSelected}
+            class="button-clear"
+            onclick={handleClickClear}
+          ></ui-button>
+        </div>
+        <div>
+          <ui-button
             design="deny"
             value={label.button.clear.value}
             class="button-clear"
@@ -85,6 +93,13 @@
           onclick={handleClickSummary}
         ></ui-button>
       </div>
+
+      <ui-button
+        design="cancel"
+        value={label.labelDeleteSelected}
+        class="button-clear"
+        onclick={handleClickClear}
+      ></ui-button>
     </div>
     <div class="container-list entries">
       <template for:each={state.entries} for:item="entry" for:index="index">

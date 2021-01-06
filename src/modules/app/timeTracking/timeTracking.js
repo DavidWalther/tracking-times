@@ -32,6 +32,7 @@ export default class TimeTracking extends LightningElement {
   };
 
   label = {
+    labelDeleteSelected: 'Delete Selected',
     sidemenu: {
       icon: '\u2630'
     },
