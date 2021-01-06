@@ -252,6 +252,7 @@ export default class Entry extends LightningElement {
       this.template.querySelector('.button-delete').disabled = true;
     } else {
       this.dispatchEvent(new CustomEvent('unselect', eventParams));
+      this.template.querySelector('.button-delete').disabled = false;
     }
   }
 

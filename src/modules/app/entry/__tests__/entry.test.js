@@ -847,6 +847,35 @@ describe('feature - Make entries selectable', () => {
     const deleteButton = getDeleteButton(element.shadowRoot);
     expect(deleteButton.disabled).toBe(true);
   });
+
+  test('deselecting entry enables delete button', () => {
+    /**
+     * Given
+     * - the entry component is added to DOM
+     * - the entry is selected
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    document.body.appendChild(element);
+    const selectCheckbox = element.shadowRoot.querySelector('input.selection');
+    selectCheckbox.checked = true;
+    selectCheckbox.dispatchEvent(new CustomEvent('change'));
+    let deleteButton = getDeleteButton(element.shadowRoot);
+    expect(deleteButton.disabled).toBe(true);
+
+    /**
+     * When
+     * the selection checkbox is unchecked
+     */
+    selectCheckbox.checked = false;
+    selectCheckbox.dispatchEvent(new CustomEvent('change'));
+
+    /**
+     * Then
+     * the delete button is enabled
+     */
+    deleteButton = getDeleteButton(element.shadowRoot);
+    expect(deleteButton.disabled).toBe(false);
+  });
 });
 
 function getEditButton(shadowRoot) {
