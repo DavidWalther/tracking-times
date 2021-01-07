@@ -114,6 +114,8 @@ export default class TimeTracking extends LightningElement {
     this.setSummaryOutput(this.createSummary());
   }
 
+  handleClickDeleteSelected() {}
+
   //----------------------------
   // Properties
   //----------------------------
@@ -184,8 +186,15 @@ export default class TimeTracking extends LightningElement {
 
   processMultipleRecordActionAvailability() {
     const summaryButtons = this.template.querySelectorAll('.button-summary');
+    const deleteSelectedButtons = this.template.querySelectorAll(
+      '.button-selected-delete'
+    );
 
     let disable = this.selectedEntries.length < 2;
+
+    deleteSelectedButtons.forEach(button => {
+      button.disabled = disable;
+    });
 
     summaryButtons.forEach(button => {
       button.disabled = disable;

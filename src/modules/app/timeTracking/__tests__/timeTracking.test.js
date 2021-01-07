@@ -628,7 +628,7 @@ describe('feature: make entries selectable', () => {
   });
 });
 
-describe('feature: summary', () => {
+describe('feature: mass actions', () => {
   afterEach(() => {
     // The jsdom instance is shared across test cases in a single file so reset the DOM
     while (document.body.firstChild) {
@@ -719,6 +719,48 @@ describe('feature: summary', () => {
       expect(commentOutput).toBeTruthy();
       expect(commentOutput.value).toBe(expectedComment);
     });
+  });
+
+  test('"delete selected"-button are enabled on multiple record selection', () => {
+    /**
+     * Given
+     * - the cmp is added to the DOM
+     * - Data in current data version (three entries)
+     * - two entries are selected
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+    let deleteSelectedButtons = element.shadowRoot.querySelectorAll(
+      '.button-selected-delete'
+    );
+    expect(deleteSelectedButtons.length).toBe(2);
+    expect(deleteSelectedButtons[0].disabled).toBe(true);
+    expect(deleteSelectedButtons[1].disabled).toBe(true);
+
+    /**
+     * When
+     * - two entries are selected
+     */
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
+    );
+
+    /**
+     * Then
+     * buttons 'delete selected' are enabled
+     */
+    deleteSelectedButtons = element.shadowRoot.querySelectorAll(
+      '.button-selected-delete'
+    );
+    expect(deleteSelectedButtons.length).toBe(2);
+    expect(deleteSelectedButtons[0].disabled).toBe(false);
+    expect(deleteSelectedButtons[1].disabled).toBe(false);
   });
 });
 
