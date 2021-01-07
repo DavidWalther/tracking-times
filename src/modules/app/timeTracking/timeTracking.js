@@ -114,7 +114,9 @@ export default class TimeTracking extends LightningElement {
     this.setSummaryOutput(this.createSummary());
   }
 
-  handleClickDeleteSelected() {}
+  handleClickDeleteSelected() {
+    this.processDeleteSelected();
+  }
 
   //----------------------------
   // Properties
@@ -165,6 +167,16 @@ export default class TimeTracking extends LightningElement {
     this.template.querySelector('.summary-difference').value =
       summary.difference;
     this.template.querySelector('.summary-comment').value = summary.comment;
+  }
+
+  processDeleteSelected() {
+    this.state.entries = this.state.entries.filter(
+      item => !this.selectedEntries.includes(item.itemId)
+    );
+    this.selectedEntries = [];
+
+    this.processMultipleRecordActionAvailability();
+    this.saveData();
   }
 
   processEntryUnselect(itemId) {

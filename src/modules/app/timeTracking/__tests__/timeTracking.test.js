@@ -726,7 +726,6 @@ describe('feature: mass actions', () => {
      * Given
      * - the cmp is added to the DOM
      * - Data in current data version (three entries)
-     * - two entries are selected
      */
     const element = createAndAddMainCmpAndSetCurrentVersionData();
 
@@ -761,6 +760,49 @@ describe('feature: mass actions', () => {
     expect(deleteSelectedButtons.length).toBe(2);
     expect(deleteSelectedButtons[0].disabled).toBe(false);
     expect(deleteSelectedButtons[1].disabled).toBe(false);
+  });
+
+  test('"delete selected"-button deletes seleced records', () => {
+    /**
+     * Given
+     * - the cmp is added to the DOM
+     * - Data in current data version (three entries)
+     * - two entries are selected
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
+    );
+
+    let deleteSelectedButtons = element.shadowRoot.querySelectorAll(
+      '.button-selected-delete'
+    );
+    expect(deleteSelectedButtons[0].disabled).toBe(false);
+    expect(deleteSelectedButtons[1].disabled).toBe(false);
+
+    /**
+     * When
+     * - delete selected button is clicked
+     */
+
+    deleteSelectedButtons[0].dispatchEvent(new CustomEvent('click'));
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * the selectes entries are removed
+       */
+
+      const remainingEntries = element.shadowRoot.querySelectorAll('app-entry');
+      expect(remainingEntries.length).toBe(1);
+    });
   });
 });
 
