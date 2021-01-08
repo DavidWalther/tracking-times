@@ -176,6 +176,7 @@ export default class TimeTracking extends LightningElement {
     this.selectedEntries = [];
 
     this.processMultipleRecordActionAvailability();
+    this.entryBasedEnablingOfButtons();
     this.saveData();
   }
 
@@ -592,23 +593,27 @@ export default class TimeTracking extends LightningElement {
   }
 
   disableDownloadButton() {
-    const downloadBtn = this.getDownloadButton();
-    downloadBtn.disabled = true;
+    this.template.querySelectorAll('.button-export').forEach(button => {
+      button.disabled = true;
+    });
   }
 
   enableDownloadButton() {
-    const downloadBtn = this.getDownloadButton();
-    downloadBtn.disabled = false;
+    this.template.querySelectorAll('.button-export').forEach(button => {
+      button.disabled = false;
+    });
   }
 
   disableClearButton() {
-    const clearBtn = this.getClearButton();
-    clearBtn.disabled = true;
+    this.template.querySelectorAll('.button-clear').forEach(button => {
+      button.disabled = true;
+    });
   }
 
   enableClearButton() {
-    const clearBtn = this.getClearButton();
-    clearBtn.disabled = false;
+    this.template.querySelectorAll('.button-clear').forEach(button => {
+      button.disabled = false;
+    });
   }
 
   //----------------------
@@ -617,14 +622,6 @@ export default class TimeTracking extends LightningElement {
 
   getClearModal() {
     return this.template.querySelector('.modal-clear');
-  }
-
-  getDownloadButton() {
-    return this.template.querySelector('.button-export');
-  }
-
-  getClearButton() {
-    return this.template.querySelector('.button-clear');
   }
 
   getSummaryModal() {
