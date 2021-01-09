@@ -131,7 +131,13 @@
     cancel-design="info"
     cancel-label={label.labelCancel}
     oncancel={handleClickSelectedDeleteCancel}
-  ></ui-modal-confirmable>
+  >
+    <div>
+      <div class="margin_auto">
+        <span>{label.labelDeleteSelected}</span>
+      </div>
+    </div>
+  </ui-modal-confirmable>
   <ui-modal-confirmable
     class="modal-clear"
     title={state.label.modal.clear.title}

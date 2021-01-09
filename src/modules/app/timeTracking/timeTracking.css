@@ -105,6 +105,11 @@ a.button-github {
   font-family: inherit;
 }
 
+.margin_auto {
+  margin: auto;
+  width: fit-content;
+}
+
 @media (min-width: 450px) {
   .button-bar_mobile {
     display: none;
