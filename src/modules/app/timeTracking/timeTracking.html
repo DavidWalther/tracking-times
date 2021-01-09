@@ -123,6 +123,16 @@
     </div>
   </div>
   <ui-modal-confirmable
+    class="modal-selected-delete"
+    title={label.labelDeleteSelected}
+    confirm-design="deny"
+    confirm-label={label.labelDelete}
+    onconfirm={handleClickSelectedDeleteConfirm}
+    cancel-design="info"
+    cancel-label={label.labelCancel}
+    oncancel={handleClickSelectedDeleteCancel}
+  ></ui-modal-confirmable>
+  <ui-modal-confirmable
     class="modal-clear"
     title={state.label.modal.clear.title}
     confirm-design="deny"

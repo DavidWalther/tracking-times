@@ -121,8 +121,7 @@ export default class TimeTracking extends LightningElement {
   }
 
   handleClickDeleteSelected() {
-    this.processDeleteSelected();
-    this.setButtonAccessibility();
+    this.showModalDeleteSelected();
   }
 
   //----------------------------
@@ -620,6 +619,30 @@ export default class TimeTracking extends LightningElement {
     this.template.querySelectorAll('.button-clear').forEach(button => {
       button.disabled = false;
     });
+  }
+
+  //----------------------------
+  // Modal handlers - delete selected
+  //----------------------------
+
+  // --- visibility controlds ---
+  showModalDeleteSelected() {
+    this.template.querySelector('.modal-selected-delete').show();
+  }
+
+  hideModalDeleteSelected() {
+    this.template.querySelector('.modal-selected-delete').hide();
+  }
+
+  // --- actions ---
+  handleClickSelectedDeleteConfirm() {
+    this.processDeleteSelected();
+    this.setButtonAccessibility();
+    this.hideModalDeleteSelected();
+  }
+
+  handleClickSelectedDeleteCancel() {
+    this.hideModalDeleteSelected();
   }
 
   //----------------------

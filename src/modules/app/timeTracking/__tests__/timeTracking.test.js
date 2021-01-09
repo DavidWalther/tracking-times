@@ -802,8 +802,12 @@ describe('feature: mass actions', () => {
      * When
      * - delete selected button is clicked
      */
+    const modalDeleteSelected = element.shadowRoot.querySelector(
+      'ui-modal-confirmable.modal-selected-delete'
+    );
+    expect(modalDeleteSelected).toBeTruthy();
 
-    deleteSelectedButtons[0].dispatchEvent(new CustomEvent('click'));
+    modalDeleteSelected.dispatchEvent(new CustomEvent('confirm'));
 
     return Promise.resolve().then(() => {
       /**
