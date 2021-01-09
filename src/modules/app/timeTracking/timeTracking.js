@@ -33,6 +33,8 @@ export default class TimeTracking extends LightningElement {
 
   label = {
     labelDeleteSelected: 'Delete Selected',
+    labelDelete: 'Delete',
+    labelCancel: 'Cancel',
     sidemenu: {
       icon: '\u2630'
     },
@@ -58,12 +60,13 @@ export default class TimeTracking extends LightningElement {
   }
 
   renderedCallback() {
-    this.entryBasedEnablingOfButtons();
+    this.setButtonAccessibility();
   }
 
   handleClickAdd() {
     this.processClickAdd();
     this.saveData();
+    this.setButtonAccessibility();
   }
 
   handleClickClear() {
@@ -78,6 +81,7 @@ export default class TimeTracking extends LightningElement {
   handleClickClearConfirm() {
     this.hideClearModal();
     this.processClearData();
+    this.setButtonAccessibility();
   }
 
   handleClickExport() {
@@ -95,11 +99,13 @@ export default class TimeTracking extends LightningElement {
   handleEventSelect(event) {
     const itemId = event.detail.id;
     this.processEntrySelect(itemId);
+    this.setButtonAccessibility();
   }
 
   handleEventUnselect(event) {
     const itemId = event.detail.id;
     this.processEntryUnselect(itemId);
+    this.setButtonAccessibility();
   }
 
   handleChangeEntry(event) {
@@ -116,6 +122,7 @@ export default class TimeTracking extends LightningElement {
 
   handleClickDeleteSelected() {
     this.processDeleteSelected();
+    this.setButtonAccessibility();
   }
 
   //----------------------------
@@ -136,6 +143,26 @@ export default class TimeTracking extends LightningElement {
   //----------------------------
   // Actions
   //----------------------------
+
+  setButtonAccessibility() {
+    const disableActions_AllRecords = this.entries.length === 0;
+    this.template.querySelectorAll('.button-clear').forEach(button => {
+      button.disabled = disableActions_AllRecords;
+    });
+    this.template.querySelectorAll('.button-export').forEach(button => {
+      button.disabled = disableActions_AllRecords;
+    });
+
+    const disableAction_MassActions = this.selectedEntries.length < 2;
+    this.template.querySelectorAll('.button-summary').forEach(button => {
+      button.disabled = disableAction_MassActions;
+    });
+    this.template
+      .querySelectorAll('.button-selected-delete')
+      .forEach(button => {
+        button.disabled = disableAction_MassActions;
+      });
+  }
 
   createSummary() {
     const result = {
@@ -175,8 +202,6 @@ export default class TimeTracking extends LightningElement {
     );
     this.selectedEntries = [];
 
-    this.processMultipleRecordActionAvailability();
-    this.entryBasedEnablingOfButtons();
     this.saveData();
   }
 
@@ -184,7 +209,6 @@ export default class TimeTracking extends LightningElement {
     this.selectedEntries = this.selectedEntries.filter(
       selectedItemId => selectedItemId !== itemId
     );
-    this.processMultipleRecordActionAvailability();
   }
 
   processEntrySelect(itemId) {
@@ -194,24 +218,6 @@ export default class TimeTracking extends LightningElement {
     const uniqueItemIds = [...new Set(tempListWithPotentialDuplicate)];
 
     this.selectedEntries = uniqueItemIds;
-    this.processMultipleRecordActionAvailability();
-  }
-
-  processMultipleRecordActionAvailability() {
-    const summaryButtons = this.template.querySelectorAll('.button-summary');
-    const deleteSelectedButtons = this.template.querySelectorAll(
-      '.button-selected-delete'
-    );
-
-    let disable = this.selectedEntries.length < 2;
-
-    deleteSelectedButtons.forEach(button => {
-      button.disabled = disable;
-    });
-
-    summaryButtons.forEach(button => {
-      button.disabled = disable;
-    });
   }
 
   proccessExport() {

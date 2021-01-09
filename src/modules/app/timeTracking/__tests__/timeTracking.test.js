@@ -429,12 +429,18 @@ describe('Download', () => {
     const element = createElement('app-timeTracking', { is: TimeTracking });
     document.body.appendChild(element);
 
-    /**
-     * Then
-     * The button is enabled
-     */
-    const downloadButton = getDownloadButton(element.shadowRoot)[0];
-    expect(downloadButton.disabled).toBe(false);
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * The button is enabled
+       */
+      const downloadButtons = element.shadowRoot.querySelectorAll(
+        '.button-export'
+      );
+      expect(downloadButtons.length).toBe(2);
+      expect(downloadButtons[0].disabled).toBe(false);
+      expect(downloadButtons[1].disabled).toBe(false);
+    });
   });
 
   test('Download button exists and is disabled when no data exists', () => {
@@ -473,7 +479,7 @@ describe('Download', () => {
      * The list is cleared
      */
     const clearConfirmButton = element.shadowRoot.querySelector(
-      'ui-modal-confirmable'
+      'ui-modal-confirmable.modal-clear'
     );
     clearConfirmButton.dispatchEvent(new CustomEvent('confirm'));
 
@@ -483,8 +489,13 @@ describe('Download', () => {
        * Then
        * The button is disabled
        */
-      const downloadButton = getDownloadButton(element.shadowRoot)[0];
-      expect(downloadButton.disabled).toBe(true);
+
+      const downloadButtons = element.shadowRoot.querySelectorAll(
+        '.button-export'
+      );
+      expect(downloadButtons.length).toBe(2);
+      expect(downloadButtons[0].disabled).toBe(true);
+      expect(downloadButtons[1].disabled).toBe(true);
     });
   });
 });
