@@ -3,7 +3,11 @@
 //----------------------------
 
 features:
+- new button: delete selected
 - selecting entry disables delete-button
+
+bugfixes:
+- display sidemenu in front
 
 //----------------------------
 // version 1.2
