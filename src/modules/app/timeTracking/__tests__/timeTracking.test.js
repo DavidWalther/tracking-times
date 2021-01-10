@@ -429,12 +429,18 @@ describe('Download', () => {
     const element = createElement('app-timeTracking', { is: TimeTracking });
     document.body.appendChild(element);
 
-    /**
-     * Then
-     * The button is enabled
-     */
-    const downloadButton = getDownloadButton(element.shadowRoot)[0];
-    expect(downloadButton.disabled).toBe(false);
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * The button is enabled
+       */
+      const downloadButtons = element.shadowRoot.querySelectorAll(
+        '.button-export'
+      );
+      expect(downloadButtons.length).toBe(2);
+      expect(downloadButtons[0].disabled).toBe(false);
+      expect(downloadButtons[1].disabled).toBe(false);
+    });
   });
 
   test('Download button exists and is disabled when no data exists', () => {
@@ -473,7 +479,7 @@ describe('Download', () => {
      * The list is cleared
      */
     const clearConfirmButton = element.shadowRoot.querySelector(
-      'ui-modal-confirmable'
+      'ui-modal-confirmable.modal-clear'
     );
     clearConfirmButton.dispatchEvent(new CustomEvent('confirm'));
 
@@ -483,8 +489,13 @@ describe('Download', () => {
        * Then
        * The button is disabled
        */
-      const downloadButton = getDownloadButton(element.shadowRoot)[0];
-      expect(downloadButton.disabled).toBe(true);
+
+      const downloadButtons = element.shadowRoot.querySelectorAll(
+        '.button-export'
+      );
+      expect(downloadButtons.length).toBe(2);
+      expect(downloadButtons[0].disabled).toBe(true);
+      expect(downloadButtons[1].disabled).toBe(true);
     });
   });
 });
@@ -628,7 +639,7 @@ describe('feature: make entries selectable', () => {
   });
 });
 
-describe('feature: summary', () => {
+describe('feature: mass actions', () => {
   afterEach(() => {
     // The jsdom instance is shared across test cases in a single file so reset the DOM
     while (document.body.firstChild) {
@@ -718,6 +729,94 @@ describe('feature: summary', () => {
         secondEntry.comment + '\n=====\n' + thirdEntry.comment;
       expect(commentOutput).toBeTruthy();
       expect(commentOutput.value).toBe(expectedComment);
+    });
+  });
+
+  test('"delete selected"-button are enabled on multiple record selection', () => {
+    /**
+     * Given
+     * - the cmp is added to the DOM
+     * - Data in current data version (three entries)
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+    let deleteSelectedButtons = element.shadowRoot.querySelectorAll(
+      '.button-selected-delete'
+    );
+    expect(deleteSelectedButtons.length).toBe(2);
+    expect(deleteSelectedButtons[0].disabled).toBe(true);
+    expect(deleteSelectedButtons[1].disabled).toBe(true);
+
+    /**
+     * When
+     * - two entries are selected
+     */
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
+    );
+
+    /**
+     * Then
+     * buttons 'delete selected' are enabled
+     */
+    deleteSelectedButtons = element.shadowRoot.querySelectorAll(
+      '.button-selected-delete'
+    );
+    expect(deleteSelectedButtons.length).toBe(2);
+    expect(deleteSelectedButtons[0].disabled).toBe(false);
+    expect(deleteSelectedButtons[1].disabled).toBe(false);
+  });
+
+  test('"delete selected"-button deletes seleced records', () => {
+    /**
+     * Given
+     * - the cmp is added to the DOM
+     * - Data in current data version (three entries)
+     * - two entries are selected
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
+    );
+
+    let deleteSelectedButtons = element.shadowRoot.querySelectorAll(
+      '.button-selected-delete'
+    );
+    expect(deleteSelectedButtons[0].disabled).toBe(false);
+    expect(deleteSelectedButtons[1].disabled).toBe(false);
+
+    /**
+     * When
+     * - delete selected button is clicked
+     */
+    const modalDeleteSelected = element.shadowRoot.querySelector(
+      'ui-modal-confirmable.modal-selected-delete'
+    );
+    expect(modalDeleteSelected).toBeTruthy();
+
+    modalDeleteSelected.dispatchEvent(new CustomEvent('confirm'));
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * the selectes entries are removed
+       */
+
+      const remainingEntries = element.shadowRoot.querySelectorAll('app-entry');
+      expect(remainingEntries.length).toBe(1);
     });
   });
 });
