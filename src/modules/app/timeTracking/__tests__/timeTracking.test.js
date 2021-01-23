@@ -667,8 +667,15 @@ describe('feature: make entries selectable', () => {
     expect(buttonDeselect.disabled).toBe(false);
 
     /**
-How to check entries
-*/
+     * When
+     * the delesect button is cicked
+     */
+    buttonDeselect.dispatchEvent(new CustomEvent('click'));
+
+    return Promise.resolve().then(() => {
+      expect(secondEntry.selected).toBe(false);
+      expect(thirdEntry.selected).toBe(false);
+    });
   });
 });
 
