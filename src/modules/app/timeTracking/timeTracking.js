@@ -125,6 +125,10 @@ export default class TimeTracking extends LightningElement {
     this.showModalDeleteSelected();
   }
 
+  handleClickDeselectAll() {
+    this.deselectAllEntries();
+  }
+
   //----------------------------
   // Properties
   //----------------------------
@@ -144,6 +148,13 @@ export default class TimeTracking extends LightningElement {
   // Actions
   //----------------------------
 
+  deselectAllEntries() {
+    const allEntryComponents = this.template.querySelectorAll('app-entry');
+    allEntryComponents.forEach(entryComponent => {
+      entryComponent.unselect();
+    });
+  }
+
   setButtonAccessibility() {
     const disableActions_AllRecords = this.entries.length === 0;
     this.template.querySelectorAll('.button-clear').forEach(button => {
@@ -159,6 +170,12 @@ export default class TimeTracking extends LightningElement {
     });
     this.template
       .querySelectorAll('.button-selected-delete')
+      .forEach(button => {
+        button.disabled = disableAction_MassActions;
+      });
+
+    this.template
+      .querySelectorAll('.button-selected-deselect_all')
       .forEach(button => {
         button.disabled = disableAction_MassActions;
       });

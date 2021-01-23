@@ -637,6 +637,39 @@ describe('feature: make entries selectable', () => {
       expect(buttonSummary.disabled).toBe(true);
     });
   });
+
+  test('deselect clears selection', () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     * - The component is added
+     * - two entries are selected + summary button is enabled
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+    const buttonDeselect = element.shadowRoot.querySelector(
+      '.button-selected-deselect_all'
+    );
+    // summary button is disabled
+    expect(buttonDeselect.disabled).toBe(true);
+
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+    expect(secondEntry).toBeTruthy();
+    expect(thirdEntry).toBeTruthy();
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: secondEntry.itemId } })
+    );
+    secondEntry.dispatchEvent(
+      new CustomEvent('select', { detail: { id: thirdEntry.itemId } })
+    );
+
+    // summary button is enabled
+    expect(buttonDeselect.disabled).toBe(false);
+
+    /**
+How to check entries
+*/
+  });
 });
 
 describe('feature: mass actions', () => {
