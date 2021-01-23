@@ -68,6 +68,11 @@ export default class Entry extends LightningElement {
   }
 
   @api
+  get selected() {
+    return this.template.querySelector('.selection').checked;
+  }
+
+  @api
   itemId;
 
   @api
