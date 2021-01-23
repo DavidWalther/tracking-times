@@ -56,6 +56,14 @@
         <div>
           <ui-button
             design="info"
+            value={label.labelDeselectAll}
+            class="button-selected-deselect_all"
+            disabled
+          ></ui-button>
+        </div>
+        <div>
+          <ui-button
+            design="info"
             value="Summary"
             class="button-summary"
             onclick={handleClickSummary}
@@ -94,14 +102,23 @@
           onclick={handleClickSummary}
         ></ui-button>
       </div>
-
-      <ui-button
-        design="cancel"
-        value={label.labelDeleteSelected}
-        class="button-selected-delete"
-        onclick={handleClickDeleteSelected}
-        disabled
-      ></ui-button>
+      <div>
+        <ui-button
+          design="cancel"
+          value={label.labelDeleteSelected}
+          class="button-selected-delete"
+          onclick={handleClickDeleteSelected}
+          disabled
+        ></ui-button>
+      </div>
+      <div>
+        <ui-button
+          design="info"
+          value={label.labelDeselectAll}
+          class="button-selected-deselect_all"
+          disabled
+        ></ui-button>
+      </div>
     </div>
     <div class="container-list entries">
       <template for:each={state.entries} for:item="entry" for:index="index">

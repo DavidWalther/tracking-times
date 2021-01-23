@@ -32,6 +32,7 @@ export default class TimeTracking extends LightningElement {
   };
 
   label = {
+    labelDeselectAll: 'Delect All',
     labelDeleteSelected: 'Delete Selected',
     labelDelete: 'Delete',
     labelCancel: 'Cancel',
