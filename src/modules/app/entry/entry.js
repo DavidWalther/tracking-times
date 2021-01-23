@@ -68,6 +68,11 @@ export default class Entry extends LightningElement {
   }
 
   @api
+  get selected() {
+    return this.template.querySelector('.selection').checked;
+  }
+
+  @api
   itemId;
 
   @api
@@ -78,6 +83,7 @@ export default class Entry extends LightningElement {
   @api
   unselect() {
     this.template.querySelector('.selection').checked = false;
+    this.createAndFireSelectionEvent(false);
   }
 
   internalState = {
@@ -242,6 +248,10 @@ export default class Entry extends LightningElement {
     stdEvent.preventDefault();
 
     let checked = stdEvent.target.checked;
+    this.createAndFireSelectionEvent(checked);
+  }
+
+  createAndFireSelectionEvent(checked) {
     const eventParams = {
       detail: {
         id: this.itemId
