@@ -7,6 +7,7 @@ features:
 
 tec debt:
 - make app-entry:select modifyable
+- create a css class to select all buttons for multiple record at once
 
 bigfix:
 - fix Label of "Deselect All"
