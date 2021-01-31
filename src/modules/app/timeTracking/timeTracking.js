@@ -145,6 +145,7 @@ export default class TimeTracking extends LightningElement {
     this.entries.sort((entry1, entry2) => {
       return entry2.start - entry1.start;
     });
+    this.saveData();
   }
 
   selectAllEntries() {
