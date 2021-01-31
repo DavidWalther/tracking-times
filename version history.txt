@@ -5,6 +5,7 @@
 features:
 - new button: Select All
 - remove 'clear' button
+- add sort
 
 tec debt:
 - make app-entry:select modifyable

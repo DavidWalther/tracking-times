@@ -35,6 +35,7 @@ export default class TimeTracking extends LightningElement {
     labelDelete: 'Delete',
     labelDeselectAll: 'Deselect All',
     labelSelectAll: 'Select All',
+    labelSort: 'Sort',
     sidemenu: {
       icon: '\u2630'
     },
@@ -117,6 +118,10 @@ export default class TimeTracking extends LightningElement {
     this.selectAllEntries();
   }
 
+  handleClickSort() {
+    this.sortEntries();
+  }
+
   //----------------------------
   // Properties
   //----------------------------
@@ -135,6 +140,13 @@ export default class TimeTracking extends LightningElement {
   //----------------------------
   // Actions
   //----------------------------
+
+  sortEntries() {
+    this.entries.sort((entry1, entry2) => {
+      return entry2.start - entry1.start;
+    });
+    this.saveData();
+  }
 
   selectAllEntries() {
     const allEntryComponents = this.template.querySelectorAll('app-entry');
