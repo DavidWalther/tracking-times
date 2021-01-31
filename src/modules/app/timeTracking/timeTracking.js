@@ -177,20 +177,9 @@ export default class TimeTracking extends LightningElement {
     });
 
     const disableAction_MassActions = this.selectedEntries.length < 2;
-    this.template.querySelectorAll('.button-summary').forEach(button => {
+    this.template.querySelectorAll('.multiple').forEach(button => {
       button.disabled = disableAction_MassActions;
     });
-    this.template
-      .querySelectorAll('.button-selected-delete')
-      .forEach(button => {
-        button.disabled = disableAction_MassActions;
-      });
-
-    this.template
-      .querySelectorAll('.button-selected-deselect_all')
-      .forEach(button => {
-        button.disabled = disableAction_MassActions;
-      });
   }
 
   createSummary() {
