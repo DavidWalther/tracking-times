@@ -5,6 +5,9 @@
 features:
 - new button: Select All
 
+tec debt:
+- make app-entry:select modifyable
+
 bigfix:
 - fix Label of "Deselect All"
 

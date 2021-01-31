@@ -71,6 +71,13 @@ export default class Entry extends LightningElement {
   get selected() {
     return this.template.querySelector('.selection').checked;
   }
+  set selected(value) {
+    if (value) {
+      this.select();
+    } else {
+      this.unselect();
+    }
+  }
 
   @api
   itemId;

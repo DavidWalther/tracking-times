@@ -845,7 +845,7 @@ describe('feature - Make entries selectable', () => {
      * When
      * the unselect method is called
      */
-    element.select();
+    element.selected = true;
 
     /**
      * Then
