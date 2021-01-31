@@ -156,14 +156,14 @@ export default class TimeTracking extends LightningElement {
   selectAllEntries() {
     const allEntryComponents = this.template.querySelectorAll('app-entry');
     allEntryComponents.forEach(entryComponent => {
-      entryComponent.select();
+      entryComponent.selected = true;
     });
   }
 
   deselectAllEntries() {
     const allEntryComponents = this.template.querySelectorAll('app-entry');
     allEntryComponents.forEach(entryComponent => {
-      entryComponent.unselect();
+      entryComponent.selected = false;
     });
   }
 

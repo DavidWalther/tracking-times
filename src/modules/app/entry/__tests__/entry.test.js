@@ -817,7 +817,7 @@ describe('feature - Make entries selectable', () => {
      * When
      * the unselect method is called
      */
-    element.unselect();
+    element.selected = false;
 
     /**
      * Then
@@ -845,7 +845,7 @@ describe('feature - Make entries selectable', () => {
      * When
      * the unselect method is called
      */
-    element.select();
+    element.selected = true;
 
     /**
      * Then
