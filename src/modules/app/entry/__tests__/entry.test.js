@@ -830,6 +830,37 @@ describe('feature - Make entries selectable', () => {
     });
   });
 
+  test('entry cmp has a select method', () => {
+    const selectHandler = jest.fn();
+    /**
+     * Given
+     * - the entry component is added to DOM
+     * - is selected
+     */
+    const element = createElement('ui-entry', { is: Entry });
+    element.addEventListener('select', selectHandler);
+    document.body.appendChild(element);
+
+    /**
+     * When
+     * the unselect method is called
+     */
+    element.select();
+
+    /**
+     * Then
+     * - the select checkbox is unchecked
+     * - a unselect event is fired
+     */
+    return Promise.resolve().then(() => {
+      const selectCheckbox = element.shadowRoot.querySelector(
+        'input.selection'
+      );
+      expect(selectCheckbox.checked).toBe(true);
+      expect(selectHandler).toHaveBeenCalled();
+    });
+  });
+
   test('selecting entry disables delete button', () => {
     /**
      * Given

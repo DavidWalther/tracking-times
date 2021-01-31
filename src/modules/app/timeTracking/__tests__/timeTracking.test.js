@@ -677,6 +677,35 @@ describe('feature: make entries selectable', () => {
       expect(thirdEntry.selected).toBe(false);
     });
   });
+
+  test("'Select All' selects all Entries.", () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     * - The component is added
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+    const buttonSelect = element.shadowRoot.querySelector(
+      '.button-selected-select_all'
+    );
+
+    /**
+     * When
+     * the Select button is cicked
+     */
+    buttonSelect.dispatchEvent(new CustomEvent('click'));
+
+    /**
+     * Then
+     * all entries are selected
+     */
+    const entries = element.shadowRoot.querySelectorAll('app-entry');
+
+    expect(entries.length).toBe(3);
+    expect(entries[0].selected).toBe(true);
+    expect(entries[1].selected).toBe(true);
+    expect(entries[2].selected).toBe(true);
+  });
 });
 
 describe('feature: mass actions', () => {
