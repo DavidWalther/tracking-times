@@ -118,6 +118,8 @@ export default class TimeTracking extends LightningElement {
     this.selectAllEntries();
   }
 
+  handleClickSort() {}
+
   //----------------------------
   // Properties
   //----------------------------
