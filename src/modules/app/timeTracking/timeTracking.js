@@ -19,13 +19,11 @@ export default class TimeTracking extends LightningElement {
       button: {
         save: 'Save',
         load: 'Load',
-        clear: 'Clear',
         add: 'Add'
       },
       modal: {
         clear: {
-          title: 'Clear',
-          body: 'Clear all entries?'
+          title: 'Clear'
         }
       }
     }
@@ -68,21 +66,6 @@ export default class TimeTracking extends LightningElement {
   handleClickAdd() {
     this.processClickAdd();
     this.saveData();
-    this.setButtonAccessibility();
-  }
-
-  handleClickClear() {
-    this.showClearModal();
-    this.template.querySelector('ui-sidemenu').close();
-  }
-
-  handleClickClearCancel() {
-    this.hideClearModal();
-  }
-
-  handleClickClearConfirm() {
-    this.hideClearModal();
-    this.processClearData();
     this.setButtonAccessibility();
   }
 
@@ -598,21 +581,11 @@ export default class TimeTracking extends LightningElement {
     return currentTime;
   }
 
-  showClearModal() {
-    this.getClearModal().show();
-  }
-
-  hideClearModal() {
-    this.getClearModal().hide();
-  }
-
   entryBasedEnablingOfButtons() {
     if (this.isEmpty) {
       this.disableDownloadButton();
-      this.disableClearButton();
     } else {
       this.enableDownloadButton();
-      this.enableClearButton();
     }
   }
 
@@ -624,18 +597,6 @@ export default class TimeTracking extends LightningElement {
 
   enableDownloadButton() {
     this.template.querySelectorAll('.button-export').forEach(button => {
-      button.disabled = false;
-    });
-  }
-
-  disableClearButton() {
-    this.template.querySelectorAll('.button-clear').forEach(button => {
-      button.disabled = true;
-    });
-  }
-
-  enableClearButton() {
-    this.template.querySelectorAll('.button-clear').forEach(button => {
       button.disabled = false;
     });
   }
@@ -667,10 +628,6 @@ export default class TimeTracking extends LightningElement {
   //----------------------
   // Element selectors
   //----------------------
-
-  getClearModal() {
-    return this.template.querySelector('.modal-clear');
-  }
 
   getSummaryModal() {
     return this.template.querySelector('.modal-summary');
