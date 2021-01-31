@@ -853,7 +853,9 @@ describe('feature - Make entries selectable', () => {
      * - a unselect event is fired
      */
     return Promise.resolve().then(() => {
-      const selectCheckbox = element.shadowRoot.querySelector('input.selection');
+      const selectCheckbox = element.shadowRoot.querySelector(
+        'input.selection'
+      );
       expect(selectCheckbox.checked).toBe(true);
       expect(selectHandler).toHaveBeenCalled();
     });

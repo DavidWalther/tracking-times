@@ -130,7 +130,9 @@ export default class TimeTracking extends LightningElement {
     this.deselectAllEntries();
   }
 
-  handleClickSelectAll() {}
+  handleClickSelectAll() {
+    this.selectAllEntries();
+  }
 
   //----------------------------
   // Properties
@@ -150,6 +152,13 @@ export default class TimeTracking extends LightningElement {
   //----------------------------
   // Actions
   //----------------------------
+
+  selectAllEntries() {
+    const allEntryComponents = this.template.querySelectorAll('app-entry');
+    allEntryComponents.forEach(entryComponent => {
+      entryComponent.select();
+    });
+  }
 
   deselectAllEntries() {
     const allEntryComponents = this.template.querySelectorAll('app-entry');

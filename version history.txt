@@ -2,6 +2,9 @@
 // version 1.5
 //----------------------------
 
+features:
+- new button: Select All
+
 bigfix:
 - fix Label of "Deselect All"
 
