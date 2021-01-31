@@ -118,7 +118,9 @@ export default class TimeTracking extends LightningElement {
     this.selectAllEntries();
   }
 
-  handleClickSort() {}
+  handleClickSort() {
+    this.sortEntries();
+  }
 
   //----------------------------
   // Properties
@@ -138,6 +140,16 @@ export default class TimeTracking extends LightningElement {
   //----------------------------
   // Actions
   //----------------------------
+
+  sortEntries() {
+    const entriesCopy = [...this.entries];
+
+    entriesCopy.sort((entry1, entry2) => {
+      return entry2.start - entry1.start;
+    });
+
+
+  }
 
   selectAllEntries() {
     const allEntryComponents = this.template.querySelectorAll('app-entry');
