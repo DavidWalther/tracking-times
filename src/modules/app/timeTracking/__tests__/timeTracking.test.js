@@ -189,135 +189,6 @@ describe('Add related tests', () => {
   });
 });
 
-describe('Clear related tests', () => {
-  afterEach(() => {
-    // The jsdom instance is shared across test cases in a single file so reset the DOM
-    while (document.body.firstChild) {
-      document.body.removeChild(document.body.firstChild);
-    }
-    clearStorage();
-  });
-
-  test('Clear button exists and is disabled by defaut', () => {
-    /**
-     * Given
-     * -
-     */
-
-    /**
-     * When
-     * Component is Loaded
-     */
-    const element = createElement('app-timeTracking', { is: TimeTracking });
-    document.body.appendChild(element);
-
-    /**
-     * Then
-     * 1. The Clear-button exists
-     * 2. The clear-button is disabled
-     */
-    const clearButton = getClearButton(element.shadowRoot);
-    expect(clearButton).toBeTruthy();
-    expect(clearButton.disabled).toBe(true);
-  });
-
-  test('Clear is enabled if data was loaded', () => {
-    /**
-     * Given
-     * data of current version is loaded
-     */
-    setCurrentVersionDummyData();
-
-    /**
-     * When
-     * Component is Loaded
-     */
-    const element = createElement('app-timeTracking', { is: TimeTracking });
-    document.body.appendChild(element);
-
-    /**
-     * Then
-     * 1. The Clear-button exists
-     * 2. The clear-button is disabled
-     */
-    const clearButton = getClearButton(element.shadowRoot);
-    expect(clearButton).toBeTruthy();
-    expect(clearButton.disabled).toBe(false);
-  });
-
-  test('confirm of the clear modal resets list', () => {
-    /**
-     * Given
-     * 1. Component is Loaded
-     * 2. Has existing Entries
-     */
-    setCurrentVersionDummyData();
-    const element = createElement('app-timeTracking', { is: TimeTracking });
-    document.body.appendChild(element);
-
-    const entriesBeforeClearing = element.shadowRoot.querySelectorAll(
-      'app-entry'
-    );
-    expect(entriesBeforeClearing.length).toBe(3);
-
-    /**
-     * When
-     * Clear-Modal is confirmed
-     */
-    const clearingModal = element.shadowRoot.querySelector('.modal-clear');
-    clearingModal.dispatchEvent(new CustomEvent('confirm'));
-
-    //wait for confirm-click to be processed
-    return Promise.resolve().then(() => {
-      /**
-       * Then
-       * All entries are removed
-       */
-      const entriesAfterClearing = element.shadowRoot.querySelectorAll(
-        'app-entry'
-      );
-      expect(entriesAfterClearing.length).toBe(0);
-
-      const clearButton = getClearButton(element.shadowRoot);
-      expect(clearButton.disabled).toBe(true);
-    });
-  });
-
-  test('clear does not delete storage', () => {
-    /**
-     * Given
-     * 1. Existing data with current data version
-     * 2. Component is Loaded
-     */
-    setCurrentVersionDummyData();
-    const element = createElement('app-timeTracking', { is: TimeTracking });
-    document.body.appendChild(element);
-
-    /**
-     * When
-     * The clear modal is confirmed
-     */
-    const clearingModal = element.shadowRoot.querySelector('.modal-clear');
-    clearingModal.dispatchEvent(new CustomEvent('confirm'));
-
-    //wait for confirm-click to be processed
-    return Promise.resolve().then(() => {
-      /**
-       * Then
-       * 1. The storage is not null
-       * 2. The entry list is empty
-       */
-      let storageString = localStorage.getItem('storage');
-      expect(storageString).not.toBe(null);
-      let storage = JSON.parse(storageString);
-      expect(storage).toBeTruthy();
-      expect(storage.settings).toBeTruthy();
-      expect(Array.isArray(storage.entries)).toBe(true);
-      expect(storage.entries.length).toBe(0);
-    });
-  });
-});
-
 describe('check delete', () => {
   afterEach(() => {
     // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -462,41 +333,6 @@ describe('Download', () => {
      */
     const downloadButton = getDownloadButton(element.shadowRoot)[0];
     expect(downloadButton.disabled).toBe(true);
-  });
-
-  test('On clear button is disabled', () => {
-    /**
-     * Given
-     * 1. Data in current data version
-     * 2. The component is added
-     */
-    setCurrentVersionDummyData();
-    const element = createElement('app-timeTracking', { is: TimeTracking });
-    document.body.appendChild(element);
-
-    /**
-     * When
-     * The list is cleared
-     */
-    const clearConfirmButton = element.shadowRoot.querySelector(
-      'ui-modal-confirmable.modal-clear'
-    );
-    clearConfirmButton.dispatchEvent(new CustomEvent('confirm'));
-
-    //wait for click event to be processed
-    return Promise.resolve().then(() => {
-      /**
-       * Then
-       * The button is disabled
-       */
-
-      const downloadButtons = element.shadowRoot.querySelectorAll(
-        '.button-export'
-      );
-      expect(downloadButtons.length).toBe(2);
-      expect(downloadButtons[0].disabled).toBe(true);
-      expect(downloadButtons[1].disabled).toBe(true);
-    });
   });
 });
 
@@ -676,6 +512,35 @@ describe('feature: make entries selectable', () => {
       expect(secondEntry.selected).toBe(false);
       expect(thirdEntry.selected).toBe(false);
     });
+  });
+
+  test("'Select All' selects all Entries.", () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     * - The component is added
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+    const buttonSelect = element.shadowRoot.querySelector(
+      '.button-selected-select_all'
+    );
+
+    /**
+     * When
+     * the Select button is cicked
+     */
+    buttonSelect.dispatchEvent(new CustomEvent('click'));
+
+    /**
+     * Then
+     * all entries are selected
+     */
+    const entries = element.shadowRoot.querySelectorAll('app-entry');
+
+    expect(entries.length).toBe(3);
+    expect(entries[0].selected).toBe(true);
+    expect(entries[1].selected).toBe(true);
+    expect(entries[2].selected).toBe(true);
   });
 });
 

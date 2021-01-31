@@ -30,17 +30,9 @@
           <ui-button
             design="cancel"
             value={label.labelDeleteSelected}
-            class="button-selected-delete"
+            class="multiple button-selected-delete"
             onclick={handleClickDeleteSelected}
             disabled
-          ></ui-button>
-        </div>
-        <div>
-          <ui-button
-            design="deny"
-            value={label.button.clear.value}
-            class="button-clear"
-            onclick={handleClickClear}
           ></ui-button>
         </div>
       </ui-sidemenu>
@@ -57,7 +49,7 @@
           <ui-button
             design="info"
             value={label.labelDeselectAll}
-            class="button-selected-deselect_all"
+            class="multiple button-selected-deselect_all"
             onclick={handleClickDeselectAll}
             disabled
           ></ui-button>
@@ -66,21 +58,29 @@
           <ui-button
             design="info"
             value="Summary"
-            class="button-summary"
+            class="multiple button-summary"
             onclick={handleClickSummary}
             disabled
+          ></ui-button>
+        </div>
+        <div>
+          <ui-button
+            design="info"
+            value={label.labelSelectAll}
+            class="button-selected-select_all"
+            onclick={handleClickSelectAll}
+          ></ui-button>
+        </div>
+        <div>
+          <ui-button
+            design="info"
+            value={label.labelSort}
+            onclick={handleClickSort}
           ></ui-button>
         </div>
       </div>
     </div>
     <div class="button-bar_wide">
-      <div class="button container-clear">
-        <ui-button
-          value={label.button.clear.value}
-          class="button-clear"
-          onclick={handleClickClear}
-        ></ui-button>
-      </div>
       <div class="button container-export">
         <ui-button
           value={label.button.download.value}
@@ -98,7 +98,7 @@
       <div class="button container-summary">
         <ui-button
           value="Summary"
-          class="button-summary"
+          class="multiple button-summary"
           disabled
           onclick={handleClickSummary}
         ></ui-button>
@@ -107,7 +107,7 @@
         <ui-button
           design="cancel"
           value={label.labelDeleteSelected}
-          class="button-selected-delete"
+          class="multiple button-selected-delete"
           onclick={handleClickDeleteSelected}
           disabled
         ></ui-button>
@@ -116,9 +116,24 @@
         <ui-button
           design="info"
           value={label.labelDeselectAll}
-          class="button-selected-deselect_all"
+          class="multiple button-selected-deselect_all"
           onclick={handleClickDeselectAll}
           disabled
+        ></ui-button>
+      </div>
+      <div>
+        <ui-button
+          design="info"
+          value={label.labelSelectAll}
+          class="button-selected-select_all"
+          onclick={handleClickSelectAll}
+        ></ui-button>
+      </div>
+      <div>
+        <ui-button
+          design="info"
+          value={label.labelSort}
+          onclick={handleClickSort}
         ></ui-button>
       </div>
     </div>
@@ -155,20 +170,6 @@
       <div class="margin_auto">
         <span>{label.labelDeleteSelected}</span>
       </div>
-    </div>
-  </ui-modal-confirmable>
-  <ui-modal-confirmable
-    class="modal-clear"
-    title={state.label.modal.clear.title}
-    confirm-design="deny"
-    confirm-label="Clear"
-    onconfirm={handleClickClearConfirm}
-    cancel-design="info"
-    cancel-label="Cancel"
-    oncancel={handleClickClearCancel}
-  >
-    <div class="modal-clear-body">
-      <span>{state.label.modal.clear.body}</span>
     </div>
   </ui-modal-confirmable>
   <ui-modal-generic class="modal-summary">

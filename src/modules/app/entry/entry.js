@@ -71,6 +71,13 @@ export default class Entry extends LightningElement {
   get selected() {
     return this.template.querySelector('.selection').checked;
   }
+  set selected(value) {
+    if (value) {
+      this.select();
+    } else {
+      this.unselect();
+    }
+  }
 
   @api
   itemId;
@@ -80,10 +87,14 @@ export default class Entry extends LightningElement {
     return this.end - this.start - this.break;
   }
 
-  @api
   unselect() {
     this.template.querySelector('.selection').checked = false;
     this.createAndFireSelectionEvent(false);
+  }
+
+  select() {
+    this.template.querySelector('.selection').checked = true;
+    this.createAndFireSelectionEvent(true);
   }
 
   internalState = {

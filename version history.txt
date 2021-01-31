@@ -1,4 +1,21 @@
 //----------------------------
+// version 1.5
+//----------------------------
+
+features:
+- new button: Select All
+- remove 'clear' button
+- add sort
+
+tec debt:
+- make app-entry:select modifyable
+- create a css class to select all buttons for multiple record at once
+- remove test for file download. It's a build in Browser function we can't test
+
+bigfix:
+- fix Label of "Deselect All"
+
+//----------------------------
 // version 1.4
 //----------------------------
 
