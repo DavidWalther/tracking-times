@@ -87,13 +87,11 @@ export default class Entry extends LightningElement {
     return this.end - this.start - this.break;
   }
 
-  @api
   unselect() {
     this.template.querySelector('.selection').checked = false;
     this.createAndFireSelectionEvent(false);
   }
 
-  @api
   select() {
     this.template.querySelector('.selection').checked = true;
     this.createAndFireSelectionEvent(true);
