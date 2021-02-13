@@ -21,7 +21,7 @@ textarea.comment {
 
 div.controls {
   display: grid;
-  grid-template-columns: auto 43% 43%;
+  grid-template-columns: auto;
 }
 
 div.controls > div {
@@ -31,13 +31,13 @@ div.controls > div {
 
 div.layout {
   display: grid;
-  grid-auto-columns: 50%;
+
+  grid-auto-columns: auto auto 70px;
   grid-template-areas:
-    'startDate startTime'
-    'endDate endTime'
-    'break diff'
-    'comment comment'
-    'controls controls';
+    'startDate startTime controls'
+    'endDate endTime controls'
+    'break diff controls'
+    'comment comment controls';
 }
 
 div.area-startdate {
@@ -130,27 +130,4 @@ div.container-button-bar > input {
 
 .ui-modal-confirmable > div {
   text-align: center;
-}
-
-@media (min-width: 500px) {
-  .modal-edit > div[slot='body'] {
-    display: grid;
-    grid-row-gap: 15px;
-    grid-template-columns: 50% 50%;
-  }
-}
-
-@media (min-width: 786px) {
-  div.controls {
-    grid-template-columns: auto;
-  }
-
-  div.layout {
-    grid-auto-columns: 45% 45% auto;
-    grid-template-areas:
-      'startDate startTime controls'
-      'endDate endTime controls'
-      'break diff controls'
-      'comment comment controls';
-  }
 }
