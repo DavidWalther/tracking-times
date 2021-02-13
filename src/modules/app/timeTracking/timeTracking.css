@@ -46,22 +46,6 @@ div.button > input {
   margin: auto;
 }
 
-div.container-add {
-  grid-area: add;
-}
-
-div.container-clear {
-  grid-area: clear;
-}
-
-div.container-export {
-  grid-area: export;
-}
-
-div.container-summary {
-  grid-area: summary;
-}
-
 div.container-github {
   background-color: lightslategray;
   border-radius: 7px;
@@ -110,7 +94,11 @@ a.button-github {
   width: fit-content;
 }
 
-@media (min-width: 450px) {
+@media (min-width: 500px) {
+  div.button-bar_wide {
+    display: grid;
+  }
+
   .button-bar_mobile {
     display: none;
   }
@@ -118,20 +106,7 @@ a.button-github {
   .wide {
     display: block;
   }
-
-  div.button-bar_wide {
-    display: grid;
-    grid-template-areas:
-      'clear'
-      'export'
-      'summary'
-      'add';
-  }
-}
-
-@media (min-width: 600px) {
   div.button-bar_wide {
     grid-template-columns: auto auto auto auto;
-    grid-template-areas: 'clear export add summary';
   }
 }
