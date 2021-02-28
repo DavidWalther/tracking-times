@@ -53,6 +53,7 @@ export default class TimeTracking extends LightningElement {
   };
 
   selectedEntries = [];
+  entriesRuledOutByFilters = [];
 
   connectedCallback() {
     this.state.entries = [];
