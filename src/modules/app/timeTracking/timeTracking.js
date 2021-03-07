@@ -126,18 +126,16 @@ export default class TimeTracking extends LightningElement {
 
   // -- Filter --
   handleClickFilter() {
-    const filterValueInput = this.template.querySelector('.input-filter');
-
-    this.customConsoleLog(new Date(filterValueInput.value).getTime());
+    this.customConsoleLog({ label: 'click filter' });
   }
 
-  setFilterInputValueToNow() {
+  handleClickFilterNow() {
+    this.customConsoleLog({ label: 'click filter Now' });
     this.setFilterInputValue(new Date().getTime());
   }
 
   setFilterInputValue(value) {
     const filterValueInput = this.template.querySelector('.input-filter');
-
     const output = {
       value: value,
       valueToIso: new Date(value).toISOString(),
