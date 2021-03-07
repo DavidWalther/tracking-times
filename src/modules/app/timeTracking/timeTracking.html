@@ -137,6 +137,15 @@
         ></ui-button>
       </div>
     </div>
+    <div class="filter">
+      <input
+        type="datetime-local"
+        class="input-filter"
+        style="font-family: sans-serif;"
+        value=""
+      />
+      <input type="button" value="Filter" onclick={handleClickFilter} />
+    </div>
     <div class="container-list entries">
       <template for:each={state.entries} for:item="entry" for:index="index">
         <div key={entry.itemId}>
