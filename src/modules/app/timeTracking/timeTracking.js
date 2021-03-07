@@ -1,6 +1,7 @@
 import { LightningElement, track } from 'lwc';
 import { startDownload } from 'data/fileDownload';
 import { save, load } from 'data/localStorage';
+// eslint-disable-next-line no-unused-vars
 import { startAuthentication } from 'data/auth';
 
 const MILISECONDS_PER_MINUTE = 1000 * 60;
@@ -57,7 +58,8 @@ export default class TimeTracking extends LightningElement {
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
-    startAuthentication();
+    //startAuthentication();
+    //this.setFilterInputValueToNow();
   }
 
   renderedCallback() {
@@ -120,6 +122,31 @@ export default class TimeTracking extends LightningElement {
 
   handleClickSort() {
     this.sortEntries();
+  }
+
+  // -- Filter --
+  handleClickFilter() {
+    const filterValueInput = this.template.querySelector('.input-filter');
+
+    this.customConsoleLog(new Date(filterValueInput.value).getTime());
+  }
+
+  setFilterInputValueToNow() {
+    this.setFilterInputValue(new Date().getTime());
+  }
+
+  setFilterInputValue(value) {
+    const filterValueInput = this.template.querySelector('.input-filter');
+
+    const output = {
+      value: value,
+      valueToIso: new Date(value).toISOString(),
+      label: 'setFilterInputValue',
+      input: filterValueInput
+    };
+    this.customConsoleLog(output);
+    //this.customConsoleLog(new Date(filterValueInput));
+    filterValueInput.value = output.valueToIso.slice(0, 16);
   }
 
   //----------------------------
