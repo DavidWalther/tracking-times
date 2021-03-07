@@ -644,6 +644,15 @@ export default class TimeTracking extends LightningElement {
   getSummaryModal() {
     return this.template.querySelector('.modal-summary');
   }
+
+  //----------------------------
+  // Helpers
+  //----------------------------
+
+  customConsoleLog(output) {
+    // eslint-disable-next-line no-console
+    console.log(output);
+  }
 }
 
 //----------------------------
