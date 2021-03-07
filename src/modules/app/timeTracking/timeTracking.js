@@ -147,6 +147,29 @@ export default class TimeTracking extends LightningElement {
     //this.customConsoleLog(new Date(filterValueInput));
     filterValueInput.value = output.valueToIso.slice(0, 16);
   }
+  /*
+  isMatchGreater(entry) {
+    const oldEntries = this.entries;
+
+    oldEntries;
+  }
+*/
+  doFilter(filter) {
+    const result = {};
+    result.matches = [];
+    result.misses = [];
+
+    this.entries.forEach(entry => {
+      if (filter(entry)) {
+        result.matches.push(entry);
+      } else {
+        result.misses.push(entry);
+      }
+    });
+
+    this.state.entries = result.matches;
+    this.entriesRuledOutByFilters = result.misses;
+  }
 
   //----------------------------
   // Properties
@@ -171,7 +194,7 @@ export default class TimeTracking extends LightningElement {
     this.entries.sort((entry1, entry2) => {
       return entry2.start - entry1.start;
     });
-    this.saveData();
+    // this.saveData();
   }
 
   selectAllEntries() {
@@ -440,11 +463,15 @@ export default class TimeTracking extends LightningElement {
   }
 
   saveData() {
+    const allRecords = [];
+    allRecords.push(...this.state.entries);
+    allRecords.push(...this.entriesRuledOutByFilters);
+
     const data = {
       settings: {
         version: DATA_CURRENT_VERSION
       },
-      entries: this.state.entries
+      entries: allRecords
     };
 
     save(data);
