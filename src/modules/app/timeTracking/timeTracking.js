@@ -144,6 +144,29 @@ export default class TimeTracking extends LightningElement {
   // Actions
   //----------------------------
 
+  async doQuery(authParams) {
+    const access_token = authParams.access_token;
+    const instance_url = authParams.instance_url;
+    const query =
+      '/services/data/v51.0/query?q=SELECT+name+from+Account -H "Authorization: Bearer access_token" -H "X-PrettyPrint:1"';
+
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      // eslint-disable-next-line no-console
+      console.log('cb 1');
+    };
+    xmlhttp.open('GET', instance_url + query, false);
+
+    xmlhttp.setRequestHeader('Content-Type', 'application/json');
+    xmlhttp.setRequestHeader('Authorization', 'Bearer '+access_token);
+    xmlhttp.onreadystatechange = function() {
+      // eslint-disable-next-line no-console
+      console.log('cb 2');
+      // eslint-disable-next-line no-console
+      console.log(xmlhttp.responseText);
+    };
+  }
+
   async doAuthCallout() {
     const authHandler = new Credentials();
     authHandler.startAuthentication();
