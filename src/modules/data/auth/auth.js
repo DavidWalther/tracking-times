@@ -55,8 +55,7 @@ class Credentials {
   }
 
   startAuthentication() {
-    console.log('startAuthentication');
-    //window.location.href = this.getUri();
+    window.location.href = this.getUri();
   }
 }
 
