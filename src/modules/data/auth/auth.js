@@ -21,7 +21,8 @@ function startAuthentication() {
     '3MVG9SOw8KERNN08rTd9ffUEaR7NhbZLhkeHRF.EJrtEeFZOPFjeILb8DI4niE.ncsCi1OmLauBCA82axhOJI';
   const response_type = 'token';
   const redirect_uri = 'https://tracking-times-develop.herokuapp.com/';
-  const base_uri = 'https://timetrackers-dev-ed.lightning.force.com/';
+  const base_uri = 'https://login.force.com/';
+  //const base_uri = 'https://timetrackers-dev-ed.lightning.force.com/';
   const endpoint = 'services/oauth2/authorize';
 
   const theUrl =
