@@ -24,7 +24,7 @@ function startAuthentication() {
   const response_type = 'token';
   // const redirect_uri = 'https://tracking-times-develop.herokuapp.com/';
   const redirect_uri = 'https://tracking-times-test-auth.herokuapp.com/';
-  const base_uri = 'https://login.salesforce.com/';
+  const base_uri = 'https://enterprise-drive-7194-dev-ed.cs101.my.salesforce.com';
   //const base_uri = 'https://timetrackers-dev-ed.lightning.force.com/';
   const endpoint = 'services/oauth2/authorize';
 
