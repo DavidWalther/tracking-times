@@ -38,8 +38,8 @@ class Credentials {
   readAuthenticationResponse() {
     let protocol = window.location.protocol;
     let host = window.location.hostname;
-
     let subStringToRemove = protocol + '//' + host + '/#';
+
     let parameterString = window.location.href.replace(subStringToRemove, '');
 
     if (parameterString.startsWith('access_token')) {

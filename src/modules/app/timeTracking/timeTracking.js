@@ -1,11 +1,7 @@
 import { LightningElement, track } from 'lwc';
 import { startDownload } from 'data/fileDownload';
 import { save, load } from 'data/localStorage';
-import {
-  Credentials,
-  readAuthenticationResponse,
-  replaceLocation
-} from 'data/auth';
+import { Credentials, replaceLocation } from 'data/auth';
 
 const MILISECONDS_PER_MINUTE = 1000 * 60;
 const MILISECONDS_PER_FIFTEEN_MINUTE = MILISECONDS_PER_MINUTE * 15;
@@ -56,9 +52,11 @@ export default class TimeTracking extends LightningElement {
   authData;
 
   connectedCallback() {
+    const authHandler = new Credentials();
+    let authParams = authHandler.readAuthenticationResponse();
+
     this.state.entries = [];
     this.loadData();
-    let authParams = readAuthenticationResponse();
     if (authParams) {
       this.authData = authParams;
       this.saveData();
