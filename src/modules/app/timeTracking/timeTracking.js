@@ -2,7 +2,7 @@ import { LightningElement, track } from 'lwc';
 import { startDownload } from 'data/fileDownload';
 import { save, load } from 'data/localStorage';
 import {
-  startAuthentication,
+  Credentials,
   readAuthenticationResponse,
   replaceLocation
 } from 'data/auth';
@@ -64,24 +64,35 @@ export default class TimeTracking extends LightningElement {
       this.saveData();
       replaceLocation();
     }
-    this.doCallout();
   }
 
   async doCallout() {
-    let uri = this.authData.instance_url + '/services/data/v50.0';
-    let access_token = this.authData.access_token;
+    const authHandler = new Credentials();
 
-    const response = await fetch(uri, {
+    authHandler.startAuthentication();
+    /*let uri = authHandler.getUri();
+
+    const authResult = authHandler.readAuthenticationResponse();
+    console.log(authResult);
+
+//    let access_token = this.authData.access_token;
+    /*
+    if(authResult) {
+      const response = await fetch(uri, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: 'Bearer ' + access_token
-      }
-    });
-    const myJson = await response.json(); //extract JSON from the http response
+        Authorization: 'Bearer ' + authResult.access_token
+      }});
+    } else {
+      authHandler.startAuthentication();
+    }
+    */
+    //const myJson = await response.json(); //extract JSON from the http response
+
     // eslint-disable-next-line no-console
-    console.log(myJson);
+    //console.log(myJson);
     // do something with myJson
   }
 
@@ -143,7 +154,8 @@ export default class TimeTracking extends LightningElement {
   }
 
   handleClickAuth() {
-    startAuthentication();
+    //startAuthentication();
+    this.doCallout();
   }
 
   //----------------------------

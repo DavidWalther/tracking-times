@@ -16,10 +16,53 @@ const constresponseType = 'token';
  * 3.2 use window.location.replace() to replace url
  */
 
-function startAuthentication() {
-  /* const client_id =
+class Credentials {
+  constructor() {
+    this.base_uri = 'https://saas-ruby-7375-dev-ed.lightning.force.com/';
+    this.redirect_uri = 'https://tracking-times-test-auth.herokuapp.com/';
+    this.client_id =
+      '3MVG95AcBeaB55lXeOhkpjm2VQzqGpcyDBRVreuu1DeC49UtgGZN5UO5r1n5dRw4PBwR3qvlV.OkG6EiYexJ0';
+    this.response_type = 'token';
+    this.endpoint = 'services/oauth2/authorize';
+  }
+
+  getUri() {
+    let result = this.base_uri + this.endpoint;
+    result += '?response_type=' + this.response_type;
+    result += '&client_id=' + this.client_id;
+    result += '&redirect_uri=' + this.redirect_uri;
+    return result;
+  }
+
+  readAuthenticationResponse() {
+    let protocol = window.location.protocol;
+    let host = window.location.hostname;
+
+    let subStringToRemove = protocol + '//' + host + '/#';
+    let parameterString = window.location.href.replace(subStringToRemove, '');
+
+    if (parameterString.startsWith('access_token')) {
+      let params = {};
+      parameterString.split('&').forEach(parameter => {
+        let tempParam = parameter.split('=');
+        params[tempParam[0]] = decodeURIComponent(tempParam[1]);
+      });
+
+      return params;
+    }
+
+    return null;
+  }
+
+  startAuthentication() {
+    console.log('startAuthentication');
+    //window.location.href = this.getUri();
+  }
+}
+
+/* const client_id =
     '3MVG9SOw8KERNN08rTd9ffUEaR7NhbZLhkeHRF.EJrtEeFZOPFjeILb8DI4niE.ncsCi1OmLauBCA82axhOJI'; */
-  const client_id =
+/*const client_id =
     '3MVG95AcBeaB55lXeOhkpjm2VQzqGpcyDBRVreuu1DeC49UtgGZN5UO5r1n5dRw4PBwR3qvlV.OkG6EiYexJ0';
   const response_type = 'token';
   // const redirect_uri = 'https://tracking-times-develop.herokuapp.com/';
@@ -42,8 +85,7 @@ function startAuthentication() {
     'redirect_uri=' +
     redirect_uri;
 
-  window.location.href = theUrl;
-}
+  window.location.href = theUrl;*/
 
 function readAuthenticationResponse() {
   let protocol = window.location.protocol;
@@ -73,4 +115,4 @@ function replaceLocation() {
   window.location.replace(plainUrl);
 }
 
-export { startAuthentication, readAuthenticationResponse, replaceLocation };
+export { Credentials, readAuthenticationResponse, replaceLocation };
