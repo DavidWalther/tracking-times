@@ -17,10 +17,13 @@ const constresponseType = 'token';
  */
 
 function startAuthentication() {
+  /* const client_id =
+    '3MVG9SOw8KERNN08rTd9ffUEaR7NhbZLhkeHRF.EJrtEeFZOPFjeILb8DI4niE.ncsCi1OmLauBCA82axhOJI'; */
   const client_id =
-    '3MVG9SOw8KERNN08rTd9ffUEaR7NhbZLhkeHRF.EJrtEeFZOPFjeILb8DI4niE.ncsCi1OmLauBCA82axhOJI';
+    '3MVG95AcBeaB55lXeOhkpjm2VQzqGpcyDBRVreuu1DeC49UtgGZN5UO5r1n5dRw4PBwR3qvlV.OkG6EiYexJ0';
   const response_type = 'token';
-  const redirect_uri = 'https://tracking-times-develop.herokuapp.com/';
+  // const redirect_uri = 'https://tracking-times-develop.herokuapp.com/';
+  const redirect_uri = 'https://tracking-times-test-auth.herokuapp.com/';
   const base_uri = 'https://login.salesforce.com/';
   //const base_uri = 'https://timetrackers-dev-ed.lightning.force.com/';
   const endpoint = 'services/oauth2/authorize';
