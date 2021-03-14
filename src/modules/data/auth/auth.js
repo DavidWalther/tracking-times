@@ -58,61 +58,14 @@ class Credentials {
   startAuthentication() {
     window.location.href = this.getUri();
   }
-}
 
-/* const client_id =
-    '3MVG9SOw8KERNN08rTd9ffUEaR7NhbZLhkeHRF.EJrtEeFZOPFjeILb8DI4niE.ncsCi1OmLauBCA82axhOJI'; */
-/*const client_id =
-    '3MVG95AcBeaB55lXeOhkpjm2VQzqGpcyDBRVreuu1DeC49UtgGZN5UO5r1n5dRw4PBwR3qvlV.OkG6EiYexJ0';
-  const response_type = 'token';
-  // const redirect_uri = 'https://tracking-times-develop.herokuapp.com/';
-  const redirect_uri = 'https://tracking-times-test-auth.herokuapp.com/';
-  const base_uri =
-    'https://enterprise-drive-7194-dev-ed.cs101.my.salesforce.com';
-  //const base_uri = 'https://timetrackers-dev-ed.lightning.force.com/';
-  const endpoint = 'services/oauth2/authorize';
+  replaceLocation() {
+    let protocol = window.location.protocol;
+    let host = window.location.hostname;
+    let plainUrl = protocol + '//' + host;
 
-  const theUrl =
-    base_uri +
-    endpoint +
-    '?' +
-    'response_type=' +
-    response_type +
-    '&' +
-    'client_id=' +
-    client_id +
-    '&' +
-    'redirect_uri=' +
-    redirect_uri;
-
-  window.location.href = theUrl;*/
-
-function readAuthenticationResponse() {
-  let protocol = window.location.protocol;
-  let host = window.location.hostname;
-  let subStringToRemove = protocol + '//' + host + '/#';
-
-  let parameterString = window.location.href.replace(subStringToRemove, '');
-
-  if (parameterString.startsWith('access_token')) {
-    let params = {};
-    parameterString.split('&').forEach(parameter => {
-      let tempParam = parameter.split('=');
-      params[tempParam[0]] = decodeURIComponent(tempParam[1]);
-    });
-
-    return params;
+    window.location.replace(plainUrl);
   }
-
-  return null;
 }
 
-function replaceLocation() {
-  let protocol = window.location.protocol;
-  let host = window.location.hostname;
-  let plainUrl = protocol + '//' + host;
-
-  window.location.replace(plainUrl);
-}
-
-export { Credentials, readAuthenticationResponse, replaceLocation };
+export { Credentials };
