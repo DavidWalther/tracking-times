@@ -64,36 +64,6 @@ export default class TimeTracking extends LightningElement {
     }
   }
 
-  async doCallout() {
-    const authHandler = new Credentials();
-
-    authHandler.startAuthentication();
-    /*let uri = authHandler.getUri();
-
-    const authResult = authHandler.readAuthenticationResponse();
-    console.log(authResult);
-
-//    let access_token = this.authData.access_token;
-    /*
-    if(authResult) {
-      const response = await fetch(uri, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: 'Bearer ' + authResult.access_token
-      }});
-    } else {
-      authHandler.startAuthentication();
-    }
-    */
-    //const myJson = await response.json(); //extract JSON from the http response
-
-    // eslint-disable-next-line no-console
-    //console.log(myJson);
-    // do something with myJson
-  }
-
   renderedCallback() {
     this.entryBasedEnablingOfButtons();
   }
@@ -152,8 +122,7 @@ export default class TimeTracking extends LightningElement {
   }
 
   handleClickAuth() {
-    //startAuthentication();
-    this.doCallout();
+    this.doAuthCallout();
   }
 
   //----------------------------
@@ -174,6 +143,11 @@ export default class TimeTracking extends LightningElement {
   //----------------------------
   // Actions
   //----------------------------
+
+  async doAuthCallout() {
+    const authHandler = new Credentials();
+    authHandler.startAuthentication();
+  }
 
   createSummary() {
     const result = {
