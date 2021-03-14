@@ -16,7 +16,7 @@ const constresponseType = 'token';
  * 3.2 use window.location.replace() to replace url
  */
 
-export default class Credentials {
+class Credentials {
   constructor() {
     this.base_uri = 'https://test.salesforce.com/';
     //this.base_uri = 'https://saas-ruby-7375-dev-ed.lightning.force.com/';
@@ -67,3 +67,5 @@ export default class Credentials {
     window.location.replace(plainUrl);
   }
 }
+
+export { Credentials };
