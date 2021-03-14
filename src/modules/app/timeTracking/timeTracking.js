@@ -61,6 +61,7 @@ export default class TimeTracking extends LightningElement {
       this.authData = authParams;
       this.saveData();
       authHandler.replaceLocation();
+      this.doQuery();
     }
   }
 
@@ -158,7 +159,7 @@ export default class TimeTracking extends LightningElement {
     xmlhttp.open('GET', instance_url + query, false);
 
     xmlhttp.setRequestHeader('Content-Type', 'application/json');
-    xmlhttp.setRequestHeader('Authorization', 'Bearer '+access_token);
+    xmlhttp.setRequestHeader('Authorization', 'Bearer ' + access_token);
     xmlhttp.onreadystatechange = function() {
       // eslint-disable-next-line no-console
       console.log('cb 2');
