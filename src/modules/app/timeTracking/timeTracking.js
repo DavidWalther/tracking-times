@@ -141,9 +141,10 @@ export default class TimeTracking extends LightningElement {
     return false;
   }
 
-  onCreateAccount(event) {
-    const accountName = event.target.value;
-
+  onCreateAccount() {
+    const accountName = this.template.querySelector(
+      'input[name=InputAccountName]'
+    ).value;
     const salesforceInterface = this.template.querySelector(
       'data-salesforce-interface'
     );
