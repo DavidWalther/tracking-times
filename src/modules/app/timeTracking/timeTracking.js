@@ -141,6 +141,21 @@ export default class TimeTracking extends LightningElement {
     return false;
   }
 
+  onCreateAccount(event) {
+    const accountName = event.target.value;
+
+    const salesforceInterface = this.template.querySelector(
+      'salesforceInterface'
+    );
+    const output = 'sf-interface: ' + (salesforceInterface ? 'true' : 'false');
+
+    // eslint-disable-next-line no-console
+    console.log(output);
+    if (salesforceInterface) {
+      salesforceInterface.createRecord({ Name: accountName });
+    }
+  }
+
   //----------------------------
   // Actions
   //----------------------------
@@ -150,14 +165,6 @@ export default class TimeTracking extends LightningElement {
     const instance_url = authParams.instance_url;
     const query =
       '/services/data/v51.0/query?q=SELECT+name+from+Account -H "Authorization: Bearer access_token" -H "X-PrettyPrint:1"';
-
-    const salesforceInterface = this.template.querySelector(
-      'salesforceInterface'
-    );
-    const output = 'sf-interface: ' + (salesforceInterface ? 'true' : 'false');
-
-    // eslint-disable-next-line no-console
-    console.log(output);
 
     const xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
