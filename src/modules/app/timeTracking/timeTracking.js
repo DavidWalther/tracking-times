@@ -152,8 +152,10 @@ export default class TimeTracking extends LightningElement {
 
     // eslint-disable-next-line no-console
     console.log(output);
-    if (salesforceInterface) {
-      salesforceInterface.createRecord({ Name: accountName });
+    if (salesforceInterface && this.authData) {
+      salesforceInterface.instanceUrl = this.authData.instance_url;
+      salesforceInterface.accessToken = this.authData.access_token;
+      salesforceInterface.createRecord('Account', { Name: accountName });
     }
   }
 
