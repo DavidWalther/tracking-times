@@ -145,7 +145,7 @@ export default class TimeTracking extends LightningElement {
     const accountName = event.target.value;
 
     const salesforceInterface = this.template.querySelector(
-      'salesforceInterface'
+      'data-salesforce-interface'
     );
     const output = 'sf-interface: ' + (salesforceInterface ? 'true' : 'false');
 
