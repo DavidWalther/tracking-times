@@ -151,7 +151,15 @@ export default class TimeTracking extends LightningElement {
     const query =
       '/services/data/v51.0/query?q=SELECT+name+from+Account -H "Authorization: Bearer access_token" -H "X-PrettyPrint:1"';
 
-    var xmlhttp = new XMLHttpRequest();
+    const salesforceInterface = this.template.querySelector(
+      'salesforceInterface'
+    );
+    const output = 'sf-interface: ' + (salesforceInterface ? 'true' : 'false');
+
+    // eslint-disable-next-line no-console
+    console.log(output);
+
+    const xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       // eslint-disable-next-line no-console
       console.log('cb 1');
