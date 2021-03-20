@@ -36,6 +36,9 @@ export default class SalesforceInterface extends LightningElement {
     const theUrl = this.instanceUrl + createRecordEndpoint + objectType + '/';
 
     const xmlhttp = new XMLHttpRequest();
+    xmlhttp.addEventListener('load', evt => {
+      console.log('Salesforce response: ' + evt);
+    });
     xmlhttp.open('POST', theUrl);
     xmlhttp.setRequestHeader('Content-Type', 'application/json');
     xmlhttp.setRequestHeader('Authorization', 'Bearer ' + this.access_token);
