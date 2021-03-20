@@ -104,6 +104,12 @@
     </div>
     <template if:true={authData}>
       <div>
+        <div><input name="InputAccountName" /></div>
+        <div>
+          <input type="button" value="Create" onclick={onCreateAccount} />
+        </div>
+      </div>
+      <div>
         <table>
           <tr>
             <td>access_token</td>
