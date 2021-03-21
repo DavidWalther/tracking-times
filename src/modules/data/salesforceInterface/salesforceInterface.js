@@ -10,6 +10,11 @@ import { LightningElement, api } from 'lwc';
  *
  * SF - Connect REST API Developer Guide
  * https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/extend_code_cors.htm
+ *
+ * Things done in Scratch Org:
+ * - CORS-Settings
+ * - Remote-Site
+ * - Connected App
  */
 
 export default class SalesforceInterface extends LightningElement {
@@ -46,13 +51,20 @@ export default class SalesforceInterface extends LightningElement {
 
     const theUrl = this.instanceUrl + createRecordEndpoint + objectType + '/';
 
-    const xmlhttp = new XMLHttpRequest();
-    xmlhttp.addEventListener('load', evt => {
-      console.log('Salesforce response: ' + evt);
+    const xhr = new XMLHttpRequest();
+
+    xhr.withCredentials = true;
+    xhr.addEventListener('readystatechange', function() {
+      if (this.readyState === 4) {
+        console.log(this.responseText);
+      }
     });
-    xmlhttp.open('POST', theUrl);
-    xmlhttp.setRequestHeader('Content-Type', 'application/json');
-    xmlhttp.setRequestHeader('Authorization', 'Bearer ' + this.access_token);
-    xmlhttp.send(JSON.stringify(recordJsonObj));
+
+    xhr.open('POST', theUrl);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + this.access_token);
+    xhr.setRequestHeader('Cookie', 'BrowserId=OwvE3vZDEeq8gXnpO7ewCg');
+    const payload = JSON.stringify(recordJsonObj);
+    xhr.send(payload);
   }
 }
