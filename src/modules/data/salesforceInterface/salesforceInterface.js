@@ -52,8 +52,6 @@ export default class SalesforceInterface extends LightningElement {
     const theUrl = this.instanceUrl + createRecordEndpoint + objectType + '/';
 
     const xhr = new XMLHttpRequest();
-
-    xhr.withCredentials = true;
     xhr.addEventListener('readystatechange', function() {
       if (this.readyState === 4) {
         console.log(this.responseText);
@@ -63,7 +61,6 @@ export default class SalesforceInterface extends LightningElement {
     xhr.open('POST', theUrl);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.setRequestHeader('Authorization', 'Bearer ' + this.access_token);
-    xhr.setRequestHeader('Cookie', 'BrowserId=OwvE3vZDEeq8gXnpO7ewCg');
     const payload = JSON.stringify(recordJsonObj);
     xhr.send(payload);
   }
