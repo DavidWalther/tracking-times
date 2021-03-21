@@ -1,6 +1,17 @@
 /* eslint-disable no-console */
 import { LightningElement, api } from 'lwc';
 
+/**
+ * Help on CORS settings
+ *
+ * SF - Knowledge:
+ * Error 'XMLHttpRequest cannot load, No Access-Control-Allow-Origin':
+ * https://help.salesforce.com/articleView?id=000334858&type=1&mode=1
+ *
+ * SF - Connect REST API Developer Guide
+ * https://developer.salesforce.com/docs/atlas.en-us.chatterapi.meta/chatterapi/extend_code_cors.htm
+ */
+
 export default class SalesforceInterface extends LightningElement {
   //----------------------------
   // API
