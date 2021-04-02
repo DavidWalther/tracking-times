@@ -22,7 +22,7 @@ class Credentials {
     //this.base_uri = 'https://saas-ruby-7375-dev-ed.lightning.force.com/';
     this.redirect_uri = 'https://tracking-times-test-auth.herokuapp.com/';
     this.client_id =
-      '3MVG95AcBeaB55lXeOhkpjm2VQzqGpcyDBRVreuu1DeC49UtgGZN5UO5r1n5dRw4PBwR3qvlV.OkG6EiYexJ0';
+      '3MVG95AcBeaB55lUO7ZDRhqwkTFHgyYmRu9rPz.heSxnoZWDiMsc7GLdYysolYS_XBh15Bh3fhTYbIj6e3zo_';
     this.response_type = 'token';
     this.endpoint = 'services/oauth2/authorize';
   }
