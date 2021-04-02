@@ -21,9 +21,9 @@ class Credentials {
     this.base_uri = 'https://test.salesforce.com/';
     //this.base_uri = 'https://saas-ruby-7375-dev-ed.lightning.force.com/';
     //this.redirect_uri = 'https://tracking-times-test-auth.herokuapp.com/';
-    this.redirect_uri = 'http://localhost:3001/'
+    this.redirect_uri = 'http://localhost:3001/';
     this.client_id =
-      '3MVG95AcBeaB55lUO7ZDRhqwkTFHgyYmRu9rPz.heSxnoZWDiMsc7GLdYysolYS_XBh15Bh3fhTYbIj6e3zo_';
+      '3MVG95AcBeaB55lXeOhkpjm2VQzqGpcyDBRVreuu1DeC49UtgGZN5UO5r1n5dRw4PBwR3qvlV.OkG6EiYexJ0';
     this.response_type = 'token';
     this.endpoint = 'services/oauth2/authorize';
   }
@@ -38,35 +38,29 @@ class Credentials {
 
   readAuthenticationResponse() {
     let urlParts = window.location.href.split('#');
-    
-    if(urlParts.length > 1) {
 
-        let parameterString = urlParts[1];
-        
-        if (parameterString.startsWith('access_token')) {
-          let params = {};
-          parameterString.split('&').forEach(parameter => {
-            let tempParam = parameter.split('=');
-            params[tempParam[0]] = decodeURIComponent(tempParam[1]);
-          });
-          
-          return params;
-        }
-      
+    if (urlParts.length > 1) {
+      let parameterString = urlParts[1];
+
+      if (parameterString.startsWith('access_token')) {
+        let params = {};
+        parameterString.split('&').forEach(parameter => {
+          let tempParam = parameter.split('=');
+          params[tempParam[0]] = decodeURIComponent(tempParam[1]);
+        });
+
+        return params;
       }
-      return null;
     }
+    return null;
+  }
 
   startAuthentication() {
     window.location.href = this.getUri();
   }
 
   replaceLocation() {
-    let protocol = window.location.protocol;
-    let host = window.location.hostname;
-    let plainUrl = protocol + '//' + host;
-
-    window.location.replace(plainUrl);
+    window.location.replace(window.location.origin);
   }
 }
 
