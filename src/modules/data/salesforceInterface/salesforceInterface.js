@@ -35,9 +35,33 @@ export default class SalesforceInterface extends LightningElement {
     }
   }
 
+  @api
+  query(queryString) {
+    if (this.accessToken && this.instanceUrl) {
+      this.salesforceQuery(queryString);
+    }
+  }
   //----------------------------
   // internal
   //----------------------------
+
+  salesforceQuery(queryString) {
+    const salesforceApiVersion = 'v51.0';
+    const queryEndpoint = '/services/data/' + salesforceApiVersion + '/query/';
+    const theUrl = this.instanceUrl + queryEndpoint + '?q=' + queryString;
+
+    const xhr = new XMLHttpRequest();
+    xhr.addEventListener('readystatechange', function() {
+      if (this.readyState === 4) {
+        console.log(this.responseText);
+      }
+    });
+
+    xhr.open('GET', theUrl);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + this.access_token);
+    xhr.send();
+  }
 
   salesforceCreateRecord(objectType, recordJsonObj) {
     /*
