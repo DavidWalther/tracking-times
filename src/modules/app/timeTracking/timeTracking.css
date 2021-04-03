@@ -2,10 +2,13 @@ body {
   padding: 5px;
 }
 
-.flexbox-container {
-  display: flex;
+.flexbox-container-group {
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+.flexbox-container {
+  display: flex;
 }
 
 .flexbox-item {

@@ -137,8 +137,8 @@
         ></ui-button>
       </div>
     </div>
-    <div class="flexbox-container filter">
-      <div>
+    <div class="filter flexbox-container flexbox-container-group">
+      <div class="flexbox-container">
         <input
           type="date"
           class="flexbox-item input-filter-date-minimum"
@@ -146,16 +146,16 @@
           onchange={onChangeFilterDateStartMin}
           value={filterStartDateMin}
         />
-        <input
+        <ui-button
+          design="info"
           class="flexbox-item"
-          type="button"
           value="Now"
           data-timing="start"
           data-limit="min"
           onclick={handleClickFilterNow}
-        />
+        ></ui-button>
       </div>
-      <div>
+      <div class="flexbox-container">
         <input
           type="date"
           class="flexbox-item input-filter-date-maximum"
@@ -163,28 +163,28 @@
           onchange={onChangeFilterDateStartMax}
           value={filterStartDateMax}
         />
-        <input
+        <ui-button
+          design="info"
           class="flexbox-item"
-          type="button"
           value="Now"
           data-timing="start"
           data-limit="max"
           onclick={handleClickFilterNow}
-        />
+        ></ui-button>
       </div>
-      <div>
-        <input
+      <div class="flexbox-container">
+        <ui-button
+          design="info"
           class="flexbox-item"
-          type="button"
           value="Filter"
           onclick={handleClickFilter}
-        />
-        <input
+        ></ui-button>
+        <ui-button
+          design="info"
           class="flexbox-item"
-          type="button"
           value="UnFilter"
           onclick={handleClickUnfilter}
-        />
+        ></ui-button>
       </div>
     </div>
     <div class="container-list entries">
