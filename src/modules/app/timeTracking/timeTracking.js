@@ -56,17 +56,7 @@ export default class TimeTracking extends LightningElement {
   // stores the Ids of selected items
   selectedEntries = [];
   entriesRuledOutByFilters = [];
-
-  get filterDate() {
-    return new Date(this.filterDateValue).toISOString().split('T')[0];
-  }
-  onChangeFilterDate(event) {
-    //console.log(event.target.value);
-    if (event.target.value) {
-      this.filterDateValue = new Date(event.target.value).getTime();
-    }
-  }
-  filterDateValue = new Date().getTime();
+  filterDateStartMinValue = new Date().getTime();
 
   connectedCallback() {
     this.state.entries = [];
@@ -136,6 +126,13 @@ export default class TimeTracking extends LightningElement {
   }
 
   // -- Filter --
+
+  onChangeFilterDateStartMin(event) {
+    if (event.target.value) {
+      this.filterDateStartMinValue = new Date(event.target.value).getTime();
+    }
+  }
+
   handleClickFilter() {
     this.applyFilters();
   }
@@ -177,6 +174,12 @@ export default class TimeTracking extends LightningElement {
     if (this.entries === null) return true;
     if (this.entries.length === 0) return true;
     return false;
+  }
+
+  // -- Filter --
+
+  get filterStartDateMin() {
+    return new Date(this.filterDateStartMinValue).toISOString().split('T')[0];
   }
 
   //----------------------------
