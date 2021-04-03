@@ -2,6 +2,28 @@ body {
   padding: 5px;
 }
 
+.border-thin_bottom {
+  border-color: lightgrey;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+}
+
+.flexbox-container-group {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.flexbox-container {
+  display: flex;
+}
+
+.flexbox-item {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 div.content {
   max-width: 1000px;
   margin: auto;

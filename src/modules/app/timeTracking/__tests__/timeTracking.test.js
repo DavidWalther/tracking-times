@@ -3,6 +3,14 @@ import { createElement } from 'lwc';
 import { save, load, clear } from 'data/localStorage';
 import TimeTracking from 'app/timeTracking';
 
+const MILISECONDS_PER_MINUTE = 1000 * 60;
+const MILISECONDS_PER_HOUR = MILISECONDS_PER_MINUTE * 60;
+const MILISECONDS_PER_DAY = MILISECONDS_PER_HOUR * 24;
+
+const FIRST_ENTRY_START = 0;
+const SECOND_ENTRY_START = MILISECONDS_PER_DAY * 3;
+const THIRD_ENTRY_START = MILISECONDS_PER_DAY * 8;
+
 describe('check loading based on version', () => {
   afterEach(() => {
     // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -726,6 +734,77 @@ describe('feature: mass actions', () => {
   });
 });
 
+describe('feature: filters', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('unmatching itmes are filtered and unfiltered', () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+    const firstEntry = element.shadowRoot.querySelectorAll('app-entry')[0];
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+
+    const latestStart = Math.max(
+      firstEntry.start,
+      secondEntry.start,
+      thirdEntry.start
+    );
+
+    const minimumDateInput = element.shadowRoot.querySelector(
+      '.input-filter-date-minimum'
+    );
+
+    /**
+     * When
+     * - The filter is set to the latest entriy's start date
+     * - the filter button is clicked
+     */
+
+    minimumDateInput.value = new Date(THIRD_ENTRY_START - MILISECONDS_PER_DAY)
+      .toISOString()
+      .split('T')[0];
+    const filterButton = element.shadowRoot.querySelector('.button-filter');
+    filterButton.dispatchEvent(new CustomEvent('click'));
+
+    return Promise.resolve()
+      .then(() => {
+        /**
+         * Then
+         * only the third entry stays visible
+         */
+        const visibleEntries = element.shadowRoot.querySelectorAll('app-entry');
+        expect(visibleEntries.length).toBe(1);
+
+        expect(visibleEntries[0].start).toBe(THIRD_ENTRY_START);
+
+        /**
+         * When
+         * - unfliter button is clicked
+         */
+        const unFilterButton = element.shadowRoot.querySelector(
+          '.button-unfilter'
+        );
+        unFilterButton.dispatchEvent(new CustomEvent('click'));
+      })
+      .then(() => {
+        /**
+         * Then
+         * - all entries are visible again
+         */
+        const visibleEntries = element.shadowRoot.querySelectorAll('app-entry');
+        expect(visibleEntries.length).toBe(3);
+      });
+  });
+});
+
 function clickButtonSummary(shadowRoot) {
   const buttonSummary = shadowRoot.querySelector('.button-summary');
   if (!buttonSummary || buttonSummary.disabled) {
@@ -799,22 +878,22 @@ function setVersion4DummyData() {
         itemId: 0,
         sortnumber: 0,
         comment: 'entry1',
-        start: 0,
-        end: 1000
+        start: FIRST_ENTRY_START,
+        end: FIRST_ENTRY_START + 1000
       },
       {
         itemId: 1,
         sortnumber: 1,
         comment: 'entry2',
-        start: 50,
-        end: 1800000
+        start: SECOND_ENTRY_START,
+        end: SECOND_ENTRY_START + 1800000
       },
       {
         itemId: 2,
         sortnumber: 2,
         comment: 'entry3',
-        start: 2000,
-        end: 2500
+        start: THIRD_ENTRY_START,
+        end: THIRD_ENTRY_START + 2500
       }
     ]
   };
