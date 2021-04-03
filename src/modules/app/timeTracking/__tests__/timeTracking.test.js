@@ -742,7 +742,7 @@ describe('feature: filters', () => {
     }
   });
 
-  test('unmatching itmes are hidden', () => {
+  test('unmatching itmes are filtered and unfiltered', () => {
     /**
      * Given
      * - Data in current data version (three entries)
@@ -776,16 +776,34 @@ describe('feature: filters', () => {
     );
     filterButton.dispatchEvent(new CustomEvent('click'));
 
-    return Promise.resolve().then(() => {
-      /**
-       * Then
-       * only the third entry stays visible
-       */
-      const visibleEntries = element.shadowRoot.querySelectorAll('app-entry');
-      expect(visibleEntries.length).toBe(1);
+    return Promise.resolve()
+      .then(() => {
+        /**
+         * Then
+         * only the third entry stays visible
+         */
+        const visibleEntries = element.shadowRoot.querySelectorAll('app-entry');
+        expect(visibleEntries.length).toBe(1);
 
-      expect(visibleEntries[0].start).toBe(THIRD_ENTRY_START);
-    });
+        expect(visibleEntries[0].start).toBe(THIRD_ENTRY_START);
+
+        /**
+         * When
+         * - unfliter button is clicked
+         */
+        const unFilterButton = element.shadowRoot.querySelector(
+          'input[type=button][value=UnFilter]'
+        );
+        unFilterButton.dispatchEvent(new CustomEvent('click'));
+      })
+      .then(() => {
+        /**
+         * Then
+         * - all entries are visible again
+         */
+        const visibleEntries = element.shadowRoot.querySelectorAll('app-entry');
+        expect(visibleEntries.length).toBe(3);
+      });
   });
 });
 
