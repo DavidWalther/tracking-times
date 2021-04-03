@@ -150,7 +150,9 @@
           class="flexbox-item"
           type="button"
           value="Now"
-          onclick={handleClickFilterNowStartMin}
+          data-timing="start"
+          data-limit="min"
+          onclick={handleClickFilterNow}
         />
       </div>
       <div>
@@ -165,7 +167,9 @@
           class="flexbox-item"
           type="button"
           value="Now"
-          onclick={handleClickFilterNowStartMax}
+          data-timing="start"
+          data-limit="max"
+          onclick={handleClickFilterNow}
         />
       </div>
       <div>

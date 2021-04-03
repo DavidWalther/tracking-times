@@ -144,28 +144,37 @@ export default class TimeTracking extends LightningElement {
     this.applyFilters();
   }
 
-  handleClickFilterNow() {
-    this.customConsoleLog({ label: 'click filter Now' });
-    this.setFilterInputValue(new Date().getTime());
+  handleClickFilterNow(event) {
+    // eslint-disable-next-line no-console
+    console.log({
+      label: 'click filter Now',
+      dataSet: { ...event.target.dataset }
+    });
+
+    const eventKey =
+      event.target.dataset.timing + '-' + event.target.dataset.limit;
+
+    let input;
+
+    switch (eventKey) {
+      case 'start-min': {
+        input = this.template.querySelector('.input-filter-date-minimum');
+        break;
+      }
+      case 'start-max': {
+        input = this.template.querySelector('.input-filter-date-maximum');
+        break;
+      }
+      default: {
+        input = null;
+      }
+    }
+
+    input.value = new Date().toISOString().split('T')[0];
   }
 
   handleClickUnfilter() {
     this.unapplyFilters();
-  }
-
-  setFilterInputValue(value) {
-    const filterValueInput = this.template.querySelector(
-      '.input-filter-date-minimum'
-    );
-    const output = {
-      value: value,
-      valueToIso: new Date(value).toISOString(),
-      label: 'setFilterInputValue',
-      input: filterValueInput
-    };
-    this.customConsoleLog(output);
-    //this.customConsoleLog(new Date(filterValueInput));
-    filterValueInput.value = output.valueToIso.split('T')[0];
   }
 
   //----------------------------
