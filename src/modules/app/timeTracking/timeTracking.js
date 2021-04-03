@@ -161,29 +161,6 @@ export default class TimeTracking extends LightningElement {
     //this.customConsoleLog(new Date(filterValueInput));
     filterValueInput.value = output.valueToIso.slice(0, 16);
   }
-  /*
-  isMatchGreater(entry) {
-    const oldEntries = this.entries;
-
-    oldEntries;
-  }
-*/
-  doFilter(filter) {
-    const result = {};
-    result.matches = [];
-    result.misses = [];
-
-    this.entries.forEach(entry => {
-      if (filter(entry)) {
-        result.matches.push(entry);
-      } else {
-        result.misses.push(entry);
-      }
-    });
-
-    this.state.entries = result.matches;
-    this.entriesRuledOutByFilters = result.misses;
-  }
 
   //----------------------------
   // Properties
@@ -233,18 +210,20 @@ export default class TimeTracking extends LightningElement {
   }
 
   doesMatchFilter(entry) {
-    return entry.start <= 1617454875656;
+    const minDateTs = new Date(this.template.querySelector('.input-filter-date-minimum').value).getTime();
+
+    let match = true;
+    match = match && this.filterStartAfter(entry, minDateTs);
+
+    return match;
+  }
+
+  filterStartAfter(entry, timestamp) {
+    return entry.start > timestamp;
   }
 
   // eslint-disable-next-line no-unused-vars
-  filterStartAfter(entry, date) {}
-
-  // eslint-disable-next-line no-unused-vars
-  filterStartBefore(entry, date) {}
-
-  getFilterDate() {
-    return this.filterDateValue;
-  }
+  filterStartBefore(entry, timestamp) {}
 
   // -- Sort --
 
