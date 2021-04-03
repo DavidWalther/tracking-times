@@ -771,9 +771,7 @@ describe('feature: filters', () => {
     minimumDateInput.value = new Date(THIRD_ENTRY_START - MILISECONDS_PER_DAY)
       .toISOString()
       .split('T')[0];
-    const filterButton = element.shadowRoot.querySelector(
-      'input[type=button][value=Filter]'
-    );
+    const filterButton = element.shadowRoot.querySelector('.button-filter');
     filterButton.dispatchEvent(new CustomEvent('click'));
 
     return Promise.resolve()
@@ -792,7 +790,7 @@ describe('feature: filters', () => {
          * - unfliter button is clicked
          */
         const unFilterButton = element.shadowRoot.querySelector(
-          'input[type=button][value=UnFilter]'
+          '.button-unfilter'
         );
         unFilterButton.dispatchEvent(new CustomEvent('click'));
       })

@@ -65,6 +65,7 @@ export default class TimeTracking extends LightningElement {
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
+    this.initStartFilters();
   }
 
   renderedCallback() {
@@ -261,6 +262,17 @@ export default class TimeTracking extends LightningElement {
   // eslint-disable-next-line no-unused-vars
   filterStartBefore(entry, timestamp) {
     return entry.start <= timestamp + MILISECONDS_PER_DAY;
+  }
+
+  initStartFilters() {
+    let earliestStartValue = new Date().getTime();
+    let latestStartValue = new Date().getTime();
+    this.entries.forEach(entry => {
+      earliestStartValue = Math.min(entry.start, earliestStartValue);
+      latestStartValue = Math.max(entry.start, latestStartValue);
+    });
+    this.filterDateStartMinValue = earliestStartValue;
+    this.filterDateStartMaxValue = latestStartValue;
   }
 
   // -- Sort --
