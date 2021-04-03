@@ -56,6 +56,19 @@ export default class TimeTracking extends LightningElement {
   selectedEntries = [];
   entriesRuledOutByFilters = [];
 
+  get filterDate() {
+    return new Date(this.filterDateValue).toISOString().split('T')[0]
+  }
+  onChangeFilterDate(event) {
+    //console.log(event.target.value);
+    if(event.target.value) {
+      this.filterDateValue = new Date(event.target.value).getTime();
+    }
+    
+  }
+  filterDateValue = new Date().getTime();
+
+
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
