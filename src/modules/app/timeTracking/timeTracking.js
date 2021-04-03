@@ -203,6 +203,27 @@ export default class TimeTracking extends LightningElement {
   // Actions
   //----------------------------
 
+  // -- Filter --
+  applyFilters() {
+    
+  }
+
+  unapplyFilfters() {
+
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  filterStartAfter(entry, date) {
+
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  filterStartBefore(entry, date) {
+    
+  }
+
+  // -- Sort --
+
   sortEntries() {
     this.entries.sort((entry1, entry2) => {
       return entry2.start - entry1.start;
