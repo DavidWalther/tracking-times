@@ -220,12 +220,17 @@ export default class TimeTracking extends LightningElement {
       }
     });
 
-    //this.state.entries = allMatchingEntries;
-    //this.entriesRuledOutByFilters = allNotMatchingEntries;
+    this.state.entries = allMatchingEntries;
+    this.entriesRuledOutByFilters = allNotMatchingEntries;
   }
 
-  unapplyFilfters() {
+  unapplyFilters() {
+    let allEntries = [];
+    allEntries = allEntries.concat(this.state.entries);
+    allEntries= allEntries.concat(this.entriesRuledOutByFilters);
+    this.state.entries = allEntries;
 
+    this.sortEntries();
   }
 
   doesMatchFilter(entry) {
