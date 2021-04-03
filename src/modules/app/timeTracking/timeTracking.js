@@ -53,27 +53,24 @@ export default class TimeTracking extends LightningElement {
     }
   };
 
+  // stores the Ids of selected items
   selectedEntries = [];
   entriesRuledOutByFilters = [];
 
   get filterDate() {
-    return new Date(this.filterDateValue).toISOString().split('T')[0]
+    return new Date(this.filterDateValue).toISOString().split('T')[0];
   }
   onChangeFilterDate(event) {
     //console.log(event.target.value);
-    if(event.target.value) {
+    if (event.target.value) {
       this.filterDateValue = new Date(event.target.value).getTime();
     }
-    
   }
   filterDateValue = new Date().getTime();
-
 
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
-    //startAuthentication();
-    //this.setFilterInputValueToNow();
   }
 
   renderedCallback() {
@@ -148,6 +145,10 @@ export default class TimeTracking extends LightningElement {
     this.setFilterInputValue(new Date().getTime());
   }
 
+  handleClickUnfilter() {
+    this.unapplyFilters();
+  }
+
   setFilterInputValue(value) {
     const filterValueInput = this.template.querySelector('.input-filter');
     const output = {
@@ -205,15 +206,13 @@ export default class TimeTracking extends LightningElement {
 
   // -- Filter --
   applyFilters() {
-    //const allEntries = [...this.entries];
     const allMatchingEntries = [];
     const allNotMatchingEntries = [];
 
     this.entries.forEach(entry => {
-
       const matchFilter = this.doesMatchFilter(entry);
 
-      if(matchFilter) {
+      if (matchFilter) {
         allMatchingEntries.push(entry);
       } else {
         allNotMatchingEntries.push(entry);
@@ -227,7 +226,7 @@ export default class TimeTracking extends LightningElement {
   unapplyFilters() {
     let allEntries = [];
     allEntries = allEntries.concat(this.state.entries);
-    allEntries= allEntries.concat(this.entriesRuledOutByFilters);
+    allEntries = allEntries.concat(this.entriesRuledOutByFilters);
     this.state.entries = allEntries;
 
     this.sortEntries();
@@ -238,13 +237,13 @@ export default class TimeTracking extends LightningElement {
   }
 
   // eslint-disable-next-line no-unused-vars
-  filterStartAfter(entry, date) {
-
-  }
+  filterStartAfter(entry, date) {}
 
   // eslint-disable-next-line no-unused-vars
-  filterStartBefore(entry, date) {
-    
+  filterStartBefore(entry, date) {}
+
+  getFilterDate() {
+    return this.filterDateValue;
   }
 
   // -- Sort --
