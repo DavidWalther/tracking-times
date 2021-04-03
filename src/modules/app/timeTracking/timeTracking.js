@@ -231,18 +231,25 @@ export default class TimeTracking extends LightningElement {
       this.template.querySelector('.input-filter-date-minimum').value
     ).getTime();
 
+    const maxDateTs = new Date(
+      this.template.querySelector('.input-filter-date-maximum').value
+    ).getTime();
+
     let match = true;
     match = match && this.filterStartAfter(entry, minDateTs);
+    match = match && this.filterStartBefore(entry, maxDateTs);
 
     return match;
   }
 
   filterStartAfter(entry, timestamp) {
-    return entry.start > timestamp;
+    return entry.start >= timestamp;
   }
 
   // eslint-disable-next-line no-unused-vars
-  filterStartBefore(entry, timestamp) {}
+  filterStartBefore(entry, timestamp) {
+    return entry.start <= timestamp + MILISECONDS_PER_DAY;
+  }
 
   // -- Sort --
 
