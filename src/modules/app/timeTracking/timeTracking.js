@@ -235,6 +235,7 @@ export default class TimeTracking extends LightningElement {
     allEntries = allEntries.concat(this.state.entries);
     allEntries = allEntries.concat(this.entriesRuledOutByFilters);
     this.state.entries = allEntries;
+    this.entriesRuledOutByFilters = [];
 
     this.sortEntries();
   }
