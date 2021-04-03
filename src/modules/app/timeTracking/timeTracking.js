@@ -183,6 +183,7 @@ export default class TimeTracking extends LightningElement {
 
   // -- Filter --
   applyFilters() {
+    this.unapplyFilters();
     const allMatchingEntries = [];
     const allNotMatchingEntries = [];
 
@@ -210,7 +211,9 @@ export default class TimeTracking extends LightningElement {
   }
 
   doesMatchFilter(entry) {
-    const minDateTs = new Date(this.template.querySelector('.input-filter-date-minimum').value).getTime();
+    const minDateTs = new Date(
+      this.template.querySelector('.input-filter-date-minimum').value
+    ).getTime();
 
     let match = true;
     match = match && this.filterStartAfter(entry, minDateTs);
