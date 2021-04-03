@@ -155,6 +155,21 @@
       </div>
       <div>
         <input
+          type="date"
+          class="flexbox-item input-filter-date-maximum"
+          style="font-family: sans-serif;"
+          onchange={onChangeFilterDateStartMax}
+          value={filterStartDateMax}
+        />
+        <input
+          class="flexbox-item"
+          type="button"
+          value="Now"
+          onclick={handleClickFilterNowStartMax}
+        />
+      </div>
+      <div>
+        <input
           class="flexbox-item"
           type="button"
           value="Filter"

@@ -57,6 +57,7 @@ export default class TimeTracking extends LightningElement {
   selectedEntries = [];
   entriesRuledOutByFilters = [];
   filterDateStartMinValue = new Date().getTime();
+  filterDateStartMaxValue = new Date().getTime();
 
   connectedCallback() {
     this.state.entries = [];
@@ -133,6 +134,12 @@ export default class TimeTracking extends LightningElement {
     }
   }
 
+  onChangeFilterDateStartMax(event) {
+    if (event.target.value) {
+      this.filterDateStartMaxValue = new Date(event.target.value).getTime();
+    }
+  }
+
   handleClickFilter() {
     this.applyFilters();
   }
@@ -180,6 +187,10 @@ export default class TimeTracking extends LightningElement {
 
   get filterStartDateMin() {
     return new Date(this.filterDateStartMinValue).toISOString().split('T')[0];
+  }
+
+  get filterStartDateMax() {
+    return new Date(this.filterDateStartMaxValue).toISOString().split('T')[0];
   }
 
   //----------------------------
