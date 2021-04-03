@@ -150,7 +150,7 @@ export default class TimeTracking extends LightningElement {
   }
 
   setFilterInputValue(value) {
-    const filterValueInput = this.template.querySelector('.input-filter');
+    const filterValueInput = this.template.querySelector('.input-filter-date-minimum');
     const output = {
       value: value,
       valueToIso: new Date(value).toISOString(),
@@ -159,7 +159,7 @@ export default class TimeTracking extends LightningElement {
     };
     this.customConsoleLog(output);
     //this.customConsoleLog(new Date(filterValueInput));
-    filterValueInput.value = output.valueToIso.slice(0, 16);
+    filterValueInput.value = output.valueToIso.split('T')[0];
   }
 
   //----------------------------
