@@ -132,19 +132,21 @@ export default class TimeTracking extends LightningElement {
 
   // -- Filter --
 
-  onChangeFilterDateStartMin(event) {
+  handleChangeFilterDateStartMin(event) {
     if (event.target.value) {
       this.filterDateStartMinValue = new Date(event.target.value).getTime();
     }
   }
 
-  onChangeFilterDateStartMax(event) {
+  handleChangeFilterDateStartMax(event) {
     if (event.target.value) {
       this.filterDateStartMaxValue = new Date(event.target.value).getTime();
     }
   }
 
   handleClickFilter() {
+    this.deselectAllEntries();
+    this.unapplyFilters();
     this.applyFilters();
   }
 
@@ -178,6 +180,7 @@ export default class TimeTracking extends LightningElement {
   }
 
   handleClickUnfilter() {
+    this.deselectAllEntries();
     this.unapplyFilters();
   }
 
@@ -212,7 +215,6 @@ export default class TimeTracking extends LightningElement {
 
   // -- Filter --
   applyFilters() {
-    this.unapplyFilters();
     const allMatchingEntries = [];
     const allNotMatchingEntries = [];
 
