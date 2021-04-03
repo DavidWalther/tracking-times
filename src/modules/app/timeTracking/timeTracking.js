@@ -1,6 +1,7 @@
 import { LightningElement, track } from 'lwc';
 import { startDownload } from 'data/fileDownload';
 import { save, load } from 'data/localStorage';
+// eslint-disable-next-line no-unused-vars
 import { startAuthentication } from 'data/auth';
 
 const MILISECONDS_PER_MINUTE = 1000 * 60;
@@ -34,8 +35,11 @@ export default class TimeTracking extends LightningElement {
     labelDeleteSelected: 'Delete Selected',
     labelDelete: 'Delete',
     labelDeselectAll: 'Deselect All',
+    labelFilter: 'Filter',
+    labelNow: 'Now',
     labelSelectAll: 'Select All',
     labelSort: 'Sort',
+    labelUnfilter: 'Unfilter',
     sidemenu: {
       icon: '\u2630'
     },
@@ -52,12 +56,16 @@ export default class TimeTracking extends LightningElement {
     }
   };
 
+  // stores the Ids of selected items
   selectedEntries = [];
+  entriesRuledOutByFilters = [];
+  filterDateStartMinValue = new Date().getTime();
+  filterDateStartMaxValue = new Date().getTime();
 
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
-    startAuthentication();
+    this.initStartFilters();
   }
 
   renderedCallback() {
@@ -122,6 +130,60 @@ export default class TimeTracking extends LightningElement {
     this.sortEntries();
   }
 
+  // -- Filter --
+
+  handleChangeFilterDateStartMin(event) {
+    if (event.target.value) {
+      this.filterDateStartMinValue = new Date(event.target.value).getTime();
+    }
+  }
+
+  handleChangeFilterDateStartMax(event) {
+    if (event.target.value) {
+      this.filterDateStartMaxValue = new Date(event.target.value).getTime();
+    }
+  }
+
+  handleClickFilter() {
+    this.deselectAllEntries();
+    this.unapplyFilters();
+    this.applyFilters();
+  }
+
+  handleClickFilterNow(event) {
+    // eslint-disable-next-line no-console
+    console.log({
+      label: 'click filter Now',
+      dataSet: { ...event.target.dataset }
+    });
+
+    const eventKey =
+      event.target.dataset.timing + '-' + event.target.dataset.limit;
+
+    let input;
+
+    switch (eventKey) {
+      case 'start-min': {
+        input = this.template.querySelector('.input-filter-date-minimum');
+        break;
+      }
+      case 'start-max': {
+        input = this.template.querySelector('.input-filter-date-maximum');
+        break;
+      }
+      default: {
+        input = null;
+      }
+    }
+
+    input.value = new Date().toISOString().split('T')[0];
+  }
+
+  handleClickUnfilter() {
+    this.deselectAllEntries();
+    this.unapplyFilters();
+  }
+
   //----------------------------
   // Properties
   //----------------------------
@@ -137,15 +199,92 @@ export default class TimeTracking extends LightningElement {
     return false;
   }
 
+  // -- Filter --
+
+  get filterStartDateMin() {
+    return new Date(this.filterDateStartMinValue).toISOString().split('T')[0];
+  }
+
+  get filterStartDateMax() {
+    return new Date(this.filterDateStartMaxValue).toISOString().split('T')[0];
+  }
+
   //----------------------------
   // Actions
   //----------------------------
+
+  // -- Filter --
+  applyFilters() {
+    const allMatchingEntries = [];
+    const allNotMatchingEntries = [];
+
+    this.entries.forEach(entry => {
+      const matchFilter = this.doesMatchFilter(entry);
+
+      if (matchFilter) {
+        allMatchingEntries.push(entry);
+      } else {
+        allNotMatchingEntries.push(entry);
+      }
+    });
+
+    this.state.entries = allMatchingEntries;
+    this.entriesRuledOutByFilters = allNotMatchingEntries;
+  }
+
+  unapplyFilters() {
+    let allEntries = [];
+    allEntries = allEntries.concat(this.state.entries);
+    allEntries = allEntries.concat(this.entriesRuledOutByFilters);
+    this.state.entries = allEntries;
+    this.entriesRuledOutByFilters = [];
+
+    this.sortEntries();
+  }
+
+  doesMatchFilter(entry) {
+    const minDateTs = new Date(
+      this.template.querySelector('.input-filter-date-minimum').value
+    ).getTime();
+
+    const maxDateTs = new Date(
+      this.template.querySelector('.input-filter-date-maximum').value
+    ).getTime();
+
+    let match = true;
+    match = match && this.filterStartAfter(entry, minDateTs);
+    match = match && this.filterStartBefore(entry, maxDateTs);
+
+    return match;
+  }
+
+  filterStartAfter(entry, timestamp) {
+    return entry.start >= timestamp;
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  filterStartBefore(entry, timestamp) {
+    return entry.start <= timestamp + MILISECONDS_PER_DAY;
+  }
+
+  initStartFilters() {
+    let earliestStartValue = new Date().getTime();
+    let latestStartValue = new Date().getTime();
+    this.entries.forEach(entry => {
+      earliestStartValue = Math.min(entry.start, earliestStartValue);
+      latestStartValue = Math.max(entry.start, latestStartValue);
+    });
+    this.filterDateStartMinValue = earliestStartValue;
+    this.filterDateStartMaxValue = latestStartValue;
+  }
+
+  // -- Sort --
 
   sortEntries() {
     this.entries.sort((entry1, entry2) => {
       return entry2.start - entry1.start;
     });
-    this.saveData();
+    // this.saveData();
   }
 
   selectAllEntries() {
@@ -414,11 +553,15 @@ export default class TimeTracking extends LightningElement {
   }
 
   saveData() {
+    const allRecords = [];
+    allRecords.push(...this.state.entries);
+    allRecords.push(...this.entriesRuledOutByFilters);
+
     const data = {
       settings: {
         version: DATA_CURRENT_VERSION
       },
-      entries: this.state.entries
+      entries: allRecords
     };
 
     save(data);
@@ -643,6 +786,15 @@ export default class TimeTracking extends LightningElement {
 
   getSummaryModal() {
     return this.template.querySelector('.modal-summary');
+  }
+
+  //----------------------------
+  // Helpers
+  //----------------------------
+
+  customConsoleLog(output) {
+    // eslint-disable-next-line no-console
+    console.log(output);
   }
 }
 

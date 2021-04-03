@@ -8,7 +8,7 @@
         >See the code on Github</a
       >
     </div>
-    <div class="button-bar_mobile">
+    <div class="button-bar_mobile border-thin_bottom">
       <ui-sidemenu>
         <div class="container-github">
           <a
@@ -80,7 +80,7 @@
         </div>
       </div>
     </div>
-    <div class="button-bar_wide">
+    <div class="button-bar_wide border-thin_bottom">
       <div class="button container-export">
         <ui-button
           value={label.button.download.value}
@@ -134,6 +134,57 @@
           design="info"
           value={label.labelSort}
           onclick={handleClickSort}
+        ></ui-button>
+      </div>
+    </div>
+    {label.labelFilter}
+    <div class="filter flexbox-container flexbox-container-group">
+      <div class="flexbox-container">
+        <input
+          type="date"
+          class="flexbox-item input-filter-date-minimum"
+          style="font-family: sans-serif;"
+          onchange={handleChangeFilterDateStartMin}
+          value={filterStartDateMin}
+        />
+        <ui-button
+          design="info"
+          class="flexbox-item"
+          value={label.labelNow}
+          data-timing="start"
+          data-limit="min"
+          onclick={handleClickFilterNow}
+        ></ui-button>
+      </div>
+      <div class="flexbox-container">
+        <input
+          type="date"
+          class="flexbox-item input-filter-date-maximum"
+          style="font-family: sans-serif;"
+          onchange={handleChangeFilterDateStartMax}
+          value={filterStartDateMax}
+        />
+        <ui-button
+          design="info"
+          class="flexbox-item"
+          value={label.labelNow}
+          data-timing="start"
+          data-limit="max"
+          onclick={handleClickFilterNow}
+        ></ui-button>
+      </div>
+      <div class="flexbox-container">
+        <ui-button
+          design="info"
+          class="flexbox-item button-filter"
+          value={label.labelFilter}
+          onclick={handleClickFilter}
+        ></ui-button>
+        <ui-button
+          design="info"
+          class="flexbox-item button-unfilter"
+          value={label.labelUnfilter}
+          onclick={handleClickUnfilter}
         ></ui-button>
       </div>
     </div>

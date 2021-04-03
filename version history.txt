@@ -1,4 +1,15 @@
 //----------------------------
+// version 1.6
+//----------------------------
+
+features:
+- add start-date filters
+
+tec debt:
+- same entry layouts for all widths
+- remove mid-size-layout
+
+//----------------------------
 // version 1.5
 //----------------------------
 

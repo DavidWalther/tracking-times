@@ -2,6 +2,28 @@ body {
   padding: 5px;
 }
 
+.border-thin_bottom {
+  border-color: lightgrey;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+}
+
+.flexbox-container-group {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.flexbox-container {
+  display: flex;
+}
+
+.flexbox-item {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
 div.content {
   max-width: 1000px;
   margin: auto;
@@ -44,22 +66,6 @@ div.button-bar_wide {
 div.button > input {
   width: 100%;
   margin: auto;
-}
-
-div.container-add {
-  grid-area: add;
-}
-
-div.container-clear {
-  grid-area: clear;
-}
-
-div.container-export {
-  grid-area: export;
-}
-
-div.container-summary {
-  grid-area: summary;
 }
 
 div.container-github {
@@ -110,7 +116,11 @@ a.button-github {
   width: fit-content;
 }
 
-@media (min-width: 450px) {
+@media (min-width: 500px) {
+  div.button-bar_wide {
+    display: grid;
+  }
+
   .button-bar_mobile {
     display: none;
   }
@@ -118,20 +128,7 @@ a.button-github {
   .wide {
     display: block;
   }
-
-  div.button-bar_wide {
-    display: grid;
-    grid-template-areas:
-      'clear'
-      'export'
-      'summary'
-      'add';
-  }
-}
-
-@media (min-width: 600px) {
   div.button-bar_wide {
     grid-template-columns: auto auto auto auto;
-    grid-template-areas: 'clear export add summary';
   }
 }
