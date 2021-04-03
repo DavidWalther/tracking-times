@@ -726,6 +726,32 @@ describe('feature: mass actions', () => {
   });
 });
 
+describe('feature: filters', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('unmatching itmes are hidden', () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+    const firstEntry = element.shadowRoot.querySelectorAll('app-entry')[0];
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+
+    const latestStart = Math.max(firstEntry.start,secondEntry.start,thirdEntry.start);
+
+    const minimumDateInput = element.shadowRoot.querySelector('.input-filter-date-minimum');
+//    minimumDateInput = 
+
+  });
+});
+
 function clickButtonSummary(shadowRoot) {
   const buttonSummary = shadowRoot.querySelector('.button-summary');
   if (!buttonSummary || buttonSummary.disabled) {
@@ -806,14 +832,14 @@ function setVersion4DummyData() {
         itemId: 1,
         sortnumber: 1,
         comment: 'entry2',
-        start: 50,
+        start: 1000 * 60 * 60 * 24 * 3,
         end: 1800000
       },
       {
         itemId: 2,
         sortnumber: 2,
         comment: 'entry3',
-        start: 2000,
+        start: 1000 * 60 * 60 * 24 * 8,
         end: 2500
       }
     ]
