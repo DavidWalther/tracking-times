@@ -2,6 +2,11 @@ body {
   padding: 5px;
 }
 
+.flexbox-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 div.content {
   max-width: 1000px;
   margin: auto;

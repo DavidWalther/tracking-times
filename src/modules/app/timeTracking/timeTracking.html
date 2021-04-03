@@ -137,17 +137,51 @@
         ></ui-button>
       </div>
     </div>
-    <div class="filter">
-      <input
-        type="date"
-        class="input-filter-date-minimum"
-        style="font-family: sans-serif;"
-        onchange={onChangeFilterDate}
-        value={filterDate}
-      />
-      <input type="button" value="Now" onclick={handleClickFilterNow} />
-      <input type="button" value="Filter" onclick={handleClickFilter} />
-      <input type="button" value="UnFilter" onclick={handleClickUnfilter} />
+    <div class="flexbox-container filter">
+      <div>
+        <input
+          type="date"
+          class="flexbox-item input-filter-date-minimum"
+          style="font-family: sans-serif;"
+          onchange={onChangeFilterDate}
+          value={filterDate}
+        />
+        <input
+          class="flexbox-item"
+          type="button"
+          value="Now"
+          onclick={handleClickFilterNowStartMin}
+        />
+      </div>
+      <div>
+        <input
+          type="date"
+          class="flexbox-item input-filter-date-maximum"
+          style="font-family: sans-serif;"
+          onchange={onChangeFilterDate}
+          value={filterDate}
+        />
+        <input
+          class="flexbox-item"
+          type="button"
+          value="Now"
+          onclick={handleClickFilterNowStartMax}
+        />
+      </div>
+      <div>
+        <input
+          class="flexbox-item"
+          type="button"
+          value="Filter"
+          onclick={handleClickFilter}
+        />
+        <input
+          class="flexbox-item"
+          type="button"
+          value="UnFilter"
+          onclick={handleClickUnfilter}
+        />
+      </div>
     </div>
     <div class="container-list entries">
       <template for:each={state.entries} for:item="entry" for:index="index">
