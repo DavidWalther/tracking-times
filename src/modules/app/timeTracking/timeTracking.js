@@ -140,7 +140,7 @@ export default class TimeTracking extends LightningElement {
 
   // -- Filter --
   handleClickFilter() {
-    this.customConsoleLog({ label: 'click filter' });
+    this.applyFilters();
   }
 
   handleClickFilterNow() {
