@@ -205,11 +205,31 @@ export default class TimeTracking extends LightningElement {
 
   // -- Filter --
   applyFilters() {
-    
+    //const allEntries = [...this.entries];
+    const allMatchingEntries = [];
+    const allNotMatchingEntries = [];
+
+    this.entries.forEach(entry => {
+
+      const matchFilter = this.doesMatchFilter(entry);
+
+      if(matchFilter) {
+        allMatchingEntries.push(entry);
+      } else {
+        allNotMatchingEntries.push(entry);
+      }
+    });
+
+    //this.state.entries = allMatchingEntries;
+    //this.entriesRuledOutByFilters = allNotMatchingEntries;
   }
 
   unapplyFilfters() {
 
+  }
+
+  doesMatchFilter(entry) {
+    return entry.start <= 1617454875656;
   }
 
   // eslint-disable-next-line no-unused-vars
