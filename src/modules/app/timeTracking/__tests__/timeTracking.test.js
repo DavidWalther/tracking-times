@@ -3,6 +3,14 @@ import { createElement } from 'lwc';
 import { save, load, clear } from 'data/localStorage';
 import TimeTracking from 'app/timeTracking';
 
+const MILISECONDS_PER_MINUTE = 1000 * 60;
+const MILISECONDS_PER_HOUR = MILISECONDS_PER_MINUTE * 60;
+const MILISECONDS_PER_DAY = MILISECONDS_PER_HOUR * 24;
+
+const FIRST_ENTRY_START = 0;
+const SECOND_ENTRY_START = MILISECONDS_PER_DAY * 3;
+const THIRD_ENTRY_START = MILISECONDS_PER_DAY * 8;
+
 describe('check loading based on version', () => {
   afterEach(() => {
     // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -744,11 +752,40 @@ describe('feature: filters', () => {
     const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
     const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
 
-    const latestStart = Math.max(firstEntry.start,secondEntry.start,thirdEntry.start);
+    const latestStart = Math.max(
+      firstEntry.start,
+      secondEntry.start,
+      thirdEntry.start
+    );
 
-    const minimumDateInput = element.shadowRoot.querySelector('.input-filter-date-minimum');
-//    minimumDateInput = 
+    const minimumDateInput = element.shadowRoot.querySelector(
+      '.input-filter-date-minimum'
+    );
 
+    /**
+     * When
+     * - The filter is set to the latest entriy's start date
+     * - the filter button is clicked
+     */
+
+    minimumDateInput.value = new Date(THIRD_ENTRY_START - MILISECONDS_PER_DAY)
+      .toISOString()
+      .split('T')[0];
+    const filterButton = element.shadowRoot.querySelector(
+      'input[type=button][value=Filter]'
+    );
+    filterButton.dispatchEvent(new CustomEvent('click'));
+
+    return Promise.resolve().then(() => {
+      /**
+       * Then
+       * only the third entry stays visible
+       */
+      const visibleEntries = element.shadowRoot.querySelectorAll('app-entry');
+      expect(visibleEntries.length).toBe(1);
+
+      expect(visibleEntries[0].start).toBe(THIRD_ENTRY_START);
+    });
   });
 });
 
@@ -825,22 +862,22 @@ function setVersion4DummyData() {
         itemId: 0,
         sortnumber: 0,
         comment: 'entry1',
-        start: 0,
-        end: 1000
+        start: FIRST_ENTRY_START,
+        end: FIRST_ENTRY_START + 1000
       },
       {
         itemId: 1,
         sortnumber: 1,
         comment: 'entry2',
-        start: 1000 * 60 * 60 * 24 * 3,
-        end: 1800000
+        start: SECOND_ENTRY_START,
+        end: SECOND_ENTRY_START + 1800000
       },
       {
         itemId: 2,
         sortnumber: 2,
         comment: 'entry3',
-        start: 1000 * 60 * 60 * 24 * 8,
-        end: 2500
+        start: THIRD_ENTRY_START,
+        end: THIRD_ENTRY_START + 2500
       }
     ]
   };
