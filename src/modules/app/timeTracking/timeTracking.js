@@ -522,7 +522,6 @@ export default class TimeTracking extends LightningElement {
   }
 
   saveData() {
-    this.unapplyFilters();
     const allRecords = [];
     allRecords.push(...this.state.entries);
     allRecords.push(...this.entriesRuledOutByFilters);
