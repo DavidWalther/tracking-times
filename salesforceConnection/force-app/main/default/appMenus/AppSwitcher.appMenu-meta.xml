@@ -65,7 +65,7 @@
         <type>CustomApplication</type>
     </appMenuItems>
     <appMenuItems>
-        <name>trackingTmes</name>
+        <name>TrackingTimes</name>
         <type>ConnectedApp</type>
     </appMenuItems>
 </AppMenu>

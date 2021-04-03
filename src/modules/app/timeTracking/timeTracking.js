@@ -126,6 +126,17 @@ export default class TimeTracking extends LightningElement {
     this.doAuthCallout();
   }
 
+  onClickQuery() {
+    const salesforceInterface = this.template.querySelector(
+      'data-salesforce-interface'
+    );
+    if (salesforceInterface && this.authData) {
+      salesforceInterface.instanceUrl = this.authData.instance_url;
+      salesforceInterface.accessToken = this.authData.access_token;
+      salesforceInterface.query('SELECT+name+from+Account');
+    }
+  }
+
   //----------------------------
   // Properties
   //----------------------------
