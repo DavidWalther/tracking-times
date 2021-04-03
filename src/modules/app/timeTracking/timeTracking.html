@@ -139,13 +139,15 @@
     </div>
     <div class="filter">
       <input
-        type="datetime-local"
+        type="date"
         class="input-filter"
         style="font-family: sans-serif;"
-        value=""
+        onchange={onChangeFilterDate}
+        value={filterDate}
       />
       <input type="button" value="Now" onclick={handleClickFilterNow} />
       <input type="button" value="Filter" onclick={handleClickFilter} />
+      <input type="button" value="UnFilter" onclick={handleClickUnfilter} />
     </div>
     <div class="container-list entries">
       <template for:each={state.entries} for:item="entry" for:index="index">

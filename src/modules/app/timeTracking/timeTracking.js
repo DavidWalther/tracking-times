@@ -53,13 +53,24 @@ export default class TimeTracking extends LightningElement {
     }
   };
 
+  // stores the Ids of selected items
   selectedEntries = [];
+  entriesRuledOutByFilters = [];
+
+  get filterDate() {
+    return new Date(this.filterDateValue).toISOString().split('T')[0];
+  }
+  onChangeFilterDate(event) {
+    //console.log(event.target.value);
+    if (event.target.value) {
+      this.filterDateValue = new Date(event.target.value).getTime();
+    }
+  }
+  filterDateValue = new Date().getTime();
 
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
-    //startAuthentication();
-    //this.setFilterInputValueToNow();
   }
 
   renderedCallback() {
@@ -126,12 +137,16 @@ export default class TimeTracking extends LightningElement {
 
   // -- Filter --
   handleClickFilter() {
-    this.customConsoleLog({ label: 'click filter' });
+    this.applyFilters();
   }
 
   handleClickFilterNow() {
     this.customConsoleLog({ label: 'click filter Now' });
     this.setFilterInputValue(new Date().getTime());
+  }
+
+  handleClickUnfilter() {
+    this.unapplyFilters();
   }
 
   setFilterInputValue(value) {
@@ -145,6 +160,29 @@ export default class TimeTracking extends LightningElement {
     this.customConsoleLog(output);
     //this.customConsoleLog(new Date(filterValueInput));
     filterValueInput.value = output.valueToIso.slice(0, 16);
+  }
+  /*
+  isMatchGreater(entry) {
+    const oldEntries = this.entries;
+
+    oldEntries;
+  }
+*/
+  doFilter(filter) {
+    const result = {};
+    result.matches = [];
+    result.misses = [];
+
+    this.entries.forEach(entry => {
+      if (filter(entry)) {
+        result.matches.push(entry);
+      } else {
+        result.misses.push(entry);
+      }
+    });
+
+    this.state.entries = result.matches;
+    this.entriesRuledOutByFilters = result.misses;
   }
 
   //----------------------------
@@ -166,11 +204,55 @@ export default class TimeTracking extends LightningElement {
   // Actions
   //----------------------------
 
+  // -- Filter --
+  applyFilters() {
+    const allMatchingEntries = [];
+    const allNotMatchingEntries = [];
+
+    this.entries.forEach(entry => {
+      const matchFilter = this.doesMatchFilter(entry);
+
+      if (matchFilter) {
+        allMatchingEntries.push(entry);
+      } else {
+        allNotMatchingEntries.push(entry);
+      }
+    });
+
+    this.state.entries = allMatchingEntries;
+    this.entriesRuledOutByFilters = allNotMatchingEntries;
+  }
+
+  unapplyFilters() {
+    let allEntries = [];
+    allEntries = allEntries.concat(this.state.entries);
+    allEntries = allEntries.concat(this.entriesRuledOutByFilters);
+    this.state.entries = allEntries;
+
+    this.sortEntries();
+  }
+
+  doesMatchFilter(entry) {
+    return entry.start <= 1617454875656;
+  }
+
+  // eslint-disable-next-line no-unused-vars
+  filterStartAfter(entry, date) {}
+
+  // eslint-disable-next-line no-unused-vars
+  filterStartBefore(entry, date) {}
+
+  getFilterDate() {
+    return this.filterDateValue;
+  }
+
+  // -- Sort --
+
   sortEntries() {
     this.entries.sort((entry1, entry2) => {
       return entry2.start - entry1.start;
     });
-    this.saveData();
+    // this.saveData();
   }
 
   selectAllEntries() {
@@ -439,11 +521,15 @@ export default class TimeTracking extends LightningElement {
   }
 
   saveData() {
+    const allRecords = [];
+    allRecords.push(...this.state.entries);
+    allRecords.push(...this.entriesRuledOutByFilters);
+
     const data = {
       settings: {
         version: DATA_CURRENT_VERSION
       },
-      entries: this.state.entries
+      entries: allRecords
     };
 
     save(data);
