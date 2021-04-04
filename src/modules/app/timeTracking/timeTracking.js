@@ -179,8 +179,6 @@ export default class TimeTracking extends LightningElement {
         break;
       }
     }
-
-    
   }
 
   handleClickUnfilter() {
