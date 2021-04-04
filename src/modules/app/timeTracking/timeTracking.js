@@ -160,23 +160,27 @@ export default class TimeTracking extends LightningElement {
     const eventKey =
       event.target.dataset.timing + '-' + event.target.dataset.limit;
 
-    let input;
+    const currentTimestamp = new Date();
 
     switch (eventKey) {
       case 'start-min': {
-        input = this.template.querySelector('.input-filter-date-minimum');
+        const input = this.template.querySelector('.input-filter-date-minimum');
+        input.value = currentTimestamp.toISOString().split('T')[0];
+        this.filterDateStartMinValue = currentTimestamp.getTime();
         break;
       }
       case 'start-max': {
-        input = this.template.querySelector('.input-filter-date-maximum');
+        const input = this.template.querySelector('.input-filter-date-maximum');
+        input.value = currentTimestamp.toISOString().split('T')[0];
+        this.filterDateStartMaxValue = currentTimestamp.getTime();
         break;
       }
       default: {
-        input = null;
+        break;
       }
     }
 
-    input.value = new Date().toISOString().split('T')[0];
+    
   }
 
   handleClickUnfilter() {
