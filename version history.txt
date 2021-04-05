@@ -1,9 +1,19 @@
 //----------------------------
+// version 1.6.2
+//----------------------------
+
+bugfix:
+- fix incorect initialization of start date filter
+
+//----------------------------
 // version 1.6.1
 //----------------------------
 
 bugfix:
 - filters do not reset filter dates set by now-button
+
+tec debt:
+- change filter-label 'Now' to 'Today'
 
 //----------------------------
 // version 1.6
