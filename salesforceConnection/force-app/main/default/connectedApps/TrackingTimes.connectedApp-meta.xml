@@ -4,7 +4,7 @@
     <label>TrackingTimes</label>
     <oauthConfig>
         <callbackUrl>https://tracking-times-test-auth.herokuapp.com/</callbackUrl>
-        <consumerKey>3MVG95AcBeaB55lUO7ZDRhqwkTFHgyYmRu9rPz.heSxnoZWDiMsc7GLdYysolYS_XBh15Bh3fhTYbIj6e3zo_</consumerKey>
+        <consumerKey>3MVG9KlmwBKoC7U35C3bAFSb_Zj3gccirPAIr4rWZXwkf5XMKbb1rYODffTAIlWkvhzisHS602LjFhRreOAjk</consumerKey>
         <isAdminApproved>false</isAdminApproved>
         <isConsumerSecretOptional>false</isConsumerSecretOptional>
         <isIntrospectAllTokens>false</isIntrospectAllTokens>
