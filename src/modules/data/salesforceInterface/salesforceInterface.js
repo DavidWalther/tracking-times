@@ -39,7 +39,6 @@ export default class SalesforceInterface extends LightningElement {
 
   @api
   query(queryString) {
-    
     const testQuery = 'SELECT+name+from+Account';
     const salesforceApiVersion = 'v51.0';
 
@@ -63,7 +62,7 @@ export default class SalesforceInterface extends LightningElement {
     });
 
 */
-/*
+    /*
     var data = '';
 
     var xhr = new XMLHttpRequest();
@@ -179,8 +178,11 @@ https://www.w3schools.com/code/tryit.asp?filename=GPAJFNAR1MUY
     xhr.send(payload);
     */
     createSf(theUrl, this.accessToken, recordJsonObj)
-      .then(data => {
-        console.log(data);
+      .then(response => {
+        return response.json();
+      })
+      .then(json => {
+        console.log(json);
       })
       .catch(error => {
         console.log(error);
@@ -197,13 +199,19 @@ async function query(theUrl, instanceUrl, access_token) {
       Authorization: 'Bearer ' + access_token,
       'Access-Control-Allow-Origin': instanceUrl
     }
-  }).then(data => {
-    console.log('Success');
-    console.log(data);
-  }).catch(error => {
-    console.log('Error');
-    console.log(error);
-  });
+  })
+    .then(data => {
+      console.log('Aquired Response');
+      return data.json();
+    })
+    .then(json => {
+      console.log('JSON');
+      console.log(json);
+    })
+    .catch(error => {
+      console.log('Error');
+      console.log(error);
+    });
 
   /*
   const response = await fetch(theUrl, {
