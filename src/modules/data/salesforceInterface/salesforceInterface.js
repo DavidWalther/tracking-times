@@ -58,8 +58,6 @@ export default class SalesforceInterface extends LightningElement {
     xhr.setRequestHeader('Access-Control-Allow-Origin', this.instanceUrl);
     xhr.send(data);
 
-    
-
     /*if (this.accessToken && this.instanceUrl) {
       this.salesforceQuery(queryString);
     }*/
