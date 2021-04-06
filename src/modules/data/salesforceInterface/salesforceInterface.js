@@ -39,6 +39,31 @@ export default class SalesforceInterface extends LightningElement {
 
   @api
   query(queryString) {
+    
+    const testQuery = 'SELECT+name+from+Account';
+    const salesforceApiVersion = 'v51.0';
+
+    const queryEndpoint = '/services/data/' + salesforceApiVersion + '/query/';
+    const theUrl = this.instanceUrl + queryEndpoint + '?q=' + testQuery;
+
+    query(theUrl, this.instanceUrl, this.accessToken);
+    /*
+   const response = await fetch(theUrl, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + access_token,
+        'Access-Control-Allow-Origin': this.instanceUrl
+      }
+    }).then(data => {
+      console.log('Success');
+      console.log(data);
+    }).catch(error => {
+      console.log('Error');
+      console.log(error);
+    });
+
+*/
+/*
     var data = '';
 
     var xhr = new XMLHttpRequest();
@@ -58,6 +83,7 @@ export default class SalesforceInterface extends LightningElement {
     xhr.setRequestHeader('Access-Control-Allow-Origin', this.instanceUrl);
     xhr.send(data);
 
+    */
     /*if (this.accessToken && this.instanceUrl) {
       this.salesforceQuery(queryString);
     }*/
@@ -162,9 +188,24 @@ https://www.w3schools.com/code/tryit.asp?filename=GPAJFNAR1MUY
   }
 }
 
-async function query(theUrl, access_token) {
+async function query(theUrl, instanceUrl, access_token) {
   //  const query = 'SELECT+name+from+Account';
 
+  const response = await fetch(theUrl, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + access_token,
+      'Access-Control-Allow-Origin': instanceUrl
+    }
+  }).then(data => {
+    console.log('Success');
+    console.log(data);
+  }).catch(error => {
+    console.log('Error');
+    console.log(error);
+  });
+
+  /*
   const response = await fetch(theUrl, {
     mode: 'no-cors',
     headers: {
@@ -173,6 +214,7 @@ async function query(theUrl, access_token) {
     }
   });
   return response;
+  */
 }
 
 async function createSf(theUrl, access_token, payload) {
