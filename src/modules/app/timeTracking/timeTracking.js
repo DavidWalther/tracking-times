@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { LightningElement, track } from 'lwc';
 import { startDownload } from 'data/fileDownload';
 import { save, load } from 'data/localStorage';
@@ -127,14 +128,54 @@ export default class TimeTracking extends LightningElement {
   }
 
   onClickQuery() {
-    const salesforceInterface = this.template.querySelector(
+    var data = '';
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = false;
+
+    xhr.addEventListener('readystatechange', function() {
+      if (this.readyState === 4) {
+        console.log(this.responseText);
+      }
+    });
+
+    const accessToken = this.authData.access_token;
+
+    xhr.open(
+      'GET',
+      'https://agility-connect-25662-dev-ed.cs101.my.salesforce.com/services/data/v51.0/query/?q=SELECT+name+from+Account'
+    );
+    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+    xhr.setRequestHeader('Access-Control-Allow-Origin', this.instanceUrl);
+    xhr.send(data);
+
+    /*const salesforceInterface = this.template.querySelector(
       'data-salesforce-interface'
     );
     if (salesforceInterface && this.authData) {
       salesforceInterface.instanceUrl = this.authData.instance_url;
       salesforceInterface.accessToken = this.authData.access_token;
       salesforceInterface.query('SELECT+name+from+Account');
-    }
+    }*/
+  }
+
+  onCreateAccount() {
+    this.onClickQuery();
+    /*const accountName = this.template.querySelector(
+      'input[name=InputAccountName]'
+    ).value;
+    const salesforceInterface = this.template.querySelector(
+      'data-salesforce-interface'
+    );
+    const output = 'sf-interface: ' + (salesforceInterface ? 'true' : 'false');
+
+    // eslint-disable-next-line no-console
+    console.log(output);
+    if (salesforceInterface && this.authData) {
+      salesforceInterface.instanceUrl = this.authData.instance_url;
+      salesforceInterface.accessToken = this.authData.access_token;
+      salesforceInterface.createRecord('Account', { Name: accountName });
+    }*/
   }
 
   //----------------------------
@@ -150,24 +191,6 @@ export default class TimeTracking extends LightningElement {
     if (this.entries === null) return true;
     if (this.entries.length === 0) return true;
     return false;
-  }
-
-  onCreateAccount() {
-    const accountName = this.template.querySelector(
-      'input[name=InputAccountName]'
-    ).value;
-    const salesforceInterface = this.template.querySelector(
-      'data-salesforce-interface'
-    );
-    const output = 'sf-interface: ' + (salesforceInterface ? 'true' : 'false');
-
-    // eslint-disable-next-line no-console
-    console.log(output);
-    if (salesforceInterface && this.authData) {
-      salesforceInterface.instanceUrl = this.authData.instance_url;
-      salesforceInterface.accessToken = this.authData.access_token;
-      salesforceInterface.createRecord('Account', { Name: accountName });
-    }
   }
 
   //----------------------------
