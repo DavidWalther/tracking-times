@@ -39,9 +39,30 @@ export default class SalesforceInterface extends LightningElement {
 
   @api
   query(queryString) {
-    if (this.accessToken && this.instanceUrl) {
+    var data = '';
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = false;
+
+    xhr.addEventListener('readystatechange', function() {
+      if (this.readyState === 4) {
+        console.log(this.responseText);
+      }
+    });
+
+    xhr.open(
+      'GET',
+      'https://agility-connect-25662-dev-ed.cs101.my.salesforce.com/services/data/v51.0/query/?q=SELECT+name+from+Account'
+    );
+    xhr.setRequestHeader('Authorization', 'Bearer ' + this.accessToken);
+    xhr.setRequestHeader('Access-Control-Allow-Origin', this.instanceUrl);
+    xhr.send(data);
+
+    
+
+    /*if (this.accessToken && this.instanceUrl) {
       this.salesforceQuery(queryString);
-    }
+    }*/
   }
   //----------------------------
   // internal

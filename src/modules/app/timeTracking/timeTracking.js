@@ -128,35 +128,14 @@ export default class TimeTracking extends LightningElement {
   }
 
   onClickQuery() {
-    var data = '';
-
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = false;
-
-    xhr.addEventListener('readystatechange', function() {
-      if (this.readyState === 4) {
-        console.log(this.responseText);
-      }
-    });
-
-    const accessToken = this.authData.access_token;
-
-    xhr.open(
-      'GET',
-      'https://agility-connect-25662-dev-ed.cs101.my.salesforce.com/services/data/v51.0/query/?q=SELECT+name+from+Account'
-    );
-    xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
-    xhr.setRequestHeader('Access-Control-Allow-Origin', this.instanceUrl);
-    xhr.send(data);
-
-    /*const salesforceInterface = this.template.querySelector(
+    const salesforceInterface = this.template.querySelector(
       'data-salesforce-interface'
     );
     if (salesforceInterface && this.authData) {
       salesforceInterface.instanceUrl = this.authData.instance_url;
       salesforceInterface.accessToken = this.authData.access_token;
       salesforceInterface.query('SELECT+name+from+Account');
-    }*/
+    }
   }
 
   onCreateAccount() {
