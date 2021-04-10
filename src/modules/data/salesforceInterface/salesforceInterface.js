@@ -47,9 +47,11 @@ export default class SalesforceInterface extends LightningElement {
 
     queryV2(theUrl, this.instanceUrl, this.accessToken)
       .then(json => {
+        console.log('calling success');
         console.log(json);
       })
       .catch(error => {
+        console.log('calling error');
         console.log(error);
       });
     /*
