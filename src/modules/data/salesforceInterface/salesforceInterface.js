@@ -45,13 +45,7 @@ export default class SalesforceInterface extends LightningElement {
     const queryEndpoint = '/services/data/' + salesforceApiVersion + '/query/';
     const theUrl = this.instanceUrl + queryEndpoint + '?q=' + testQuery;
 
-    queryV2(theUrl, this.instanceUrl, this.accessToken)
-      .then(json => {
-        console.log(json);
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    query(theUrl, this.instanceUrl, this.accessToken);
     /*
    const response = await fetch(theUrl, {
       headers: {
@@ -194,19 +188,6 @@ https://www.w3schools.com/code/tryit.asp?filename=GPAJFNAR1MUY
         console.log(error);
       });
   }
-}
-
-async function queryV2(theUrl, instanceUrl, access_token) {
-  const response = await fetch(theUrl, {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + access_token,
-      'Access-Control-Allow-Origin': instanceUrl
-    }
-  }).then(data => {
-    console.log('Aquired Response');
-    return data.json();
-  });
 }
 
 async function query(theUrl, instanceUrl, access_token) {
