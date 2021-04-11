@@ -2,6 +2,9 @@
 // version 1.6.2
 //----------------------------
 
+features:
+- change filter-label 'Now' to 'Today'
+
 bugfix:
 - fix incorect initialization of start date filter
 
@@ -11,9 +14,6 @@ bugfix:
 
 bugfix:
 - filters do not reset filter dates set by now-button
-
-tec debt:
-- change filter-label 'Now' to 'Today'
 
 //----------------------------
 // version 1.6
