@@ -4,6 +4,7 @@
 
 features:
 - change filter-label 'Now' to 'Today'
+- show 'unfilter' button only if entries are filtered
 
 bugfix:
 - fix incorect initialization of start date filter

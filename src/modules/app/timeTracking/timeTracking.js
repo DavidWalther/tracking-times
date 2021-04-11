@@ -194,6 +194,10 @@ export default class TimeTracking extends LightningElement {
   // Properties
   //----------------------------
 
+  get isEntiesAreFiltered() {
+    return this.entriesRuledOutByFilters.length > 0;
+  }
+
   get entries() {
     return this.state.entries;
   }
