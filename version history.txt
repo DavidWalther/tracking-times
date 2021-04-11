@@ -1,4 +1,18 @@
 //----------------------------
+// version 1.6.2
+//----------------------------
+
+features:
+- change filter-label 'Now' to 'Today'
+- show 'unfilter' button only if entries are filtered
+
+bugfix:
+- fix incorect initialization of start date filter
+
+tec debt:
+- add 'design' attribute to all buttons
+
+//----------------------------
 // version 1.6.1
 //----------------------------
 

@@ -36,7 +36,7 @@ export default class TimeTracking extends LightningElement {
     labelDelete: 'Delete',
     labelDeselectAll: 'Deselect All',
     labelFilter: 'Filter',
-    labelNow: 'Now',
+    labelToday: 'Today',
     labelSelectAll: 'Select All',
     labelSort: 'Sort',
     labelUnfilter: 'Unfilter',
@@ -62,10 +62,14 @@ export default class TimeTracking extends LightningElement {
   filterDateStartMinValue = new Date().getTime();
   filterDateStartMaxValue = new Date().getTime();
 
+  //----------------------------
+  // Event handlers
+  //----------------------------
+
   connectedCallback() {
     this.state.entries = [];
     this.loadData();
-    this.initStartFilters();
+    this.initStartDateFilters();
   }
 
   renderedCallback() {
@@ -190,6 +194,10 @@ export default class TimeTracking extends LightningElement {
   // Properties
   //----------------------------
 
+  get isEntiesAreFiltered() {
+    return this.entriesRuledOutByFilters.length > 0;
+  }
+
   get entries() {
     return this.state.entries;
   }
@@ -269,15 +277,19 @@ export default class TimeTracking extends LightningElement {
     return entry.start <= timestamp + MILISECONDS_PER_DAY;
   }
 
-  initStartFilters() {
-    let earliestStartValue = new Date().getTime();
-    let latestStartValue = new Date().getTime();
+  initStartDateFilters() {
+    let earliestStartValue = new Date('4000-12-31');
+    let latestStartValue = null;
     this.entries.forEach(entry => {
       earliestStartValue = Math.min(entry.start, earliestStartValue);
       latestStartValue = Math.max(entry.start, latestStartValue);
     });
-    this.filterDateStartMinValue = earliestStartValue;
-    this.filterDateStartMaxValue = latestStartValue;
+    this.filterDateStartMinValue = earliestStartValue
+      ? earliestStartValue
+      : new Date().getTime();
+    this.filterDateStartMaxValue = latestStartValue
+      ? latestStartValue
+      : new Date().getTime();
   }
 
   // -- Sort --
