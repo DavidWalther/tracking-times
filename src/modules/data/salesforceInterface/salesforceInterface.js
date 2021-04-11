@@ -14,7 +14,6 @@ import { LightningElement, api } from 'lwc';
  *
  * Things done in Scratch Org:
  * - CORS-Settings
- * - Remote-Site
  * - Connected App
  */
 

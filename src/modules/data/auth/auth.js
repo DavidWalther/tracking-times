@@ -19,9 +19,7 @@ const constresponseType = 'token';
 class Credentials {
   constructor() {
     this.base_uri = 'https://test.salesforce.com/';
-    //this.base_uri = 'https://saas-ruby-7375-dev-ed.lightning.force.com/';
     this.redirect_uri = 'https://tracking-times-test-auth.herokuapp.com/';
-    //this.redirect_uri = 'http://localhost:3001/';
     this.client_id =
       '3MVG95AcBeaB55lXeOhkpjm2VQzqGpcyDBRVreuu1DeC49UtgGZN5UO5r1n5dRw4PBwR3qvlV.OkG6EiYexJ0';
     this.response_type = 'token';
