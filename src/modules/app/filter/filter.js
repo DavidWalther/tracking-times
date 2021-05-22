@@ -1,5 +1,3 @@
 import { LightningElement } from 'lwc';
 
-export default class Filter extends LightningElement {
-}
-
+export default class Filter extends LightningElement {}
