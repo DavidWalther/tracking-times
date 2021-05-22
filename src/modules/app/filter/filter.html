@@ -1,1 +1,12 @@
-<template> </template>
+<template>
+  <div class="content">
+    <template if:true={isFilterTypeText}>
+      <div class="filter filter-text"></div>
+    </template>
+    <template if:true={isFilterTypeDate}>
+      <div class="filter filter-date">
+        <input type="date" value={filterValueDate} />
+      </div>
+    </template>
+  </div>
+</template>
