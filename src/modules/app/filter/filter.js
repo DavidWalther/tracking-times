@@ -81,7 +81,7 @@ export default class Filter extends LightningElement {
   //----------------------------
 
   renderedCallback() {
-    //this.readOperator();
+    this.getInputValue();
   }
 
   handleAttributeSetFilterType() {
@@ -90,6 +90,10 @@ export default class Filter extends LightningElement {
 
   handleChangeDateOperator() {
     this.readOperator();
+  }
+
+  handleChangeInput() {
+    this.getInputValue();
   }
   //----------------------------
   // actions
@@ -122,6 +126,11 @@ export default class Filter extends LightningElement {
     });
 
     return result.value;
+  }
+
+  getInputValue() {
+    let input = this.template.querySelector('.filter-value-date');
+    return input ? input.value : null;
   }
 
   //----------------------------

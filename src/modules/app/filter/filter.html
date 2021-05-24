@@ -18,7 +18,12 @@
           </select>
         </div>
         <div>
-          <input type="date" value={filterValueDate} />
+          <input
+            type="date"
+            class="filter-value-date"
+            value={filterValueDate}
+            onchange={handleChangeInput}
+          />
         </div>
       </div>
     </template>
