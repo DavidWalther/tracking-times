@@ -24,6 +24,10 @@ export default class Filter extends LightningElement {
 
   apiAttributes = {};
 
+  @api
+  setFilterPaths() {
+    
+  }
   //----------------------------
   // handlers
   //----------------------------
