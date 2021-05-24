@@ -3,6 +3,8 @@
  */
 import { LightningElement, api } from 'lwc';
 
+const EVENT_NAME_FILTER_TYPE_SET = 'filtertype';
+
 export default class Filter extends LightningElement {
   //----------------------------
   // API
@@ -12,7 +14,35 @@ export default class Filter extends LightningElement {
    * The available operators are defined by the provided filter type.
    */
   @api
-  filterType;
+  get filterType() {
+    return this.apiAttributes.filterType;
+  }
+  set filterType(value) {
+    this.apiAttributes.filterType = value;
+    this.handleAttributeSetFilterType();
+  }
+
+  apiAttributes = {};
+
+  //----------------------------
+  // handlers
+  //----------------------------
+
+  handleAttributeSetFilterType() {
+    this.fireEventFilterTypeSet();
+  }
+
+  //----------------------------
+  // actions
+  //----------------------------
+
+  fireEventFilterTypeSet() {
+    this.dispatchEvent(new CustomEvent(EVENT_NAME_FILTER_TYPE_SET));
+  }
+
+  //----------------------------
+  // getters
+  //----------------------------
 
   get isFilterTypeText() {
     return this.filterType === 'text';

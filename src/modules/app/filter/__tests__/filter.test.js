@@ -29,5 +29,18 @@ describe('attributes', () => {
       expect(elements_ToCheck.length).toBe(1);
       expect(elements_ToCheck[0].classList).toContain('filter-date');
     });
+
+    test("A 'filtertypeset' event is fired on change", () => {
+      const handler = jest.fn();
+
+      const element = createElement('app-filter', { is: Filter });
+      element.addEventListener('filtertype', handler);
+      element.filterType = 'date';
+      document.body.appendChild(element);
+
+      return Promise.resolve().then(() => {
+        expect(handler).toHaveBeenCalled();
+      });
+    });
   });
 });
