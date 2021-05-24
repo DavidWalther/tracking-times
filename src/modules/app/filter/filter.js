@@ -37,7 +37,11 @@ export default class Filter extends LightningElement {
   //----------------------------
 
   fireEventFilterTypeSet() {
-    this.dispatchEvent(new CustomEvent(EVENT_NAME_FILTER_TYPE_SET));
+    const eventDetail = {};
+    eventDetail.filterType = this.filterType;
+    this.dispatchEvent(
+      new CustomEvent(EVENT_NAME_FILTER_TYPE_SET, { detail: eventDetail })
+    );
   }
 
   //----------------------------

@@ -30,7 +30,7 @@ describe('attributes', () => {
       expect(elements_ToCheck[0].classList).toContain('filter-date');
     });
 
-    test("A 'filtertypeset' event is fired on change", () => {
+    test("A 'filtertypeset' event is fired on setting the attribute", () => {
       const handler = jest.fn();
 
       const element = createElement('app-filter', { is: Filter });
@@ -40,6 +40,38 @@ describe('attributes', () => {
 
       return Promise.resolve().then(() => {
         expect(handler).toHaveBeenCalled();
+      });
+    });
+
+    test("A 'filtertypeset' event is fired on changing the attribute", () => {
+      const handler = jest.fn();
+
+      const element = createElement('app-filter', { is: Filter });
+      element.addEventListener('filtertype', handler);
+      element.filterType = 'date';
+      document.body.appendChild(element);
+
+      return Promise.resolve()
+        .then(() => {
+          expect(handler).toHaveBeenCalledTimes(1);
+          element.filterType = 'text';
+        })
+        .then(() => {
+          expect(handler).toHaveBeenCalledTimes(2);
+        });
+    });
+
+    test("The 'filtertypeset' event contains the selected type", () => {
+      const handler = jest.fn();
+      const FILTER_TYPE = 'random';
+
+      const element = createElement('app-filter', { is: Filter });
+      element.addEventListener('filtertype', handler);
+      element.filterType = FILTER_TYPE;
+      document.body.appendChild(element);
+
+      return Promise.resolve().then(() => {
+        expect(handler.mock.calls[0][0].detail.filterType).toBe(FILTER_TYPE);
       });
     });
   });
