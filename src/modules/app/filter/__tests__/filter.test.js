@@ -146,8 +146,14 @@ describe('api functions', () => {
       element.setFilterPaths(fieldParameter);
 
       return Promise.resolve().then(() => {
-        const selectElements = element.shadowRoot.querySelectorAll('option');
+        const selectElements = element.shadowRoot.querySelectorAll(
+          '.filter-path option'
+        );
         expect(selectElements.length).toBe(2);
+        expect(selectElements[0].value).toBe(testPath1);
+        expect(selectElements[0].label).toBe(testLabel1);
+        expect(selectElements[1].value).toBe(testPath2);
+        expect(selectElements[1].label).toBe(testLabel2);
       });
     });
   });
