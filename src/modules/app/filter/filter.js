@@ -22,6 +22,14 @@ export default class Filter extends LightningElement {
     this.handleAttributeSetFilterType();
   }
 
+  @api
+  get operator() {
+    return this.apiAttributes.operator;
+  }
+  set operator(value) {
+    this.apiAttributes.operator = value;
+  }
+
   apiAttributes = {};
 
   /**
@@ -66,18 +74,30 @@ export default class Filter extends LightningElement {
 
   @track
   filterPaths = [];
+  operator;
 
   //----------------------------
   // handlers
   //----------------------------
 
+  renderedCallback() {
+    //this.readOperator();
+  }
+
   handleAttributeSetFilterType() {
     this.fireEventFilterTypeSet();
   }
 
+  handleChangeDateOperator() {
+    this.readOperator();
+  }
   //----------------------------
   // actions
   //----------------------------
+
+  readOperator() {
+    this.operator = this.getOperatorValue();
+  }
 
   fireEventFilterTypeSet() {
     const eventDetail = {};
@@ -85,6 +105,23 @@ export default class Filter extends LightningElement {
     this.dispatchEvent(
       new CustomEvent(EVENT_NAME_FILTER_TYPE_SET, { detail: eventDetail })
     );
+  }
+
+  //----------------------------
+  // helpers
+  //----------------------------
+
+  getOperatorValue() {
+    let optionList = this.template.querySelectorAll('.filter-operator option');
+    let result = null;
+    //TODO: check why Array.find does not work
+    optionList.forEach(option => {
+      if (option.selected) {
+        result = option;
+      }
+    });
+
+    return result.value;
   }
 
   //----------------------------

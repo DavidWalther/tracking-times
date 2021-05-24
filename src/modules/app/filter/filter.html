@@ -1,16 +1,25 @@
 <template>
   <div class="content">
-    <select>
-      <template for:each={filterPaths} for:item="entry">
-        <option key={entry.path} value={entry.path}>{entry.label}</option>
-      </template>
-    </select>
+    <div class="filter-path">
+      <select>
+        <template for:each={filterPaths} for:item="entry">
+          <option key={entry.path} value={entry.path}>{entry.label}</option>
+        </template>
+      </select>
+    </div>
     <template if:true={isFilterTypeText}>
       <div class="filter filter-text"></div>
     </template>
     <template if:true={isFilterTypeDate}>
       <div class="filter filter-date">
-        <input type="date" value={filterValueDate} />
+        <div class="filter-operator">
+          <select onchange={handleChangeDateOperator}>
+            <option value="greaterThanOrEqual" selected>&gt;</option>
+          </select>
+        </div>
+        <div>
+          <input type="date" value={filterValueDate} />
+        </div>
       </div>
     </template>
   </div>
