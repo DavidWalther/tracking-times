@@ -1,5 +1,10 @@
 <template>
   <div class="content">
+    <select>
+      <template for:each={filterPaths} for:item="entry">
+        <option key={entry.path} value={entry.path}>{entry.label}</option>
+      </template>
+    </select>
     <template if:true={isFilterTypeText}>
       <div class="filter filter-text"></div>
     </template>
