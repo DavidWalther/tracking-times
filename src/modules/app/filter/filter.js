@@ -68,6 +68,10 @@ export default class Filter extends LightningElement {
     this.filterPaths = [...filtersPaths];
   }
 
+  @api
+  // eslint-disable-next-line no-unused-vars
+  isMatch(objectToCheck) {}
+
   //----------------------------
   // private attributes
   //----------------------------
@@ -86,9 +90,7 @@ export default class Filter extends LightningElement {
     this.fireEventFilterTypeSet();
   }
 
-  handleChangeDateOperator() {
-    this.readOperator();
-  }
+  handleChangeDateOperator() {}
 
   handleChangeInput(event) {
     this.filterValueDate = event.target.value;
