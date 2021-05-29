@@ -91,7 +91,7 @@ export default class Filter extends LightningElement {
   }
 
   handleChangeInput(event) {
-    this.filterValueDate = event.target.value;
+    this.filterValue = event.target.value;
   }
 
   //----------------------------

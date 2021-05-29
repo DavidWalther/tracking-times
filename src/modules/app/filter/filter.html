@@ -17,15 +17,15 @@
             <option value="greaterThanOrEqual" selected>&gt;</option>
           </select>
         </div>
-        <div>
-          <input
-            type="date"
-            class="filter-value-date"
-            value={filterValueDate}
-            onchange={handleChangeInput}
-          />
-        </div>
       </div>
     </template>
+    <div>
+      <input
+        type={apiAttributes.filterType}
+        class="filter-value-date"
+        value={filterValue}
+        onchange={handleChangeInput}
+      />
+    </div>
   </div>
 </template>
