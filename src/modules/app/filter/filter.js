@@ -30,6 +30,9 @@ export default class Filter extends LightningElement {
     this.apiAttributes.operator = value;
   }
 
+  @api
+  consoleLog = false;
+
   apiAttributes = {};
 
   /**
