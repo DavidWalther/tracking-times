@@ -30,6 +30,10 @@ export default class Filter extends LightningElement {
     this.apiAttributes.operator = value;
   }
 
+  /**
+   * A JS-Object for defining value paths and their labels in the picklist for available filter fields.
+   * expected structure: [ {path: string, label: string } ]
+   */
   @api
   paths = [];
 
@@ -38,45 +42,9 @@ export default class Filter extends LightningElement {
 
   apiAttributes = {};
 
-  /**
-   * This function defines paths to read the values form an object. These paths are used to check for a filter match.
-   *
-   * @param filtersPaths A JS-Object for defining value paths and their labels in the picklist for available filter fields.
-   * expected structure: [ {path: string, label: string } ]
-   */
-  @api
-  setFilterPaths(filtersPaths) {
-    // Guardians
-    if (!filtersPaths) {
-      const exception = { message: "'filtersPaths' must be defined" };
-      throw exception;
-    }
-    if (!Array.isArray(filtersPaths)) {
-      const exception = { message: "'filtersPaths' must be an array" };
-      throw exception;
-    }
-    filtersPaths.forEach(entry => {
-      if (!entry.path) {
-        const exception = {
-          message: "each entry of 'filtersPaths' must have a 'path' attribute"
-        };
-        throw exception;
-      }
-      if (!entry.label) {
-        const exception = {
-          message: "each entry of 'filtersPaths' must have a 'label' attribute"
-        };
-        throw exception;
-      }
-    });
-
-    // Business logic
-    this.filterPaths = [...filtersPaths];
-  }
-
   @api
   isMatch(objectToCheck) {
-    const fieldPath = this.getFieldPathFromSelectedLabel();
+    const fieldPath = this.selectedFieldPath;
     const operator = this.getOperatorValue();
     const compareValue = this.filterValue;
     return this.isFilterMatch(objectToCheck, fieldPath, operator, compareValue);
@@ -172,10 +140,6 @@ export default class Filter extends LightningElement {
   //----------------------------
   // helpers
   //----------------------------
-
-  getFieldPathFromSelectedLabel() {
-    return this.template.querySelector('.filter-path select').value;
-  }
 
   getOperatorValue() {
     let optionList = this.template.querySelectorAll('.filter-operator option');

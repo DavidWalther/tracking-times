@@ -2,8 +2,8 @@
   <div class="content">
     <div class="filter-path">
       <select>
-        <template for:each={filterPaths} for:item="entry">
-          <option key={entry.path} value={entry.path}>{entry.label}</option>
+        <template for:each={paths} for:item="path">
+          <option key={path.path} value={path.path}>{path.label}</option>
         </template>
       </select>
     </div>

@@ -92,11 +92,11 @@ describe('api functions', () => {
         document.body.removeChild(document.body.firstChild);
       }
     });
-
+/*
     test("'setFilterPaths' is defined with guardians", () => {
       const element = createElement('app-filter', { is: Filter });
       try {
-        element.setFilterPaths();
+        element.paths();
       } catch (exc) {
         expect(exc.message).toBe("'filtersPaths' must be defined");
       }
@@ -129,8 +129,8 @@ describe('api functions', () => {
       ];
       element.setFilterPaths(array);
     });
-
-    test("'setFilterPaths' defines a select for defined fields", () => {
+*/
+    test("'paths' defines a select for defined fields", () => {
       const testPath1 = 'testPath1';
       const testLabel1 = 'testLabel1';
       const testPath2 = 'testPath2';
@@ -171,7 +171,7 @@ describe('api functions', () => {
       const testObject = { startAttribute: new Date('2000-06-01').getTime() };
       const element = createElement('app-filter', { is: Filter });
       element.filterType = 'date';
-      element.setFilterPaths(fieldParameter);
+      element.paths = fieldParameter;
       document.body.appendChild(element);
 
       const attributeSelect = element.shadowRoot.querySelector(
@@ -202,7 +202,7 @@ describe('api functions', () => {
       const testObject = { startAttribute: new Date('2000-06-01').getTime() };
       const element = createElement('app-filter', { is: Filter });
       element.filterType = 'date';
-      element.setFilterPaths(fieldParameter);
+      element.paths = fieldParameter;
       document.body.appendChild(element);
 
       const attributeSelect = element.shadowRoot.querySelector(
