@@ -48,7 +48,7 @@ export default class Filter extends LightningElement {
   isMatch(objectToCheck) {
     const fieldPath = this.selectedFieldPath;
     const operator = this.selectedOperator;
-    const compareValue = this.filterValue;
+    const compareValue = this.enteredCompareValue;
     return this.isFilterMatch(objectToCheck, fieldPath, operator, compareValue);
   }
 
@@ -148,6 +148,11 @@ export default class Filter extends LightningElement {
 
   get selectedFieldPath() {
     const result = this.template.querySelector('.filter-path select').value;
+    return result;
+  }
+
+  get enteredCompareValue() {
+    const result = this.template.querySelector('input').value;
     return result;
   }
 
