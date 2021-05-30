@@ -1,7 +1,7 @@
 /**
  * This component contains a single filter setting for a certain type of data.
  */
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 const OPERATORS = {
   date: [
@@ -46,13 +46,6 @@ export default class Filter extends LightningElement {
   }
 
   //----------------------------
-  // private attributes
-  //----------------------------
-
-  @track
-  filterPaths = [];
-
-  //----------------------------
   // handlers
   //----------------------------
   connectedCallback() {
@@ -75,14 +68,6 @@ export default class Filter extends LightningElement {
         }
       }
     }
-  }
-
-  handleChangeInput(event) {
-    if (this.consoleLog) {
-      // eslint-disable-next-line no-console
-      console.log('app-filter.handleChangeInput');
-    }
-    this.filterValue = event.target.value;
   }
 
   //----------------------------
@@ -154,9 +139,5 @@ export default class Filter extends LightningElement {
   get enteredCompareValue() {
     const result = this.template.querySelector('input').value;
     return result;
-  }
-
-  get isPathArrayIsNotEmpty() {
-    return this.filterPaths.length >= 0;
   }
 }
