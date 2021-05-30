@@ -3,7 +3,6 @@
  */
 import { LightningElement, api, track } from 'lwc';
 
-const EVENT_NAME_FILTER_TYPE_SET = 'filtertype';
 const OPERATORS = {
   date: [
     { label: '≥', value: 'greaterThanOrEqual' }
@@ -88,9 +87,7 @@ export default class Filter extends LightningElement {
 
   renderedCallback() {}
 
-  handleAttributeSetFilterType() {
-    this.fireEventFilterTypeSet();
-  }
+  handleAttributeSetFilterType() {}
 
   handleChangeInput(event) {
     if (this.consoleLog) {
@@ -103,14 +100,6 @@ export default class Filter extends LightningElement {
   //----------------------------
   // actions
   //----------------------------
-
-  fireEventFilterTypeSet() {
-    const eventDetail = {};
-    eventDetail.filterType = this.filterType;
-    this.dispatchEvent(
-      new CustomEvent(EVENT_NAME_FILTER_TYPE_SET, { detail: eventDetail })
-    );
-  }
 
   isFilterMatch(compareObject, path, operator, filterValue) {
     if (this.consoleLog) {
