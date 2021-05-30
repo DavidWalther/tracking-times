@@ -19,7 +19,7 @@ describe('attributes', () => {
       expect(elements_ToCheck.length).toBe(1);
       expect(elements_ToCheck[0].classList).toContain('filter-text');
     });
-
+    /*
     test("date filter section is displayed on type 'date'.", () => {
       const element = createElement('app-filter', { is: Filter });
       element.filterType = 'date';
@@ -28,7 +28,7 @@ describe('attributes', () => {
       const elements_ToCheck = element.shadowRoot.querySelectorAll('.filter');
       expect(elements_ToCheck.length).toBe(1);
       expect(elements_ToCheck[0].classList).toContain('filter-date');
-    });
+    });*/
 
     test("A 'filtertypeset' event is fired on setting the attribute", () => {
       const handler = jest.fn();
@@ -182,7 +182,7 @@ describe('api functions', () => {
       //attributeSelect.dispatchEvent(new CustomEvent('change'));
 
       const operatorSelect = element.shadowRoot.querySelector(
-        '.filter-date select'
+        '.filter-operator select'
       );
       operatorSelect.value = 'greaterThanOrEqual';
       //operatorSelect.dispatchEvent(new CustomEvent('change'));
@@ -214,7 +214,7 @@ describe('api functions', () => {
       //attributeSelect.dispatchEvent(new CustomEvent('change'));
 
       const operatorSelect = element.shadowRoot.querySelector(
-        '.filter-date select'
+        '.filter-operator select'
       );
       expect(operatorSelect).toBeTruthy();
       operatorSelect.value = 'greaterThanOrEqual';

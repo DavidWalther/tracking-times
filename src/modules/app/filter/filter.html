@@ -10,19 +10,15 @@
     <template if:true={isFilterTypeText}>
       <div class="filter filter-text"></div>
     </template>
-    <template if:true={isFilterTypeDate}>
-      <div class="filter filter-date">
-        <div class="filter-operator">
-          <select onchange={handleChangeDateOperator}>
-            <template for:each={operators} for:item="operator">
-              <option key={operator.value} value={operator.value}
-                >{operator.label}</option
-              >
-            </template>
-          </select>
-        </div>
-      </div>
-    </template>
+    <div class="filter-operator">
+      <select onchange={handleChangeDateOperator}>
+        <template for:each={operators} for:item="operator">
+          <option key={operator.value} value={operator.value}
+            >{operator.label}</option
+          >
+        </template>
+      </select>
+    </div>
     <div>
       <input
         type={apiAttributes.filterType}
