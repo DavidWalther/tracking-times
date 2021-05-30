@@ -135,7 +135,8 @@ export default class Filter extends LightningElement {
   //----------------------------
 
   get operators() {
-    return OPERATORS[this.filterType];
+    const result = OPERATORS[this.filterType];
+    return result ? result : [];
   }
 
   get selectedOperator() {
