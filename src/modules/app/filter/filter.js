@@ -62,6 +62,29 @@ export default class Filter extends LightningElement {
   //----------------------------
   // handlers
   //----------------------------
+  connectedCallback() {
+    if (this.consoleLog) {
+      // eslint-disable-next-line no-console
+      console.log('app-filter.connectedCallback');
+
+      // eslint-disable-next-line no-console
+      console.log(
+        'app-filter.connectedCallback filtertype: ' + this.filterType
+      );
+    }
+
+    if (!this.value) {
+      switch (this.filterType) {
+        case 'date': {
+          this.value = new Date().toISOString().split('T')[0];
+          break;
+        }
+        // eslint-disable-next-line no-empty
+        default: {
+        }
+      }
+    }
+  }
 
   renderedCallback() {}
 
