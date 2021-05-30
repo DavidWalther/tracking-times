@@ -182,12 +182,4 @@ export default class Filter extends LightningElement {
   get isPathArrayIsNotEmpty() {
     return this.filterPaths.length >= 0;
   }
-
-  get isFilterTypeText() {
-    return this.filterType === 'text';
-  }
-
-  get isFilterTypeDate() {
-    return this.filterType === 'date';
-  }
 }
