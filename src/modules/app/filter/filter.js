@@ -30,6 +30,9 @@ export default class Filter extends LightningElement {
     this.apiAttributes.operator = value;
   }
 
+  @api
+  consoleLog = false;
+
   apiAttributes = {};
 
   /**
@@ -68,6 +71,14 @@ export default class Filter extends LightningElement {
     this.filterPaths = [...filtersPaths];
   }
 
+  @api
+  isMatch(objectToCheck) {
+    const fieldPath = this.getFieldPathFromSelectedLabel();
+    const operator = this.getOperatorValue();
+    const compareValue = this.filterValue;
+    return this.isFilterMatch(objectToCheck, fieldPath, operator, compareValue);
+  }
+
   //----------------------------
   // private attributes
   //----------------------------
@@ -86,11 +97,13 @@ export default class Filter extends LightningElement {
     this.fireEventFilterTypeSet();
   }
 
-  handleChangeDateOperator() {
-    this.readOperator();
-  }
+  handleChangeDateOperator() {}
 
   handleChangeInput(event) {
+    if (this.consoleLog) {
+      // eslint-disable-next-line no-console
+      console.log('app-filter.handleChangeInput');
+    }
     this.filterValue = event.target.value;
   }
 
@@ -110,9 +123,56 @@ export default class Filter extends LightningElement {
     );
   }
 
+  isFilterMatch(compareObject, path, operator, filterValue) {
+    if (this.consoleLog) {
+      // eslint-disable-next-line no-console
+      console.log('app-filter.isFilterMatch - start');
+      // eslint-disable-next-line no-console
+      console.log('path: ' + path);
+      // eslint-disable-next-line no-console
+      console.log('operator: ' + operator);
+      // eslint-disable-next-line no-console
+      console.log('filterValue: ' + filterValue);
+    }
+    const objectValue = compareObject[path];
+
+    switch (this.filterType) {
+      case 'date': {
+        if (this.consoleLog) {
+          // eslint-disable-next-line no-console
+          console.log('app-filter.isFilterMatch - type date');
+        }
+        let filterValueDate = new Date(filterValue).getTime();
+
+        switch (operator) {
+          case 'greaterThanOrEqual': {
+            if (this.consoleLog) {
+              // eslint-disable-next-line no-console
+              console.log(
+                'app-filter.isFilterMatch - operator greaterThanOrEqual'
+              );
+              // eslint-disable-next-line no-console
+              console.log('objectValue: ' + objectValue);
+              // eslint-disable-next-line no-console
+              console.log('filterValueDate: ' + filterValueDate);
+            }
+            return objectValue >= filterValueDate;
+          }
+          default:
+            return false;
+        }
+      }
+      default:
+        return false;
+    }
+  }
   //----------------------------
   // helpers
   //----------------------------
+
+  getFieldPathFromSelectedLabel() {
+    return this.template.querySelector('.filter-path select').value;
+  }
 
   getOperatorValue() {
     let optionList = this.template.querySelectorAll('.filter-operator option');

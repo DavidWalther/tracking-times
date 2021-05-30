@@ -157,4 +157,75 @@ describe('api functions', () => {
       });
     });
   });
+
+  describe('isMatch', () => {
+    afterEach(() => {
+      // The jsdom instance is shared across test cases in a single file so reset the DOM
+      while (document.body.firstChild) {
+        document.body.removeChild(document.body.firstChild);
+      }
+    });
+
+    test("Date - returns 'true' if object matches filter", () => {
+      const fieldParameter = [{ path: 'startAttribute', label: 'startLabel' }];
+      const testObject = { startAttribute: new Date('2000-06-01').getTime() };
+      const element = createElement('app-filter', { is: Filter });
+      element.filterType = 'date';
+      element.setFilterPaths(fieldParameter);
+      document.body.appendChild(element);
+
+      const attributeSelect = element.shadowRoot.querySelector(
+        '.filter-path select'
+      );
+      attributeSelect.value = 'startAttribute';
+      attributeSelect.dispatchEvent(new CustomEvent('change'));
+
+      const operatorSelect = element.shadowRoot.querySelector(
+        '.filter-date select'
+      );
+      operatorSelect.value = 'greaterThanOrEqual';
+      operatorSelect.dispatchEvent(new CustomEvent('change'));
+
+      const inputCompareValue = element.shadowRoot.querySelector('input');
+      inputCompareValue.value = '2000-01-01';
+      inputCompareValue.dispatchEvent(new CustomEvent('change'));
+
+      // give 'time' to process asychronous event handling
+      return Promise.resolve().then(() => {
+        const result = element.isMatch(testObject);
+        expect(result).toBe(true);
+      });
+    });
+
+    test("Date - returns 'false' if object does not matches filter", () => {
+      const fieldParameter = [{ path: 'startAttribute', label: 'startLabel' }];
+      const testObject = { startAttribute: new Date('2000-06-01').getTime() };
+      const element = createElement('app-filter', { is: Filter });
+      element.filterType = 'date';
+      element.setFilterPaths(fieldParameter);
+      document.body.appendChild(element);
+
+      const attributeSelect = element.shadowRoot.querySelector(
+        '.filter-path select'
+      );
+      attributeSelect.value = 'startAttribute';
+      attributeSelect.dispatchEvent(new CustomEvent('change'));
+
+      const operatorSelect = element.shadowRoot.querySelector(
+        '.filter-date select'
+      );
+      operatorSelect.value = 'greaterThanOrEqual';
+      operatorSelect.dispatchEvent(new CustomEvent('change'));
+
+      const inputCompareValue = element.shadowRoot.querySelector('input');
+      inputCompareValue.value = '2000-12-01';
+      inputCompareValue.dispatchEvent(new CustomEvent('change'));
+
+      // give 'time' to process asychronous event handling
+      return Promise.resolve().then(() => {
+        const result = element.isMatch(testObject);
+        expect(result).toBe(false);
+      });
+    });
+  });
 });
