@@ -72,7 +72,6 @@ export default class Filter extends LightningElement {
   }
 
   @api
-  // eslint-disable-next-line no-unused-vars
   isMatch(objectToCheck) {
     const fieldPath = this.getFieldPathFromSelectedLabel();
     const operator = this.getOperatorValue();
@@ -101,6 +100,10 @@ export default class Filter extends LightningElement {
   handleChangeDateOperator() {}
 
   handleChangeInput(event) {
+    if (this.consoleLog) {
+      // eslint-disable-next-line no-console
+      console.log('app-filter.handleChangeInput');
+    }
     this.filterValue = event.target.value;
   }
 
@@ -121,22 +124,38 @@ export default class Filter extends LightningElement {
   }
 
   isFilterMatch(compareObject, path, operator, filterValue) {
-    // eslint-disable-next-line no-console
-    console.log('app-filter.isFilterMatch - start');
+    if (this.consoleLog) {
+      // eslint-disable-next-line no-console
+      console.log('app-filter.isFilterMatch - start');
+      // eslint-disable-next-line no-console
+      console.log('path: ' + path);
+      // eslint-disable-next-line no-console
+      console.log('operator: ' + operator);
+      // eslint-disable-next-line no-console
+      console.log('filterValue: ' + filterValue);
+    }
     const objectValue = compareObject[path];
 
     switch (this.filterType) {
       case 'date': {
-        // eslint-disable-next-line no-console
-        console.log('app-filter.isFilterMatch - type date');
+        if (this.consoleLog) {
+          // eslint-disable-next-line no-console
+          console.log('app-filter.isFilterMatch - type date');
+        }
         let filterValueDate = new Date(filterValue).getTime();
 
         switch (operator) {
           case 'greaterThanOrEqual': {
-            // eslint-disable-next-line no-console
-            console.log(
-              'app-filter.isFilterMatch - operator greaterThanOrEqual'
-            );
+            if (this.consoleLog) {
+              // eslint-disable-next-line no-console
+              console.log(
+                'app-filter.isFilterMatch - operator greaterThanOrEqual'
+              );
+              // eslint-disable-next-line no-console
+              console.log('objectValue: ' + objectValue);
+              // eslint-disable-next-line no-console
+              console.log('filterValueDate: ' + filterValueDate);
+            }
             return objectValue >= filterValueDate;
           }
           default:
