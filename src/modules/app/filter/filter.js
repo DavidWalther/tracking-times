@@ -5,9 +5,11 @@ import { LightningElement, api, track } from 'lwc';
 
 const OPERATORS = {
   date: [
-    { label: '≥', value: 'greaterThanOrEqual' }
-    /* ,
-    { label: '≤', value: 'lessOrEqual' } */
+    {
+      label: '≥',
+      value: 'greaterThanOrEqual'
+    } /*,
+    { label: '≤', value: 'lessOrEqual' }*/
   ]
 };
 
@@ -20,12 +22,7 @@ export default class Filter extends LightningElement {
    * The available operators are defined by the provided filter type.
    */
   @api
-  get filterType() {
-    return this.apiAttributes.filterType;
-  }
-  set filterType(value) {
-    this.apiAttributes.filterType = value;
-  }
+  type;
 
   /**
    * A JS-Object for defining value paths and their labels in the picklist for available filter fields.
@@ -39,8 +36,6 @@ export default class Filter extends LightningElement {
 
   @api
   value;
-
-  apiAttributes = {};
 
   @api
   isMatch(objectToCheck) {
@@ -66,13 +61,11 @@ export default class Filter extends LightningElement {
       console.log('app-filter.connectedCallback');
 
       // eslint-disable-next-line no-console
-      console.log(
-        'app-filter.connectedCallback filtertype: ' + this.filterType
-      );
+      console.log('app-filter.connectedCallback type: ' + this.type);
     }
 
     if (!this.value) {
-      switch (this.filterType) {
+      switch (this.type) {
         case 'date': {
           this.value = new Date().toISOString().split('T')[0];
           break;
@@ -109,7 +102,7 @@ export default class Filter extends LightningElement {
     }
     const objectValue = compareObject[path];
 
-    switch (this.filterType) {
+    switch (this.type) {
       case 'date': {
         if (this.consoleLog) {
           // eslint-disable-next-line no-console
@@ -145,7 +138,7 @@ export default class Filter extends LightningElement {
   //----------------------------
 
   get operators() {
-    const result = OPERATORS[this.filterType];
+    const result = OPERATORS[this.type];
     return result ? result : [];
   }
 

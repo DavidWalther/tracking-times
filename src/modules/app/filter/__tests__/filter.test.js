@@ -96,7 +96,7 @@ describe('api functions', () => {
       ];
 
       const element = createElement('app-filter', { is: Filter });
-      element.filterType = 'date';
+      element.type = 'date';
       element.paths = fieldParameter;
       document.body.appendChild(element);
 
@@ -125,7 +125,7 @@ describe('api functions', () => {
       const fieldParameter = [{ path: 'startAttribute', label: 'startLabel' }];
       const testObject = { startAttribute: new Date('2000-06-01').getTime() };
       const element = createElement('app-filter', { is: Filter });
-      element.filterType = 'date';
+      element.type = 'date';
       element.paths = fieldParameter;
       element.consoleLog = true;
       document.body.appendChild(element);
@@ -157,7 +157,7 @@ describe('api functions', () => {
       const fieldParameter = [{ path: 'startAttribute', label: 'startLabel' }];
       const testObject = { startAttribute: new Date('2000-06-01').getTime() };
       const element = createElement('app-filter', { is: Filter });
-      element.filterType = 'date';
+      element.type = 'date';
       element.paths = fieldParameter;
       document.body.appendChild(element);
 
