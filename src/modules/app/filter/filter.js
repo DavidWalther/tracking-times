@@ -39,13 +39,16 @@ export default class Filter extends LightningElement {
   @api
   consoleLog = false;
 
+  @api
+  value;
+
   apiAttributes = {};
 
   @api
   isMatch(objectToCheck) {
     const fieldPath = this.selectedFieldPath;
     const operator = this.selectedOperator;
-    const compareValue = this.filterValue;
+    const compareValue = this.enteredCompareValue;
     return this.isFilterMatch(objectToCheck, fieldPath, operator, compareValue);
   }
 
@@ -59,6 +62,29 @@ export default class Filter extends LightningElement {
   //----------------------------
   // handlers
   //----------------------------
+  connectedCallback() {
+    if (this.consoleLog) {
+      // eslint-disable-next-line no-console
+      console.log('app-filter.connectedCallback');
+
+      // eslint-disable-next-line no-console
+      console.log(
+        'app-filter.connectedCallback filtertype: ' + this.filterType
+      );
+    }
+
+    if (!this.value) {
+      switch (this.filterType) {
+        case 'date': {
+          this.value = new Date().toISOString().split('T')[0];
+          break;
+        }
+        // eslint-disable-next-line no-empty
+        default: {
+        }
+      }
+    }
+  }
 
   renderedCallback() {}
 
@@ -145,6 +171,11 @@ export default class Filter extends LightningElement {
 
   get selectedFieldPath() {
     const result = this.template.querySelector('.filter-path select').value;
+    return result;
+  }
+
+  get enteredCompareValue() {
+    const result = this.template.querySelector('input').value;
     return result;
   }
 
