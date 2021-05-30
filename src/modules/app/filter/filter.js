@@ -25,7 +25,6 @@ export default class Filter extends LightningElement {
   }
   set filterType(value) {
     this.apiAttributes.filterType = value;
-    this.handleAttributeSetFilterType();
   }
 
   /**
@@ -84,10 +83,6 @@ export default class Filter extends LightningElement {
       }
     }
   }
-
-  renderedCallback() {}
-
-  handleAttributeSetFilterType() {}
 
   handleChangeInput(event) {
     if (this.consoleLog) {
