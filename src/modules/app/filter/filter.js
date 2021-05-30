@@ -194,6 +194,11 @@ export default class Filter extends LightningElement {
   // getters
   //----------------------------
 
+  get selectedFieldPath() {
+    const result = this.template.querySelector('.filter-path select').value;
+    return result;
+  }
+
   get isPathArrayIsNotEmpty() {
     return this.filterPaths.length >= 0;
   }
