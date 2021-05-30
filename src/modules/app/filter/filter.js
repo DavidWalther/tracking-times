@@ -5,9 +5,12 @@ import { LightningElement, api, track } from 'lwc';
 
 const EVENT_NAME_FILTER_TYPE_SET = 'filtertype';
 const OPERATORS = {
-  date:[
-    {label:'≥', value:'greaterThanOrEqual'}
-  ]};
+  date: [
+    { label: '≥', value: 'greaterThanOrEqual' }
+    /* ,
+    { label: '≤', value: 'lessOrEqual' } */
+  ]
+};
 
 export default class Filter extends LightningElement {
   //----------------------------
@@ -26,14 +29,6 @@ export default class Filter extends LightningElement {
     this.handleAttributeSetFilterType();
   }
 
-  @api
-  get operator() {
-    return this.apiAttributes.operator;
-  }
-  set operator(value) {
-    this.apiAttributes.operator = value;
-  }
-
   /**
    * A JS-Object for defining value paths and their labels in the picklist for available filter fields.
    * expected structure: [ {path: string, label: string } ]
@@ -49,7 +44,7 @@ export default class Filter extends LightningElement {
   @api
   isMatch(objectToCheck) {
     const fieldPath = this.selectedFieldPath;
-    const operator = this.getOperatorValue();
+    const operator = this.selectedOperator;
     const compareValue = this.filterValue;
     return this.isFilterMatch(objectToCheck, fieldPath, operator, compareValue);
   }
@@ -60,7 +55,6 @@ export default class Filter extends LightningElement {
 
   @track
   filterPaths = [];
-  operator;
 
   //----------------------------
   // handlers
@@ -71,8 +65,6 @@ export default class Filter extends LightningElement {
   handleAttributeSetFilterType() {
     this.fireEventFilterTypeSet();
   }
-
-  handleChangeDateOperator() {}
 
   handleChangeInput(event) {
     if (this.consoleLog) {
@@ -85,10 +77,6 @@ export default class Filter extends LightningElement {
   //----------------------------
   // actions
   //----------------------------
-
-  readOperator() {
-    this.operator = this.getOperatorValue();
-  }
 
   fireEventFilterTypeSet() {
     const eventDetail = {};
@@ -141,29 +129,18 @@ export default class Filter extends LightningElement {
         return false;
     }
   }
-  //----------------------------
-  // helpers
-  //----------------------------
-
-  getOperatorValue() {
-    let optionList = this.template.querySelectorAll('.filter-operator option');
-    let result = null;
-    //TODO: check why Array.find does not work
-    optionList.forEach(option => {
-      if (option.selected) {
-        result = option;
-      }
-    });
-
-    return result.value;
-  }
 
   //----------------------------
   // getters
   //----------------------------
+
   get operators() {
     return OPERATORS[this.filterType];
-  } 
+  }
+
+  get selectedOperator() {
+    return this.template.querySelector('.filter-operator select').value;
+  }
 
   get selectedFieldPath() {
     const result = this.template.querySelector('.filter-path select').value;

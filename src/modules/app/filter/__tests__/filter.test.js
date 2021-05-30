@@ -172,19 +172,20 @@ describe('api functions', () => {
       const element = createElement('app-filter', { is: Filter });
       element.filterType = 'date';
       element.paths = fieldParameter;
+      element.consoleLog = true;
       document.body.appendChild(element);
 
       const attributeSelect = element.shadowRoot.querySelector(
         '.filter-path select'
       );
       attributeSelect.value = 'startAttribute';
-      attributeSelect.dispatchEvent(new CustomEvent('change'));
+      //attributeSelect.dispatchEvent(new CustomEvent('change'));
 
       const operatorSelect = element.shadowRoot.querySelector(
         '.filter-date select'
       );
       operatorSelect.value = 'greaterThanOrEqual';
-      operatorSelect.dispatchEvent(new CustomEvent('change'));
+      //operatorSelect.dispatchEvent(new CustomEvent('change'));
 
       const inputCompareValue = element.shadowRoot.querySelector('input');
       inputCompareValue.value = '2000-01-01';
@@ -208,16 +209,19 @@ describe('api functions', () => {
       const attributeSelect = element.shadowRoot.querySelector(
         '.filter-path select'
       );
+      expect(attributeSelect).toBeTruthy();
       attributeSelect.value = 'startAttribute';
-      attributeSelect.dispatchEvent(new CustomEvent('change'));
+      //attributeSelect.dispatchEvent(new CustomEvent('change'));
 
       const operatorSelect = element.shadowRoot.querySelector(
         '.filter-date select'
       );
+      expect(operatorSelect).toBeTruthy();
       operatorSelect.value = 'greaterThanOrEqual';
-      operatorSelect.dispatchEvent(new CustomEvent('change'));
+      //operatorSelect.dispatchEvent(new CustomEvent('change'));
 
       const inputCompareValue = element.shadowRoot.querySelector('input');
+      expect(inputCompareValue).toBeTruthy();
       inputCompareValue.value = '2000-12-01';
       inputCompareValue.dispatchEvent(new CustomEvent('change'));
 
