@@ -70,7 +70,12 @@ export default class Filter extends LightningElement {
 
   @api
   // eslint-disable-next-line no-unused-vars
-  isMatch(objectToCheck) {}
+  isMatch(objectToCheck) {
+    const fieldPath = this.getFieldPathFromSelectedLabel();
+    const operator = this.getOperatorValue();
+    const compareValue = this.filterValue;
+    return this.isFilterMatch(objectToCheck, fieldPath, operator, compareValue);
+  }
 
   //----------------------------
   // private attributes
@@ -112,9 +117,40 @@ export default class Filter extends LightningElement {
     );
   }
 
+  isFilterMatch(compareObject, path, operator, filterValue) {
+    // eslint-disable-next-line no-console
+    console.log('app-filter.isFilterMatch - start');
+    const objectValue = compareObject[path];
+
+    switch (this.filterType) {
+      case 'date': {
+        // eslint-disable-next-line no-console
+        console.log('app-filter.isFilterMatch - type date');
+        let filterValueDate = new Date(filterValue).getTime();
+
+        switch (operator) {
+          case 'greaterThanOrEqual': {
+            // eslint-disable-next-line no-console
+            console.log(
+              'app-filter.isFilterMatch - operator greaterThanOrEqual'
+            );
+            return objectValue >= filterValueDate;
+          }
+          default:
+            return false;
+        }
+      }
+      default:
+        return false;
+    }
+  }
   //----------------------------
   // helpers
   //----------------------------
+
+  getFieldPathFromSelectedLabel() {
+    return this.template.querySelector('.filter-path select').value;
+  }
 
   getOperatorValue() {
     let optionList = this.template.querySelectorAll('.filter-operator option');
