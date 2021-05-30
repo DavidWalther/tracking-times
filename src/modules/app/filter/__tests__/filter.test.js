@@ -142,8 +142,8 @@ describe('api functions', () => {
 
       const element = createElement('app-filter', { is: Filter });
       element.filterType = 'date';
+      element.paths = fieldParameter;
       document.body.appendChild(element);
-      element.setFilterPaths(fieldParameter);
 
       return Promise.resolve().then(() => {
         const selectElements = element.shadowRoot.querySelectorAll(

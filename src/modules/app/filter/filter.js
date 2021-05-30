@@ -31,6 +31,9 @@ export default class Filter extends LightningElement {
   }
 
   @api
+  paths = [];
+
+  @api
   consoleLog = false;
 
   apiAttributes = {};
