@@ -4,6 +4,10 @@
 import { LightningElement, api, track } from 'lwc';
 
 const EVENT_NAME_FILTER_TYPE_SET = 'filtertype';
+const OPERATORS = {
+  date:[
+    {label:'≥', value:'greaterThanOrEqual'}
+  ]};
 
 export default class Filter extends LightningElement {
   //----------------------------
@@ -157,6 +161,9 @@ export default class Filter extends LightningElement {
   //----------------------------
   // getters
   //----------------------------
+  get operators() {
+    return OPERATORS[this.filterType];
+  } 
 
   get selectedFieldPath() {
     const result = this.template.querySelector('.filter-path select').value;

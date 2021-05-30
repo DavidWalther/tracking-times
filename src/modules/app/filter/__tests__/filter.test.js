@@ -92,7 +92,7 @@ describe('api functions', () => {
         document.body.removeChild(document.body.firstChild);
       }
     });
-/*
+    /*
     test("'setFilterPaths' is defined with guardians", () => {
       const element = createElement('app-filter', { is: Filter });
       try {

@@ -19,6 +19,11 @@
         </div>
       </div>
     </template>
+    <select>
+      <template for:each={operators} for:item="operator" >
+        <option key={operator.value} value={operator.value}>{operator.label}</option>
+      </template>
+    </select>
     <div>
       <input
         type={apiAttributes.filterType}
