@@ -15,6 +15,14 @@ const CUTTING_TYPE_ROUND = 'round';
 const DATA_CURRENT_VERSION = 'v0.5';
 
 export default class TimeTracking extends LightningElement {
+  filterPaths = [
+    { path: 'start', label: 'Start' },
+    { path: 'end', label: 'End' }
+  ];
+
+  @track
+  filters = [{ index: 1, type: 'date' }, { index: 2, type: 'date' }];
+
   @track state = {
     label: {
       button: {
@@ -253,18 +261,10 @@ export default class TimeTracking extends LightningElement {
   }
 
   doesMatchFilter(entry) {
-    const minDateTs = new Date(
-      this.template.querySelector('.input-filter-date-minimum').value
-    ).getTime();
-
-    const maxDateTs = new Date(
-      this.template.querySelector('.input-filter-date-maximum').value
-    ).getTime();
-
     let match = true;
-    match = match && this.filterStartAfter(entry, minDateTs);
-    match = match && this.filterStartBefore(entry, maxDateTs);
-
+    this.template.querySelectorAll('app-filter').forEach(filter => {
+      match = match && filter.isMatch(entry);
+    });
     return match;
   }
 
@@ -278,18 +278,13 @@ export default class TimeTracking extends LightningElement {
   }
 
   initStartDateFilters() {
-    let earliestStartValue = new Date('4000-12-31');
-    let latestStartValue = null;
-    this.entries.forEach(entry => {
-      earliestStartValue = Math.min(entry.start, earliestStartValue);
-      latestStartValue = Math.max(entry.start, latestStartValue);
-    });
-    this.filterDateStartMinValue = earliestStartValue
-      ? earliestStartValue
-      : new Date().getTime();
-    this.filterDateStartMaxValue = latestStartValue
-      ? latestStartValue
-      : new Date().getTime();
+    const initialDateValues = this.getInitialDateValues();
+    this.filters[0].value = new Date(initialDateValues.startMin)
+      .toISOString()
+      .split('T')[0];
+    this.filters[1].value = new Date(initialDateValues.startMax)
+      .toISOString()
+      .split('T')[0];
   }
 
   // -- Sort --
@@ -809,6 +804,21 @@ export default class TimeTracking extends LightningElement {
   customConsoleLog(output) {
     // eslint-disable-next-line no-console
     console.log(output);
+  }
+
+  getInitialDateValues() {
+    const currentTimestamp = new Date().getTime();
+    let initialDateObject = {
+      startMin: currentTimestamp,
+      startMax: currentTimestamp
+    };
+
+    return this.entries.reduce((accumulator, currentValue) => {
+      return {
+        startMin: Math.min(accumulator.startMin, currentValue.start),
+        startMax: Math.max(accumulator.startMax, currentValue.start)
+      };
+    }, initialDateObject);
   }
 }
 

@@ -1,7 +1,7 @@
 .flexbox {
   display: flex;
   /*justify-content: space-between;*/
-  gap:5px;
+  gap: 5px;
 }
 
 .flexbox-item > select {
