@@ -1,9 +1,9 @@
 //----------------------------
-// version 1.7
+// version 1.6.3
 //----------------------------
 
-features:
-- create dynamic filters
+tec dept:
+- create dynamic filter componenz
 
 //----------------------------
 // version 1.6.2
