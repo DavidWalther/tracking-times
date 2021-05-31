@@ -8,8 +8,8 @@ const OPERATORS = {
     {
       label: '≥',
       value: 'greaterThanOrEqual'
-    } /*,
-    { label: '≤', value: 'lessOrEqual' }*/
+    },
+    { label: '≤', value: 'lessOrEqual' }
   ]
 };
 
@@ -38,6 +38,9 @@ export default class Filter extends LightningElement {
   value;
 
   @api
+  operator;
+
+  @api
   isMatch(objectToCheck) {
     const fieldPath = this.selectedFieldPath;
     const operator = this.selectedOperator;
@@ -52,9 +55,10 @@ export default class Filter extends LightningElement {
     if (this.consoleLog) {
       // eslint-disable-next-line no-console
       console.log('app-filter.connectedCallback');
-
       // eslint-disable-next-line no-console
       console.log('app-filter.connectedCallback type: ' + this.type);
+      // eslint-disable-next-line no-console
+      console.log('app-filter.connectedCallback operator: ' + this.operator);
     }
 
     if (!this.value) {
@@ -67,6 +71,19 @@ export default class Filter extends LightningElement {
         default: {
         }
       }
+    }
+  }
+
+  renderedCallback() {
+    if (this.consoleLog) {
+      // eslint-disable-next-line no-console
+      console.log('app-filter.renderedCallback');
+    }
+
+    if (this.operator) {
+      this.template.querySelector(
+        '.filter-operator select'
+      ).value = this.operator;
     }
   }
 

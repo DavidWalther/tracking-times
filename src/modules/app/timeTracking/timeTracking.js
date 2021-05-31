@@ -21,7 +21,10 @@ export default class TimeTracking extends LightningElement {
   ];
 
   @track
-  filters = [{ index: 1, type: 'date' }, { index: 2, type: 'date' }];
+  filters = [
+    { index: 1, type: 'date' },
+    { index: 2, type: 'date', operator: 'lessOrEqual' }
+  ];
 
   @track state = {
     label: {
