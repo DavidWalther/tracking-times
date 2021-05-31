@@ -7,9 +7,6 @@
         </template>
       </select>
     </div>
-    <template if:true={isFilterTypeText}>
-      <div class="filter filter-text"></div>
-    </template>
     <div class="filter-operator">
       <select onchange={handleChangeDateOperator}>
         <template for:each={operators} for:item="operator">

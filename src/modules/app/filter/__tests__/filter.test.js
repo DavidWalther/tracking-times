@@ -127,7 +127,6 @@ describe('api functions', () => {
       const element = createElement('app-filter', { is: Filter });
       element.type = 'date';
       element.paths = fieldParameter;
-      element.consoleLog = true;
       document.body.appendChild(element);
 
       const attributeSelect = element.shadowRoot.querySelector(
