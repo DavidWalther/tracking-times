@@ -131,9 +131,7 @@ export default class Filter extends LightningElement {
           case 'lessOrEqual': {
             if (this.consoleLog) {
               // eslint-disable-next-line no-console
-              console.log(
-                'app-filter.isFilterMatch - operator lessOrEqual'
-              );
+              console.log('app-filter.isFilterMatch - operator lessOrEqual');
             }
             return objectValue <= filterValueDate;
           }

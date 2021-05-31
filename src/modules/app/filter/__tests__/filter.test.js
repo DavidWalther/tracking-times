@@ -9,7 +9,7 @@ describe('attributes', () => {
     }
   });
 
-  describe('filter-type', () => {
+  describe('type', () => {
     /*test("text filter section is displayed on type 'text'.", () => {
       const element = createElement('app-filter', { is: Filter });
       element.filterType = 'text';
@@ -19,72 +19,71 @@ describe('attributes', () => {
       expect(elements_ToCheck.length).toBe(1);
       expect(elements_ToCheck[0].classList).toContain('filter-text');
     });*/
-    /*
-    test("date filter section is displayed on type 'date'.", () => {
-      const element = createElement('app-filter', { is: Filter });
-      element.filterType = 'date';
-      document.body.appendChild(element);
 
-      const elements_ToCheck = element.shadowRoot.querySelectorAll('.filter');
-      expect(elements_ToCheck.length).toBe(1);
-      expect(elements_ToCheck[0].classList).toContain('filter-date');
-    });*/
-  });
-});
+    test('input type is defined by parameter', () => {
+      expect(1).toBe(2);
+    });
 
-describe('api functions', () => {
-  afterEach(() => {
-    // The jsdom instance is shared across test cases in a single file so reset the DOM
-    while (document.body.firstChild) {
-      document.body.removeChild(document.body.firstChild);
-    }
+    test('operators depend on type', () => {
+      expect(1).toBe(2);
+    });
   });
 
-  describe('setFilterPaths', () => {
+  describe('value', () => {
     afterEach(() => {
       // The jsdom instance is shared across test cases in a single file so reset the DOM
       while (document.body.firstChild) {
         document.body.removeChild(document.body.firstChild);
       }
     });
-    /*
-    test("'setFilterPaths' is defined with guardians", () => {
-      const element = createElement('app-filter', { is: Filter });
-      try {
-        element.paths();
-      } catch (exc) {
-        expect(exc.message).toBe("'filtersPaths' must be defined");
-      }
-      try {
-        element.setFilterPaths('value');
-      } catch (exc) {
-        expect(exc.message).toBe("'filtersPaths' must be an array");
-      }
-      try {
-        const array = ['value', 'test'];
-        element.setFilterPaths(array);
-      } catch (exc) {
-        expect(exc.message).toBe(
-          "each entry of 'filtersPaths' must have a 'path' attribute"
-        );
-      }
-      try {
-        const array = [{ path: 'test' }];
-        element.setFilterPaths(array);
-      } catch (exc) {
-        expect(exc.message).toBe(
-          "each entry of 'filtersPaths' must have a 'label' attribute"
-        );
-      }
-      const array = [
-        {
-          path: 'testPath',
-          label: 'testLabel'
-        }
-      ];
-      element.setFilterPaths(array);
+
+    test('defines initial filter value', () => {
+      expect(1).toBe(2);
     });
-*/
+  });
+
+  describe('operator', () => {
+    afterEach(() => {
+      // The jsdom instance is shared across test cases in a single file so reset the DOM
+      while (document.body.firstChild) {
+        document.body.removeChild(document.body.firstChild);
+      }
+    });
+
+    test('if invalid operator is passed, first entry is selected', () => {
+      expect(1).toBe(2);
+    });
+
+    test('defines selected operator', () => {
+      expect(1).toBe(2);
+    });
+  });
+
+  describe('path', () => {
+    afterEach(() => {
+      // The jsdom instance is shared across test cases in a single file so reset the DOM
+      while (document.body.firstChild) {
+        document.body.removeChild(document.body.firstChild);
+      }
+    });
+
+    test('if invalid path is passed, first entry is selected', () => {
+      expect(1).toBe(2);
+    });
+
+    test('defines selected path', () => {
+      expect(1).toBe(2);
+    });
+  });
+
+  describe('paths', () => {
+    afterEach(() => {
+      // The jsdom instance is shared across test cases in a single file so reset the DOM
+      while (document.body.firstChild) {
+        document.body.removeChild(document.body.firstChild);
+      }
+    });
+
     test("'paths' defines a select for defined fields", () => {
       const testPath1 = 'testPath1';
       const testLabel1 = 'testLabel1';
@@ -111,6 +110,15 @@ describe('api functions', () => {
         expect(selectElements[1].label).toBe(testLabel2);
       });
     });
+  });
+});
+
+describe('api functions', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
   });
 
   describe('isMatch', () => {
