@@ -111,6 +111,12 @@ export default class Filter extends LightningElement {
           console.log('app-filter.isFilterMatch - type date');
         }
         let filterValueDate = new Date(filterValue).getTime();
+        if (this.consoleLog) {
+          // eslint-disable-next-line no-console
+          console.log('objectValue: ' + objectValue);
+          // eslint-disable-next-line no-console
+          console.log('filterValueDate: ' + filterValueDate);
+        }
 
         switch (operator) {
           case 'greaterThanOrEqual': {
@@ -119,12 +125,17 @@ export default class Filter extends LightningElement {
               console.log(
                 'app-filter.isFilterMatch - operator greaterThanOrEqual'
               );
-              // eslint-disable-next-line no-console
-              console.log('objectValue: ' + objectValue);
-              // eslint-disable-next-line no-console
-              console.log('filterValueDate: ' + filterValueDate);
             }
             return objectValue >= filterValueDate;
+          }
+          case 'lessOrEqual': {
+            if (this.consoleLog) {
+              // eslint-disable-next-line no-console
+              console.log(
+                'app-filter.isFilterMatch - operator lessOrEqual'
+              );
+            }
+            return objectValue <= filterValueDate;
           }
           default:
             return false;
