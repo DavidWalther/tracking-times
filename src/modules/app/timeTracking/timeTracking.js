@@ -15,9 +15,14 @@ const CUTTING_TYPE_ROUND = 'round';
 const DATA_CURRENT_VERSION = 'v0.5';
 
 export default class TimeTracking extends LightningElement {
+  filterPaths = [
+    { path: 'start', label: 'Start' },
+    { path: 'end', label: 'End' }
+  ];
 
-  filterPaths = [{path:'start', label:'Start'}, {path:'end', label:'End'}];
-  
+  @track
+  filters = [{ index: 1, type: 'date' }];
+
   @track state = {
     label: {
       button: {
@@ -256,18 +261,10 @@ export default class TimeTracking extends LightningElement {
   }
 
   doesMatchFilter(entry) {
-    const minDateTs = new Date(
-      this.template.querySelector('.input-filter-date-minimum').value
-    ).getTime();
-
-    const maxDateTs = new Date(
-      this.template.querySelector('.input-filter-date-maximum').value
-    ).getTime();
-
     let match = true;
-    match = match && this.filterStartAfter(entry, minDateTs);
-    match = match && this.filterStartBefore(entry, maxDateTs);
-
+    this.template.querySelectorAll('app-filter').forEach(filter => {
+      match = match && filter.isMatch(entry);
+    });
     return match;
   }
 
