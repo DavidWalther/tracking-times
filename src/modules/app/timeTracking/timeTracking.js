@@ -21,7 +21,7 @@ export default class TimeTracking extends LightningElement {
   ];
 
   @track
-  filters = [{ index: 1, type: 'date' }];
+  filters = [{ index: 1, type: 'date' }, { index: 2, type: 'date' }];
 
   @track state = {
     label: {
@@ -278,18 +278,13 @@ export default class TimeTracking extends LightningElement {
   }
 
   initStartDateFilters() {
-    let earliestStartValue = new Date('4000-12-31');
-    let latestStartValue = null;
-    this.entries.forEach(entry => {
-      earliestStartValue = Math.min(entry.start, earliestStartValue);
-      latestStartValue = Math.max(entry.start, latestStartValue);
-    });
-    this.filterDateStartMinValue = earliestStartValue
-      ? earliestStartValue
-      : new Date().getTime();
-    this.filterDateStartMaxValue = latestStartValue
-      ? latestStartValue
-      : new Date().getTime();
+    const initialDateValues = this.getInitialDateValues();
+    this.filters[0].value = new Date(initialDateValues.startMin)
+      .toISOString()
+      .split('T')[0];
+    this.filters[1].value = new Date(initialDateValues.startMax)
+      .toISOString()
+      .split('T')[0];
   }
 
   // -- Sort --
@@ -809,6 +804,21 @@ export default class TimeTracking extends LightningElement {
   customConsoleLog(output) {
     // eslint-disable-next-line no-console
     console.log(output);
+  }
+
+  getInitialDateValues() {
+    const currentTimestamp = new Date().getTime();
+    let initialDateObject = {
+      startMin: currentTimestamp,
+      startMax: currentTimestamp
+    };
+
+    return this.entries.reduce((accumulator, currentValue) => {
+      return {
+        startMin: Math.min(accumulator.startMin, currentValue.start),
+        startMax: Math.max(accumulator.startMax, currentValue.start)
+      };
+    }, initialDateObject);
   }
 }
 
