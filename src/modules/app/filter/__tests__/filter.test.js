@@ -51,7 +51,7 @@ describe('attributes', () => {
         '.filter-operator option'
       );
       expect(operatorOptions.length).toBe(1);
-      expect(operatorOptions[0].value).toBe('contains');
+      expect(operatorOptions[0].value).toBe('containsWithCase');
     });
 
     test('operators depend on type - date', () => {
