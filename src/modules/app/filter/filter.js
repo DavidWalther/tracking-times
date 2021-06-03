@@ -12,8 +12,10 @@ const OPERATORS = {
     { label: '≤', value: 'lessOrEqual' }
   ],
   text: [
-    { label: 'contains (a <> A)', value: 'containsWithCase' },
-    { label: 'contains (a = A)', value: 'containsWithoutCase' }
+    { label: 'starts with (a = A)', value: 'startsWithWithoutCase' },
+    { label: 'contains (a = A)', value: 'containsWithoutCase' },
+    { label: 'starts with (a <> A)', value: 'startsWithWithCase' },
+    { label: 'contains (a <> A)', value: 'containsWithCase' }
   ]
 };
 
@@ -140,6 +142,11 @@ export default class Filter extends LightningElement {
             return objectValue
               .toLowerCase()
               .includes(filterValue.toLowerCase());
+          }
+          case 'startsWithWithoutCase': {
+            return objectValue
+              .toLowerCase()
+              .startsWith(filterValue.toLowerCase());
           }
           default:
             return false;

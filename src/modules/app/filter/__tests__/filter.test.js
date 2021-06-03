@@ -50,9 +50,11 @@ describe('attributes', () => {
       const operatorOptions = element.shadowRoot.querySelectorAll(
         '.filter-operator option'
       );
-      expect(operatorOptions.length).toBe(2);
+      expect(operatorOptions.length).toBe(4);
       expect(operatorOptions[0].value).toBe('containsWithCase');
       expect(operatorOptions[1].value).toBe('containsWithoutCase');
+      expect(operatorOptions[2].value).toBe('startsWithWithCase');
+      expect(operatorOptions[3].value).toBe('startsWithWithoutCase');
     });
 
     test('operators depend on type - date', () => {
@@ -301,8 +303,9 @@ describe('api functions', () => {
         expect(result).toBe(false);
       });
     });
+    describe('type text', () => {
 
-    test("Text - containsWithCase - returns 'true' if the selected field contains text", () => {
+    test("containsWithCase - returns 'true' if the selected field contains text", () => {
       const CONTAINING_TEXT = 'abcd';
       const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
       const testObject = {
@@ -325,7 +328,7 @@ describe('api functions', () => {
       });
     });
 
-    test("Text - containsWithoutCase - returns 'true' if the selected field contains the same text in different case", () => {
+    test("containsWithoutCase - returns 'true' if the selected field contains the same text in different case", () => {
       const CONTAINING_TEXT = 'abcd';
       const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
       const testObject = {
@@ -343,6 +346,25 @@ describe('api functions', () => {
       inputCompareValue.dispatchEvent(new CustomEvent('change'));
 
       return Promise.resolve().then(() => {
+        const result = element.isMatch(testObject);
+        expect(result).toBe(true);
+      });
+
+    });
+      
+      test('startsWithWithoutCase returns true if object fields starts withe value', () => {          
+        const STARTING_TEXT = 'abcd';
+        const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+        const testObject = {
+          comment: STARTING_TEXT + 'comment value'
+        };
+        const element = createElement('app-filter', { is: Filter });
+        element.type = 'text';
+        element.paths = fieldParameter;
+        element.operator = 'startsWithWithoutCase';
+        element.value = STARTING_TEXT;
+        document.body.appendChild(element);
+
         const result = element.isMatch(testObject);
         expect(result).toBe(true);
       });
