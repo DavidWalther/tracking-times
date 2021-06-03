@@ -8,7 +8,7 @@ describe('attributes', () => {
       document.body.removeChild(document.body.firstChild);
     }
   });
-
+  /*
   describe('inactive', () => {
     afterEach(() => {
       // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -21,10 +21,25 @@ describe('attributes', () => {
       expect(1).toBe(2);
     });
   });
+*/
 
   describe('type', () => {
-    test('input type is defined by parameter', () => {
-      expect(1).toBe(2);
+    test('input type is defined by parameter - date', () => {
+      const element = createElement('app-filter', { is: Filter });
+      element.type = 'date';
+      document.body.appendChild(element);
+
+      const input = element.shadowRoot.querySelector('input');
+      expect(input.type).toBe('date');
+    });
+
+    test('input type is defined by parameter - text', () => {
+      const element = createElement('app-filter', { is: Filter });
+      element.type = 'text';
+      document.body.appendChild(element);
+
+      const input = element.shadowRoot.querySelector('input');
+      expect(input.type).toBe('text');
     });
 
     test('operators depend on type', () => {
@@ -32,6 +47,7 @@ describe('attributes', () => {
     });
   });
 
+  /* 
   describe('value', () => {
     afterEach(() => {
       // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -44,7 +60,8 @@ describe('attributes', () => {
       expect(1).toBe(2);
     });
   });
-
+ */
+  /* 
   describe('operator', () => {
     afterEach(() => {
       // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -61,7 +78,7 @@ describe('attributes', () => {
       expect(1).toBe(2);
     });
   });
-
+ */
   describe('path', () => {
     afterEach(() => {
       // The jsdom instance is shared across test cases in a single file so reset the DOM
