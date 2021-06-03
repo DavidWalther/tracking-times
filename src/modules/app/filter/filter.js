@@ -32,6 +32,9 @@ export default class Filter extends LightningElement {
   paths = [];
 
   @api
+  path;
+
+  @api
   consoleLog = false;
 
   @api
@@ -85,6 +88,7 @@ export default class Filter extends LightningElement {
         '.filter-operator select'
       ).value = this.operator;
     }
+    this.readPathFromAttribute();
   }
 
   //----------------------------
@@ -141,6 +145,23 @@ export default class Filter extends LightningElement {
       }
       default:
         return false;
+    }
+  }
+
+  readPathFromAttribute() {
+    const pathAttributeValue = this.path;
+    if (pathAttributeValue) {
+      const operatorSelect = this.template.querySelector('.filter-path select');
+      if (this.consoleLog) {
+        // eslint-disable-next-line no-console
+        console.log('app-filter.readPathFromAttribute');
+        // eslint-disable-next-line no-console
+        console.log(
+          'app-filter.readPathFromAttribute - pathAttributeValue: ' +
+            pathAttributeValue
+        );
+      }
+      operatorSelect.value = pathAttributeValue;
     }
   }
 
