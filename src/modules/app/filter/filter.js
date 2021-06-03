@@ -10,6 +10,9 @@ const OPERATORS = {
       value: 'greaterThanOrEqual'
     },
     { label: '≤', value: 'lessOrEqual' }
+  ],
+  text: [
+    {label: 'contains', value: 'contains'}
   ]
 };
 
