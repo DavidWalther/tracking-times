@@ -42,8 +42,29 @@ describe('attributes', () => {
       expect(input.type).toBe('text');
     });
 
-    test('operators depend on type', () => {
-      expect(1).toBe(2);
+    test('operators depend on type - text', () => {
+      const element = createElement('app-filter', { is: Filter });
+      element.type = 'text';
+      document.body.appendChild(element);
+
+      const operatorOptions = element.shadowRoot.querySelectorAll(
+        '.filter-operator option'
+      );
+      expect(operatorOptions.length).toBe(1);
+      expect(operatorOptions[0].value).toBe('contains');
+    });
+
+    test('operators depend on type - date', () => {
+      const element = createElement('app-filter', { is: Filter });
+      element.type = 'date';
+      document.body.appendChild(element);
+
+      const operatorOptions = element.shadowRoot.querySelectorAll(
+        '.filter-operator option'
+      );
+      expect(operatorOptions.length).toBe(2);
+      expect(operatorOptions[0].value).toBe('greaterThanOrEqual');
+      expect(operatorOptions[1].value).toBe('lessOrEqual');
     });
   });
 
