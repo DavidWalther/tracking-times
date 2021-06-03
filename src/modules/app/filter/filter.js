@@ -11,7 +11,10 @@ const OPERATORS = {
     },
     { label: '≤', value: 'lessOrEqual' }
   ],
-  text: [{ label: 'contains', value: 'containsWithCase' }]
+  text: [
+    { label: 'contains (a <> A)', value: 'containsWithCase' },
+    { label: 'contains (a = A)', value: 'containsWithoutCase' }
+  ]
 };
 
 export default class Filter extends LightningElement {
@@ -85,9 +88,12 @@ export default class Filter extends LightningElement {
     }
 
     if (this.operator) {
-      //this.selectOperator.value = this.operator;
+      this.selectOperator.value = this.operator;
     }
     this.readPathFromAttribute();
+    if (this.operatorSelect) {
+      this.operatorSelect.value = this.operator;
+    }
   }
 
   //----------------------------
@@ -129,6 +135,11 @@ export default class Filter extends LightningElement {
         switch (operator) {
           case 'containsWithCase': {
             return objectValue.includes(filterValue);
+          }
+          case 'containsWithoutCase': {
+            return objectValue
+              .toLowerCase()
+              .includes(filterValue.toLowerCase());
           }
           default:
             return false;

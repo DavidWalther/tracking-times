@@ -50,8 +50,9 @@ describe('attributes', () => {
       const operatorOptions = element.shadowRoot.querySelectorAll(
         '.filter-operator option'
       );
-      expect(operatorOptions.length).toBe(1);
+      expect(operatorOptions.length).toBe(2);
       expect(operatorOptions[0].value).toBe('containsWithCase');
+      expect(operatorOptions[1].value).toBe('containsWithoutCase');
     });
 
     test('operators depend on type - date', () => {
@@ -301,22 +302,44 @@ describe('api functions', () => {
       });
     });
 
-    test("Text - contains - returns 'true' if the selected field contains text", () => {
+    test("Text - containsWithCase - returns 'true' if the selected field contains text", () => {
       const CONTAINING_TEXT = 'abcd';
       const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
       const testObject = {
-        comment: 'comment ' + CONTAINING_TEXT + 'value',
-        startAttribute: new Date('2000-06-01').getTime()
+        comment: 'comment ' + CONTAINING_TEXT + 'value'
       };
       const element = createElement('app-filter', { is: Filter });
       element.type = 'text';
       element.paths = fieldParameter;
-      element.operator = 'contains';
+      element.operator = 'containsWithCase';
       document.body.appendChild(element);
 
       const inputCompareValue = element.shadowRoot.querySelector('input');
       expect(inputCompareValue).toBeTruthy();
       inputCompareValue.value = CONTAINING_TEXT;
+      inputCompareValue.dispatchEvent(new CustomEvent('change'));
+
+      return Promise.resolve().then(() => {
+        const result = element.isMatch(testObject);
+        expect(result).toBe(true);
+      });
+    });
+
+    test("Text - containsWithoutCase - returns 'true' if the selected field contains the same text in different case", () => {
+      const CONTAINING_TEXT = 'abcd';
+      const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+      const testObject = {
+        comment: 'comment ' + CONTAINING_TEXT + 'value'
+      };
+      const element = createElement('app-filter', { is: Filter });
+      element.type = 'text';
+      element.paths = fieldParameter;
+      element.operator = 'containsWithoutCase';
+      document.body.appendChild(element);
+
+      const inputCompareValue = element.shadowRoot.querySelector('input');
+      expect(inputCompareValue).toBeTruthy();
+      inputCompareValue.value = CONTAINING_TEXT.toUpperCase();
       inputCompareValue.dispatchEvent(new CustomEvent('change'));
 
       return Promise.resolve().then(() => {
