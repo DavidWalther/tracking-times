@@ -9,17 +9,20 @@ describe('attributes', () => {
     }
   });
 
+  describe('inactive', () => {
+    afterEach(() => {
+      // The jsdom instance is shared across test cases in a single file so reset the DOM
+      while (document.body.firstChild) {
+        document.body.removeChild(document.body.firstChild);
+      }
+    });
+
+    test('filters can be disabled with flag', () => {
+      expect(1).toBe(2);
+    });
+  });
+
   describe('type', () => {
-    /*test("text filter section is displayed on type 'text'.", () => {
-      const element = createElement('app-filter', { is: Filter });
-      element.filterType = 'text';
-      document.body.appendChild(element);
-
-      const elements_ToCheck = element.shadowRoot.querySelectorAll('.filter');
-      expect(elements_ToCheck.length).toBe(1);
-      expect(elements_ToCheck[0].classList).toContain('filter-text');
-    });*/
-
     test('input type is defined by parameter', () => {
       expect(1).toBe(2);
     });
@@ -68,11 +71,77 @@ describe('attributes', () => {
     });
 
     test('if invalid path is passed, first entry is selected', () => {
-      expect(1).toBe(2);
+      /**
+       * Given
+       * -
+       */
+
+      /**
+       * When
+       * the filter component is created with the 'path' attribue set to 'someValue'
+       */
+      const testPath1 = 'testPath1';
+      const testLabel1 = 'testLabel1';
+      const testPath2 = 'testPath2';
+      const testLabel2 = 'testLabel2';
+      const fieldParameter = [
+        { path: testPath1, label: testLabel1 },
+        { path: testPath2, label: testLabel2 }
+      ];
+
+      const element = createElement('app-filter', { is: Filter });
+      element.type = 'date';
+      element.paths = fieldParameter;
+      element.path = 'someValue';
+      document.body.appendChild(element);
+
+      return Promise.resolve().then(() => {
+        /**
+         * Then
+         * the selected path is the first one in list
+         */
+        const selectElement = element.shadowRoot.querySelector(
+          '.filter-path select'
+        );
+        expect(selectElement.value).toBe(fieldParameter[0].path);
+      });
     });
 
     test('defines selected path', () => {
-      expect(1).toBe(2);
+      /**
+       * Given
+       * -
+       */
+
+      /**
+       * When
+       * the filter component is created with the 'path' attribue set to 'testPath2'
+       */
+      const testPath1 = 'testPath1';
+      const testLabel1 = 'testLabel1';
+      const testPath2 = 'testPath2';
+      const testLabel2 = 'testLabel2';
+      const fieldParameter = [
+        { path: testPath1, label: testLabel1 },
+        { path: testPath2, label: testLabel2 }
+      ];
+
+      const element = createElement('app-filter', { is: Filter });
+      element.type = 'date';
+      element.paths = fieldParameter;
+      element.path = testPath2;
+      document.body.appendChild(element);
+
+      return Promise.resolve().then(() => {
+        /**
+         * Then
+         * Option connected with value 'testPath2' is selected in path picklist
+         */
+        const selectElement = element.shadowRoot.querySelector(
+          '.filter-path select'
+        );
+        expect(selectElement.value).toBe(testPath2);
+      });
     });
   });
 

@@ -32,6 +32,9 @@ export default class Filter extends LightningElement {
   paths = [];
 
   @api
+  path;
+
+  @api
   consoleLog = false;
 
   @api
@@ -81,10 +84,9 @@ export default class Filter extends LightningElement {
     }
 
     if (this.operator) {
-      this.template.querySelector(
-        '.filter-operator select'
-      ).value = this.operator;
+      //this.selectOperator.value = this.operator;
     }
+    this.readPathFromAttribute();
   }
 
   //----------------------------
@@ -144,6 +146,23 @@ export default class Filter extends LightningElement {
     }
   }
 
+  readPathFromAttribute() {
+    const pathAttributeValue = this.path;
+    if (pathAttributeValue) {
+      const operatorSelect = this.selectPath;
+      if (this.consoleLog) {
+        // eslint-disable-next-line no-console
+        console.log('app-filter.readPathFromAttribute');
+        // eslint-disable-next-line no-console
+        console.log(
+          'app-filter.readPathFromAttribute - pathAttributeValue: ' +
+            pathAttributeValue
+        );
+      }
+      operatorSelect.value = pathAttributeValue;
+    }
+  }
+
   //----------------------------
   // getters
   //----------------------------
@@ -154,16 +173,28 @@ export default class Filter extends LightningElement {
   }
 
   get selectedOperator() {
-    return this.template.querySelector('.filter-operator select').value;
+    return this.selectOperator.value;
   }
 
   get selectedFieldPath() {
-    const result = this.template.querySelector('.filter-path select').value;
+    const result = this.selectPath.value;
     return result;
   }
 
   get enteredCompareValue() {
     const result = this.template.querySelector('input').value;
     return result;
+  }
+
+  //----------------------------
+  // Element selectors
+  //----------------------------
+
+  get selectOperator() {
+    return this.template.querySelector('.filter-operator select');
+  }
+
+  get selectPath() {
+    return this.template.querySelector('.filter-path select');
   }
 }
