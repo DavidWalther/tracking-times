@@ -262,5 +262,29 @@ describe('api functions', () => {
         expect(result).toBe(false);
       });
     });
+
+    test("Text - contains - returns 'true' if the selected field contains text", () => {
+      const CONTAINING_TEXT = 'abcd';
+      const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+      const testObject = {
+        comment: 'comment ' + CONTAINING_TEXT + 'value',
+        startAttribute: new Date('2000-06-01').getTime()
+      };
+      const element = createElement('app-filter', { is: Filter });
+      element.type = 'text';
+      element.paths = fieldParameter;
+      element.operator = 'contains';
+      document.body.appendChild(element);
+
+      const inputCompareValue = element.shadowRoot.querySelector('input');
+      expect(inputCompareValue).toBeTruthy();
+      inputCompareValue.value = CONTAINING_TEXT;
+      inputCompareValue.dispatchEvent(new CustomEvent('change'));
+
+      return Promise.resolve().then(() => {
+        const result = element.isMatch(testObject);
+        expect(result).toBe(true);
+      });
+    });
   });
 });
