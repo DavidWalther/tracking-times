@@ -109,19 +109,6 @@ describe('attributes', () => {
             '.filter-path select'
           );
           expect(selectElement.value).toBe(testPath2);
-
-          /**
-           * When
-           * the attribute is changed is chang
-           */
-          element.path = testPath1;
-          element.dispatchEvent(new CustomEvent('change'));
-        })
-        .then(() => {
-          const selectElement = element.shadowRoot.querySelector(
-            '.filter-path select'
-          );
-          expect(selectElement.value).toBe(testPath1);
         });
     });
 
