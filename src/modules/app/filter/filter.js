@@ -148,6 +148,9 @@ export default class Filter extends LightningElement {
               .toLowerCase()
               .startsWith(filterValue.toLowerCase());
           }
+          case 'startsWithWithCase': {
+            return objectValue.startsWith(filterValue);
+          }
           default:
             return false;
         }

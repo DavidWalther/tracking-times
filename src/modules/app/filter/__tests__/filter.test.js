@@ -51,10 +51,10 @@ describe('attributes', () => {
         '.filter-operator option'
       );
       expect(operatorOptions.length).toBe(4);
-      expect(operatorOptions[0].value).toBe('containsWithCase');
+      expect(operatorOptions[0].value).toBe('startsWithWithoutCase');
       expect(operatorOptions[1].value).toBe('containsWithoutCase');
       expect(operatorOptions[2].value).toBe('startsWithWithCase');
-      expect(operatorOptions[3].value).toBe('startsWithWithoutCase');
+      expect(operatorOptions[3].value).toBe('containsWithCase');
     });
 
     test('operators depend on type - date', () => {
@@ -304,55 +304,53 @@ describe('api functions', () => {
       });
     });
     describe('type text', () => {
+      test("containsWithCase - returns 'true' if the selected field contains text", () => {
+        const CONTAINING_TEXT = 'abcd';
+        const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+        const testObject = {
+          comment: 'comment ' + CONTAINING_TEXT + 'value'
+        };
+        const element = createElement('app-filter', { is: Filter });
+        element.type = 'text';
+        element.paths = fieldParameter;
+        element.operator = 'containsWithCase';
+        document.body.appendChild(element);
 
-    test("containsWithCase - returns 'true' if the selected field contains text", () => {
-      const CONTAINING_TEXT = 'abcd';
-      const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
-      const testObject = {
-        comment: 'comment ' + CONTAINING_TEXT + 'value'
-      };
-      const element = createElement('app-filter', { is: Filter });
-      element.type = 'text';
-      element.paths = fieldParameter;
-      element.operator = 'containsWithCase';
-      document.body.appendChild(element);
+        const inputCompareValue = element.shadowRoot.querySelector('input');
+        expect(inputCompareValue).toBeTruthy();
+        inputCompareValue.value = CONTAINING_TEXT;
+        inputCompareValue.dispatchEvent(new CustomEvent('change'));
 
-      const inputCompareValue = element.shadowRoot.querySelector('input');
-      expect(inputCompareValue).toBeTruthy();
-      inputCompareValue.value = CONTAINING_TEXT;
-      inputCompareValue.dispatchEvent(new CustomEvent('change'));
-
-      return Promise.resolve().then(() => {
-        const result = element.isMatch(testObject);
-        expect(result).toBe(true);
-      });
-    });
-
-    test("containsWithoutCase - returns 'true' if the selected field contains the same text in different case", () => {
-      const CONTAINING_TEXT = 'abcd';
-      const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
-      const testObject = {
-        comment: 'comment ' + CONTAINING_TEXT + 'value'
-      };
-      const element = createElement('app-filter', { is: Filter });
-      element.type = 'text';
-      element.paths = fieldParameter;
-      element.operator = 'containsWithoutCase';
-      document.body.appendChild(element);
-
-      const inputCompareValue = element.shadowRoot.querySelector('input');
-      expect(inputCompareValue).toBeTruthy();
-      inputCompareValue.value = CONTAINING_TEXT.toUpperCase();
-      inputCompareValue.dispatchEvent(new CustomEvent('change'));
-
-      return Promise.resolve().then(() => {
-        const result = element.isMatch(testObject);
-        expect(result).toBe(true);
+        return Promise.resolve().then(() => {
+          const result = element.isMatch(testObject);
+          expect(result).toBe(true);
+        });
       });
 
-    });
-      
-      test('startsWithWithoutCase returns true if object fields starts withe value', () => {          
+      test("containsWithoutCase - returns 'true' if the selected field contains the same text in different case", () => {
+        const CONTAINING_TEXT = 'abcd';
+        const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+        const testObject = {
+          comment: 'comment ' + CONTAINING_TEXT + 'value'
+        };
+        const element = createElement('app-filter', { is: Filter });
+        element.type = 'text';
+        element.paths = fieldParameter;
+        element.operator = 'containsWithoutCase';
+        document.body.appendChild(element);
+
+        const inputCompareValue = element.shadowRoot.querySelector('input');
+        expect(inputCompareValue).toBeTruthy();
+        inputCompareValue.value = CONTAINING_TEXT.toUpperCase();
+        inputCompareValue.dispatchEvent(new CustomEvent('change'));
+
+        return Promise.resolve().then(() => {
+          const result = element.isMatch(testObject);
+          expect(result).toBe(true);
+        });
+      });
+
+      test('startsWithWithoutCase: returns true if object fields starts with value', () => {
         const STARTING_TEXT = 'abcd';
         const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
         const testObject = {
@@ -367,6 +365,40 @@ describe('api functions', () => {
 
         const result = element.isMatch(testObject);
         expect(result).toBe(true);
+      });
+
+      test('startsWithWithCase: returns true if object fields starts with same value in same case', () => {
+        const STARTING_TEXT = 'abcd';
+        const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+        const testObject = {
+          comment: STARTING_TEXT + 'comment value'
+        };
+        const element = createElement('app-filter', { is: Filter });
+        element.type = 'text';
+        element.paths = fieldParameter;
+        element.operator = 'startsWithWithCase';
+        element.value = STARTING_TEXT;
+        document.body.appendChild(element);
+
+        const result = element.isMatch(testObject);
+        expect(result).toBe(true);
+      });
+
+      test('startsWithWithCase: returns false if object fields starts with same value in same case', () => {
+        const STARTING_TEXT = 'abcd';
+        const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+        const testObject = {
+          comment: STARTING_TEXT + 'comment value'
+        };
+        const element = createElement('app-filter', { is: Filter });
+        element.type = 'text';
+        element.paths = fieldParameter;
+        element.operator = 'startsWithWithCase';
+        element.value = STARTING_TEXT.toUpperCase();
+        document.body.appendChild(element);
+
+        const result = element.isMatch(testObject);
+        expect(result).toBe(false);
       });
     });
   });
