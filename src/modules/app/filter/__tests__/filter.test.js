@@ -9,17 +9,20 @@ describe('attributes', () => {
     }
   });
 
+  describe('inactive', () => {
+    afterEach(() => {
+      // The jsdom instance is shared across test cases in a single file so reset the DOM
+      while (document.body.firstChild) {
+        document.body.removeChild(document.body.firstChild);
+      }
+    });
+
+    test('filters can be disabled with flag', () => {
+      expect(1).toBe(2);
+    });
+  });
+
   describe('type', () => {
-    /*test("text filter section is displayed on type 'text'.", () => {
-      const element = createElement('app-filter', { is: Filter });
-      element.filterType = 'text';
-      document.body.appendChild(element);
-
-      const elements_ToCheck = element.shadowRoot.querySelectorAll('.filter');
-      expect(elements_ToCheck.length).toBe(1);
-      expect(elements_ToCheck[0].classList).toContain('filter-text');
-    });*/
-
     test('input type is defined by parameter', () => {
       expect(1).toBe(2);
     });
@@ -85,7 +88,6 @@ describe('attributes', () => {
       element.type = 'date';
       element.paths = fieldParameter;
       element.path = testPath2;
-      element.consoleLog =true;
       document.body.appendChild(element);
 
       return Promise.resolve().then(() => {
