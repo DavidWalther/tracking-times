@@ -75,6 +75,57 @@ describe('attributes', () => {
     });
 
     test('defines selected path', () => {
+      /**
+       * Given
+       * -
+       */
+
+      /**
+       * When
+       * the filter component is created with the 'path' attribue set to 'testPath2'
+       */
+      const testPath1 = 'testPath1';
+      const testLabel1 = 'testLabel1';
+      const testPath2 = 'testPath2';
+      const testLabel2 = 'testLabel2';
+      const fieldParameter = [
+        { path: testPath1, label: testLabel1 },
+        { path: testPath2, label: testLabel2 }
+      ];
+
+      const element = createElement('app-filter', { is: Filter });
+      element.type = 'date';
+      element.paths = fieldParameter;
+      element.path = testPath2;
+      document.body.appendChild(element);
+
+      return Promise.resolve()
+        .then(() => {
+          /**
+           * Then
+           * Option connected with value 'testPath2' is selected in path picklist
+           */
+          const selectElement = element.shadowRoot.querySelector(
+            '.filter-path select'
+          );
+          expect(selectElement.value).toBe(testPath2);
+
+          /**
+           * When
+           * the attribute is changed is chang
+           */
+          element.path = testPath1;
+          element.dispatchEvent(new CustomEvent('change'));
+        })
+        .then(() => {
+          const selectElement = element.shadowRoot.querySelector(
+            '.filter-path select'
+          );
+          expect(selectElement.value).toBe(testPath1);
+        });
+    });
+
+    test('changing value results in change of selected value', () => {
       const testPath1 = 'testPath1';
       const testLabel1 = 'testLabel1';
       const testPath2 = 'testPath2';
@@ -91,15 +142,6 @@ describe('attributes', () => {
       document.body.appendChild(element);
 
       return Promise.resolve().then(() => {
-        const optionElements = element.shadowRoot.querySelectorAll(
-          '.filter-path option'
-        );
-        expect(optionElements.length).toBe(2);
-        expect(optionElements[0].value).toBe(testPath1);
-        expect(optionElements[0].label).toBe(testLabel1);
-        expect(optionElements[1].value).toBe(testPath2);
-        expect(optionElements[1].label).toBe(testLabel2);
-
         const selectElement = element.shadowRoot.querySelector(
           '.filter-path select'
         );
