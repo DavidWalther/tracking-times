@@ -96,14 +96,19 @@ describe('attributes', () => {
     });
 
     test('change of attribute is processed to input', () => {
+      const handler = jest.fn();
       const element = createElement('app-filter', { is: Filter });
       element.value = TEST_TEXT_1;
+      element.addEventListener('change', handler);
       document.body.appendChild(element);
 
       const inputElement = element.shadowRoot.querySelector('input');
 
       element.value = TEST_TEXT_2;
-      expect(inputElement.value).toBe(TEST_TEXT_2);
+
+      return Promise.resolve().then(() => {
+        expect(inputElement.value).toBe(TEST_TEXT_2);
+      });
     });
   });
 
