@@ -15,10 +15,7 @@ const CUTTING_TYPE_ROUND = 'round';
 const DATA_CURRENT_VERSION = 'v0.5';
 
 export default class TimeTracking extends LightningElement {
-  dateFilterPaths = [
-    { path: 'start', label: 'Start' },
-    { path: 'end', label: 'End' }
-  ];
+  dateFilterPaths = [{ path: 'start', label: 'Start' }];
 
   @track
   filters = [
