@@ -145,7 +145,8 @@
       <template for:each={filters} for:item="filter" for:index="index">
         <app-filter
           key={filter.index}
-          paths={filterPaths}
+          paths={filter.paths}
+          path={filter.path}
           type={filter.type}
           value={filter.value}
           operator={filter.operator}
