@@ -6,7 +6,7 @@
  * - For This reason it only knows about data-types and what operators to use on which of them.
  * - A parent component has to provide the object and the attribute to check.
  */
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, track } from 'lwc';
 
 const OPERATORS = {
   date: [
@@ -47,9 +47,19 @@ export default class Filter extends LightningElement {
 
   @api
   consoleLog = false;
-
+  /* 
   @api
   value;
+ */
+  @api
+  get value() {
+    return this.elementInputValue;
+  }
+  set value(inputValue) {
+    this.elementInputValue = inputValue;
+  }
+  @track
+  elementInputValue;
 
   @api
   operator;
@@ -217,5 +227,9 @@ export default class Filter extends LightningElement {
 
   get selectPath() {
     return this.template.querySelector('.filter-path select');
+  }
+
+  get selectorInput() {
+    return this.template.querySelector('.filter-input input');
   }
 }

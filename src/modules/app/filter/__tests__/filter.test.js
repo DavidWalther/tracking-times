@@ -1,6 +1,17 @@
 import { createElement } from 'lwc';
 import Filter from 'app/filter';
 
+const TEST_PATH_1 = 'start';
+const TEST_LABEL_1 = 'Start';
+const TEST_PATH_2 = 'end';
+const TEST_LABEL_2 = 'End';
+
+// eslint-disable-next-line no-unused-vars
+const TEST_PATHS = [
+  { path: TEST_PATH_1, label: TEST_LABEL_1 },
+  { path: TEST_PATH_2, label: TEST_LABEL_2 }
+];
+
 describe('attributes', () => {
   afterEach(() => {
     // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -71,21 +82,36 @@ describe('attributes', () => {
     });
   });
 
-  /* 
   describe('value', () => {
-    afterEach(() => {
-      // The jsdom instance is shared across test cases in a single file so reset the DOM
-      while (document.body.firstChild) {
-        document.body.removeChild(document.body.firstChild);
-      }
-    });
+    const TEST_TEXT_1 = 'alpha';
+    const TEST_TEXT_2 = 'beta';
 
     test('defines initial filter value', () => {
-      expect(1).toBe(2);
+      const element = createElement('app-filter', { is: Filter });
+      element.value = TEST_TEXT_1;
+      document.body.appendChild(element);
+
+      const inputElement = element.shadowRoot.querySelector('input');
+      expect(inputElement.value).toBe(TEST_TEXT_1);
+    });
+
+    test('change of attribute is processed to input', () => {
+      const handler = jest.fn();
+      const element = createElement('app-filter', { is: Filter });
+      element.value = TEST_TEXT_1;
+      element.addEventListener('change', handler);
+      document.body.appendChild(element);
+
+      const inputElement = element.shadowRoot.querySelector('input');
+
+      element.value = TEST_TEXT_2;
+
+      return Promise.resolve().then(() => {
+        expect(inputElement.value).toBe(TEST_TEXT_2);
+      });
     });
   });
- */
-  /* 
+
   describe('operator', () => {
     afterEach(() => {
       // The jsdom instance is shared across test cases in a single file so reset the DOM
@@ -102,7 +128,7 @@ describe('attributes', () => {
       expect(1).toBe(2);
     });
   });
- */
+
   describe('path', () => {
     afterEach(() => {
       // The jsdom instance is shared across test cases in a single file so reset the DOM
