@@ -1,5 +1,10 @@
 /**
  * This component contains a single filter setting for a certain type of data.
+ *
+ * It servers a a general component to set filter criteria on any object/attribute.
+ *
+ * - For This reason it only knows about data-types and what operators to use on which of them.
+ * - A parent component has to provide the object and the attribute to check.
  */
 import { LightningElement, api } from 'lwc';
 
@@ -49,6 +54,11 @@ export default class Filter extends LightningElement {
   @api
   operator;
 
+  /**
+   *
+   * @param objectToCheck Object to check. at must contain the attributes defined in 'paths'
+   * @returns
+   */
   @api
   isMatch(objectToCheck) {
     const fieldPath = this.selectedFieldPath;
