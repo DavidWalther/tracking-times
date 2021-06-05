@@ -802,6 +802,10 @@ export default class TimeTracking extends LightningElement {
     return this.template.querySelector('.modal-summary');
   }
 
+  getFilters() {
+    return this.template.querySelectorAll('app-filter');
+  }
+
   //----------------------------
   // Helpers
   //----------------------------
