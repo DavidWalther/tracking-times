@@ -218,4 +218,8 @@ export default class Filter extends LightningElement {
   get selectPath() {
     return this.template.querySelector('.filter-path select');
   }
+
+  get selectorInput() {
+    return this.template.querySelector('.filter-input input');
+  }
 }
