@@ -10,6 +10,12 @@ const OPERATORS = {
       value: 'greaterThanOrEqual'
     },
     { label: '≤', value: 'lessOrEqual' }
+  ],
+  text: [
+    { label: 'starts with (a = A)', value: 'startsWithWithoutCase' },
+    { label: 'contains (a = A)', value: 'containsWithoutCase' },
+    { label: 'starts with (a <> A)', value: 'startsWithWithCase' },
+    { label: 'contains (a <> A)', value: 'containsWithCase' }
   ]
 };
 
@@ -83,8 +89,8 @@ export default class Filter extends LightningElement {
       console.log('app-filter.renderedCallback');
     }
 
-    if (this.operator) {
-      //this.selectOperator.value = this.operator;
+    if (this.operator && this.selectorSelectOperator) {
+      this.selectorSelectOperator.value = this.operator;
     }
     this.readPathFromAttribute();
   }
@@ -105,37 +111,42 @@ export default class Filter extends LightningElement {
       console.log('filterValue: ' + filterValue);
     }
     const objectValue = compareObject[path];
-
+    if (this.consoleLog) {
+      // eslint-disable-next-line no-console
+      console.log('objectValue: ' + objectValue);
+    }
     switch (this.type) {
       case 'date': {
-        if (this.consoleLog) {
-          // eslint-disable-next-line no-console
-          console.log('app-filter.isFilterMatch - type date');
-        }
         let filterValueDate = new Date(filterValue).getTime();
-        if (this.consoleLog) {
-          // eslint-disable-next-line no-console
-          console.log('objectValue: ' + objectValue);
-          // eslint-disable-next-line no-console
-          console.log('filterValueDate: ' + filterValueDate);
-        }
 
         switch (operator) {
           case 'greaterThanOrEqual': {
-            if (this.consoleLog) {
-              // eslint-disable-next-line no-console
-              console.log(
-                'app-filter.isFilterMatch - operator greaterThanOrEqual'
-              );
-            }
             return objectValue >= filterValueDate;
           }
           case 'lessOrEqual': {
-            if (this.consoleLog) {
-              // eslint-disable-next-line no-console
-              console.log('app-filter.isFilterMatch - operator lessOrEqual');
-            }
             return objectValue <= filterValueDate;
+          }
+          default:
+            return false;
+        }
+      }
+      case 'text': {
+        switch (operator) {
+          case 'containsWithCase': {
+            return objectValue.includes(filterValue);
+          }
+          case 'containsWithoutCase': {
+            return objectValue
+              .toLowerCase()
+              .includes(filterValue.toLowerCase());
+          }
+          case 'startsWithWithoutCase': {
+            return objectValue
+              .toLowerCase()
+              .startsWith(filterValue.toLowerCase());
+          }
+          case 'startsWithWithCase': {
+            return objectValue.startsWith(filterValue);
           }
           default:
             return false;
@@ -173,7 +184,7 @@ export default class Filter extends LightningElement {
   }
 
   get selectedOperator() {
-    return this.selectOperator.value;
+    return this.selectorSelectOperator.value;
   }
 
   get selectedFieldPath() {
@@ -190,7 +201,7 @@ export default class Filter extends LightningElement {
   // Element selectors
   //----------------------------
 
-  get selectOperator() {
+  get selectorSelectOperator() {
     return this.template.querySelector('.filter-operator select');
   }
 
