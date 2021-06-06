@@ -1,0 +1,226 @@
+{
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app",
+    "isDirectory": true,
+    "size": 96,
+    "modifiedTime": 1615699682561,
+    "changeTime": 1615699682561,
+    "contentHash": "b28b7af69320201d1cf206ebf28373980add1451",
+    "state": "n",
+    "isArtifactRoot": true,
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main",
+    "isDirectory": true,
+    "size": 96,
+    "modifiedTime": 1615699682561,
+    "changeTime": 1615699682561,
+    "contentHash": "7505d64a54e061b7acd54ccd58b49dc43500b635",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default",
+    "isDirectory": true,
+    "size": 544,
+    "modifiedTime": 1616339183123,
+    "changeTime": 1616339183123,
+    "contentHash": "a463668bc24cc18b3931d85efc3e1cc3f9cfe3c8",
+    "state": "u",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/applications": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/applications",
+    "isDirectory": true,
+    "size": 64,
+    "modifiedTime": 1615699682561,
+    "changeTime": 1615699682561,
+    "contentHash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/aura": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/aura",
+    "isDirectory": true,
+    "size": 96,
+    "modifiedTime": 1615699682640,
+    "changeTime": 1615699682640,
+    "contentHash": "71c20a341bfe32aa5cd5b4384e94f942bab6a7d3",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/classes": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/classes",
+    "isDirectory": true,
+    "size": 64,
+    "modifiedTime": 1615699682561,
+    "changeTime": 1615699682561,
+    "contentHash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/contentassets": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/contentassets",
+    "isDirectory": true,
+    "size": 64,
+    "modifiedTime": 1615699682561,
+    "changeTime": 1615699682561,
+    "contentHash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/flexipages": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/flexipages",
+    "isDirectory": true,
+    "size": 64,
+    "modifiedTime": 1615699682562,
+    "changeTime": 1615699682562,
+    "contentHash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/layouts": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/layouts",
+    "isDirectory": true,
+    "size": 64,
+    "modifiedTime": 1615699682562,
+    "changeTime": 1615699682562,
+    "contentHash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/lwc": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/lwc",
+    "isDirectory": true,
+    "size": 96,
+    "modifiedTime": 1615699682640,
+    "changeTime": 1615699682640,
+    "contentHash": "71c20a341bfe32aa5cd5b4384e94f942bab6a7d3",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/objects": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/objects",
+    "isDirectory": true,
+    "size": 64,
+    "modifiedTime": 1615699682562,
+    "changeTime": 1615699682562,
+    "contentHash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/permissionsets": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/permissionsets",
+    "isDirectory": true,
+    "size": 64,
+    "modifiedTime": 1615699682562,
+    "changeTime": 1615699682562,
+    "contentHash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/staticresources": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/staticresources",
+    "isDirectory": true,
+    "size": 64,
+    "modifiedTime": 1615699682562,
+    "changeTime": 1615699682562,
+    "contentHash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/tabs": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/tabs",
+    "isDirectory": true,
+    "size": 64,
+    "modifiedTime": 1615699682562,
+    "changeTime": 1615699682562,
+    "contentHash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/triggers": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/triggers",
+    "isDirectory": true,
+    "size": 64,
+    "modifiedTime": 1615699682562,
+    "changeTime": 1615699682562,
+    "contentHash": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+    "state": "n",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection",
+    "isDirectory": true,
+    "size": 480,
+    "modifiedTime": 1615699938589,
+    "changeTime": 1615699938589,
+    "contentHash": "2218d6ac52298c604d0293e5657b75dae2251d50",
+    "state": "n",
+    "isWorkspace": true
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/connectedApps": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/connectedApps",
+    "isDirectory": true,
+    "size": 96,
+    "modifiedTime": 1615722209288,
+    "changeTime": 1615722209288,
+    "contentHash": "9efd22915d741c62bc4eb0f1db6c695ee1d4416b",
+    "state": "u",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/appMenus": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/appMenus",
+    "isDirectory": true,
+    "size": 96,
+    "modifiedTime": 1615722209292,
+    "changeTime": 1615722209292,
+    "contentHash": "7c65d70563206b380e20367663fe2cc611131a2d",
+    "state": "u",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/connectedApps/trackingTmes.connectedApp-meta.xml": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/connectedApps/trackingTmes.connectedApp-meta.xml",
+    "size": 791,
+    "modifiedTime": 1615722209289,
+    "changeTime": 1615722209289,
+    "contentHash": "0b9eeb5642978153e359fe264d744a642fc40525",
+    "isMetadataFile": true,
+    "state": "u",
+    "package": "force-app",
+    "metadataType": "ConnectedApp"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/appMenus/AppSwitcher.appMenu-meta.xml": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/appMenus/AppSwitcher.appMenu-meta.xml",
+    "size": 2120,
+    "modifiedTime": 1615722209292,
+    "changeTime": 1615722209292,
+    "contentHash": "c6d8d751e9eea7312bebbf0d937f226fdad2205f",
+    "isMetadataFile": true,
+    "state": "u",
+    "package": "force-app",
+    "metadataType": "AppMenu"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/corsWhitelistOrigins": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/corsWhitelistOrigins",
+    "isDirectory": true,
+    "size": 96,
+    "modifiedTime": 1616339183125,
+    "changeTime": 1616339183125,
+    "contentHash": "e7d9b27599b3832abb412e20744b54bdb8d301e8",
+    "state": "u",
+    "package": "force-app"
+  },
+  "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/corsWhitelistOrigins/https_tracking_times_test_auth_herokuapp_com.corsWhitelistOrigin-meta.xml": {
+    "sourcePath": "/Users/davidwork/Documents/Workspace/Private/Projects/LWC/tracking-times/salesforceConnection/force-app/main/default/corsWhitelistOrigins/https_tracking_times_test_auth_herokuapp_com.corsWhitelistOrigin-meta.xml",
+    "size": 208,
+    "modifiedTime": 1616339183125,
+    "changeTime": 1616339183125,
+    "contentHash": "2325f0860b2743759c2988b75971150a6abb6487",
+    "isMetadataFile": true,
+    "state": "u",
+    "package": "force-app",
+    "metadataType": "CorsWhitelistOrigin"
+  }
+}

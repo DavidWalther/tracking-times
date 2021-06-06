@@ -6,6 +6,10 @@
  * - For This reason it only knows about data-types and what operators to use on which of them.
  * - A parent component has to provide the object and the attribute to check.
  */
+
+const MILISECONDS_PER_MINUTE = 1000 * 60;
+const MILISECONDS_PER_HOUR = MILISECONDS_PER_MINUTE * 60;
+const MILISECONDS_PER_DAY = MILISECONDS_PER_HOUR * 24;
 import { LightningElement, api, track } from 'lwc';
 
 const OPERATORS = {
@@ -144,7 +148,7 @@ export default class Filter extends LightningElement {
             return objectValue >= filterValueDate;
           }
           case 'lessOrEqual': {
-            return objectValue <= filterValueDate;
+            return objectValue <= filterValueDate + MILISECONDS_PER_DAY;
           }
           default:
             return false;
