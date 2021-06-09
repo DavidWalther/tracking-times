@@ -1,0 +1,23 @@
+{
+  "serverMaxRevisionCounter": 4,
+  "sourceMembers": {
+    "ConnectedApp__trackingTmes": {
+      "serverRevisionCounter": 3,
+      "lastRetrievedFromServer": 3,
+      "memberType": "ConnectedApp",
+      "isNameObsolete": false
+    },
+    "AppMenu__AppSwitcher": {
+      "serverRevisionCounter": 2,
+      "lastRetrievedFromServer": 2,
+      "memberType": "AppMenu",
+      "isNameObsolete": false
+    },
+    "CorsWhitelistOrigin__https_tracking_times_test_auth_herokuapp_com": {
+      "serverRevisionCounter": 4,
+      "lastRetrievedFromServer": 4,
+      "memberType": "CorsWhitelistOrigin",
+      "isNameObsolete": false
+    }
+  }
+}

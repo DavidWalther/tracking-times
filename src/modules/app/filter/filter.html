@@ -1,0 +1,23 @@
+<template>
+  <div class="flexbox content">
+    <div class="flexbox-item flexbox-item-1 filter-path">
+      <select>
+        <template for:each={paths} for:item="path">
+          <option key={path.path} value={path.path}>{path.label}</option>
+        </template>
+      </select>
+    </div>
+    <div class="flexbox-item flexbox-item-2 filter-operator">
+      <select onchange={handleChangeDateOperator}>
+        <template for:each={operators} for:item="operator">
+          <option key={operator.value} value={operator.value}
+            >{operator.label}</option
+          >
+        </template>
+      </select>
+    </div>
+    <div class="flexbox-item flexbox-item-3 ">
+      <input type={type} class="filter-value-date" value={elementInputValue} />
+    </div>
+  </div>
+</template>
