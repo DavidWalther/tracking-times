@@ -1,0 +1,14 @@
+.content {
+  height: 100%;
+}
+
+.flexbox {
+  display: flex;
+  /*justify-content: space-between;*/
+  gap: 5px;
+  align-items: center;
+}
+
+.flexbox-item > * {
+  /* border-width: 0px; */
+}

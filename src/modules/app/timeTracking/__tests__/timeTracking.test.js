@@ -752,15 +752,8 @@ describe('feature: filters', () => {
     const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
     const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
 
-    const latestStart = Math.max(
-      firstEntry.start,
-      secondEntry.start,
-      thirdEntry.start
-    );
-
-    const minimumDateInput = element.shadowRoot.querySelector(
-      '.input-filter-date-minimum'
-    );
+    const filtersComponents = element.shadowRoot.querySelectorAll('app-filter');
+    expect(filtersComponents.length).toBe(2);
 
     /**
      * When
@@ -768,13 +761,17 @@ describe('feature: filters', () => {
      * - the filter button is clicked
      */
 
-    minimumDateInput.value = new Date(THIRD_ENTRY_START - MILISECONDS_PER_DAY)
+    filtersComponents[0].value = new Date(
+      THIRD_ENTRY_START - MILISECONDS_PER_DAY
+    )
       .toISOString()
       .split('T')[0];
-    const filterButton = element.shadowRoot.querySelector('.button-filter');
-    filterButton.dispatchEvent(new CustomEvent('click'));
-
     return Promise.resolve()
+      .then(() => {
+        // wait for the value-change to be processed
+        const filterButton = element.shadowRoot.querySelector('.button-filter');
+        filterButton.dispatchEvent(new CustomEvent('click'));
+      })
       .then(() => {
         /**
          * Then
