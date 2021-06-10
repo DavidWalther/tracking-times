@@ -1,179 +1,151 @@
-# tracking-times
+# Version History
 
-//----------------------------
-// version 1.7.0
-//----------------------------
+## version 1.7.0 (WIP)
 
-feature
+### features
 
 - add filter for text
 
-tec dept
+### tec depts
 
 - move version history to README.md
 
-//----------------------------
-// version 1.6.3
-//----------------------------
+## version 1.6.3
 
-tec dept:
+### tec depts
 
 - create dynamic filter componenz
 
-//----------------------------
-// version 1.6.2
-//----------------------------
+## version 1.6.2
 
-features:
+### features
 
 - change filter-label 'Now' to 'Today'
 - show 'unfilter' button only if entries are filtered
 
-bugfix:
+### bugfixes
 
 - fix incorect initialization of start date filter
 
-tec debt:
+### tec depts
 
 - add 'design' attribute to all buttons
 
-//----------------------------
-// version 1.6.1
-//----------------------------
+## version 1.6.1
 
-bugfix:
+### bugfixes
 
 - filters do not reset filter dates set by now-button
 
-//----------------------------
-// version 1.6
-//----------------------------
+## version 1.6
 
-features:
+### features
 
 - add start-date filters
 
-tec debt:
+### tec depts
 
 - same entry layouts for all widths
 - remove mid-size-layout
 
-//----------------------------
-// version 1.5
-//----------------------------
+## version 1.5
 
-features:
+### features
 
 - new button: Select All
 - remove 'clear' button
 - add sort
 
-tec debt:
+### tec depts
 
 - make app-entry:select modifyable
 - create a css class to select all buttons for multiple record at once
 - remove test for file download. It's a build in Browser function we can't test
 
-bigfix:
+### bugfixes
 
 - fix Label of "Deselect All"
 
-//----------------------------
-// version 1.4
-//----------------------------
+## version 1.4
 
-features:
+### features
 
 - new button: Deselect All
 
-//----------------------------
-// version 1.3
-//----------------------------
+## version 1.3
 
-features:
+### features
 
 - new button: delete selected
 - selecting entry disables delete-button
 
-bugfixes:
+### bugfixes
 
 - display sidemenu in front
 
-//----------------------------
-// version 1.2
-//----------------------------
+## version 1.2
 
-features:
+### features
 
 - selectable entries
 - summary for selected entries
 
-tec dept:
+### tec depts
 
 - use itemId for identifying entries instead of sortnumber
 
-//----------------------------
-// version 1.1.1.1
-//----------------------------
+## version 1.1.1.1
 
-hotfixes:
+### hotfixes
 
 - add breaktime to export
 - improve duration output for export
 - improve formating of export
 
-//----------------------------
-// version 1.1.1
-//----------------------------
+## version 1.1.1
 
-bugfixes:
+### bugfixes
 
 - interpret "" as 0 for difference calculation
 
-tec dept:
+### tec depts
 
 - broken jest test for entry cmp are fixed
 - removed unnecessary code
 
-//----------------------------
-// version 1.1.0
-//----------------------------
+## version 1.1.0
 
-features:
+### features
 
 - add sidemenu for slim screen
 - add break time
 
-bugfixes:
+### bugfixes
 
 - shows linebreaks in comment output
 
-tec dept:
+### tec depts
 
 - sort label in entry cmp
 - move entry cmp to app folder
 
-//----------------------------
-// version 1.0.2
-//----------------------------
+## version 1.0.2
 
-tec dept:
+### tec depts
 
 - On clearing only remove stored entries instead of whole storge
 - remove duplicate buttons which were rendered conditionally
 - remove repeated unnecessary font definitions
 - add version history file
 
-//----------------------------
-// version 1.0.1
-//----------------------------
+## version 1.0.1
 
-bugfixes:
+### bugfixes
 
 - comment input is now only scrollable in x-axis
 - when app is on max-width comment-output now extends over whole entry-height
 
-tec dept:
+### tec depts
 
 - Export method is renamed from '...Csv' to '...Txt'
 - remove obsolete clear-confirm
@@ -181,22 +153,20 @@ tec dept:
 - button-cmp name does not look like being connected to modal
 - edit-modal uses the new modal cmp now
 
-//----------------------------
-// version 1.0
-//----------------------------
+## version 1.0
 
-features:
+### features
 
 - more button styles
 - confirm before deleting entry
 - assign a maximum width for app
 - disable clear when list is empty
 
-bugfixes:
+### bugfixes
 
 - entry does not extend beyond frame anymore
 - spacing between entries is now consistent with other spacings
 
-tec dept:
+### tec depts
 
 - unified modal cmp
