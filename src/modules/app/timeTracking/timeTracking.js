@@ -16,6 +16,7 @@ const DATA_CURRENT_VERSION = 'v0.5';
 
 export default class TimeTracking extends LightningElement {
   dateFilterPaths = [{ path: 'start', label: 'Start' }];
+  textFilterPaths = [{path:'comment', label:'Comment'}]
 
   @track
   filters = [
