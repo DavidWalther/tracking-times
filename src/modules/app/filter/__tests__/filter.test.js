@@ -64,7 +64,7 @@ describe('attributes', () => {
       expect(operatorOptions.length).toBe(4);
       expect(operatorOptions[0].value).toBe('startsWithWithoutCase');
       expect(operatorOptions[1].value).toBe('containsWithoutCase');
-      expect(operatorOptions[2].value).toBe('startsWithWithCase');
+      expect(operatorOptions[2].value).toBe('startsWithCase');
       expect(operatorOptions[3].value).toBe('containsWithCase');
     });
 
@@ -419,7 +419,7 @@ describe('api functions', () => {
         const element = createElement('app-filter', { is: Filter });
         element.type = 'text';
         element.paths = fieldParameter;
-        element.operator = 'startsWithWithCase';
+        element.operator = 'startsWithCase';
         element.value = STARTING_TEXT.toUpperCase();
         document.body.appendChild(element);
 
