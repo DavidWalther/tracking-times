@@ -14,9 +14,13 @@ const CUTTING_TYPE_FLOOR = 'floor';
 const CUTTING_TYPE_ROUND = 'round';
 const DATA_CURRENT_VERSION = 'v0.5';
 
+const LABELS = {
+  Comment: 'Comment'
+};
+
 export default class TimeTracking extends LightningElement {
   dateFilterPaths = [{ path: 'start', label: 'Start' }];
-  textFilterPaths = [{ path: 'comment', label: 'Comment' }];
+  textFilterPaths = [{ path: 'comment', label: LABELS.Comment }];
 
   @track
   filters = [
@@ -51,6 +55,7 @@ export default class TimeTracking extends LightningElement {
   };
 
   label = {
+    labelComment: 'Comment',
     labelCancel: 'Cancel',
     labelDeleteSelected: 'Delete Selected',
     labelDelete: 'Delete',
