@@ -113,19 +113,32 @@ describe('attributes', () => {
   });
 
   describe('operator', () => {
-    afterEach(() => {
-      // The jsdom instance is shared across test cases in a single file so reset the DOM
-      while (document.body.firstChild) {
-        document.body.removeChild(document.body.firstChild);
-      }
-    });
-
     test('if invalid operator is passed, first entry is selected', () => {
-      expect(1).toBe(2);
+      const element = createElement('app-filter', { is: Filter });
+      element.type = 'text';
+      element.operator = 'someRandomValue';
+      document.body.appendChild(element);
+
+      return Promise.resolve().then(() => {
+        const operatorSelect = element.shadowRoot.querySelector(
+          '.filter-operator select'
+        );
+        expect(operatorSelect.value).toBe('startsWithWithoutCase');
+      });
     });
 
     test('defines selected operator', () => {
-      expect(1).toBe(2);
+      const element = createElement('app-filter', { is: Filter });
+      element.type = 'text';
+      element.operator = 'startsWithCase';
+      document.body.appendChild(element);
+
+      return Promise.resolve().then(() => {
+        const operatorSelect = element.shadowRoot.querySelector(
+          '.filter-operator select'
+        );
+        expect(operatorSelect.value).toBe('startsWithCase');
+      });
     });
   });
 
