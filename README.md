@@ -4,6 +4,10 @@
 // version 1.7.0
 //----------------------------
 
+feature
+
+- add filter for text
+
 tec dept
 
 - version 1.7.0
