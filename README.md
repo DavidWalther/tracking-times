@@ -10,7 +10,7 @@ feature
 
 tec dept
 
-- version 1.7.0
+- move version history to README.md
 
 //----------------------------
 // version 1.6.3
