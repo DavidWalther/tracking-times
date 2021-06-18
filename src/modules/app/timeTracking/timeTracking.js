@@ -215,7 +215,13 @@ export default class TimeTracking extends LightningElement {
     this.unapplyFilters();
   }
 
-  handleClickReinitFilters() {}
+  handleClickReinitFilters() {
+    const initDates = this.getInitialDateValues();
+    const filters = this.getFilters();
+
+    filters[0].value = new Date(initDates.startMin).toISOString().split('T')[0];
+    filters[1].value = new Date(initDates.startMax).toISOString().split('T')[0];
+  }
 
   //----------------------------
   // Properties
