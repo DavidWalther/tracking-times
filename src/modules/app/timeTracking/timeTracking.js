@@ -215,6 +215,10 @@ export default class TimeTracking extends LightningElement {
     this.unapplyFilters();
   }
 
+  handleClickReinitFilters() {
+    
+  }
+
   //----------------------------
   // Properties
   //----------------------------
