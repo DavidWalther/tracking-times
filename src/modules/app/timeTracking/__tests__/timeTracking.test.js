@@ -813,7 +813,78 @@ describe('feature: filters', () => {
     });
 
     test('Filters are reinitialized based on visible entries.', () => {
-      expect(1).toBe(2);
+      /**
+       * Given
+       * - the initialized component with entries
+       * - one entry hidden by filters
+       */
+      const element = createAndAddMainCmpAndSetCurrentVersionData();
+      return Promise.resolve()
+        .then(() => {
+          /**
+           * Given
+           * the initialized component
+           */
+          const firstEntryStart = element.shadowRoot.querySelectorAll(
+            'app-entry'
+          )[0].start;
+          expect(new Date(firstEntryStart).toISOString().split('T')[0]).toBe(
+            '1970-01-01'
+          );
+
+          const secoundEntryStart = element.shadowRoot.querySelectorAll(
+            'app-entry'
+          )[1].start;
+          expect(new Date(secoundEntryStart).toISOString().split('T')[0]).toBe(
+            '1970-01-04'
+          );
+
+          const thirdEntryStart = element.shadowRoot.querySelectorAll(
+            'app-entry'
+          )[2].start;
+          expect(new Date(thirdEntryStart).toISOString().split('T')[0]).toBe(
+            '1970-01-09'
+          );
+
+          // set first filter to one day after start of first entry
+          const firstFiltersComponent = element.shadowRoot.querySelector(
+            'app-filter'
+          );
+          firstFiltersComponent.value = '1970-01-03';
+        })
+        .then(() => {
+          // wait for the value change to be processed
+          const filterButton = element.shadowRoot.querySelector(
+            '.button-filter'
+          );
+          filterButton.dispatchEvent(new CustomEvent('click'));
+        })
+        .then(() => {
+          // wait for the entries being filtered
+          const visibleEntries = element.shadowRoot.querySelectorAll(
+            'app-entry'
+          );
+          expect(visibleEntries.length).toBe(2);
+          /**
+           * When
+           * the reinit button is clicked
+           */
+          const reInitButton = element.shadowRoot.querySelector(
+            '.button-filter-reinit'
+          );
+          reInitButton.dispatchEvent(new CustomEvent('click'));
+        })
+        .then(() => {
+          /**
+           * Then
+           * the filter values are changed based on the remaining entries
+           */
+          const filtersComponents = element.shadowRoot.querySelectorAll(
+            'app-filter'
+          );
+          expect(filtersComponents[0].value).toBe('1970-01-04');
+          expect(filtersComponents[1].value).toBe('1970-01-09');
+        });
     });
   });
 
