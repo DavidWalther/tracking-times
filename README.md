@@ -1,5 +1,9 @@
 # Version History
 
+pattern for version numbers:
+
+<number of main version>.<number of feature release>.<number of feature improvement / bugfix / tec dept fix>
+
 ## version 1.7.1
 
 ### features
