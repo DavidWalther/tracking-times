@@ -49,6 +49,7 @@ export default class TimeTracking extends LightningElement {
   };
 
   label = {
+    labelReInit: 'Re-Init',
     labelComment: 'Comment',
     labelCancel: 'Cancel',
     labelDeleteSelected: 'Delete Selected',
