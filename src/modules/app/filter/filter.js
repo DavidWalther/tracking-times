@@ -1,4 +1,4 @@
-// eslint-disable-file no-console
+/* eslint-disable no-console */
 
 /**
  * This component contains a single filter setting for a certain type of data.
@@ -63,9 +63,7 @@ export default class Filter extends LightningElement {
   }
   set value(inputValue) {
     if (this.consoleLog) {
-      // eslint-disable-next-line no-console
       console.log('app-filter.value.set');
-      // eslint-disable-next-line no-console
       console.log('inputValue: ' + inputValue);
     }
     this.elementInputValue = inputValue;
@@ -94,11 +92,8 @@ export default class Filter extends LightningElement {
   //----------------------------
   connectedCallback() {
     if (this.consoleLog) {
-      // eslint-disable-next-line no-console
       console.log('app-filter.connectedCallback');
-      // eslint-disable-next-line no-console
       console.log('app-filter.connectedCallback type: ' + this.type);
-      // eslint-disable-next-line no-console
       console.log('app-filter.connectedCallback operator: ' + this.operator);
     }
 
@@ -117,7 +112,6 @@ export default class Filter extends LightningElement {
 
   renderedCallback() {
     if (this.consoleLog) {
-      // eslint-disable-next-line no-console
       console.log('app-filter.renderedCallback');
     }
 
@@ -133,18 +127,13 @@ export default class Filter extends LightningElement {
 
   isFilterMatch(compareObject, path, operator, filterValue) {
     if (this.consoleLog) {
-      // eslint-disable-next-line no-console
       console.log('app-filter.isFilterMatch - start');
-      // eslint-disable-next-line no-console
       console.log('path: ' + path);
-      // eslint-disable-next-line no-console
       console.log('operator: ' + operator);
-      // eslint-disable-next-line no-console
       console.log('filterValue: ' + filterValue);
     }
     const objectValue = compareObject[path];
     if (this.consoleLog) {
-      // eslint-disable-next-line no-console
       console.log('objectValue: ' + objectValue);
     }
     switch (this.type) {
@@ -194,9 +183,7 @@ export default class Filter extends LightningElement {
     if (pathAttributeValue) {
       const operatorSelect = this.selectPath;
       if (this.consoleLog) {
-        // eslint-disable-next-line no-console
         console.log('app-filter.readPathFromAttribute');
-        // eslint-disable-next-line no-console
         console.log(
           'app-filter.readPathFromAttribute - pathAttributeValue: ' +
             pathAttributeValue
