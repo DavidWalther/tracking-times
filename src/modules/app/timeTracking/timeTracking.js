@@ -831,18 +831,24 @@ export default class TimeTracking extends LightningElement {
   }
 
   getInitialDateValues() {
-    const currentTimestamp = new Date().getTime();
     let initialDateObject = {
-      startMin: currentTimestamp,
-      startMax: currentTimestamp
+      startMin: new Date('4000-12-31').getTime(),
+      startMax: 0
     };
 
-    return this.entries.reduce((accumulator, currentValue) => {
-      return {
-        startMin: Math.min(accumulator.startMin, currentValue.start),
-        startMax: Math.max(accumulator.startMax, currentValue.start)
-      };
-    }, initialDateObject);
+    if (this.entries.length > 0) {
+      initialDateObject = this.entries.reduce((accumulator, currentValue) => {
+        return {
+          startMin: Math.min(accumulator.startMin, currentValue.start),
+          startMax: Math.max(accumulator.startMax, currentValue.start)
+        };
+      }, initialDateObject);
+    } else {
+      const currentTimestamp = new Date().getTime();
+      initialDateObject.startMin = currentTimestamp;
+      initialDateObject.startMax = currentTimestamp;
+    }
+    return initialDateObject;
   }
 }
 
