@@ -742,6 +742,152 @@ describe('feature: filters', () => {
     }
   });
 
+  describe('Re-Init', () => {
+    test('Filters can be reinitialized on button click.', () => {
+      //expect(1).toBe(2);
+
+      const element = createAndAddMainCmpAndSetCurrentVersionData();
+      // Wait for the component to be initialized
+      return Promise.resolve()
+        .then(() => {
+          /**
+           * Given
+           * the initialized component
+           */
+          const firstEntryStart = element.shadowRoot.querySelectorAll(
+            'app-entry'
+          )[0].start;
+          const thirdEntryStart = element.shadowRoot.querySelectorAll(
+            'app-entry'
+          )[2].start;
+          expect(new Date(firstEntryStart).toISOString().split('T')[0]).toBe(
+            '1970-01-01'
+          );
+          expect(new Date(thirdEntryStart).toISOString().split('T')[0]).toBe(
+            '1970-01-09'
+          );
+
+          /**
+           * When
+           * 1. the filter values are changed
+           * 2. the re-init button is clicked
+           */
+          const filtersComponents = element.shadowRoot.querySelectorAll(
+            'app-filter'
+          );
+
+          // change values
+          const firstStartDateFilter = filtersComponents[0];
+          firstStartDateFilter.value = '2020-07-03';
+
+          const secondStartDateFilter = filtersComponents[1];
+          secondStartDateFilter.value = '1820-12-30';
+
+          // click button
+          const reInitButton = element.shadowRoot.querySelector(
+            '.button-filter-reinit'
+          );
+          reInitButton.dispatchEvent(new CustomEvent('click'));
+        })
+        .then(() => {
+          /**
+           * Then
+           * the filter inputs are changed back to their original values
+           */
+          const filtersComponents = element.shadowRoot.querySelectorAll(
+            'app-filter'
+          );
+
+          const firstStartDateFilter = filtersComponents[0];
+          const firstFilterStartDayStr = new Date(firstStartDateFilter.value)
+            .toISOString()
+            .split('T')[0];
+          expect(firstFilterStartDayStr).toBe('1970-01-01');
+
+          const secondStartDateFilter = filtersComponents[1];
+          const secondFilterStartDateStr = new Date(secondStartDateFilter.value)
+            .toISOString()
+            .split('T')[0];
+          expect(secondFilterStartDateStr).toBe('1970-01-09');
+        });
+    });
+
+    test('Filters are reinitialized based on visible entries.', () => {
+      /**
+       * Given
+       * - the initialized component with entries
+       * - one entry hidden by filters
+       */
+      const element = createAndAddMainCmpAndSetCurrentVersionData();
+      return Promise.resolve()
+        .then(() => {
+          /**
+           * Given
+           * the initialized component
+           */
+          const firstEntryStart = element.shadowRoot.querySelectorAll(
+            'app-entry'
+          )[0].start;
+          expect(new Date(firstEntryStart).toISOString().split('T')[0]).toBe(
+            '1970-01-01'
+          );
+
+          const secoundEntryStart = element.shadowRoot.querySelectorAll(
+            'app-entry'
+          )[1].start;
+          expect(new Date(secoundEntryStart).toISOString().split('T')[0]).toBe(
+            '1970-01-04'
+          );
+
+          const thirdEntryStart = element.shadowRoot.querySelectorAll(
+            'app-entry'
+          )[2].start;
+          expect(new Date(thirdEntryStart).toISOString().split('T')[0]).toBe(
+            '1970-01-09'
+          );
+
+          // set first filter to one day after start of first entry
+          const firstFiltersComponent = element.shadowRoot.querySelector(
+            'app-filter'
+          );
+          firstFiltersComponent.value = '1970-01-03';
+        })
+        .then(() => {
+          // wait for the value change to be processed
+          const filterButton = element.shadowRoot.querySelector(
+            '.button-filter'
+          );
+          filterButton.dispatchEvent(new CustomEvent('click'));
+        })
+        .then(() => {
+          // wait for the entries being filtered
+          const visibleEntries = element.shadowRoot.querySelectorAll(
+            'app-entry'
+          );
+          expect(visibleEntries.length).toBe(2);
+          /**
+           * When
+           * the reinit button is clicked
+           */
+          const reInitButton = element.shadowRoot.querySelector(
+            '.button-filter-reinit'
+          );
+          reInitButton.dispatchEvent(new CustomEvent('click'));
+        })
+        .then(() => {
+          /**
+           * Then
+           * the filter values are changed based on the remaining entries
+           */
+          const filtersComponents = element.shadowRoot.querySelectorAll(
+            'app-filter'
+          );
+          expect(filtersComponents[0].value).toBe('1970-01-04');
+          expect(filtersComponents[1].value).toBe('1970-01-09');
+        });
+    });
+  });
+
   test('unmatching itmes are filtered and unfiltered', () => {
     /**
      * Given

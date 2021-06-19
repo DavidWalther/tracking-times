@@ -110,6 +110,34 @@ describe('attributes', () => {
         expect(inputElement.value).toBe(TEST_TEXT_2);
       });
     });
+
+    test('subsequent change of attribute is processed to input', () => {
+      const handler = jest.fn();
+      const element = createElement('app-filter', { is: Filter });
+      element.value = TEST_TEXT_1;
+      element.addEventListener('change', handler);
+      document.body.appendChild(element);
+
+      const inputElement = element.shadowRoot.querySelector('input');
+
+      element.value = TEST_TEXT_2;
+
+      return Promise.resolve()
+        .then(() => {
+          expect(inputElement.value).toBe(TEST_TEXT_2);
+
+          const filterComponent = document.body.querySelector('app-filter');
+          filterComponent.value = TEST_TEXT_1;
+        })
+        .then(() => {
+          expect(inputElement.value).toBe(TEST_TEXT_1);
+          const filterComponent = document.body.querySelector('app-filter');
+          filterComponent.value = TEST_TEXT_2;
+        })
+        .then(() => {
+          expect(inputElement.value).toBe(TEST_TEXT_2);
+        });
+    });
   });
 
   describe('operator', () => {

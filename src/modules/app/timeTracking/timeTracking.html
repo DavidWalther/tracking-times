@@ -150,9 +150,16 @@
           type={filter.type}
           value={filter.value}
           operator={filter.operator}
+          console-log={filter.consoleLog}
         ></app-filter>
       </template>
       <div class="flexbox-container">
+        <ui-button
+          design="info"
+          class="flexbox-item button-filter-reinit"
+          value={label.labelReInit}
+          onclick={handleClickReinitFilters}
+        ></ui-button>
         <ui-button
           design="info"
           class="flexbox-item button-filter"

@@ -1,6 +1,12 @@
 # Version History
 
-## version 1.7.0 (WIP)
+## version 1.7.1
+
+### features
+
+- add re-init button
+
+## version 1.7.0
 
 ### features
 
