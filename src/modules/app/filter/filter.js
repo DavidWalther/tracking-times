@@ -12,7 +12,7 @@
 const MILISECONDS_PER_MINUTE = 1000 * 60;
 const MILISECONDS_PER_HOUR = MILISECONDS_PER_MINUTE * 60;
 const MILISECONDS_PER_DAY = MILISECONDS_PER_HOUR * 24;
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 const OPERATORS = {
   date: [
@@ -36,41 +36,40 @@ export default class Filter extends LightningElement {
   //----------------------------
 
   /**
-   * The available operators are defined by the provided filter type.
+   * (required) Specifies the type to filter on. The available operators are defined by the provided type.
    */
   @api
   type;
 
   /**
-   * A JS-Object for defining value paths and their labels in the picklist for available filter fields.
+   * (required) JS-Object for defining value paths and their labels in the picklist for available filter fields.
    * expected structure: [ {path: string, label: string } ]
    */
   @api
   paths = [];
 
+  /**
+   * (optional) this attribute specifies which field should be selected by default
+   * The value must be one of the path-values passed via 'paths'.
+   */
   @api
   path;
 
+  /**
+   * (optional)
+   */
   @api
   consoleLog = false;
-  /* 
+
+  /**
+   * (optional)
+   */
   @api
   value;
- */
-  @api
-  get value() {
-    return this.elementInputValue;
-  }
-  set value(inputValue) {
-    if (this.consoleLog) {
-      console.log('app-filter.value.set');
-      console.log('inputValue: ' + inputValue);
-    }
-    this.elementInputValue = inputValue;
-  }
-  @track
-  elementInputValue;
 
+  /**
+   * (optional)
+   */
   @api
   operator;
 
@@ -90,6 +89,7 @@ export default class Filter extends LightningElement {
   //----------------------------
   // handlers
   //----------------------------
+
   connectedCallback() {
     if (this.consoleLog) {
       console.log('app-filter.connectedCallback');
