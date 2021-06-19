@@ -24,7 +24,7 @@ export default class TimeTracking extends LightningElement {
 
   @track
   filters = [
-    { index: 1, type: 'date', paths: this.dateFilterPaths, consoleLog: true },
+    { index: 1, type: 'date', paths: this.dateFilterPaths },
     {
       index: 2,
       type: 'date',
