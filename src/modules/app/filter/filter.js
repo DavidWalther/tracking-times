@@ -1,10 +1,12 @@
+// eslint-disable-file no-console
+
 /**
  * This component contains a single filter setting for a certain type of data.
  *
- * It servers a a general component to set filter criteria on any object/attribute.
+ * It serves as a general component to set filter criteria on any object/attribute.
  *
  * - For This reason it only knows about data-types and what operators to use on which of them.
- * - A parent component has to provide the object and the attribute to check.
+ * - The parent component has to provide the object and the attribute to check.
  */
 
 const MILISECONDS_PER_MINUTE = 1000 * 60;
@@ -60,6 +62,12 @@ export default class Filter extends LightningElement {
     return this.elementInputValue;
   }
   set value(inputValue) {
+    if (this.consoleLog) {
+      // eslint-disable-next-line no-console
+      console.log('app-filter.value.set');
+      // eslint-disable-next-line no-console
+      console.log('inputValue: ' + inputValue);
+    }
     this.elementInputValue = inputValue;
   }
   @track
