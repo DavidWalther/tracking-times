@@ -130,14 +130,14 @@ describe('attributes', () => {
     test('defines selected operator', () => {
       const element = createElement('app-filter', { is: Filter });
       element.type = 'text';
-      element.operator = 'startsWithCase';
+      element.operator = 'startsWithWithCase';
       document.body.appendChild(element);
 
       return Promise.resolve().then(() => {
         const operatorSelect = element.shadowRoot.querySelector(
           '.filter-operator select'
         );
-        expect(operatorSelect.value).toBe('startsWithCase');
+        expect(operatorSelect.value).toBe('startsWithWithCase');
       });
     });
   });
