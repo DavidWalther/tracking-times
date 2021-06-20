@@ -121,6 +121,10 @@ export default class Filter extends LightningElement {
     this.readPathFromAttribute();
   }
 
+  handleChangeCriteriaValue() {
+    this.dispatchEvent(new CustomEvent('change'));
+  }
+
   //----------------------------
   // actions
   //----------------------------
