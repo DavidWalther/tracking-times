@@ -36,7 +36,7 @@ export default class TimeTracking extends LightningElement {
       type: 'text',
       paths: this.textFilterPaths,
       operator: 'startsWithWithoutCase',
-      value:''
+      value: ''
     }
   ];
 

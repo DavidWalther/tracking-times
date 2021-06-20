@@ -2,13 +2,14 @@
 
 pattern for version numbers:
 
-<number of main version>.<number of feature release>.<number of feature improvement / bugfix / tec dept fix>
+<number of main version>.<number of feature release>.<number of feature improvement / bugfix / tec dept>
 
 ## version 1.7.1
 
 ### features
 
 - add re-init button
+- add comment filter
 
 ## version 1.7.0
 
