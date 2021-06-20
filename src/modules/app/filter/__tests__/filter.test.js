@@ -470,3 +470,36 @@ describe('api functions', () => {
     });
   });
 });
+
+describe('events', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test("component fires 'change' event on change of criteria input value", () => {
+    const TEST_TEXT = 'abcdefg';
+    const handler = jest.fn();
+
+    const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+    const element = createElement('app-filter', { is: Filter });
+    element.type = 'text';
+    element.paths = fieldParameter;
+    element.operator = 'containsWithoutCase';
+    element.addEventListener('change', handler);
+    document.body.appendChild(element);
+
+    const inputElement = element.shadowRoot.querySelector(
+      '.filter-input input'
+    );
+    expect(inputElement).toBeTruthy();
+    inputElement.value = TEST_TEXT;
+    inputElement.dispatchEvent(new CustomEvent('change'));
+
+    return Promise.resolve().then(() => {
+      expect(handler).toHaveBeenCalled();
+    });
+  });
+});
