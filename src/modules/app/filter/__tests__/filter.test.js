@@ -529,7 +529,10 @@ describe('events', () => {
   test("component fires 'change' event on change of field", () => {
     const handler = jest.fn();
 
-    const fieldParameter = [{ path: 'start', label: 'Start' }, { path: 'end', label: 'End' }];
+    const fieldParameter = [
+      { path: 'start', label: 'Start' },
+      { path: 'end', label: 'End' }
+    ];
     const element = createElement('app-filter', { is: Filter });
     element.type = 'date';
     element.type = 'end';
