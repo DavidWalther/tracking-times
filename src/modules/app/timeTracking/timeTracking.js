@@ -30,6 +30,13 @@ export default class TimeTracking extends LightningElement {
       type: 'date',
       paths: this.dateFilterPaths,
       operator: 'lessOrEqual'
+    },
+    {
+      index: 3,
+      type: 'text',
+      paths: this.textFilterPaths,
+      operator: 'startsWithWithoutCase',
+      value: ''
     }
   ];
 

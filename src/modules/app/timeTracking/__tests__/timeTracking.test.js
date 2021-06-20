@@ -899,7 +899,7 @@ describe('feature: filters', () => {
     const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
 
     const filtersComponents = element.shadowRoot.querySelectorAll('app-filter');
-    expect(filtersComponents.length).toBe(2);
+    expect(filtersComponents.length).toBe(3);
 
     /**
      * When
