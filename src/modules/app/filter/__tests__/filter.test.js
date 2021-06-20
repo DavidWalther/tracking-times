@@ -502,4 +502,27 @@ describe('events', () => {
       expect(handler).toHaveBeenCalled();
     });
   });
+
+  test("component fires 'change' event on change of operator", () => {
+    const TEST_OPERATOR = 'containsWithCase';
+    const handler = jest.fn();
+
+    const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+    const element = createElement('app-filter', { is: Filter });
+    element.type = 'text';
+    element.paths = fieldParameter;
+    element.addEventListener('change', handler);
+    document.body.appendChild(element);
+
+    const operatorSelectElement = element.shadowRoot.querySelector(
+      '.filter-operator select'
+    );
+    expect(operatorSelectElement).toBeTruthy();
+    operatorSelectElement.value = TEST_OPERATOR;
+    operatorSelectElement.dispatchEvent(new CustomEvent('change'));
+
+    return Promise.resolve().then(() => {
+      expect(handler).toHaveBeenCalled();
+    });
+  });
 });
