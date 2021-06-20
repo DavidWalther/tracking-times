@@ -1,16 +1,18 @@
+/* eslint-disable no-console */
+
 /**
  * This component contains a single filter setting for a certain type of data.
  *
- * It servers a a general component to set filter criteria on any object/attribute.
+ * It serves as a general component to set filter criteria on any object/attribute.
  *
  * - For This reason it only knows about data-types and what operators to use on which of them.
- * - A parent component has to provide the object and the attribute to check.
+ * - The parent component has to provide the object and the attribute to check.
  */
 
 const MILISECONDS_PER_MINUTE = 1000 * 60;
 const MILISECONDS_PER_HOUR = MILISECONDS_PER_MINUTE * 60;
 const MILISECONDS_PER_DAY = MILISECONDS_PER_HOUR * 24;
-import { LightningElement, api, track } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 const OPERATORS = {
   date: [
@@ -34,37 +36,40 @@ export default class Filter extends LightningElement {
   //----------------------------
 
   /**
-   * The available operators are defined by the provided filter type.
+   * (required) Specifies the type to filter on. The available operators are defined by the provided type.
    */
   @api
   type;
 
   /**
-   * A JS-Object for defining value paths and their labels in the picklist for available filter fields.
+   * (required) JS-Object for defining value paths and their labels in the picklist for available filter fields.
    * expected structure: [ {path: string, label: string } ]
    */
   @api
   paths = [];
 
+  /**
+   * (optional) this attribute specifies which field should be selected by default
+   * The value must be one of the path-values passed via 'paths'.
+   */
   @api
   path;
 
+  /**
+   * (optional)
+   */
   @api
   consoleLog = false;
-  /* 
+
+  /**
+   * (optional)
+   */
   @api
   value;
- */
-  @api
-  get value() {
-    return this.elementInputValue;
-  }
-  set value(inputValue) {
-    this.elementInputValue = inputValue;
-  }
-  @track
-  elementInputValue;
 
+  /**
+   * (optional)
+   */
   @api
   operator;
 
@@ -84,13 +89,11 @@ export default class Filter extends LightningElement {
   //----------------------------
   // handlers
   //----------------------------
+
   connectedCallback() {
     if (this.consoleLog) {
-      // eslint-disable-next-line no-console
       console.log('app-filter.connectedCallback');
-      // eslint-disable-next-line no-console
       console.log('app-filter.connectedCallback type: ' + this.type);
-      // eslint-disable-next-line no-console
       console.log('app-filter.connectedCallback operator: ' + this.operator);
     }
 
@@ -109,7 +112,6 @@ export default class Filter extends LightningElement {
 
   renderedCallback() {
     if (this.consoleLog) {
-      // eslint-disable-next-line no-console
       console.log('app-filter.renderedCallback');
     }
 
@@ -125,18 +127,13 @@ export default class Filter extends LightningElement {
 
   isFilterMatch(compareObject, path, operator, filterValue) {
     if (this.consoleLog) {
-      // eslint-disable-next-line no-console
       console.log('app-filter.isFilterMatch - start');
-      // eslint-disable-next-line no-console
       console.log('path: ' + path);
-      // eslint-disable-next-line no-console
       console.log('operator: ' + operator);
-      // eslint-disable-next-line no-console
       console.log('filterValue: ' + filterValue);
     }
     const objectValue = compareObject[path];
     if (this.consoleLog) {
-      // eslint-disable-next-line no-console
       console.log('objectValue: ' + objectValue);
     }
     switch (this.type) {
@@ -186,9 +183,7 @@ export default class Filter extends LightningElement {
     if (pathAttributeValue) {
       const operatorSelect = this.selectPath;
       if (this.consoleLog) {
-        // eslint-disable-next-line no-console
         console.log('app-filter.readPathFromAttribute');
-        // eslint-disable-next-line no-console
         console.log(
           'app-filter.readPathFromAttribute - pathAttributeValue: ' +
             pathAttributeValue

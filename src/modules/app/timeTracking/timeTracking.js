@@ -19,7 +19,10 @@ const LABELS = {
 };
 
 export default class TimeTracking extends LightningElement {
-  dateFilterPaths = [{ path: 'start', label: 'Start' }];
+  dateFilterPaths = [
+    { path: 'start', label: 'Start' },
+    { path: 'end', label: 'End' }
+  ];
   textFilterPaths = [{ path: 'comment', label: LABELS.Comment }];
 
   @track
@@ -35,6 +38,7 @@ export default class TimeTracking extends LightningElement {
       index: 3,
       type: 'text',
       paths: this.textFilterPaths,
+      operator: 'startsWithWithoutCase',
       value: ''
     }
   ];
@@ -55,6 +59,7 @@ export default class TimeTracking extends LightningElement {
   };
 
   label = {
+    labelReInit: 'Re-Init',
     labelComment: 'Comment',
     labelCancel: 'Cancel',
     labelDeleteSelected: 'Delete Selected',
@@ -213,6 +218,14 @@ export default class TimeTracking extends LightningElement {
   handleClickUnfilter() {
     this.deselectAllEntries();
     this.unapplyFilters();
+  }
+
+  handleClickReinitFilters() {
+    const initDates = this.getInitialDateValues();
+    const filters = this.getFilters();
+
+    filters[0].value = new Date(initDates.startMin).toISOString().split('T')[0];
+    filters[1].value = new Date(initDates.startMax).toISOString().split('T')[0];
   }
 
   //----------------------------
@@ -828,18 +841,24 @@ export default class TimeTracking extends LightningElement {
   }
 
   getInitialDateValues() {
-    const currentTimestamp = new Date().getTime();
     let initialDateObject = {
-      startMin: currentTimestamp,
-      startMax: currentTimestamp
+      startMin: new Date('4000-12-31').getTime(),
+      startMax: 0
     };
 
-    return this.entries.reduce((accumulator, currentValue) => {
-      return {
-        startMin: Math.min(accumulator.startMin, currentValue.start),
-        startMax: Math.max(accumulator.startMax, currentValue.start)
-      };
-    }, initialDateObject);
+    if (this.entries.length > 0) {
+      initialDateObject = this.entries.reduce((accumulator, currentValue) => {
+        return {
+          startMin: Math.min(accumulator.startMin, currentValue.start),
+          startMax: Math.max(accumulator.startMax, currentValue.start)
+        };
+      }, initialDateObject);
+    } else {
+      const currentTimestamp = new Date().getTime();
+      initialDateObject.startMin = currentTimestamp;
+      initialDateObject.startMax = currentTimestamp;
+    }
+    return initialDateObject;
   }
 }
 

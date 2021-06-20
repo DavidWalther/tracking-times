@@ -1,6 +1,18 @@
 # Version History
 
-## version 1.7.0 (WIP)
+pattern for version numbers:
+
+<number of main version>.<number of feature release>.<number of feature improvement / bugfix / tec dept>
+
+## version 1.7.1
+
+### features
+
+- add re-init button
+- add comment filter
+- add end to filterable date fields
+
+## version 1.7.0
 
 ### features
 
