@@ -1,7 +1,7 @@
 <template>
   <div class="flexbox content">
     <div class="flexbox-item flexbox-item-1 filter-path">
-      <select>
+      <select onchange={handleChangeFilterPath}>
         <template for:each={paths} for:item="path">
           <option key={path.path} value={path.path}>{path.label}</option>
         </template>

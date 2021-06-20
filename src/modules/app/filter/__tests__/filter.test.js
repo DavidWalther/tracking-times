@@ -526,7 +526,7 @@ describe('events', () => {
     });
   });
 
-  test("component fires 'change' event on change of field", () => {
+  test("component fires 'change' event on change of field path", () => {
     const handler = jest.fn();
 
     const fieldParameter = [
@@ -535,7 +535,7 @@ describe('events', () => {
     ];
     const element = createElement('app-filter', { is: Filter });
     element.type = 'date';
-    element.type = 'end';
+    element.path = 'end';
     element.paths = fieldParameter;
     element.addEventListener('change', handler);
     document.body.appendChild(element);
