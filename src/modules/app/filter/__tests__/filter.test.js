@@ -525,4 +525,27 @@ describe('events', () => {
       expect(handler).toHaveBeenCalled();
     });
   });
+
+  test("component fires 'change' event on change of field", () => {
+    const handler = jest.fn();
+
+    const fieldParameter = [{ path: 'start', label: 'Start' }, { path: 'end', label: 'End' }];
+    const element = createElement('app-filter', { is: Filter });
+    element.type = 'date';
+    element.type = 'end';
+    element.paths = fieldParameter;
+    element.addEventListener('change', handler);
+    document.body.appendChild(element);
+
+    const pathSelectElement = element.shadowRoot.querySelector(
+      '.filter-path select'
+    );
+    expect(pathSelectElement).toBeTruthy();
+    pathSelectElement.value = 'start';
+    pathSelectElement.dispatchEvent(new CustomEvent('change'));
+
+    return Promise.resolve().then(() => {
+      expect(handler).toHaveBeenCalled();
+    });
+  });
 });
