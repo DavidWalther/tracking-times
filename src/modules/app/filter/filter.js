@@ -125,6 +125,10 @@ export default class Filter extends LightningElement {
     this.dispatchEvent(new CustomEvent('change'));
   }
 
+  handleChangeCriteriaOperator() {
+    this.dispatchEvent(new CustomEvent('change'));
+  }
+
   //----------------------------
   // actions
   //----------------------------
