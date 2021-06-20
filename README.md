@@ -10,6 +10,7 @@ pattern for version numbers:
 
 - add re-init button
 - add comment filter
+- add end to filterable date fields
 
 ## version 1.7.0
 

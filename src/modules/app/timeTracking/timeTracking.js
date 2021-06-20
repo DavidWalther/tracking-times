@@ -19,7 +19,10 @@ const LABELS = {
 };
 
 export default class TimeTracking extends LightningElement {
-  dateFilterPaths = [{ path: 'start', label: 'Start' }, { path: 'end', label: 'End' }];
+  dateFilterPaths = [
+    { path: 'start', label: 'Start' },
+    { path: 'end', label: 'End' }
+  ];
   textFilterPaths = [{ path: 'comment', label: LABELS.Comment }];
 
   @track
