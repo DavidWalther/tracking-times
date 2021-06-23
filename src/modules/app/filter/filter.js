@@ -122,7 +122,7 @@ export default class Filter extends LightningElement {
   }
 
   handleChangeFilterValue() {
-    this.dispatchEvent(new CustomEvent('change'));
+    this.dispatchEvent(new CustomEvent('change', {detail:{}}));
   }
 
   handleChangeFilterOperator() {
