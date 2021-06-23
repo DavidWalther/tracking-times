@@ -136,7 +136,7 @@ export default class Filter extends LightningElement {
   }
 
   handleChangeFilterPath() {
-    const filterPath = this.selectPath.value;
+    const filterPath = this.selectorPath.value;
     this.dispatchEvent(
       new CustomEvent('change', { detail: { filterPath: filterPath } })
     );
@@ -202,7 +202,7 @@ export default class Filter extends LightningElement {
   readPathFromAttribute() {
     const pathAttributeValue = this.path;
     if (pathAttributeValue) {
-      const operatorSelect = this.selectPath;
+      const operatorSelect = this.selectorPath;
       if (this.consoleLog) {
         console.log('app-filter.readPathFromAttribute');
         console.log(
@@ -228,7 +228,7 @@ export default class Filter extends LightningElement {
   }
 
   get selectedFieldPath() {
-    const result = this.selectPath.value;
+    const result = this.selectorPath.value;
     return result;
   }
 
@@ -245,7 +245,7 @@ export default class Filter extends LightningElement {
     return this.template.querySelector('.filter-operator select');
   }
 
-  get selectPath() {
+  get selectorPath() {
     return this.template.querySelector('.filter-path select');
   }
 
