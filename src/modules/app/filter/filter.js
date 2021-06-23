@@ -136,7 +136,10 @@ export default class Filter extends LightningElement {
   }
 
   handleChangeFilterPath() {
-    this.dispatchEvent(new CustomEvent('change'));
+    const filterPath = this.selectPath.value;
+    this.dispatchEvent(
+      new CustomEvent('change', { detail: { filterPath: filterPath } })
+    );
   }
 
   //----------------------------
