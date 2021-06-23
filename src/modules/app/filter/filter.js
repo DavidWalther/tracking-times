@@ -122,24 +122,15 @@ export default class Filter extends LightningElement {
   }
 
   handleChangeFilterValue() {
-    const filterValue = this.selectorInput.value;
-    this.dispatchEvent(
-      new CustomEvent('change', { detail: { filterValue: filterValue } })
-    );
+    this.createAndfireChangeEvent();
   }
 
   handleChangeFilterOperator() {
-    const filterOperator = this.selectorOperator.value;
-    this.dispatchEvent(
-      new CustomEvent('change', { detail: { filterOperator: filterOperator } })
-    );
+    this.createAndfireChangeEvent();
   }
 
   handleChangeFilterPath() {
-    const filterPath = this.selectorPath.value;
-    this.dispatchEvent(
-      new CustomEvent('change', { detail: { filterPath: filterPath } })
-    );
+    this.createAndfireChangeEvent();
   }
 
   //----------------------------
@@ -212,6 +203,21 @@ export default class Filter extends LightningElement {
       }
       operatorSelect.value = pathAttributeValue;
     }
+  }
+
+  createAndfireChangeEvent() {
+    const filterValue = this.selectorInput.value;
+    const filterOperator = this.selectorOperator.value;
+    const filterPath = this.selectorPath.value;
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: {
+          filterValue: filterValue,
+          filterOperator: filterOperator,
+          filterPath: filterPath
+        }
+      })
+    );
   }
 
   //----------------------------
