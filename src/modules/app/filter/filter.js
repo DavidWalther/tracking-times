@@ -80,10 +80,13 @@ export default class Filter extends LightningElement {
    */
   @api
   isMatch(objectToCheck) {
-    const fieldPath = this.selectedFieldPath;
-    const operator = this.selectedOperator;
-    const compareValue = this.enteredCompareValue;
-    return this.isFilterMatch(objectToCheck, fieldPath, operator, compareValue);
+    const configurations = this.getFilterConfigurations();
+    return this.isFilterMatch(
+      objectToCheck,
+      configurations.filterPath,
+      configurations.filterOperator,
+      configurations.filterValue
+    );
   }
 
   //----------------------------
@@ -206,16 +209,9 @@ export default class Filter extends LightningElement {
   }
 
   createAndfireChangeEvent() {
-    const filterValue = this.selectorInput.value;
-    const filterOperator = this.selectorOperator.value;
-    const filterPath = this.selectorPath.value;
     this.dispatchEvent(
       new CustomEvent('change', {
-        detail: {
-          filterValue: filterValue,
-          filterOperator: filterOperator,
-          filterPath: filterPath
-        }
+        detail: this.getFilterConfigurations()
       })
     );
   }
@@ -243,7 +239,6 @@ export default class Filter extends LightningElement {
     return result;
   }
 
-
   //----------------------------
   // helpers
   //----------------------------
@@ -253,10 +248,10 @@ export default class Filter extends LightningElement {
     const filterOperator = this.selectorOperator.value;
     const filterPath = this.selectorPath.value;
     const configurations = {
-          filterValue: filterValue,
-          filterOperator: filterOperator,
-          filterPath: filterPath
-        };
+      filterValue: filterValue,
+      filterOperator: filterOperator,
+      filterPath: filterPath
+    };
     return configurations;
   }
 
