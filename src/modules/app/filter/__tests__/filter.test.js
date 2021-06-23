@@ -527,6 +527,12 @@ describe('events', () => {
 
     return Promise.resolve().then(() => {
       expect(handler).toHaveBeenCalled();
+      expect(handler.mock.calls.length).toBe(1);
+      expect(handler.mock.calls[0].length).toBe(1);
+      expect(handler.mock.calls[0][0].detail).toBeTruthy();
+      expect(handler.mock.calls[0][0].detail.filterOperator).toBe(
+        TEST_OPERATOR
+      );
     });
   });
 
