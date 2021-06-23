@@ -98,6 +98,7 @@ export default class Filter extends LightningElement {
       console.log('app-filter.connectedCallback');
       console.log('app-filter.connectedCallback type: ' + this.type);
       console.log('app-filter.connectedCallback operator: ' + this.operator);
+      console.log('app-filter.connectedCallback path: ' + this.path);
     }
 
     if (!this.value) {
@@ -209,9 +210,10 @@ export default class Filter extends LightningElement {
   }
 
   createAndfireChangeEvent() {
+    const eventDetail = this.getFilterConfigurations();
     this.dispatchEvent(
       new CustomEvent('change', {
-        detail: this.getFilterConfigurations()
+        detail: eventDetail
       })
     );
   }
@@ -223,20 +225,6 @@ export default class Filter extends LightningElement {
   get operators() {
     const result = OPERATORS[this.type];
     return result ? result : [];
-  }
-
-  get selectedOperator() {
-    return this.selectorOperator.value;
-  }
-
-  get selectedFieldPath() {
-    const result = this.selectorPath.value;
-    return result;
-  }
-
-  get enteredCompareValue() {
-    const result = this.template.querySelector('input').value;
-    return result;
   }
 
   //----------------------------
