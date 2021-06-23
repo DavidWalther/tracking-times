@@ -115,8 +115,8 @@ export default class Filter extends LightningElement {
       console.log('app-filter.renderedCallback');
     }
 
-    if (this.operator && this.selectorSelectOperator) {
-      this.selectorSelectOperator.value = this.operator;
+    if (this.operator && this.selectorOperator) {
+      this.selectorOperator.value = this.operator;
     }
     this.readPathFromAttribute();
   }
@@ -129,7 +129,7 @@ export default class Filter extends LightningElement {
   }
 
   handleChangeFilterOperator() {
-    const filterOperator = this.selectorSelectOperator.value;
+    const filterOperator = this.selectorOperator.value;
     this.dispatchEvent(
       new CustomEvent('change', { detail: { filterOperator: filterOperator } })
     );
@@ -224,7 +224,7 @@ export default class Filter extends LightningElement {
   }
 
   get selectedOperator() {
-    return this.selectorSelectOperator.value;
+    return this.selectorOperator.value;
   }
 
   get selectedFieldPath() {
@@ -241,7 +241,7 @@ export default class Filter extends LightningElement {
   // Element selectors
   //----------------------------
 
-  get selectorSelectOperator() {
+  get selectorOperator() {
     return this.template.querySelector('.filter-operator select');
   }
 
