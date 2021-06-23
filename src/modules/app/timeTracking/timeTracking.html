@@ -140,10 +140,11 @@
         ></ui-button>
       </div>
     </div>
-    {label.labelFilter}
-    <div class="filter flexbox-container flexbox-container-group">
-      <template for:each={filters} for:item="filter" for:index="index">
-        <app-filter
+    <div class="panel panel-filter">
+      {label.labelFilter}
+      <div class="filters flexbox-container flexbox-container-group">
+        <template for:each={filters} for:item="filter" for:index="index">
+          <app-filter
           key={filter.index}
           paths={filter.paths}
           path={filter.path}
@@ -151,29 +152,30 @@
           value={filter.value}
           operator={filter.operator}
           console-log={filter.consoleLog}
-        ></app-filter>
-      </template>
-      <div class="flexbox-container">
-        <ui-button
+          ></app-filter>
+        </template>
+        <div class="flexbox-container">
+          <ui-button
           design="info"
           class="flexbox-item button-filter-reinit"
           value={label.labelReInit}
           onclick={handleClickReinitFilters}
-        ></ui-button>
-        <ui-button
+          ></ui-button>
+          <ui-button
           design="info"
           class="flexbox-item button-filter"
           value={label.labelFilter}
           onclick={handleClickFilter}
-        ></ui-button>
-        <template if:true={isEntiesAreFiltered}>
-          <ui-button
+          ></ui-button>
+          <template if:true={isEntiesAreFiltered}>
+            <ui-button
             design="info"
             class="flexbox-item button-unfilter"
             value={label.labelUnfilter}
             onclick={handleClickUnfilter}
-          ></ui-button>
-        </template>
+            ></ui-button>
+          </template>
+        </div>
       </div>
     </div>
     <div class="container-list entries">

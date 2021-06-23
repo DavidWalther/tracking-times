@@ -10,6 +10,10 @@ pattern for version numbers:
 
 - add change event on changes of filter criteria
 
+### bugfixes
+
+- filter buttons are not wrapped into new line on filtering anymore
+
 ## version 1.7.1
 
 ### features
