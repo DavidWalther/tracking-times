@@ -243,6 +243,23 @@ export default class Filter extends LightningElement {
     return result;
   }
 
+
+  //----------------------------
+  // helpers
+  //----------------------------
+
+  getFilterConfigurations() {
+    const filterValue = this.selectorInput.value;
+    const filterOperator = this.selectorOperator.value;
+    const filterPath = this.selectorPath.value;
+    const configurations = {
+          filterValue: filterValue,
+          filterOperator: filterOperator,
+          filterPath: filterPath
+        };
+    return configurations;
+  }
+
   //----------------------------
   // Element selectors
   //----------------------------
