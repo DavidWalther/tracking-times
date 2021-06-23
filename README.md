@@ -2,7 +2,13 @@
 
 pattern for version numbers:
 
-<number of main version>.<number of feature release>.<number of feature improvement / bugfix / tec dept>
+<main version>.<feature release>.<feature improvement / bugfix / tec dept>
+
+## version 1.7.2
+
+### feature improvements
+
+- add change event on changes of filter criteria
 
 ## version 1.7.1
 
