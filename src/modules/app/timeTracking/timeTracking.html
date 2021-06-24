@@ -140,39 +140,41 @@
         ></ui-button>
       </div>
     </div>
-    <div class="panel panel-filter">
-      {label.labelFilter}
-      <div class="filters flexbox-container flexbox-container-group">
-        <template for:each={filters} for:item="filter" for:index="index">
-          <app-filter
-          key={filter.index}
-          paths={filter.paths}
-          path={filter.path}
-          type={filter.type}
-          value={filter.value}
-          operator={filter.operator}
-          console-log={filter.consoleLog}
-          ></app-filter>
-        </template>
-        <div class="flexbox-container">
+    <div class="panel filter-panel">
+      <span>{label.labelFilter}</span>
+      <div>
+        <div class="flexbox-container flex-wrap filter-configuration ">
+          <template for:each={filters} for:item="filter" for:index="index">
+            <app-filter
+              key={filter.index}
+              paths={filter.paths}
+              path={filter.path}
+              type={filter.type}
+              value={filter.value}
+              operator={filter.operator}
+              console-log={filter.consoleLog}
+            ></app-filter>
+          </template>
+        </div>
+        <div class="flexbox-container filter-actions">
           <ui-button
-          design="info"
-          class="flexbox-item button-filter-reinit"
-          value={label.labelReInit}
-          onclick={handleClickReinitFilters}
+            design="info"
+            class="button-filter-reinit"
+            value={label.labelReInit}
+            onclick={handleClickReinitFilters}
           ></ui-button>
           <ui-button
-          design="info"
-          class="flexbox-item button-filter"
-          value={label.labelFilter}
-          onclick={handleClickFilter}
+            design="info"
+            class="button-filter"
+            value={label.labelFilter}
+            onclick={handleClickFilter}
           ></ui-button>
           <template if:true={isEntiesAreFiltered}>
             <ui-button
-            design="info"
-            class="flexbox-item button-unfilter"
-            value={label.labelUnfilter}
-            onclick={handleClickUnfilter}
+              design="info"
+              class="button-unfilter"
+              value={label.labelUnfilter}
+              onclick={handleClickUnfilter}
             ></ui-button>
           </template>
         </div>
