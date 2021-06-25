@@ -19,20 +19,15 @@ describe('attributes', () => {
       document.body.removeChild(document.body.firstChild);
     }
   });
-  /*
-  describe('inactive', () => {
-    afterEach(() => {
-      // The jsdom instance is shared across test cases in a single file so reset the DOM
-      while (document.body.firstChild) {
-        document.body.removeChild(document.body.firstChild);
-      }
-    });
 
+  describe('inactive', () => {
     test('filters can be disabled with flag', () => {
-      expect(1).toBe(2);
+      const element = createElement('app-filter', { is: Filter });
+      document.body.appendChild(element);
+
+      expect(element.inactive).toBe(false);
     });
   });
-*/
 
   describe('type', () => {
     test('input type is defined by parameter - date', () => {
