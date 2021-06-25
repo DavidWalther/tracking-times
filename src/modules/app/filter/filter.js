@@ -87,6 +87,10 @@ export default class Filter extends LightningElement {
   @api
   isMatch(objectToCheck) {
     const configurations = this.getFilterConfigurations();
+
+    if (this.inactive) {
+      return true;
+    }
     return this.isFilterMatch(
       objectToCheck,
       configurations.filterPath,
