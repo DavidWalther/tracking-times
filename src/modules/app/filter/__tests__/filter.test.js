@@ -19,20 +19,15 @@ describe('attributes', () => {
       document.body.removeChild(document.body.firstChild);
     }
   });
-  /*
-  describe('inactive', () => {
-    afterEach(() => {
-      // The jsdom instance is shared across test cases in a single file so reset the DOM
-      while (document.body.firstChild) {
-        document.body.removeChild(document.body.firstChild);
-      }
-    });
 
+  describe('inactive', () => {
     test('filters can be disabled with flag', () => {
-      expect(1).toBe(2);
+      const element = createElement('app-filter', { is: Filter });
+      document.body.appendChild(element);
+
+      expect(element.inactive).toBe(false);
     });
   });
-*/
 
   describe('type', () => {
     test('input type is defined by parameter - date', () => {
@@ -306,70 +301,122 @@ describe('api functions', () => {
       }
     });
 
-    test("Date - returns 'true' if object matches filter", () => {
-      const fieldParameter = [{ path: 'startAttribute', label: 'startLabel' }];
-      const testObject = { startAttribute: new Date('2000-06-01').getTime() };
-      const element = createElement('app-filter', { is: Filter });
-      element.type = 'date';
-      element.paths = fieldParameter;
-      document.body.appendChild(element);
+    describe('type date', () => {
+      test("Date - returns 'true' if object matches filter", () => {
+        const fieldParameter = [
+          { path: 'startAttribute', label: 'startLabel' }
+        ];
+        const testObject = { startAttribute: new Date('2000-06-01').getTime() };
+        const element = createElement('app-filter', { is: Filter });
+        element.type = 'date';
+        element.paths = fieldParameter;
+        document.body.appendChild(element);
 
-      const attributeSelect = element.shadowRoot.querySelector(
-        '.filter-path select'
-      );
-      attributeSelect.value = 'startAttribute';
-      //attributeSelect.dispatchEvent(new CustomEvent('change'));
+        const attributeSelect = element.shadowRoot.querySelector(
+          '.filter-path select'
+        );
+        attributeSelect.value = 'startAttribute';
+        //attributeSelect.dispatchEvent(new CustomEvent('change'));
 
-      const operatorSelect = element.shadowRoot.querySelector(
-        '.filter-operator select'
-      );
-      operatorSelect.value = 'greaterThanOrEqual';
-      //operatorSelect.dispatchEvent(new CustomEvent('change'));
+        const operatorSelect = element.shadowRoot.querySelector(
+          '.filter-operator select'
+        );
+        operatorSelect.value = 'greaterThanOrEqual';
+        //operatorSelect.dispatchEvent(new CustomEvent('change'));
 
-      const inputCompareValue = element.shadowRoot.querySelector('input');
-      inputCompareValue.value = '2000-01-01';
-      inputCompareValue.dispatchEvent(new CustomEvent('change'));
+        const inputCompareValue = element.shadowRoot.querySelector('input');
+        inputCompareValue.value = '2000-01-01';
+        inputCompareValue.dispatchEvent(new CustomEvent('change'));
 
-      // give 'time' to process asychronous event handling
-      return Promise.resolve().then(() => {
-        const result = element.isMatch(testObject);
-        expect(result).toBe(true);
+        // give 'time' to process asychronous event handling
+        return Promise.resolve().then(() => {
+          const result = element.isMatch(testObject);
+          expect(result).toBe(true);
+        });
       });
-    });
 
-    test("Date - returns 'false' if object does not matches filter", () => {
-      const fieldParameter = [{ path: 'startAttribute', label: 'startLabel' }];
-      const testObject = { startAttribute: new Date('2000-06-01').getTime() };
-      const element = createElement('app-filter', { is: Filter });
-      element.type = 'date';
-      element.paths = fieldParameter;
-      document.body.appendChild(element);
+      test("Date - returns 'false' if object does not matches filter", () => {
+        const fieldParameter = [
+          { path: 'startAttribute', label: 'startLabel' }
+        ];
+        const testObject = { startAttribute: new Date('2000-06-01').getTime() };
+        const element = createElement('app-filter', { is: Filter });
+        element.type = 'date';
+        element.paths = fieldParameter;
+        document.body.appendChild(element);
 
-      const attributeSelect = element.shadowRoot.querySelector(
-        '.filter-path select'
-      );
-      expect(attributeSelect).toBeTruthy();
-      attributeSelect.value = 'startAttribute';
-      //attributeSelect.dispatchEvent(new CustomEvent('change'));
+        const attributeSelect = element.shadowRoot.querySelector(
+          '.filter-path select'
+        );
+        expect(attributeSelect).toBeTruthy();
+        attributeSelect.value = 'startAttribute';
+        //attributeSelect.dispatchEvent(new CustomEvent('change'));
 
-      const operatorSelect = element.shadowRoot.querySelector(
-        '.filter-operator select'
-      );
-      expect(operatorSelect).toBeTruthy();
-      operatorSelect.value = 'greaterThanOrEqual';
-      //operatorSelect.dispatchEvent(new CustomEvent('change'));
+        const operatorSelect = element.shadowRoot.querySelector(
+          '.filter-operator select'
+        );
+        expect(operatorSelect).toBeTruthy();
+        operatorSelect.value = 'greaterThanOrEqual';
+        //operatorSelect.dispatchEvent(new CustomEvent('change'));
 
-      const inputCompareValue = element.shadowRoot.querySelector('input');
-      expect(inputCompareValue).toBeTruthy();
-      inputCompareValue.value = '2000-12-01';
-      inputCompareValue.dispatchEvent(new CustomEvent('change'));
+        const inputCompareValue = element.shadowRoot.querySelector('input');
+        expect(inputCompareValue).toBeTruthy();
+        inputCompareValue.value = '2000-12-01';
+        inputCompareValue.dispatchEvent(new CustomEvent('change'));
 
-      // give 'time' to process asychronous event handling
-      return Promise.resolve().then(() => {
-        const result = element.isMatch(testObject);
+        // give 'time' to process asychronous event handling
+        return Promise.resolve().then(() => {
+          const result = element.isMatch(testObject);
+          expect(result).toBe(false);
+        });
+      });
+
+      test("Date - returns 'true' if inactive is set to true", () => {
+        const fieldParameter = [
+          { path: 'startAttribute', label: 'startLabel' }
+        ];
+        const testObject = { startAttribute: new Date('2000-06-01').getTime() };
+        const element = createElement('app-filter', { is: Filter });
+        element.type = 'date';
+        element.paths = fieldParameter;
+        document.body.appendChild(element);
+
+        const attributeSelect = element.shadowRoot.querySelector(
+          '.filter-path select'
+        );
+        expect(attributeSelect).toBeTruthy();
+        attributeSelect.value = 'startAttribute';
+        //attributeSelect.dispatchEvent(new CustomEvent('change'));
+
+        const operatorSelect = element.shadowRoot.querySelector(
+          '.filter-operator select'
+        );
+        expect(operatorSelect).toBeTruthy();
+        operatorSelect.value = 'greaterThanOrEqual';
+        //operatorSelect.dispatchEvent(new CustomEvent('change'));
+
+        const inputCompareValue = element.shadowRoot.querySelector('input');
+        expect(inputCompareValue).toBeTruthy();
+        inputCompareValue.value = '2000-12-01';
+        inputCompareValue.dispatchEvent(new CustomEvent('change'));
+
+        let result = element.isMatch(testObject);
         expect(result).toBe(false);
+
+        // set inactive attribe
+        const inactiveCheckbox = element.shadowRoot.querySelector(
+          '.filter-disable'
+        );
+        inactiveCheckbox.checked = true;
+        inactiveCheckbox.dispatchEvent(new CustomEvent('change'));
+
+        return Promise.resolve().then(() => {
+          result = element.isMatch(testObject);
+          expect(result).toBe(true);
+        });
       });
     });
+
     describe('type text', () => {
       test("containsWithCase - returns 'true' if the selected field contains text", () => {
         const CONTAINING_TEXT = 'abcd';
@@ -451,7 +498,36 @@ describe('api functions', () => {
         expect(result).toBe(true);
       });
 
-      test('startsWithWithCase: returns false if object fields starts with same value in same case', () => {
+      test('startsWithWithCase: returns false if object fields starts with same value in different case', () => {
+        const STARTING_TEXT = 'abcd';
+        const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+        const testObject = {
+          comment: STARTING_TEXT + 'comment value'
+        };
+        const element = createElement('app-filter', { is: Filter });
+        element.type = 'text';
+        element.paths = fieldParameter;
+        element.operator = 'startsWithWithCase';
+        element.value = STARTING_TEXT.toUpperCase();
+        document.body.appendChild(element);
+
+        let result = element.isMatch(testObject);
+        expect(result).toBe(false);
+
+        // set inactive attribe
+        const inactiveCheckbox = element.shadowRoot.querySelector(
+          '.filter-disable'
+        );
+        inactiveCheckbox.checked = true;
+        inactiveCheckbox.dispatchEvent(new CustomEvent('change'));
+
+        return Promise.resolve().then(() => {
+          result = element.isMatch(testObject);
+          expect(result).toBe(true);
+        });
+      });
+
+      test("startsWithWithCase: returns 'true' if object fields starts with same value in different case and inactive is set", () => {
         const STARTING_TEXT = 'abcd';
         const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
         const testObject = {
@@ -563,6 +639,34 @@ describe('events', () => {
       expect(handler.mock.calls[0].length).toBe(1);
       expect(handler.mock.calls[0][0].detail).toBeTruthy();
       expect(handler.mock.calls[0][0].detail.filterPath).toBe('start');
+    });
+  });
+
+  test("component fires 'change' event on change of disabled checkbox", () => {
+    const handler = jest.fn();
+
+    const fieldParameter = [
+      { path: 'start', label: 'Start' },
+      { path: 'end', label: 'End' }
+    ];
+    const element = createElement('app-filter', { is: Filter });
+    element.type = 'date';
+    element.path = 'end';
+    element.paths = fieldParameter;
+    element.addEventListener('change', handler);
+    document.body.appendChild(element);
+
+    const checkboxDisable = element.shadowRoot.querySelector('.filter-disable');
+    expect(checkboxDisable).toBeTruthy();
+    checkboxDisable.checked = true;
+    checkboxDisable.dispatchEvent(new CustomEvent('change'));
+
+    return Promise.resolve().then(() => {
+      expect(handler).toHaveBeenCalled();
+      expect(handler.mock.calls.length).toBe(1);
+      expect(handler.mock.calls[0].length).toBe(1);
+      expect(handler.mock.calls[0][0].detail).toBeTruthy();
+      expect(handler.mock.calls[0][0].detail.filterInactive).toBe(true);
     });
   });
 });

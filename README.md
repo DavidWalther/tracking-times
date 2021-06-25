@@ -4,7 +4,11 @@ pattern for version numbers:
 
 <main version>.<feature release>.<feature improvement / bugfix / tec dept>
 
-## version 1.7.2
+## version 1.8
+
+### features
+
+- add active checkbox to filter component
 
 ### feature improvements
 

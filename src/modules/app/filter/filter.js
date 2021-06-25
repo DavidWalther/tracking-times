@@ -74,13 +74,23 @@ export default class Filter extends LightningElement {
   operator;
 
   /**
-   *
+   * (optional) This attribute can be set to 'true' to disable filter.
+   * @default false
+   */
+  @api
+  inactive = false;
+
+  /**
    * @param objectToCheck Object to check. at must contain the attributes defined in 'paths'
    * @returns
    */
   @api
   isMatch(objectToCheck) {
     const configurations = this.getFilterConfigurations();
+
+    if (this.inactive) {
+      return true;
+    }
     return this.isFilterMatch(
       objectToCheck,
       configurations.filterPath,
@@ -137,6 +147,10 @@ export default class Filter extends LightningElement {
     this.createAndfireChangeEvent();
   }
 
+  handleChangeFilterDisable(event) {
+    this.inactive = event.target.checked;
+    this.createAndfireChangeEvent();
+  }
   //----------------------------
   // actions
   //----------------------------
@@ -235,10 +249,12 @@ export default class Filter extends LightningElement {
     const filterValue = this.selectorInput.value;
     const filterOperator = this.selectorOperator.value;
     const filterPath = this.selectorPath.value;
+    const filterInactive = this.selectorDisabled.checked;
     const configurations = {
-      filterValue: filterValue,
-      filterOperator: filterOperator,
-      filterPath: filterPath
+      filterValue,
+      filterOperator,
+      filterPath,
+      filterInactive
     };
     return configurations;
   }
@@ -257,5 +273,9 @@ export default class Filter extends LightningElement {
 
   get selectorInput() {
     return this.template.querySelector('.filter-input input');
+  }
+
+  get selectorDisabled() {
+    return this.template.querySelector('.filter-disable');
   }
 }
