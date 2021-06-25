@@ -400,21 +400,16 @@ describe('api functions', () => {
         inputCompareValue.value = '2000-12-01';
         inputCompareValue.dispatchEvent(new CustomEvent('change'));
 
-        // give 'time' to process asychronous event handling
-        return Promise.resolve()
-          .then(() => {
-            const result = element.isMatch(testObject);
-            expect(result).toBe(false);
-          })
-          .then(() => {
-            element.inactive = true;
-          })
-          .then(() => {
-            const result = element.isMatch(testObject);
-            expect(result).toBe(true);
-          });
+        let result = element.isMatch(testObject);
+        expect(result).toBe(false);
+
+        // set inactive attribe
+        element.inactive = true;
+        result = element.isMatch(testObject);
+        expect(result).toBe(true);
       });
     });
+
     describe('type text', () => {
       test("containsWithCase - returns 'true' if the selected field contains text", () => {
         const CONTAINING_TEXT = 'abcd';
@@ -496,7 +491,29 @@ describe('api functions', () => {
         expect(result).toBe(true);
       });
 
-      test('startsWithWithCase: returns false if object fields starts with same value in same case', () => {
+      test('startsWithWithCase: returns false if object fields starts with same value in different case', () => {
+        const STARTING_TEXT = 'abcd';
+        const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+        const testObject = {
+          comment: STARTING_TEXT + 'comment value'
+        };
+        const element = createElement('app-filter', { is: Filter });
+        element.type = 'text';
+        element.paths = fieldParameter;
+        element.operator = 'startsWithWithCase';
+        element.value = STARTING_TEXT.toUpperCase();
+        document.body.appendChild(element);
+
+        let result = element.isMatch(testObject);
+        expect(result).toBe(false);
+        
+        //set inactive
+        element.inactive = true;
+        result = element.isMatch(testObject);
+        expect(result).toBe(true);
+      });
+
+      test("startsWithWithCase: returns 'true' if object fields starts with same value in different case and inactive is set", () => {
         const STARTING_TEXT = 'abcd';
         const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
         const testObject = {
