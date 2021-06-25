@@ -149,6 +149,7 @@ export default class Filter extends LightningElement {
 
   handleChangeFilterDisable(event) {
     this.inactive = event.target.checked;
+    this.createAndfireChangeEvent();
   }
   //----------------------------
   // actions

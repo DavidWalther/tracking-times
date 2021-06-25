@@ -641,4 +641,34 @@ describe('events', () => {
       expect(handler.mock.calls[0][0].detail.filterPath).toBe('start');
     });
   });
+  
+  test("component fires 'change' event on change of disabled checkbox", () => {
+    const handler = jest.fn();
+
+    const fieldParameter = [
+      { path: 'start', label: 'Start' },
+      { path: 'end', label: 'End' }
+    ];
+    const element = createElement('app-filter', { is: Filter });
+    element.type = 'date';
+    element.path = 'end';
+    element.paths = fieldParameter;
+    element.addEventListener('change', handler);
+    document.body.appendChild(element);
+
+    const checkboxDisable = element.shadowRoot.querySelector(
+      '.filter-disable'
+    );
+    expect(checkboxDisable).toBeTruthy();
+    checkboxDisable.checked = true;
+    checkboxDisable.dispatchEvent(new CustomEvent('change'));
+
+    return Promise.resolve().then(() => {
+      expect(handler).toHaveBeenCalled();
+      expect(handler.mock.calls.length).toBe(1);
+      expect(handler.mock.calls[0].length).toBe(1);
+      expect(handler.mock.calls[0][0].detail).toBeTruthy();
+      expect(handler.mock.calls[0][0].detail.filterInactive).toBe(true);
+    });
+  });
 });
