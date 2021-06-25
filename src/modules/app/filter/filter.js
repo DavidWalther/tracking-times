@@ -249,10 +249,12 @@ export default class Filter extends LightningElement {
     const filterValue = this.selectorInput.value;
     const filterOperator = this.selectorOperator.value;
     const filterPath = this.selectorPath.value;
+    const filterInactive = this.selectorDisabled.checked;
     const configurations = {
-      filterValue: filterValue,
-      filterOperator: filterOperator,
-      filterPath: filterPath
+      filterValue,
+      filterOperator,
+      filterPath,
+      filterInactive
     };
     return configurations;
   }

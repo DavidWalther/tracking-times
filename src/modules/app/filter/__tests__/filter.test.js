@@ -641,7 +641,7 @@ describe('events', () => {
       expect(handler.mock.calls[0][0].detail.filterPath).toBe('start');
     });
   });
-  
+
   test("component fires 'change' event on change of disabled checkbox", () => {
     const handler = jest.fn();
 
@@ -656,9 +656,7 @@ describe('events', () => {
     element.addEventListener('change', handler);
     document.body.appendChild(element);
 
-    const checkboxDisable = element.shadowRoot.querySelector(
-      '.filter-disable'
-    );
+    const checkboxDisable = element.shadowRoot.querySelector('.filter-disable');
     expect(checkboxDisable).toBeTruthy();
     checkboxDisable.checked = true;
     checkboxDisable.dispatchEvent(new CustomEvent('change'));
