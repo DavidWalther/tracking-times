@@ -404,9 +404,16 @@ describe('api functions', () => {
         expect(result).toBe(false);
 
         // set inactive attribe
-        element.inactive = true;
-        result = element.isMatch(testObject);
-        expect(result).toBe(true);
+        const inactiveCheckbox = element.shadowRoot.querySelector(
+          '.filter-disable'
+        );
+        inactiveCheckbox.checked = true;
+        inactiveCheckbox.dispatchEvent(new CustomEvent('change'));
+
+        return Promise.resolve().then(() => {
+          result = element.isMatch(testObject);
+          expect(result).toBe(true);
+        });
       });
     });
 
@@ -506,11 +513,18 @@ describe('api functions', () => {
 
         let result = element.isMatch(testObject);
         expect(result).toBe(false);
-        
-        //set inactive
-        element.inactive = true;
-        result = element.isMatch(testObject);
-        expect(result).toBe(true);
+
+        // set inactive attribe
+        const inactiveCheckbox = element.shadowRoot.querySelector(
+          '.filter-disable'
+        );
+        inactiveCheckbox.checked = true;
+        inactiveCheckbox.dispatchEvent(new CustomEvent('change'));
+
+        return Promise.resolve().then(() => {
+          result = element.isMatch(testObject);
+          expect(result).toBe(true);
+        });
       });
 
       test("startsWithWithCase: returns 'true' if object fields starts with same value in different case and inactive is set", () => {

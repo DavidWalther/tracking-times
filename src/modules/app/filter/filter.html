@@ -27,7 +27,13 @@
       </div>
     </div>
     <div>
-      <input id="filter-disable" type="checkbox" checked={inactive} />
+      <input
+        id="filter-disable"
+        class="filter-disable"
+        type="checkbox"
+        checked={inactive}
+        onchange={handleChangeFilterDisable}
+      />
       <label for="filter-disable">disable</label>
     </div>
   </div>

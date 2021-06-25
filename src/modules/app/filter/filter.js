@@ -147,6 +147,9 @@ export default class Filter extends LightningElement {
     this.createAndfireChangeEvent();
   }
 
+  handleChangeFilterDisable(event) {
+    this.inactive = event.target.checked;
+  }
   //----------------------------
   // actions
   //----------------------------
@@ -267,5 +270,9 @@ export default class Filter extends LightningElement {
 
   get selectorInput() {
     return this.template.querySelector('.filter-input input');
+  }
+
+  get selectorDisabled() {
+    return this.template.querySelector('.filter-disable');
   }
 }
