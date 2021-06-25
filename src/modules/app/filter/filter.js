@@ -74,7 +74,13 @@ export default class Filter extends LightningElement {
   operator;
 
   /**
-   *
+   * (optional) This attribute can be set to 'true' to disable filter.
+   * @default false
+   */
+  @api
+  inactive = false;
+
+  /**
    * @param objectToCheck Object to check. at must contain the attributes defined in 'paths'
    * @returns
    */
