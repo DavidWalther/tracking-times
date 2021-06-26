@@ -3,18 +3,18 @@
   width: 100%;
 }
 
-.border  {
+.border {
   padding: 7px;
   border-style: solid;
   border-width: 1px;
   border-radius: 5px;
-  border-color: #E8E8E8;
+  border-color: #e8e8e8;
 }
 
 .filter-configuration {
   display: flex;
   flex-direction: column;
-  gap:3px;
+  gap: 5px;
 }
 
 .filter-configuration-criteria {
@@ -25,4 +25,8 @@
 
 .flexbox-item > * {
   /* border-width: 0px; */
+}
+
+.interface {
+  font-family: Arial, Helvetica, sans-serif;
 }
