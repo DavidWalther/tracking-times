@@ -74,17 +74,38 @@ export default class Filter extends LightningElement {
   operator;
 
   /**
-   *
+   * (optional) This attribute can be set to 'true' to disable filter.
+   * @default false
+   */
+  @api
+  inactive = false;
+
+  /**
    * @param objectToCheck Object to check. at must contain the attributes defined in 'paths'
    * @returns
    */
   @api
   isMatch(objectToCheck) {
-    const fieldPath = this.selectedFieldPath;
-    const operator = this.selectedOperator;
-    const compareValue = this.enteredCompareValue;
-    return this.isFilterMatch(objectToCheck, fieldPath, operator, compareValue);
+    const configurations = this.getFilterConfigurations();
+
+    if (this.inactive) {
+      return true;
+    }
+    return this.isFilterMatch(
+      objectToCheck,
+      configurations.filterPath,
+      configurations.filterOperator,
+      configurations.filterValue
+    );
   }
+
+  /**
+   * This variable saves the last change made be the user.
+   * This is required to re-apply it on renderedCallback.
+   * Otherwise the original value would be applied:
+   */
+  valueOfLastInputChange;
+  operatorOfLastInputChange;
 
   //----------------------------
   // handlers
@@ -95,6 +116,7 @@ export default class Filter extends LightningElement {
       console.log('app-filter.connectedCallback');
       console.log('app-filter.connectedCallback type: ' + this.type);
       console.log('app-filter.connectedCallback operator: ' + this.operator);
+      console.log('app-filter.connectedCallback path: ' + this.path);
     }
 
     if (!this.value) {
@@ -113,14 +135,51 @@ export default class Filter extends LightningElement {
   renderedCallback() {
     if (this.consoleLog) {
       console.log('app-filter.renderedCallback');
-    }
-
-    if (this.operator && this.selectorSelectOperator) {
-      this.selectorSelectOperator.value = this.operator;
+      console.log(
+        'app-filter.renderedCallback valueOfLastInputChange: ' +
+          this.valueOfLastInputChange
+      );
     }
     this.readPathFromAttribute();
+
+    if (this.operator && this.selectorOperator) {
+      this.selectorOperator.value = this.operator;
+    }
+
+    if (this.valueOfLastInputChange) {
+      this.selectorInput.value = this.valueOfLastInputChange;
+    }
+
+    if (this.operatorOfLastInputChange) {
+      this.selectorOperator.value = this.operatorOfLastInputChange;
+    }
   }
 
+  handleChangeFilterValue(event) {
+    if (this.consoleLog) {
+      console.log('app-filter.handleChangeFilterValue');
+      console.log(
+        'app-filter.handleChangeFilterValue event.target.value: ' +
+          event.target.value
+      );
+    }
+    this.valueOfLastInputChange = event.target.value;
+    this.createAndfireChangeEvent();
+  }
+
+  handleChangeFilterOperator(event) {
+    this.operatorOfLastInputChange = event.target.value;
+    this.createAndfireChangeEvent();
+  }
+
+  handleChangeFilterPath() {
+    this.createAndfireChangeEvent();
+  }
+
+  handleChangeFilterDisable(event) {
+    this.inactive = event.target.checked;
+    this.createAndfireChangeEvent();
+  }
   //----------------------------
   // actions
   //----------------------------
@@ -181,7 +240,7 @@ export default class Filter extends LightningElement {
   readPathFromAttribute() {
     const pathAttributeValue = this.path;
     if (pathAttributeValue) {
-      const operatorSelect = this.selectPath;
+      const operatorSelect = this.selectorPath;
       if (this.consoleLog) {
         console.log('app-filter.readPathFromAttribute');
         console.log(
@@ -193,6 +252,15 @@ export default class Filter extends LightningElement {
     }
   }
 
+  createAndfireChangeEvent() {
+    const eventDetail = this.getFilterConfigurations();
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        detail: eventDetail
+      })
+    );
+  }
+
   //----------------------------
   // getters
   //----------------------------
@@ -202,33 +270,41 @@ export default class Filter extends LightningElement {
     return result ? result : [];
   }
 
-  get selectedOperator() {
-    return this.selectorSelectOperator.value;
-  }
+  //----------------------------
+  // helpers
+  //----------------------------
 
-  get selectedFieldPath() {
-    const result = this.selectPath.value;
-    return result;
-  }
-
-  get enteredCompareValue() {
-    const result = this.template.querySelector('input').value;
-    return result;
+  getFilterConfigurations() {
+    const filterValue = this.selectorInput.value;
+    const filterOperator = this.selectorOperator.value;
+    const filterPath = this.selectorPath.value;
+    const filterInactive = this.selectorDisabled.checked;
+    const configurations = {
+      filterValue,
+      filterOperator,
+      filterPath,
+      filterInactive
+    };
+    return configurations;
   }
 
   //----------------------------
   // Element selectors
   //----------------------------
 
-  get selectorSelectOperator() {
+  get selectorOperator() {
     return this.template.querySelector('.filter-operator select');
   }
 
-  get selectPath() {
+  get selectorPath() {
     return this.template.querySelector('.filter-path select');
   }
 
   get selectorInput() {
     return this.template.querySelector('.filter-input input');
+  }
+
+  get selectorDisabled() {
+    return this.template.querySelector('.filter-disable');
   }
 }

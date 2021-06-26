@@ -1,23 +1,42 @@
 <template>
-  <div class="flexbox content">
-    <div class="flexbox-item flexbox-item-1 filter-path">
-      <select>
-        <template for:each={paths} for:item="path">
-          <option key={path.path} value={path.path}>{path.label}</option>
-        </template>
-      </select>
-    </div>
-    <div class="flexbox-item flexbox-item-2 filter-operator">
-      <select>
-        <template for:each={operators} for:item="operator">
-          <option key={operator.value} value={operator.value}
-            >{operator.label}</option
-          >
-        </template>
-      </select>
-    </div>
-    <div class="flexbox-item flexbox-item-3 ">
-      <input type={type} class="filter-value-date" value={value} />
+  <div class=" content">
+    <div class="border filter-configuration">
+      <div class="filter-configuration-criteria">
+        <div class="flexbox-item flexbox-item-1 filter-path">
+          <select class="interface" onchange={handleChangeFilterPath}>
+            <template for:each={paths} for:item="path">
+              <option key={path.path} value={path.path}>{path.label}</option>
+            </template>
+          </select>
+        </div>
+        <div class="flexbox-item flexbox-item-2 filter-operator">
+          <select class="interface" onchange={handleChangeFilterOperator}>
+            <template for:each={operators} for:item="operator">
+              <option key={operator.value} value={operator.value}
+                >{operator.label}</option
+              >
+            </template>
+          </select>
+        </div>
+        <div class="flexbox-item flexbox-item-3 filter-input">
+          <input
+            type={type}
+            class="interface filter-value-date"
+            value={value}
+            onchange={handleChangeFilterValue}
+          />
+        </div>
+      </div>
+      <div>
+        <input
+          id="filter-disable"
+          class="filter-disable"
+          type="checkbox"
+          checked={inactive}
+          onchange={handleChangeFilterDisable}
+        />
+        <label for="filter-disable">disable</label>
+      </div>
     </div>
   </div>
 </template>

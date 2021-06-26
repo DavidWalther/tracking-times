@@ -2,7 +2,19 @@
 
 pattern for version numbers:
 
-<number of main version>.<number of feature release>.<number of feature improvement / bugfix / tec dept>
+<main version>.<feature release>.<feature improvement / bugfix / tec dept>
+
+## version 1.7.2
+
+### feature improvements
+
+- add active checkbox to filter component
+- make the end the default path for second date filter
+- add change event on changes of filter criteria
+
+### bugfixes
+
+- filter buttons are not wrapped into new line on filtering anymore
 
 ## version 1.7.1
 
