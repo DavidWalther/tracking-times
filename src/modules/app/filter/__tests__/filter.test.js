@@ -670,3 +670,47 @@ describe('events', () => {
     });
   });
 });
+
+describe('bugsfixes', () => {
+  afterEach(() => {
+    // The jsdom instance is shared across test cases in a single file so reset the DOM
+    while (document.body.firstChild) {
+      document.body.removeChild(document.body.firstChild);
+    }
+  });
+
+  test('input retains value on toggle of disabled', () => {
+    const INITIAL_VALUE = '2015-06-23';
+    const CHANGED_VALUE = '2015-07-23';
+
+    const fieldParameter = [
+      { path: 'start', label: 'Start' },
+      { path: 'end', label: 'End' }
+    ];
+
+    const element = createElement('app-filter', { is: Filter });
+    element.type = 'date';
+    element.path = 'end';
+    element.value = INITIAL_VALUE;
+    element.paths = fieldParameter;
+    document.body.appendChild(element);
+
+    const valueInput = element.shadowRoot.querySelector('.filter-input input');
+    expect(valueInput.value).toBe(INITIAL_VALUE);
+
+    valueInput.value = CHANGED_VALUE;
+    valueInput.dispatchEvent(new CustomEvent('change'));
+
+    const disabledCheckbox = element.shadowRoot.querySelector(
+      '.filter-disable'
+    );
+    expect(disabledCheckbox).not.toBeNull();
+    expect(disabledCheckbox.checked).toBe(false);
+
+    disabledCheckbox.checked = true;
+    disabledCheckbox.dispatchEvent(new CustomEvent('change'));
+    return Promise.resolve().then(() => {
+      expect(valueInput.value).toBe(CHANGED_VALUE);
+    });
+  });
+});
