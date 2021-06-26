@@ -99,6 +99,13 @@ export default class Filter extends LightningElement {
     );
   }
 
+  /**
+   * This variable saves the last change made be the user.
+   * This is required to re-apply it on renderedCallback.
+   * Otherwise the original value would be applied:
+   */
+  valueOfLastInputChange;
+
   //----------------------------
   // handlers
   //----------------------------
@@ -127,6 +134,14 @@ export default class Filter extends LightningElement {
   renderedCallback() {
     if (this.consoleLog) {
       console.log('app-filter.renderedCallback');
+      console.log(
+        'app-filter.renderedCallback valueOfLastInputChange: ' +
+          this.valueOfLastInputChange
+      );
+    }
+
+    if (this.valueOfLastInputChange) {
+      this.selectorInput.value = this.valueOfLastInputChange;
     }
 
     if (this.operator && this.selectorOperator) {
@@ -135,7 +150,15 @@ export default class Filter extends LightningElement {
     this.readPathFromAttribute();
   }
 
-  handleChangeFilterValue() {
+  handleChangeFilterValue(event) {
+    if (this.consoleLog) {
+      console.log('app-filter.handleChangeFilterValue');
+      console.log(
+        'app-filter.handleChangeFilterValue event.target.value: ' +
+          event.target.value
+      );
+    }
+    this.valueOfLastInputChange = event.target.value;
     this.createAndfireChangeEvent();
   }
 
