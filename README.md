@@ -4,14 +4,12 @@ pattern for version numbers:
 
 <main version>.<feature release>.<feature improvement / bugfix / tec dept>
 
-## version 1.8
-
-### features
-
-- add active checkbox to filter component
+## version 1.7.2
 
 ### feature improvements
 
+- add active checkbox to filter component
+- make the end the default path for second date filter
 - add change event on changes of filter criteria
 
 ### bugfixes
