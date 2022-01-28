@@ -216,6 +216,12 @@ export default class TimeTracking extends LightningElement {
     }
   }
 
+  handleChangeFilterCriteria() {
+    this.deselectAllEntries();
+    this.unapplyFilters();
+    this.applyFilters();
+  }
+
   handleClickUnfilter() {
     this.deselectAllEntries();
     this.unapplyFilters();

@@ -888,6 +888,45 @@ describe('feature: filters', () => {
     });
   });
 
+  test('change of filter triggers re-applying of filters', () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+    const firstEntry = element.shadowRoot.querySelectorAll('app-entry')[0];
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+
+    const filtersComponents = element.shadowRoot.querySelectorAll('app-filter');
+    expect(filtersComponents.length).toBe(3);
+
+    /**
+     * When
+     * - The filter is set to the latest entriy's start date
+     */
+
+    filtersComponents[0].value = new Date(
+      THIRD_ENTRY_START - MILISECONDS_PER_DAY
+    )
+      .toISOString()
+      .split('T')[0];
+    return Promise.resolve()
+      .then(() => {
+        filtersComponents[0].dispatchEvent(new CustomEvent('change'));
+      })
+      .then(() => {
+        /**
+         * Then
+         * only the third entry stays visible
+         */
+        const visibleEntries = element.shadowRoot.querySelectorAll('app-entry');
+        expect(visibleEntries.length).toBe(1);
+
+        expect(visibleEntries[0].start).toBe(THIRD_ENTRY_START);
+      });
+  });
+
   test('unmatching itmes are filtered and unfiltered', () => {
     /**
      * Given
