@@ -888,6 +888,108 @@ describe('feature: filters', () => {
     });
   });
 
+  test('change of filter triggers re-applying of filters', () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+    const firstEntry = element.shadowRoot.querySelectorAll('app-entry')[0];
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+
+    const filtersComponents = element.shadowRoot.querySelectorAll('app-filter');
+    expect(filtersComponents.length).toBe(3);
+
+    /**
+     * When
+     * - The filter is set to the latest entriy's start date
+     */
+
+    filtersComponents[0].value = new Date(
+      THIRD_ENTRY_START - MILISECONDS_PER_DAY
+    )
+      .toISOString()
+      .split('T')[0];
+    return Promise.resolve()
+      .then(() => {
+        filtersComponents[0].dispatchEvent(new CustomEvent('change'));
+      })
+      .then(() => {
+        /**
+         * Then
+         * only the third entry stays visible
+         */
+        const visibleEntries = element.shadowRoot.querySelectorAll('app-entry');
+        expect(visibleEntries.length).toBe(1);
+
+        expect(visibleEntries[0].start).toBe(THIRD_ENTRY_START);
+      });
+  });
+
+  test("Button 'unfilter' disables all filters", () => {
+    /**
+     * Given
+     * - Data in current data version (three entries)
+     * - Elements are filterd
+     */
+    const element = createAndAddMainCmpAndSetCurrentVersionData();
+    const firstEntry = element.shadowRoot.querySelectorAll('app-entry')[0];
+    const secondEntry = element.shadowRoot.querySelectorAll('app-entry')[1];
+    const thirdEntry = element.shadowRoot.querySelectorAll('app-entry')[2];
+
+    const filtersComponents = element.shadowRoot.querySelectorAll('app-filter');
+    expect(filtersComponents.length).toBe(3);
+
+    // Set start filter before before the second entry
+    filtersComponents[0].value = new Date(
+      SECOND_ENTRY_START - MILISECONDS_PER_DAY
+    )
+      .toISOString()
+      .split('T')[0];
+
+    // Set end filter before before the third entry
+    filtersComponents[1].value = new Date(
+      THIRD_ENTRY_START - MILISECONDS_PER_DAY
+    )
+      .toISOString()
+      .split('T')[0];
+    return Promise.resolve()
+      .then(() => {
+        // apply filters
+        filtersComponents[0].dispatchEvent(new CustomEvent('change'));
+      })
+      .then(() => {
+        const visibleEntries = element.shadowRoot.querySelectorAll('app-entry');
+        expect(visibleEntries.length).toBe(1);
+        expect(visibleEntries[0].start).toBe(SECOND_ENTRY_START);
+
+        /**
+         * When
+         * - unfliter button is clicked
+         */
+        const unFilterButton = element.shadowRoot.querySelector(
+          '.button-unfilter'
+        );
+        unFilterButton.dispatchEvent(new CustomEvent('click'));
+      })
+      .then(() => {
+        /**
+         * Then
+         * - all entries are visible again
+         * - all filters are disabled
+         */
+        const visibleEntries = element.shadowRoot.querySelectorAll('app-entry');
+        expect(visibleEntries.length).toBe(3);
+        const disabledFilters = element.shadowRoot.querySelectorAll(
+          'app-filter'
+        );
+        disabledFilters.forEach(filter => {
+          expect(filter.inactive).toBe(true);
+        });
+      });
+  });
+
   test('unmatching itmes are filtered and unfiltered', () => {
     /**
      * Given

@@ -216,8 +216,15 @@ export default class TimeTracking extends LightningElement {
     }
   }
 
+  handleChangeFilterCriteria() {
+    this.deselectAllEntries();
+    this.unapplyFilters();
+    this.applyFilters();
+  }
+
   handleClickUnfilter() {
     this.deselectAllEntries();
+    this.disableAllFilters();
     this.unapplyFilters();
   }
 
@@ -289,6 +296,12 @@ export default class TimeTracking extends LightningElement {
     this.entriesRuledOutByFilters = [];
 
     this.sortEntries();
+  }
+
+  disableAllFilters() {
+    this.template.querySelectorAll('app-filter').forEach(filter => {
+      filter.inactive = true;
+    });
   }
 
   doesMatchFilter(entry) {

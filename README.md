@@ -6,6 +6,8 @@ pattern for version numbers:
 
 ## version 1.7.3
 
+- refilter on filter change
+
 ## version 1.7.2
 
 ### feature improvements
