@@ -4,6 +4,10 @@ pattern for version numbers:
 
 <main version>.<feature release>.<feature improvement / bugfix / tec dept>
 
+## version 1.7.3
+
+- refilter on filter change
+
 ## version 1.7.2
 
 ### feature improvements
