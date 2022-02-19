@@ -52,11 +52,6 @@ div.buttons > div {
   gap: 5px;
 }
 
-div.content {
-  display: grid;
-  gap: 5px;
-  grid-template-columns: auto;
-}
 
 ui-sidemenu div {
   margin-bottom: 10px;
