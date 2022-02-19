@@ -2,14 +2,6 @@ body {
   padding: 5px;
 }
 
-.border-thin_bottom {
-  border-color: lightgrey;
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  padding-bottom: 10px;
-  margin-bottom: 5px;
-}
-
 .flex-wrap {
   flex-wrap: wrap;
 }
@@ -21,11 +13,8 @@ body {
 /* --- Layout --- */
 div.main {
   display: flex;
-  gap: 1rem;
-}
-
-div.menubar div.buttons {
   flex-direction: column;
+  gap: 1rem;
 }
 
 /* --- Buttons --- */
@@ -34,7 +23,8 @@ div.buttons {
   gap: 5px;
   display: flex;
   align-items: stretch;
-  justify-content: space-between;
+  width: fit-content;
+  justify-content: left;
   flex-wrap: wrap;
 }
 
@@ -72,6 +62,7 @@ div.container-github {
   border-radius: 7px;
   padding: 10px;
   text-align: center;
+  margin-bottom: 5px;
 }
 
 div.modal-clear-body {
@@ -116,6 +107,24 @@ a.button-github {
 }
 
 @media (min-width: 500px) {
+  /* --- Layout --- */
+  div.main {
+    flex-direction: row;
+  }
+
+  div.menubar div.buttons {
+    flex-direction: column;
+  }
+
+  /* --- Buttons --- */
+
+  div.buttons {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  /* --- Filters --- */
+
   .filter-actions {
     flex-direction: column;
   }
