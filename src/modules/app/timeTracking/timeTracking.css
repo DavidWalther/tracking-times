@@ -17,18 +17,25 @@ body {
 .flexbox-container {
   display: flex;
 }
-/* --- Buttons--- */
+
+/* --- Layout --- */
+div.main {
+  display: flex;
+  gap: 1rem;
+}
+
+div.menubar div.buttons {
+  flex-direction: column;
+}
+
+/* --- Buttons --- */
 
 div.buttons {
   gap: 5px;
   display: flex;
+  align-items: stretch;
   justify-content: space-between;
   flex-wrap: wrap;
-}
-
-div.buttons > div {
-  display: flex;
-  width: fit-content;
 }
 
 /* --- Filters --- */
@@ -51,7 +58,6 @@ div.buttons > div {
   flex-grow: 1;
   gap: 5px;
 }
-
 
 ui-sidemenu div {
   margin-bottom: 10px;
