@@ -17,6 +17,19 @@ body {
 .flexbox-container {
   display: flex;
 }
+/* --- Buttons--- */
+
+div.buttons {
+  gap: 5px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+div.buttons > div {
+  display: flex;
+  width: fit-content;
+}
 
 /* --- Filters --- */
 
@@ -102,7 +115,6 @@ a.button-github {
 }
 
 @media (min-width: 500px) {
-
   .filter-actions {
     flex-direction: column;
   }
