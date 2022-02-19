@@ -1,131 +1,137 @@
 <template>
-  <div class="content">
-    <div class="container-github wide">
-      <a
-        target="_blank"
-        href="https://github.com/DavidWalther/tracking-times/"
-        class="button-github"
-        >See the code on Github</a
-      >
-    </div>
-    <div class="buttons border-thin_bottom">
-      <div class="container-export">
-        <ui-button
-          design="info"
-          value={label.button.download.value}
-          class="button-export"
-          onclick={handleClickExport}
-        ></ui-button>
-      </div>
-      <div class="container-add">
-        <ui-button
-          design="accept"
-          value={label.button.add.value}
-          class="button-add"
-          onclick={handleClickAdd}
-        ></ui-button>
-      </div>
-      <div class="container-summary">
-        <ui-button
-          design="info"
-          value="Summary"
-          class="multiple button-summary"
-          disabled
-          onclick={handleClickSummary}
-        ></ui-button>
-      </div>
-      <div>
-        <ui-button
-          design="cancel"
-          value={label.labelDeleteSelected}
-          class="multiple button-selected-delete"
-          onclick={handleClickDeleteSelected}
-          disabled
-        ></ui-button>
-      </div>
-      <div>
-        <ui-button
-          design="info"
-          value={label.labelDeselectAll}
-          class="multiple button-selected-deselect_all"
-          onclick={handleClickDeselectAll}
-          disabled
-        ></ui-button>
-      </div>
-      <div>
-        <ui-button
-          design="info"
-          value={label.labelSelectAll}
-          class="button-selected-select_all"
-          onclick={handleClickSelectAll}
-        ></ui-button>
-      </div>
-      <div>
-        <ui-button
-          design="info"
-          value={label.labelSort}
-          onclick={handleClickSort}
-        ></ui-button>
-      </div>
-    </div>
-    <div class="panel filter-panel">
-      <span>{label.labelFilter}</span>
-      <div>
-        <div class="flexbox-container flex-wrap filter-configuration ">
-          <template for:each={filters} for:item="filter" for:index="index">
-            <app-filter
-              key={filter.index}
-              paths={filter.paths}
-              path={filter.path}
-              type={filter.type}
-              value={filter.value}
-              operator={filter.operator}
-              console-log={filter.consoleLog}
-              onchange={handleChangeFilterCriteria}
-            ></app-filter>
-          </template>
+  <div class="header container-github wide">
+    <a
+      target="_blank"
+      href="https://github.com/DavidWalther/tracking-times/"
+      class="button-github"
+      >See the code on Github</a
+    >
+  </div>
+
+  <div class="main">
+    <div class="sidemenu">
+      <div class="buttons border-thin_bottom">
+        <div class="container-export">
+          <ui-button
+            design="info"
+            value={label.button.download.value}
+            class="button-export"
+            onclick={handleClickExport}
+          ></ui-button>
         </div>
-        <div class="flexbox-container filter-actions">
+        <div class="container-add">
+          <ui-button
+            design="accept"
+            value={label.button.add.value}
+            class="button-add"
+            onclick={handleClickAdd}
+          ></ui-button>
+        </div>
+        <div class="container-summary">
           <ui-button
             design="info"
-            class="button-filter-reinit"
-            value={label.labelReInit}
-            onclick={handleClickReinitFilters}
+            value="Summary"
+            class="multiple button-summary"
+            disabled
+            onclick={handleClickSummary}
           ></ui-button>
+        </div>
+        <div>
+          <ui-button
+            design="cancel"
+            value={label.labelDeleteSelected}
+            class="multiple button-selected-delete"
+            onclick={handleClickDeleteSelected}
+            disabled
+          ></ui-button>
+        </div>
+        <div>
           <ui-button
             design="info"
-            class="button-filter"
-            value={label.labelFilter}
-            onclick={handleClickFilter}
+            value={label.labelDeselectAll}
+            class="multiple button-selected-deselect_all"
+            onclick={handleClickDeselectAll}
+            disabled
           ></ui-button>
-          <template if:true={isEntiesAreFiltered}>
+        </div>
+        <div>
+          <ui-button
+            design="info"
+            value={label.labelSelectAll}
+            class="button-selected-select_all"
+            onclick={handleClickSelectAll}
+          ></ui-button>
+        </div>
+        <div>
+          <ui-button
+            design="info"
+            value={label.labelSort}
+            onclick={handleClickSort}
+          ></ui-button>
+        </div>
+      </div>
+      <div class="main"></div>
+    </div>
+    <div class="content">
+      <div class="panel filter-panel">
+        <span>{label.labelFilter}</span>
+        <div>
+          <div class="flexbox-container flex-wrap filter-configuration ">
+            <template for:each={filters} for:item="filter" for:index="index">
+              <app-filter
+                key={filter.index}
+                paths={filter.paths}
+                path={filter.path}
+                type={filter.type}
+                value={filter.value}
+                operator={filter.operator}
+                console-log={filter.consoleLog}
+                onchange={handleChangeFilterCriteria}
+              ></app-filter>
+            </template>
+          </div>
+          <div class="flexbox-container filter-actions">
             <ui-button
               design="info"
-              class="button-unfilter"
-              value={label.labelUnfilter}
-              onclick={handleClickUnfilter}
+              class="button-filter-reinit"
+              value={label.labelReInit}
+              onclick={handleClickReinitFilters}
             ></ui-button>
-          </template>
+            <ui-button
+              design="info"
+              class="button-filter"
+              value={label.labelFilter}
+              onclick={handleClickFilter}
+            ></ui-button>
+            <template if:true={isEntiesAreFiltered}>
+              <ui-button
+                design="info"
+                class="button-unfilter"
+                value={label.labelUnfilter}
+                onclick={handleClickUnfilter}
+              ></ui-button>
+            </template>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="container-list entries">
-      <template for:each={state.entries} for:item="entry" for:index="index">
-        <div key={entry.itemId}>
-          <app-entry
-            data-index={entry.sortnumber}
-            item-id={entry.itemId}
-            start={entry.start}
-            end={entry.end}
-            break={entry.break}
-            comment={entry.comment}
-            onchange={handleChangeEntry}
-            ondelete={handleEventDelete}
-            onselect={handleEventSelect}
-            onunselect={handleEventUnselect}
-          ></app-entry>
-        </div>
-      </template>
+      <div class="container-list entries">
+        <template for:each={state.entries} for:item="entry" for:index="index">
+          <div key={entry.itemId}>
+            <app-entry
+              data-index={entry.sortnumber}
+              item-id={entry.itemId}
+              start={entry.start}
+              end={entry.end}
+              break={entry.break}
+              comment={entry.comment}
+              onchange={handleChangeEntry}
+              ondelete={handleEventDelete}
+              onselect={handleEventSelect}
+              onunselect={handleEventUnselect}
+            ></app-entry>
+          </div>
+        </template>
+      </div>
     </div>
   </div>
   <ui-modal-confirmable
