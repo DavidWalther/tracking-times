@@ -583,6 +583,39 @@ describe('events', () => {
     });
   });
 
+  test('component re-enabels on change of criteria input value', () => {
+    const TEST_TEXT = 'abcdefg';
+    const handler = jest.fn();
+
+    const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+    const element = createElement('app-filter', { is: Filter });
+    element.type = 'text';
+    element.paths = fieldParameter;
+    element.operator = 'containsWithoutCase';
+    element.inactive = true;
+    element.addEventListener('change', handler);
+    document.body.appendChild(element);
+
+    const inputElement = element.shadowRoot.querySelector(
+      '.filter-input input'
+    );
+    expect(inputElement).toBeTruthy();
+    inputElement.value = TEST_TEXT;
+    inputElement.dispatchEvent(new CustomEvent('change'));
+
+    return Promise.resolve().then(() => {
+      expect(handler).toHaveBeenCalled();
+      expect(handler.mock.calls.length).toBe(1);
+      expect(handler.mock.calls[0].length).toBe(1);
+      expect(handler.mock.calls[0][0].detail).toBeTruthy();
+      expect(handler.mock.calls[0][0].detail.filterValue).toBe(TEST_TEXT);
+      expect(handler.mock.calls[0][0].detail.filterInactive).toBe(false);
+
+      const elementToCheck = createElement('app-filter', { is: Filter });
+      expect(elementToCheck.inactive).toBe(false);
+    });
+  });
+
   test("component fires 'change' event on change of operator", () => {
     const TEST_OPERATOR = 'containsWithCase';
     const handler = jest.fn();
@@ -676,6 +709,7 @@ describe('events', () => {
       expect(elementToCheck.inactive).toBe(false);
     });
   });
+
   test("component fires 'change' event on change of disabled checkbox", () => {
     const handler = jest.fn();
 

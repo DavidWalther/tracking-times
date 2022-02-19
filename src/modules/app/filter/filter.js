@@ -164,6 +164,7 @@ export default class Filter extends LightningElement {
       );
     }
     this.valueOfLastInputChange = event.target.value;
+    this.enable();
     this.createAndfireChangeEvent();
   }
 
