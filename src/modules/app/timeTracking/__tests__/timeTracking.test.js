@@ -316,9 +316,8 @@ describe('Download', () => {
       const downloadButtons = element.shadowRoot.querySelectorAll(
         '.button-export'
       );
-      expect(downloadButtons.length).toBe(2);
+      expect(downloadButtons.length).toBe(1);
       expect(downloadButtons[0].disabled).toBe(false);
-      expect(downloadButtons[1].disabled).toBe(false);
     });
   });
 
@@ -656,9 +655,8 @@ describe('feature: mass actions', () => {
     let deleteSelectedButtons = element.shadowRoot.querySelectorAll(
       '.button-selected-delete'
     );
-    expect(deleteSelectedButtons.length).toBe(2);
+    expect(deleteSelectedButtons.length).toBe(1);
     expect(deleteSelectedButtons[0].disabled).toBe(true);
-    expect(deleteSelectedButtons[1].disabled).toBe(true);
 
     /**
      * When
@@ -681,9 +679,8 @@ describe('feature: mass actions', () => {
     deleteSelectedButtons = element.shadowRoot.querySelectorAll(
       '.button-selected-delete'
     );
-    expect(deleteSelectedButtons.length).toBe(2);
+    expect(deleteSelectedButtons.length).toBe(1);
     expect(deleteSelectedButtons[0].disabled).toBe(false);
-    expect(deleteSelectedButtons[1].disabled).toBe(false);
   });
 
   test('"delete selected"-button deletes seleced records', () => {
@@ -709,7 +706,6 @@ describe('feature: mass actions', () => {
       '.button-selected-delete'
     );
     expect(deleteSelectedButtons[0].disabled).toBe(false);
-    expect(deleteSelectedButtons[1].disabled).toBe(false);
 
     /**
      * When
@@ -1149,7 +1145,7 @@ function setVersion4DummyData() {
 function getAddButton(shadowRoot) {
   const allFoundElements = getElementBySelectorAll(shadowRoot, '.button-add');
   // check whether there is one for each layout
-  expect(allFoundElements.length).toBe(2);
+  expect(allFoundElements.length).toBe(1);
   return allFoundElements[0];
 }
 

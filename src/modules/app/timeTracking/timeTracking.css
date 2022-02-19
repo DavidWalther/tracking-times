@@ -45,40 +45,12 @@ div.content {
   grid-template-columns: auto;
 }
 
-.button-bar_mobile {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: 30px auto;
-}
-
-.button-bar_mobile > .buttons {
-  display: grid;
-  grid-template-columns: auto auto;
-  gap: 5px;
-
-  /* z-index: -1; */
-}
-
-.wide {
-  display: none;
-}
-
 ui-sidemenu div {
   margin-bottom: 10px;
 }
 
 div.entries > div {
   height: 150px;
-}
-
-div.button-bar_wide {
-  display: none;
-  gap: 5px;
-}
-
-div.button > input {
-  width: 100%;
-  margin: auto;
 }
 
 div.container-github {
@@ -130,13 +102,6 @@ a.button-github {
 }
 
 @media (min-width: 500px) {
-  div.button-bar_wide {
-    display: grid;
-  }
-
-  .button-bar_mobile {
-    display: none;
-  }
 
   .filter-actions {
     flex-direction: column;
@@ -144,12 +109,5 @@ a.button-github {
 
   .filter-panel > div {
     flex-direction: row;
-  }
-
-  .wide {
-    display: block;
-  }
-  div.button-bar_wide {
-    grid-template-columns: auto auto auto auto;
   }
 }

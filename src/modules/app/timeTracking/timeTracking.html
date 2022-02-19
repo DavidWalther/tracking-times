@@ -8,80 +8,8 @@
         >See the code on Github</a
       >
     </div>
-    <div class="button-bar_mobile border-thin_bottom">
-      <ui-sidemenu>
-        <div class="container-github">
-          <a
-            target="_blank"
-            href="https://github.com/DavidWalther/tracking-times/"
-            class="button-github"
-            >See the code on Github</a
-          >
-        </div>
-        <div>
-          <ui-button
-            design="info"
-            value={label.button.download.value}
-            class="button-export"
-            onclick={handleClickExport}
-          ></ui-button>
-        </div>
-        <div>
-          <ui-button
-            design="cancel"
-            value={label.labelDeleteSelected}
-            class="multiple button-selected-delete"
-            onclick={handleClickDeleteSelected}
-            disabled
-          ></ui-button>
-        </div>
-      </ui-sidemenu>
-      <div class="buttons">
-        <div>
-          <ui-button
-            design="info"
-            value={label.button.add.value}
-            class="button-add"
-            onclick={handleClickAdd}
-          ></ui-button>
-        </div>
-        <div>
-          <ui-button
-            design="info"
-            value={label.labelDeselectAll}
-            class="multiple button-selected-deselect_all"
-            onclick={handleClickDeselectAll}
-            disabled
-          ></ui-button>
-        </div>
-        <div>
-          <ui-button
-            design="info"
-            value="Summary"
-            class="multiple button-summary"
-            onclick={handleClickSummary}
-            disabled
-          ></ui-button>
-        </div>
-        <div>
-          <ui-button
-            design="info"
-            value={label.labelSelectAll}
-            class="button-selected-select_all"
-            onclick={handleClickSelectAll}
-          ></ui-button>
-        </div>
-        <div>
-          <ui-button
-            design="info"
-            value={label.labelSort}
-            onclick={handleClickSort}
-          ></ui-button>
-        </div>
-      </div>
-    </div>
-    <div class="button-bar_wide border-thin_bottom">
-      <div class="button container-export">
+    <div class="border-thin_bottom">
+      <div class="container-export">
         <ui-button
           design="info"
           value={label.button.download.value}
@@ -89,7 +17,7 @@
           onclick={handleClickExport}
         ></ui-button>
       </div>
-      <div class="button container-add">
+      <div class="container-add">
         <ui-button
           design="accept"
           value={label.button.add.value}
@@ -97,7 +25,7 @@
           onclick={handleClickAdd}
         ></ui-button>
       </div>
-      <div class="button container-summary">
+      <div class="container-summary">
         <ui-button
           design="info"
           value="Summary"
