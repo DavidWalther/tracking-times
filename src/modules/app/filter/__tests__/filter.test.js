@@ -645,6 +645,40 @@ describe('events', () => {
     });
   });
 
+  test('component re-enabels on change of operator', () => {
+    const TEST_OPERATOR = 'containsWithCase';
+    const handler = jest.fn();
+
+    const fieldParameter = [{ path: 'comment', label: 'Kommentar' }];
+    const element = createElement('app-filter', { is: Filter });
+    element.type = 'text';
+    element.paths = fieldParameter;
+    element.inactive = true;
+    element.addEventListener('change', handler);
+    document.body.appendChild(element);
+
+    const operatorSelectElement = element.shadowRoot.querySelector(
+      '.filter-operator select'
+    );
+    expect(operatorSelectElement).toBeTruthy();
+    operatorSelectElement.value = TEST_OPERATOR;
+    operatorSelectElement.dispatchEvent(new CustomEvent('change'));
+
+    return Promise.resolve().then(() => {
+      expect(handler).toHaveBeenCalled();
+      expect(handler.mock.calls.length).toBe(1);
+      expect(handler.mock.calls[0].length).toBe(1);
+      expect(handler.mock.calls[0][0].detail).toBeTruthy();
+      expect(handler.mock.calls[0][0].detail.filterOperator).toBe(
+        TEST_OPERATOR
+      );
+      expect(handler.mock.calls[0][0].detail.filterInactive).toBe(false);
+
+      const elementToCheck = createElement('app-filter', { is: Filter });
+      expect(elementToCheck.inactive).toBe(false);
+    });
+  });
+
   test("component fires 'change' event on change of field path", () => {
     const handler = jest.fn();
 

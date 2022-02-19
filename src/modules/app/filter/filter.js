@@ -170,6 +170,7 @@ export default class Filter extends LightningElement {
 
   handleChangeFilterOperator(event) {
     this.operatorOfLastInputChange = event.target.value;
+    this.enable();
     this.createAndfireChangeEvent();
   }
 
