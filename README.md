@@ -8,7 +8,7 @@ pattern for version numbers:
 
 - re-enable fiter on change
 - create a sidemenu
-- move download buttonn
+- move download button
 
 ## version 1.7.3
 
