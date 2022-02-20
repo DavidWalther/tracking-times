@@ -119,6 +119,10 @@ a.button-github {
     flex-direction: row;
   }
 
+  div.main > div.content {
+    flex-grow: 1;
+  }
+
   div.menubar div.buttons {
     flex-direction: column;
   }
