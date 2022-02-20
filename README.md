@@ -7,6 +7,7 @@ pattern for version numbers:
 ## version 1.7.4
 
 - re-enable fiter on change
+- create a sidemenu
 
 ## version 1.7.3
 
