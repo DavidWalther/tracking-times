@@ -11,14 +11,6 @@
   <div class="main">
     <div class="menubar">
       <div class="buttons">
-        <div class="container-export">
-          <ui-button
-            design="info"
-            value={label.button.download.value}
-            class="button-export"
-            onclick={handleClickExport}
-          ></ui-button>
-        </div>
         <div class="container-add">
           <ui-button
             design="accept"
@@ -60,6 +52,14 @@
             value={label.labelSelectAll}
             class="button-selected-select_all"
             onclick={handleClickSelectAll}
+          ></ui-button>
+        </div>
+        <div class="container-export">
+          <ui-button
+            design="info"
+            value={label.button.download.value}
+            class="button-export"
+            onclick={handleClickExport}
           ></ui-button>
         </div>
         <div>
