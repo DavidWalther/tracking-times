@@ -28,6 +28,13 @@ div.buttons {
   flex-wrap: wrap;
 }
 
+/* --- Content --- */
+div.content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
 /* --- Filters --- */
 
 .filter-panel > div {
