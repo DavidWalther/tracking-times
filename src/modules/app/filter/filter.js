@@ -164,15 +164,18 @@ export default class Filter extends LightningElement {
       );
     }
     this.valueOfLastInputChange = event.target.value;
+    this.enable();
     this.createAndfireChangeEvent();
   }
 
   handleChangeFilterOperator(event) {
     this.operatorOfLastInputChange = event.target.value;
+    this.enable();
     this.createAndfireChangeEvent();
   }
 
   handleChangeFilterPath() {
+    this.enable();
     this.createAndfireChangeEvent();
   }
 
@@ -261,6 +264,10 @@ export default class Filter extends LightningElement {
     );
   }
 
+  enable() {
+    this.inactive = false;
+  }
+
   //----------------------------
   // getters
   //----------------------------
@@ -278,7 +285,7 @@ export default class Filter extends LightningElement {
     const filterValue = this.selectorInput.value;
     const filterOperator = this.selectorOperator.value;
     const filterPath = this.selectorPath.value;
-    const filterInactive = this.selectorDisabled.checked;
+    const filterInactive = this.inactive;
     const configurations = {
       filterValue,
       filterOperator,
@@ -302,9 +309,5 @@ export default class Filter extends LightningElement {
 
   get selectorInput() {
     return this.template.querySelector('.filter-input input');
-  }
-
-  get selectorDisabled() {
-    return this.template.querySelector('.filter-disable');
   }
 }
