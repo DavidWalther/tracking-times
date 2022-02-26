@@ -4,6 +4,8 @@ pattern for version numbers:
 
 <main version>.<feature release>.<feature improvement / bugfix / tec dept>
 
+## version 1.7.5
+
 ## version 1.7.4
 
 - re-enable fiter on change
