@@ -12,11 +12,14 @@ pattern for version numbers:
 
 ## version 1.7.4
 
+### feature improvements
 - re-enable fiter on change
 - create a sidemenu
 - move download button
 
 ## version 1.7.3
+
+### feature improvements
 
 - refilter on filter change
 
