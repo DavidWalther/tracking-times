@@ -6,6 +6,10 @@ pattern for version numbers:
 
 ## version 1.7.5
 
+### bugfixes
+
+- date filters can be entered by numberkeys
+
 ## version 1.7.4
 
 - re-enable fiter on change
