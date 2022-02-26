@@ -265,7 +265,9 @@ export default class Filter extends LightningElement {
   }
 
   enable() {
-    this.inactive = false;
+    if (this.inactive) {
+      this.inactive = false;
+    }
   }
 
   //----------------------------
