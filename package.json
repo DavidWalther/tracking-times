@@ -5,7 +5,7 @@
   "author": "David Walther",
   "bugs": "https://github.com/David Walther/tracking-times/issues",
   "dependencies": {
-    "lwc-services": "^1.2.2"
+    "lwc-services": "^3.2.2"
   },
   "devDependencies": {
     "husky": "^2.7.0",
